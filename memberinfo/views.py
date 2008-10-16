@@ -20,7 +20,7 @@ def index(request):
     u = request.user
     shell = failsafe(lambda: u.shellaccount,False)
     db = failsafe(lambda: u.databaseaccount,False)
-    name = failsafe(lambda: u.nicknamedetails,"")
+    name = failsafe(lambda: u.nicknamedetails.nickname,"")
     website = failsafe(lambda: u.websitedetails,False)
     pub = failsafe(lambda: u.member.showDetails,False)
 
@@ -38,7 +38,7 @@ def index(request):
         'quota': quota,
         'req_quota': req_quota*500,
         'total_quota':quota*500+1000,
-        'name':name.nickname,
+        'name':name,
         'url':website.websiteUrl if website else "",
         'title':website.websiteTitle if website else "",
         'my_lists':my_lists,
