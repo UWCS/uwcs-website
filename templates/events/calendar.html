@@ -1,0 +1,42 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<table border="1">
+    <tr>
+        <th>Week Begin</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+    </tr>
+    {% for week_begin,week_contents in events %}
+    <tr>
+        <td>{{ week_begin }}</td>
+        {% for day,day_contents in week_contents %}
+            <td>
+            {{ day }}
+            {% for event in day_contents %}
+            <br /><a href="/events/details/{{ event.id }}">{{ event.shortDescription }}</a>
+            {% endfor %}
+            </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block sidebar %}
+    <ul>
+        <li>
+            <h2>Calendar</h2>
+            <ul>
+                <li><a href="/events/calendar/{{ prev }}">previous</a></li>
+                <li><a href="/events/calendar/">current</a></li>
+                <li><a href="/events/calendar/{{ next }}">next</a></li>
+            </ul>
+            <h2>Feeds</h2>
+            <ul>
+                <li><a href="/feeds/news/">RSS</a></li>
+                <li><a href="/feeds/news/atom/">Atom</a></li>
+                <li><a href="/events/ical/">ical</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

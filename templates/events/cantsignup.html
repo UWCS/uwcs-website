@@ -1,0 +1,9 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+You can't yet signup to {{ event.type.name }}.
+{% endblock %}
+
+{% block sidebar %}
+<a href="/events/details/{{ event.id }}/">event</a>
+{% endblock %}

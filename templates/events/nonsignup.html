@@ -1,0 +1,9 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+You aren't signed up up to the {{ event.type.name }}, so you can't unsignup from it!
+{% endblock %}
+
+{% block sidebar %}
+<a href="/events/details/{{ event.id }}">event</a>
+{% endblock %}

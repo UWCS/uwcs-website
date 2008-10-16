@@ -1,0 +1,24 @@
+{% extends "memberinfo/base.html" %}
+
+{% block content %}
+<table>
+    <thead>
+    <tr>
+        <th>Member Name</th>
+        <th>Nickname</th>
+        <th>Website</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for name,nickname,website_name,website_url in users %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ nickname }}</td>
+            <td> {% if website_name %}
+                <a href="{{ website_url }}">{{ website_name }}</a>
+            {% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
