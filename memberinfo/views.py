@@ -1,8 +1,16 @@
-from Compsoc.memberinfo.models import *
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.template import loader, Context
+
+from random import choice
+from string import *
+
+from Compsoc.memberinfo.models import *
+
+from Compsoc.settings import *
 
 @login_required()
 def index(request):
@@ -143,3 +151,35 @@ def member_list(request):
         'users': users
     }
     return render_to_response('memberinfo/list.html',dict)
+
+def reset_password(request):
+    try:
+        # Do the password reset
+        user_name = request.POST['user_name']
+        user = User.objects.get(username__exact=user_name)
+        password = ''.join([choice(string.letters+string.digits) for i in range(0,8)])
+        user.set_password(password)
+        user.save()
+
+        # Email the user
+        template = loader.get_template('memberinfo/reset_email')
+        context = Context({'name':user_name,'password':password})
+        send_mail(
+            'Compsoc Password Reset',
+            template.render(context),
+            COMPSOC_EXEC_EMAIL,
+            [user.email],
+            fail_silently=False)
+        render_to_response('memberinfo/password_reset_success.html',{'user':request.user})
+    # If someone tries to reset the password of a user who doesn't exist, then report it
+    except User.DoesNotExist:
+        template = loader.get_template('memberinfo/techteam_reset_email')
+        context = Context({'name':user_name, 'ip':request.META['REMOTE_ADDR']})
+        send_mail(
+            'Warning: Failed Password Reset Attempt',
+            template.render(context),
+            COMPSOC_TECHTEAM_EMAIL,
+            [COMPSOC_TECHTEAM_EMAIL],
+            fail_silently=False)
+        render_to_response('memberinfo/password_reset_no_name.html', {'tech':COMPSOC_TECHTEAM_EMAIL,})
+

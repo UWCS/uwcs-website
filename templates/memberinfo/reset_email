@@ -1,0 +1,11 @@
+Dear  {{ name }},
+
+Your computing society website account was reset.  Your new password is:
+
+{{ password }}
+
+If you haven't reset the password yourself please contact the computing society exec.  You may reply to this email to do so.
+
+regards,
+
+    The Computing Society Exec

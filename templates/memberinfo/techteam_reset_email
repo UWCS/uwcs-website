@@ -1,0 +1,6 @@
+Dear techteam,
+
+An unknown person has tried to reset the website account password of {{ name }}.
+
+Their ip address is {{ ip }}.
+

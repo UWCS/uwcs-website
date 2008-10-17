@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+
+<h2>Login</h2>
+<form method="post" action=".">
+<table>
+<tr><td>{{ form.username.label_tag }}</td><td>{{ form.username }}</td></tr>
+<tr><td>{{ form.password.label_tag }}</td><td>{{ form.password }}</td></tr>
+</table>
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="/" />
+</form>
+<hr />
+
+<h2>Password Reset</h2>
+    <p>If you have forgotten your password, you can reset it.  A new password will be automatically emailed to you, at your contact email address.</p>
+    <form method="post" action="/memberinfo/reset/">
+        <input type="text" name="user_name" />
+        <input type="submit" value="reset" />
+    </form>
+<hr />
+
+{% endblock %}
