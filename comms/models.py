@@ -13,4 +13,4 @@ class Communication(models.Model):
     type = models.CharField(max_length=2,choices=COMMS_TYPE)
 
     def __unicode__(self):
-        return self.text
+        return self.title

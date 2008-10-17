@@ -36,22 +36,59 @@
 
 </script>
 
-
 {% if object_list %}
     {% for comm_item in object_list %}
         <div id="{{ comm_item.title }}"/>
-        <h1><a href="/{{ comm_item.id }}">{{ comm_item.title }}</a></h1>
-        <p>{{ comm_item.date }}<p>
-        <p>{{ comm_item.text|truncatewords:"30" }}</p>
+            <div class="post">
+                <h1 class="title">{{ comm_item.title }}</h1>
+                <p class="byline"><small>Posted on {{ comm_item.date }} | <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a></small></p>
+                <div class="entry">
+                {{ comm_item.text }}
+                </div>
+                <p class="meta"><a href="/details/{{ comm_item.id }}" class="more">Details</a></p>
+            </div>
         </div>
     {% endfor %}
+
+    {% if is_paginated %}
+        {% ifnotequal page "last" %}
+            <a href="{{ page|add:"1" }}">more</a>
+        {% endifnotequal %}
+    {% endif %}
 {% else %}
     <p>No Items are available.</p>
 {% endif %}
 {% endblock %}
 
 {% block sidebar %}
-<form>
-    <input type="text" name="searchBox"onkeypress="checkInput(this.value,event);" />
-</form>
+<ul>
+    <li>
+        <form>
+            <input type="text" name="searchBox"onkeypress="checkInput(this.value,event);" />
+        </form>
+        <br />
+    </li>
+    <li>
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="/news/1/">News</a></li>
+            <li><a href="/minutes/1/">Minutes</a></li>
+            <li><a href="/newsletters/1/">Newsletters</a></li>
+        </ul>
+    </li>
+<!--<li>
+        <h2>Archives</h2>
+        <ul>
+            <li><a href="#">September</a> (23)</li>
+            <li><a href="#">August</a> (31)</li>
+            <li><a href="#">July</a> (31)</li>
+            <li><a href="#">June</a> (30)</li>
+            <li><a href="#">May</a> (31)</li>
+            <li><a href="#">April</a> (30)</li>
+            <li><a href="#">March</a> (31)</li>
+            <li><a href="#">February</a> (28)</li>
+            <li><a href="#">January</a> (31)</li>
+        </ul>
+    </li>-->
+</ul>
 {% endblock %}
