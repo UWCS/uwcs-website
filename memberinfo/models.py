@@ -20,6 +20,12 @@ class Member(models.Model):
             return self.user.nicknamedetails.nickname
         except NicknameDetails.DoesNotExist:
             return self.user.get_full_name()
+    
+    def get_nick(self):
+        try:
+            return self.user.nicknamedetails.nickname
+        except NicknameDetails.DoesNotExist:
+            return ""
 
     def __unicode__(self):
         return self.name()

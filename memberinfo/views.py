@@ -157,10 +157,10 @@ def member_list(request):
 
     for user in User.objects.all():
         try:
-            if user.member.showDetails:
+            if user.member.showDetails and user.is_active :
                 users.append((
                     user.get_full_name(),
-                    user.member.name(),
+                    user.member.get_nick(),
                     get_website(user,lambda w: w.websiteTitle),
                     get_website(user,lambda w: w.websiteUrl),
                 ))
