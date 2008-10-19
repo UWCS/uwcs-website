@@ -9,7 +9,7 @@ from random import choice
 from string import *
 
 from Compsoc.memberinfo.models import *
-
+from Compsoc.shorts import template_mail
 from Compsoc.settings import *
 
 @login_required()
@@ -32,7 +32,7 @@ def index(request):
     website = failsafe(lambda: u.websitedetails,False)
     pub = failsafe(lambda: u.member.showDetails,False)
 
-    (quota,req_quota) = (getQuota('PR'),getQuota('RE'))
+    quota,req_quota = (getQuota('PR'),getQuota('RE'))
 
     my_lists = u.mailinglist_set.all()
     other_lists = []
@@ -52,41 +52,61 @@ def index(request):
         'my_lists':my_lists,
         'other_lists':other_lists,
         'publish_details': pub,
+        'user':u,
     }
     return render_to_response('memberinfo/index.html',dict)
 
 @login_required()
 def shell(request):
-    n = request.POST['shell']
-    u = request.user
-
-    try:
-        ShellAccount.objects.get(user=u)
-    except:
-    # TODO: sanity check name
-        s = ShellAccount(user=u,name=n,status='RE')
-        s.save()
-    return HttpResponseRedirect('/member/')
+    return do_service(request,'shell',ShellAccount, 'shell',
+        lambda acc: "You already own a shell account called %s" % acc.name)
 
 @login_required()
 def database(request):
-    n = request.POST['db']
+    return do_service(request,'db',DatabaseAccount, 'database',
+        lambda acc: "You already own a database account called %s" % acc.name)
+
+def do_service(request,param,klass,name,error):
+    n = request.POST[param]
     u = request.user
 
     try:
-        DatabaseAccount.objects.get(user=u)
-    except:
-    # TODO: sanity check name
-        db = DatabaseAccount(user=u,name=n,status='RE')
-        db.save()
+        acc = klass.objects.get(user=u)
+        return render_to_response('memberinfo/request_error.html',
+            {'user':u,'name':name,'error':error(acc)})
+    except klass.DoesNotExist:
+        obj = klass(user=u,name=n,status='RE')
+        obj.save()
+
+        template_mail(
+            'New service request',
+            'memberinfo/service_techteam.html',
+            {'realname':("%s %s"%(u.first_name,u.last_name)),'username':n,'what':name},
+            COMPSOC_TECHTEAM_EMAIL,
+            [COMPSOC_TECHTEAM_EMAIL])
     return HttpResponseRedirect('/member/')
 
 @login_required()
 def quota(request):
     amount = request.POST['quota']
-    q = Quota(user=request.user,quantity=amount,status='RE')
-    q.save()
-    return HttpResponseRedirect('/member/')
+    user = request.user
+    try:
+        acc_name = user.shellaccount.name
+        q = Quota(user=user,quantity=amount,status='RE')
+        q.save()
+        template_mail(
+            'Quota request',
+            'membeinfo/quota_techteam.html',
+            {'realname':("%s %s"%(u.first_name,u.last_name)),'username':acc_name,'amount':amount},
+            user.email,
+            [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
+        return HttpResponseRedirect('/member/')
+    except ValueError:
+        return render_to_response('memberinfo/request_error.html',
+            {'user':user,'name':'Quota','error':"%s is not an integer" % amount})
+    except ShellAccount.DoesNotExist:
+        return render_to_response('memberinfo/request_error.html',
+            {'user':user,'name':'Quota','error':'You don\'t have a shell account'})
 
 @login_required()
 def lists(request):
@@ -162,24 +182,20 @@ def reset_password(request):
         user.save()
 
         # Email the user
-        template = loader.get_template('memberinfo/reset_email')
-        context = Context({'name':user_name,'password':password})
-        send_mail(
+        template_mail(
             'Compsoc Password Reset',
-            template.render(context),
+            'memberinfo/reset_email',
+            {'name':user_name,'password':password},
             COMPSOC_EXEC_EMAIL,
-            [user.email],
-            fail_silently=False)
+            [user.email])
         render_to_response('memberinfo/password_reset_success.html',{'user':request.user})
     # If someone tries to reset the password of a user who doesn't exist, then report it
     except User.DoesNotExist:
-        template = loader.get_template('memberinfo/techteam_reset_email')
-        context = Context({'name':user_name, 'ip':request.META['REMOTE_ADDR']})
-        send_mail(
+        template_mail(
             'Warning: Failed Password Reset Attempt',
-            template.render(context),
+            'memberinfo/techteam_reset_email',
+            {'name':user_name, 'ip':request.META['REMOTE_ADDR']},
             COMPSOC_TECHTEAM_EMAIL,
-            [COMPSOC_TECHTEAM_EMAIL],
-            fail_silently=False)
+            [COMPSOC_TECHTEAM_EMAIL])
         render_to_response('memberinfo/password_reset_no_name.html', {'tech':COMPSOC_TECHTEAM_EMAIL,})
 
