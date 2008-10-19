@@ -9,4 +9,5 @@ admin.site.register(ShellAccount)
 admin.site.register(DatabaseAccount)
 admin.site.register(Quota)
 admin.site.register(MailingList)
+admin.site.register(Term)
 

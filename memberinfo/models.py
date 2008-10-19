@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from Compsoc.config import *
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -7,13 +8,21 @@ class Member(models.Model):
     showDetails = models.BooleanField()
 
     def is_fresher(self):
-        return True
+        joins = self.user.memberjoin_set.all()
+        if joins.count() == 1:
+            dates = Term.objects.filter(start_number=1).order_by('start_date').reverse()
+            return joins[0].year == dates[0].start_date.year
+        else:
+            return False
 
     def name(self):
         try:
             return self.user.nicknamedetails.nickname
         except NicknameDetails.DoesNotExist:
             return self.user.get_full_name()
+
+    def __unicode__(self):
+        return self.name()
 
 # Optional info about one's website
 class WebsiteDetails(models.Model):
@@ -29,6 +38,25 @@ class MemberJoin(models.Model):
     '''Stores history of membership'''
     user = models.ForeignKey(User)
     year = models.IntegerField()
+
+    def __unicode__(self):
+        return "%s joined in %i" % (self.user.username,self.year)
+
+TERMS = (
+    ('AU','Autumn'),
+    ('SP','Spring'),
+    ('SU','Summer'),
+)
+
+class Term(models.Model):
+    '''Stores date information about terms'''
+    start_date = models.DateField()
+    start_number = models.IntegerField()
+    length = models.IntegerField()
+    which = models.CharField(max_length=2,choices=TERMS)
+
+    def __unicode__(self):
+        return "%s term %i" % (self.get_which_display(), self.start_date.year)
 
 STATUS = (
     ('RE','Requested'),
