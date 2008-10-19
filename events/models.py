@@ -46,6 +46,19 @@ class Event(models.Model):
 
     def is_in_future(self):
         return datetime.now() < self.start
+
+    def has_signups(self):
+        try:
+            self.eventsignup
+            return True
+        except EventSignup.DoesNotExist:
+            return False
+    
+    def signup_total(self):
+        return self.eventsignup.signupsLimit
+
+    def signup_tally(self):
+        return self.signup_set.count
     
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):

@@ -21,23 +21,45 @@ def month(dat): return strftime("%b",(0,dat,0,0,0,0,0,0,0))
 
 a_week = timedelta(days=7)
 
+def get_events(offset,span):
+    begin = begin_week(datetime.today())+timedelta(days=7*offset)
+    end = begin + timedelta(days=7*span)
+    events = filter(lambda event: begin < event.start and event.finish < end,Event.objects.order_by('start'))
+    return (begin.date(),end.date(),events)
+
+class Week:
+    '''
+    Abstract a week, so the template doesn't require any lookup logic
+    '''
+    def __init__(self,begin):
+        self.begin = begin
+        self.end = begin + timedelta(days=6)
+        self.week_number = 0
+    def __str__(self):
+        return self.begin.strftime(DATE_FORMAT_STRING)+" - "+self.end.strftime(DATE_FORMAT_STRING)
+
+def events_list(request):
+    begin,end,events = get_events(0,10)
+    lookup = defaultdict(lambda: [])
+    for event in events:
+       lookup[begin_week(event.start)].append(event)
+
+    lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
+    return render_to_response('events/list.html',{'user':request.user,'events':lookup})
+
 def calendar(request,delta):
     '''
     Main Calendar view for website
     presents a Table of events for the current week, and 4 successors
     '''
     offset = int(delta)
-    begin = begin_week(datetime.today())+timedelta(days=7*offset)
-    end = begin + timedelta(days=28)
-
-    events = filter(lambda event: begin < event.start and event.finish < end,Event.objects.all())
+    begin,end,events = get_events(offset,4)
     # lookup :: BEGIN_WEEK -> DAY -> EVENT
     lookup = defaultdict(lambda: defaultdict(lambda:[]))
     for event in events:
         for event_date in event.days():
             lookup[begin_week(event_date)][event_date.weekday()].append(event)
     
-    begin,end = begin.date(),end.date()
     iter,events = begin,[]
     while iter <= end:
         week = lookup[iter]
@@ -59,6 +81,7 @@ def calendar(request,delta):
         'next':offset+1,
         'user':request.user,
     })
+
 
 def valid_signup(user,event):
     now = datetime.now()
@@ -86,6 +109,7 @@ def details(request,event_id):
         'event':event,
         'signups':signups,
         'can_edit':request.user.is_staff if request.user else False,
+        'user':request.user,
     }
 
     try:

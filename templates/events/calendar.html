@@ -21,22 +21,3 @@
     {% endfor %}
 </table>
 {% endblock %}
-
-{% block sidebar %}
-    <ul>
-        <li>
-            <h2>Calendar</h2>
-            <ul>
-                <li><a href="/events/calendar/{{ prev }}">previous</a></li>
-                <li><a href="/events/calendar/">current</a></li>
-                <li><a href="/events/calendar/{{ next }}">next</a></li>
-            </ul>
-            <h2>Feeds</h2>
-            <ul>
-                <li><a href="/feeds/news/">RSS</a></li>
-                <li><a href="/feeds/news/atom/">Atom</a></li>
-                <li><a href="/events/ical/">ical</a></li>
-            </ul>
-        </li>
-    </ul>
-{% endblock %}

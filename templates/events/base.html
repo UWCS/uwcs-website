@@ -1,3 +1,34 @@
 {% extends "base.html" %}
 
 {% block events %}class="active"{% endblock %}
+
+{% block sidebar %}
+    <ul>
+        <li>
+            <h2>Events</h2>
+            <ul>
+                <li><a href="/events/">events list</a></li>
+            </ul>
+            <h2>Calendar</h2>
+            <ul>
+                {% if prev %}
+                    <li><a href="/events/calendar/{{ prev }}">previous week</a></li>
+                {% else %}
+                    <li><a href="/events/calendar/-1">previous week</a></li>
+                {% endif %}
+                <li><a href="/events/calendar/">current week</a></li>
+                {% if prev %}
+                    <li><a href="/events/calendar/{{ next }}">next_week</a></li>
+                {% else %}
+                    <li><a href="/events/calendar/1">next week</a></li>
+                {% endif %}
+            </ul>
+            <h2>Feeds</h2>
+            <ul>
+                <li><a href="/feeds/news/">RSS</a></li>
+                <li><a href="/feeds/news/atom/">Atom</a></li>
+                <li><a href="/events/ical/">ical</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

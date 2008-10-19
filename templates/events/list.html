@@ -1,0 +1,25 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+<table>
+<tr><th>Event</th><th>When</th><th>Location</th><th colspan="2">Signups</th></tr>
+{% for week,entries in events %}
+    <tr>
+        <th>Week {{ week.week_number }}</th>
+        <th colspan="5">{{ week }}</th>
+    </tr>
+    {% for event in entries %}
+        <tr>
+            <td>{{ event.type.name }}</td>
+            <td>{{ event.time_string }}</td>
+            <td>{{ event.location }} </td>
+            {% if event.has_signups %}
+                <td>{{ event.signup_tally }}/{{ event.signup_total }}</td>
+            {% else %}
+                <td>N/A</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+{% endfor %}
+</table>
+{% endblock %}
