@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     (r'^logout/', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
-
+    (r'^password/', 'django.contrib.auth.views.password_change', {'template_name':'password.html','post_change_redirect':'/'}),
 )
 
 # if we are debugging serve the static content locally
