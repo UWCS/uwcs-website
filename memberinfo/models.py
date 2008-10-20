@@ -1,17 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Compsoc.config import *
+from Compsoc.shorts import *
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
     user = models.OneToOneField(User)
     showDetails = models.BooleanField()
+    guest = models.BooleanField()
 
     def is_fresher(self):
         joins = self.user.memberjoin_set.all()
         if joins.count() == 1:
-            dates = Term.objects.filter(start_number=1).order_by('start_date').reverse()
-            return joins[0].year == dates[0].start_date.year
+            return joins[0].year == current_year()
         else:
             return False
 
