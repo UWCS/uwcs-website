@@ -1,12 +1,21 @@
 {% extends "memberinfo/base.html" %}
 
 {% block sidebar %}
-<a href="/password/">change password</a>
-
+    <h2>Actions</h2>
+    <ul>
+        <li><a href="/password/">change website password</a></li>
+        {% if shell.isPresent %}
+           <li><a href="/memberinfo/reset/shell/">request shell password reset</a></li>
+        {% endif %}
+        {% if db.isPresent %}
+            <li><a href="/memberinfo/reset/db/">request database password reset</a></li>
+        {% endif %}
+        <li>
+    </ul>
 {% endblock %}
 
 {% block content %}
-<h1>Compsoc Member Profile</h1>
+<h1>Compsoc Member Profile Settings</h1>
 
 <h2>Shell Account</h2>
 {% if shell %}

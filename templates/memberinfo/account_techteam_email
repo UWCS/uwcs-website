@@ -1,0 +1,4 @@
+{{ name }} has requested that their {{ type }} password be reset.  The account
+name is {{ accname}}.
+
+You can simply reply to this email to contact them.

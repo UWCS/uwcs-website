@@ -96,7 +96,7 @@ def quota(request):
         q.save()
         template_mail(
             'Quota request',
-            'membeinfo/quota_techteam.html',
+            'membeinfo/quota_techteam',
             {'realname':("%s %s"%(u.first_name,u.last_name)),'username':acc_name,'amount':amount},
             user.email,
             [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
@@ -192,3 +192,23 @@ def reset_password(request):
             [COMPSOC_TECHTEAM_EMAIL])
         render_to_response('memberinfo/password_reset_no_name.html', {'tech':COMPSOC_TECHTEAM_EMAIL,})
 
+@login_required()
+def reset_account(request,account):
+    try:
+        u = request.user
+        name = (u.databaseaccount if account == 'db' else u.shellaccount).name
+        type = 'Database' if account == 'db' else 'Shell'
+        template_mail(
+            'Password reset request',
+            'memberinfo/account_techteam_email',
+            {'name':u.get_full_name(),'type':type,'accname':name},
+            u.email,
+            [COMPSOC_TECHTEAM_EMAIL])
+        render_to_response('memberinfo/account_reset.html')
+    except DatabaseAccount.DoesNotExist:
+        return render_to_response('memberinfo/request_error.html',
+            {'user':u,'name':'Database','error':"You don't have a database, so it can't be password reset"})
+    except ShellAccount.DoesNotExist:
+        return render_to_response('memberinfo/request_error.html',
+            {'user':u,'name':'Shell','error':"You don't have a shell account, so it can't be password reset"})
+        
