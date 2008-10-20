@@ -82,24 +82,20 @@ def calendar(request,delta):
         'user':request.user,
     })
 
-
 def valid_signup(user,event):
     now = datetime.now()
     s = event.eventsignup
     if event.signupsRequired and user.is_authenticated():
         can_signup = now < s.close
-        try:
             if user.member.is_fresher():
                 can_signup &= s.fresher_open < now
+            elif user.member.guest:
+                can_signup &= s.guest_open < now
             else:
                 can_signup &= s.open < now
-        # Guests have no 'member' object
-        except Member.DoesNotExist:
-            can_signup &= s.guest_open < now
     else:
         can_signup = False
     return can_signup
-    
     
 def details(request,event_id):
     event = Event.objects.get(id=event_id)

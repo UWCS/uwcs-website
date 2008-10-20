@@ -129,11 +129,8 @@ def details(request):
     try: publish = request.POST['publish']
     except: publish = False
 
-    try:
-        member = u.member
-        member.showDetails = publish
-    except Member.DoesNotExist:
-        member = Member(user=u,showDetails=publish)
+    member = u.member
+    member.showDetails = publish
     member.save()
 
     try:
@@ -156,16 +153,13 @@ def member_list(request):
             return False
 
     for user in User.objects.all():
-        try:
-            if user.member.showDetails and user.is_active :
-                users.append((
-                    user.get_full_name(),
-                    user.member.get_nick(),
-                    get_website(user,lambda w: w.websiteTitle),
-                    get_website(user,lambda w: w.websiteUrl),
-                ))
-        # Don't need to display guest accounts
-        except Member.DoesNotExist: pass
+        if user.member.showDetails and user.is_active :
+            users.append((
+                user.get_full_name(),
+                user.member.get_nick(),
+                get_website(user,lambda w: w.websiteTitle),
+                get_website(user,lambda w: w.websiteUrl),
+            ))
     
     dict = {
         'users': users
