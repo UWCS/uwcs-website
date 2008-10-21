@@ -14,3 +14,9 @@ def template_mail(title,template,context,addr_from,addr_to,fail_silently=False):
 def current_year():
     from Compsoc.memberinfo.models import Term
     return Term.objects.filter(start_number=1).order_by('start_date').reverse()[0].start_date.year
+
+def get(tuples,key):
+    for (s,l) in tuples:
+        if s == key:
+            return l
+    raise ValueError
