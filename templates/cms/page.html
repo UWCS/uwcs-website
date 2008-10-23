@@ -8,6 +8,14 @@
     {% for slug,name in peers %}
         <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
     {% endfor %}
+    <li>
+    {{ title }}
+    <ul>
+        {% for slug,name in children %}
+            <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
+        {% endfor %}
+    </ul>
+    </li>
 </ul>
 
 {% endblock %}

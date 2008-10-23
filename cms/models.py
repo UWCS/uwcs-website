@@ -10,8 +10,16 @@ class Page(models.Model):
         return self.pagerevision_set.latest('date_written')
 
     def get_peers(self):
-        parent_slug = '/'.join(self.slug.split('/')[:-1])
-        return Page.objects.filter(slug__startswith=parent_slug)
+        parent_slug = '/'.join(self.slug.split('/')[:-1])+'/'
+        peers = []
+        for p in Page.objects.filter(slug__startswith=parent_slug):
+            if not p.slug.startswith(self.slug):
+                peers.append(p)
+        return peers
+
+    def get_children(self):
+        url = self.slug+'/'
+        return Page.objects.filter(slug__startswith=url)
 
 class PageRevision(models.Model):
     page = models.ForeignKey(Page)
