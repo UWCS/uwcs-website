@@ -3,7 +3,6 @@
 {% load markup %}
 
 {% block sidebar %}
-
 <ul>
     {% for slug,name in peers %}
         <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
@@ -17,7 +16,6 @@
     </ul>
     </li>
 </ul>
-
 {% endblock %}
 
 {% block content %}

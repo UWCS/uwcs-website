@@ -87,12 +87,12 @@ def valid_signup(user,event):
     s = event.eventsignup
     if event.signupsRequired and user.is_authenticated():
         can_signup = now < s.close
-            if user.member.is_fresher():
-                can_signup &= s.fresher_open < now
-            elif user.member.guest:
-                can_signup &= s.guest_open < now
-            else:
-                can_signup &= s.open < now
+        if user.member.is_fresher():
+            can_signup &= s.fresher_open < now
+        elif user.member.guest:
+            can_signup &= s.guest_open < now
+        else:
+            can_signup &= s.open < now
     else:
         can_signup = False
     return can_signup
