@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response,get_object_or_404
+from django.http import HttpResponseRedirect
 from Compsoc.cms.models import *
     
 def cleanse(l):
@@ -16,7 +17,10 @@ def lookup(l):
 def handle(request,url):
     page = get_object_or_404(Page,slug=url)
     data = page.get_data()
-    
+   
+    if data.login and not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+
     # breadcrumbs
     split = url.split('/')
     breadcrumbs,prefix = [],split[0]
@@ -24,7 +28,6 @@ def handle(request,url):
         breadcrumbs.append(prefix)
         prefix += '/' + item
     breadcrumbs.append(prefix)
-    print breadcrumbs
 
     dict = {
         'title':data.title,
