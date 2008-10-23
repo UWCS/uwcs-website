@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,get_object_or_404
 from Compsoc.cms.models import *
     
 def cleanse(l):
@@ -14,7 +14,7 @@ def lookup(l):
     return breadcrumbs
 
 def handle(request,url):
-    page = Page.objects.get(slug=url)
+    page = get_object_or_404(Page,slug=url)
     data = page.get_data()
     
     # breadcrumbs
