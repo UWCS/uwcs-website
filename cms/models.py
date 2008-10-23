@@ -6,6 +6,13 @@ class Page(models.Model):
     def __unicode__(self):
             return self.slug
 
+    def get_data(self):
+        return self.pagerevision_set.latest('date_written')
+
+    def get_peers(self):
+        parent_slug = '/'.join(self.slug.split('/')[:-1])
+        return Page.objects.filter(slug__startswith=parent_slug)
+
 class PageRevision(models.Model):
     page = models.ForeignKey(Page)
     title = models.CharField(max_length=30)

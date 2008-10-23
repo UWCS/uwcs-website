@@ -2,6 +2,16 @@
 
 {% load markup %}
 
+{% block sidebar %}
+
+<ul>
+    {% for slug,name in peers %}
+        <li><a href="/cms/{{ slug }}">name</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
 {% block content %}
     <h1>{{ title }}</h1>
     {{ text|markdown }}
