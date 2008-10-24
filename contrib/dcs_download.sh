@@ -51,6 +51,11 @@ install_vobject ()
     standard_setup http://vobject.skyhouseconsulting.com/vobject-0.7.1.tar.gz vobject-0.7.1
 }
 
+install_textile ()
+{
+    standard_setup http://pypi.python.org/packages/source/t/textile/textile-2.0.11.tar.gz textile-2.0.11
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
@@ -61,3 +66,4 @@ install_markdown
 install_docutils
 install_dateutil
 install_vobject
+install_textile
