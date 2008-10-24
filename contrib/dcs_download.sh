@@ -36,8 +36,6 @@ install_docutils ()
     cd $WEBSITE_DIR
 }
 
-export PYTHONPATH=$WEBSITE_DIR/lib/python2.4/site-packages/:$PYTHONPATH
-
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
