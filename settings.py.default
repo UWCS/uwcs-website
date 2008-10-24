@@ -88,4 +88,5 @@ INSTALLED_APPS = (
     'Compsoc.comms',
     'Compsoc.events',
     'Compsoc.memberinfo',
+    'Compsoc.cms',
 )
