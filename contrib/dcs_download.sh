@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -u
-
 standard_setup ()
 {
     # $1 = source URL
@@ -12,7 +10,7 @@ standard_setup ()
 
 install_django ()
 {
-    curl http://mulletron.uwcs.co.uk/django.tar | tar xv
+    standard_setup http://media.djangoproject.com/releases/1.0/Django-1.0.tar.gz Django-1.0
 }
 
 install_python ()
