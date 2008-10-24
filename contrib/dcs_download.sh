@@ -46,6 +46,11 @@ install_dateutil ()
     standard_setup http://labix.org/download/python-dateutil/python-dateutil-1.4.1.tar.gz python-dateutil-1.4.1
 }
 
+install_vobject ()
+{
+    standard_setup http://vobject.skyhouseconsulting.com/vobject-0.7.1.tar.gz vobject-0.7.1
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
@@ -55,3 +60,4 @@ install_django
 install_markdown
 install_docutils
 install_dateutil
+install_vobject
