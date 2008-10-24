@@ -1,10 +1,17 @@
 #!/bin/sh
 
+WEBSITE_DIR=/var/tmp/website
+
+pysetup ()
+{
+    /var/tmp/website/bin/python setup.py install --prefix=$WEBSITE_DIR
+}
+
 standard_setup ()
 {
     # $1 = source URL
     # $2 = untarred directory
-    curl $1 | tar zxv && cd $2 && python setup.py install --prefix=/var/tmp/website
+    curl $1 | tar zxv && cd $2 && pysetup
     cd $WEBSITE_DIR
 }
 
@@ -25,11 +32,10 @@ install_markdown ()
 
 install_docutils ()
 {
-    wget http://docutils.sourceforge.net/docutils-snapshot.tgz && tar zxvf docutils-snapshot.tgz && cd docutils && python setup.py install --prefix=/var/tmp/website
+    wget http://docutils.sourceforge.net/docutils-snapshot.tgz && tar zxvf docutils-snapshot.tgz && cd docutils && pysetup
     cd $WEBSITE_DIR
 }
 
-WEBSITE_DIR=/var/tmp/website
 export PYTHONPATH=$WEBSITE_DIR/lib/python2.4/site-packages/:$PYTHONPATH
 
 mkdir -p $WEBSITE_DIR
