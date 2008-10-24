@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -u
 
 WEBSITE_DIR=/var/tmp/website
 
@@ -10,6 +10,8 @@ cd $WEBSITE_DIR
 curl http://mulletron.uwcs.co.uk/django.tar | tar xv
 curl http://mulletron.uwcs.co.uk/python26.tar | tar xv
 curl http://ftp.de.debian.org/debian/pool/main/p/python-markdown/python-markdown_1.7.orig.tar.gz | tar zxv && cd markdown-1.7 && python setup.py install --prefix=/var/tmp/website
+cd $WEBSITE_DIR
+wget http://docutils.sourceforge.net/docutils-snapshot.tgz && tar zxvf docutils-snapshot.tgz && cd docutils && python setup.py install --prefix=/var/tmp/website
 cd $WEBSITE_DIR
 
 export PYTHONPATH=$WEBSITE_DIR/lib/python2.4/site-packages/:$PYTHONPATH
