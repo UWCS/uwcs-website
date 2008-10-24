@@ -8,8 +8,11 @@
 
 <meta name="keywords" content="">
 <meta name="description" content="">
-<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen"></head><body>
+<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen"></head>
+{% block morehead %}{% endblock %}
 
+<body>
+{% block pretitle %}{% endblock %}
 <!-- start header -->
 <div id="header">
 	<div id="logo">
@@ -22,6 +25,9 @@
 			<li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
 			<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
 			<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact </a></li>
+            {% if user.is_staff %}
+                <li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
+            {% endif %}
 		</ul>
 	</div>
     {# Put this section in the correct place on the page #}
@@ -34,25 +40,31 @@
         <a href="/login/">login</a>
     {% endif %}
     </div>
+    {% block nav-global %}{% endblock %}
 </div>
 <!-- end header -->
 <!-- start page -->
 <div id="page">
 	<!-- start content -->
 	<div id="content">
-    {% if breadcrumbs %}
-        {% for url,name in breadcrumbs %}
-            <a href="/cms/{{ url }}">{{ name }}</a>
-            {% if not forloop.last %}
-                ::
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% block content %}{% endblock %}</div>
+    {% block content_title %}{% endblock %}
+    {% block breadcrumbs %}
+        {% if breadcrumbs %}
+            {% for url,name in breadcrumbs %}
+                <a href="/cms/{{ url }}">{{ name }}</a>
+                {% if not forloop.last %}
+                   &rsaquo; 
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+    {% block content %}{% endblock %}
+    </div>
 	<!-- end content -->
 	<!-- start sidebar -->
 	<div id="sidebar">{% block sidebar %}{% endblock %}</div>
 	<!-- end sidebar -->
 </div>
+{% block footer %}{% endblock %}
 <!-- end page -->
 </body></html>
