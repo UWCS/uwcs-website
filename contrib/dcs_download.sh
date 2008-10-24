@@ -25,6 +25,11 @@ install_python ()
     curl http://mulletron.uwcs.co.uk/python26.tar | tar xv
 }
 
+install_setuptools ()
+{
+    standard_setup http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c9.tar.gz setuptools-0.6c9
+}
+
 install_markdown ()
 {
     standard_setup http://pypi.python.org/packages/source/M/Markdown/markdown-1.7.tar.gz markdown-1.7
@@ -36,10 +41,17 @@ install_docutils ()
     cd $WEBSITE_DIR
 }
 
+install_dateutil ()
+{
+    standard_setup http://labix.org/download/python-dateutil/python-dateutil-1.4.1.tar.gz python-dateutil-1.4.1
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
 install_python
+install_setuptools
 install_django
 install_markdown
 install_docutils
+install_dateutil
