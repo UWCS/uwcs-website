@@ -23,8 +23,9 @@
         {% else %}
             <a href="/login/">login</a>
         {% endif %}
-        <form>
+        <form action="/search/" method="post">
             <input type="text" name="searchBox" />
+            <span style="visibility: hidden"><input type="submit" /></span>
         </form>
     </div>
     <div id="logo">
