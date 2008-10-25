@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
+{% load truncate %}
+
 {% block content %}
 {% if results %}
     <ul>
     {% for result in results %}
-        <li><a href="{{ result.get_absolute_url }}">{{ result }}</a></li>
+        <li>
+          <a href="{{ result.get_absolute_url }}">{{ result }}</a> ( {{ result.get_type_display }} )<br />
+          {{ result.text|truncate:60 }}
+        </li>
     {% endfor %}
     </ul>
 {% endif %}
