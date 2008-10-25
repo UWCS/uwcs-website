@@ -2,6 +2,11 @@
 
 {% block sidebar %}
     <a href="/admin/cms/page/">page list</a>
+    <ul>
+    {% for comment,id in comments %}
+        <li><a href="/admin/cms/pagerevision/{{ id }}/">{{ comment }}</a></li>
+    {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block content %}

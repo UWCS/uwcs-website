@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     
     (r'^admin/cms/page/(?P<page_id>\d+)/$','Compsoc.cms.admin_views.add_edit'),
+    (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','Compsoc.cms.admin_views.revision'),
     (r'^admin/cms/page/add/$','Compsoc.cms.admin_views.add_edit'),
     (r'^admin/events/email/(?P<event_id>\d+)/$','Compsoc.events.admin_views.email_signups'),
     (r'^admin/(.*)', admin.site.root),

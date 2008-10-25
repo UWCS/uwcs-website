@@ -1,0 +1,16 @@
+{% extends "cms/admin/base.html" %}
+
+{% load markup %}
+
+{% block content %}
+    <h1>{{ revision.title }}</h1>
+    <p>{{ revision.comment }}</p>
+    <p>{{ revision.text|markdown }}</p>
+{% endblock %}
+
+{% block sidebar %}
+    <form action="/admin/cms/pagerevision/{{ revision.id }}/" method="post">
+        <input type="text" name="comment" />
+        <input type="submit" value="revert to this" />
+    </form>
+{% endblock %}

@@ -20,7 +20,7 @@ class Page(models.Model):
     def get_children(self):
         url = self.slug+'/'
         return Page.objects.filter(slug__startswith=url)
-
+    
 class PageRevision(models.Model):
     page = models.ForeignKey(Page)
     title = models.CharField(max_length=30)

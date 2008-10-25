@@ -13,6 +13,23 @@ class PageForm(forms.Form):
     login = forms.BooleanField(required=False)
 
 @staff_member_required
+def revision(request,rev_id):
+    rev = get_object_or_404(PageRevision,id=rev_id)
+    if request.method == 'POST':
+        # clone
+        rev.id = None
+        rev.date_written = datetime.now()
+        rev.comment = request.POST['comment']
+        rev.save()
+        return HttpResponseRedirect('/admin/cms/page/'+str(rev.page.id))
+        
+    else: 
+        return render_to_response('cms/admin/view_revision.html', {
+            'revision':rev,
+            'user':request.user,
+        })
+
+@staff_member_required
 def add_edit(request,page_id=None):
     if request.method == 'POST':
         form = PageForm(request.POST)
@@ -45,11 +62,14 @@ def add_edit(request,page_id=None):
             'login':rev.login,
         }
         form = PageForm(data)
+        comments = map(lambda rev: (rev.comment,rev.id),page.pagerevision_set.order_by('-date_written'))
     else:
         form = PageForm()
+        comments = []
 
     return render_to_response('cms/admin/addedit.html', {
         'form': form,
         'user': request.user,
         'id': page_id,
+        'comments':comments,
     })

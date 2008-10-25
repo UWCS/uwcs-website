@@ -10,4 +10,5 @@ class PageAdmin(admin.ModelAdmin):
     inlines = [RevisionInline]
 
 admin.site.register(Page,PageAdmin)
+admin.site.register(PageRevision)
 
