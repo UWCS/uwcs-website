@@ -4,7 +4,7 @@
 {% if results %}
     <ul>
     {% for result in results %}
-        <li>{{ result }}</li>
+        <li><a href="{{ result.get_absolute_url }}">{{ result }}</a></li>
     {% endfor %}
     </ul>
 {% endif %}

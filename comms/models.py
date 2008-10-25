@@ -14,6 +14,9 @@ class Communication(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=2,choices=COMMS_TYPE)
 
+    def get_absolute_url(self):
+        return "/details/%d" % (self.id,)
+
     def __unicode__(self):
         return self.title
 
