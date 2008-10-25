@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<!--[if lt IE 7.]>
-		<script defer type="text/javascript" src="pngfix.js"></script>
-		<![endif]-->
+        <!--[if lt IE 7.]>
+        <script defer type="text/javascript" src="pngfix.js"></script>
+        <![endif]-->
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Warwick Computing Society</title>
 
@@ -24,28 +24,28 @@
         <a href="/login/">login</a>
     {% endif %}
     </div>
-	<div id="logo">
-		<img src="/static/img/si_logo_small.png" />
-		<h1><a href="/">Warwick Computing Society</a></h1>
-	</div>
-	<div id="menu">
-		<ul>
-			<li {% block home %}{% endblock %} ><a href="/">Home</a></li>
-			<li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
-			<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
-			<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact </a></li>
+    <div id="logo">
+        <img src="/static/img/si_logo_small.png" />
+        <h1><a href="/">Warwick Computing Society</a></h1>
+    </div>
+    <div id="menu">
+        <ul>
+            <li {% block home %}{% endblock %} ><a href="/">Home</a></li>
+            <li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
+            <li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
+            <li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact </a></li>
             {% if user.is_staff %}
                 <li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
             {% endif %}
-		</ul>
-	</div>
+        </ul>
+    </div>
     {% block nav-global %}{% endblock %}
 </div>
 <!-- end header -->
 <!-- start page -->
 <div id="page">
-	<!-- start content -->
-	<div id="content">
+    <!-- start content -->
+    <div id="content">
     {% block content_title %}{% endblock %}
     {% block breadcrumbs %}
         {% if breadcrumbs %}
@@ -59,10 +59,10 @@
     {% endblock %}
     {% block content %}{% endblock %}
     </div>
-	<!-- end content -->
-	<!-- start sidebar -->
-	<div id="sidebar">{% block sidebar %}{% endblock %}</div>
-	<!-- end sidebar -->
+    <!-- end content -->
+    <!-- start sidebar -->
+    <div id="sidebar">{% block sidebar %}{% endblock %}</div>
+    <!-- end sidebar -->
 </div>
 {% block footer %}{% endblock %}
 <!-- end page -->
