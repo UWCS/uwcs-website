@@ -1,0 +1,15 @@
+{% extends "events/admin/base.html" %}
+
+{% block content %}
+    {% if form.subject.errors %}
+        <ol>
+        {% for error in form.message.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+        {% endfor %}
+        </ol>
+    {% endif %}
+    <form action="/admin/events/email/" method="POST">
+        {{ form.as_p }}
+        <input type="submit" value="email" />
+    </form>
+{% endblock %}
