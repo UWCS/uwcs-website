@@ -19,6 +19,9 @@
 {% endblock %}
 
 {% block content %}
-        <h1>{{ title }}</h1>
-        {{ text|markdown }}
+    <h1>{{ title }}</h1>
+    {% if user.is_staff %}
+       <a href="/admin/cms/page/{{ page_id }}/">edit</a>
+    {% endif %}
+    {{ text|markdown }}
 {% endblock%}

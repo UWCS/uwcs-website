@@ -25,7 +25,8 @@ class PageRevision(models.Model):
     page = models.ForeignKey(Page)
     title = models.CharField(max_length=30)
     text = models.TextField()
-    date_written = models.DateField()
+    comment = models.CharField(max_length=30)
+    date_written = models.DateTimeField()
     login = models.BooleanField()
 
     def __unicode__(self):

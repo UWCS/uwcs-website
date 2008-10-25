@@ -22,7 +22,10 @@ urlpatterns = patterns('',
     (r'^member/', include('Compsoc.memberinfo.urls')),
     (r'^events/', include('Compsoc.events.urls')),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
-    (r'^admin/events/email/$','Compsoc.events.admin_views.email_signups', {'event_id':1}),
+    
+    (r'^admin/cms/page/(?P<page_id>\d+)/$','Compsoc.cms.admin_views.add_edit'),
+    (r'^admin/cms/page/add/$','Compsoc.cms.admin_views.add_edit'),
+    (r'^admin/events/email/(?P<event_id>\d+)/$','Compsoc.events.admin_views.email_signups'),
     (r'^admin/(.*)', admin.site.root),
 
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),

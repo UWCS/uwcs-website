@@ -30,6 +30,7 @@ def handle(request,url):
     breadcrumbs.append(prefix)
 
     dict = {
+        'page_id':page.id,
         'title':data.title,
         'text':data.text,
         'peers':cleanse(page.get_peers()),
