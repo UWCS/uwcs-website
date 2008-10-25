@@ -125,6 +125,38 @@ def details(request,event_id):
 
     return render_to_response('events/details.html',dict)
 
+def make_cols(seating):
+    cols = []
+    for s in seating:
+        try:
+            cols[s.col].append(s)
+        except IndexError:
+            cols.insert(s.col, [])
+            cols[s.col].append(s)
+    return cols
+
+def seating(request, event_id):
+    e = Event.objects.get(id=event_id)
+    dict = {
+            'user':request.user,
+            'event':e,
+            }
+    try:
+        seating = Seating.objects.filter(event=e)
+        seating_revisions = SeatingRevision.objects.filter(event=e).order_by('-revision')
+        dict.update({
+            'has_seating':True,
+            'seating':seating,
+            'seating_revisions':seating_revisions,
+            'new_revision_no':seating_revisions[0].revision + 1,
+            'cols':make_cols(seating)
+            })
+    except Seating.DoesNotExist:
+        dict.update({
+            'has_seating':False,
+            })
+    return render_to_response('events/seating.html', dict)
+
 @login_required
 def do_signup(request,event_id):
     try:

@@ -9,5 +9,7 @@ urlpatterns = patterns('Compsoc.events.views',
     (r'^signup/(?P<event_id>\d+)/$','do_signup'),
     (r'^unsignup/(?P<event_id>\d+)/$','do_unsignup'),
     (r'^ical/$','ical_feed'),
+    (r'^seating/(?P<event_id>\d+)/$', 'seating'),
+    (r'^seating/(?P<event_id>\d+)/(?P<revision_no>\d+)/$', 'seating'),
 )
 
