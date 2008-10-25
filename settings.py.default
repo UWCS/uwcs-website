@@ -86,8 +86,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
-    'Compsoc.comms',
-    'Compsoc.events',
-    'Compsoc.memberinfo',
-    'Compsoc.cms',
+    'compsoc.comms',
+    'compsoc.events',
+    'compsoc.memberinfo',
+    'compsoc.cms',
 )
