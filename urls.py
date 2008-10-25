@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from compsoc.feeds import *
 from compsoc import settings
 from compsoc.cms.views import handle
+from compsoc.search.views import search
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -34,6 +35,8 @@ urlpatterns = patterns('',
     (r'^password/', 'django.contrib.auth.views.password_change', {'template_name':'password.html','post_change_redirect':'/'}),
 
     (r'^cms/(?P<url>.*)',handle),
+
+    (r'^search/$', search),
 
 )
 
