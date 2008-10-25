@@ -1,1 +1,11 @@
-{{ r }}
+{% extends "base.html" %}
+
+{% block content %}
+{% if results %}
+    <ul>
+    {% for result in results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

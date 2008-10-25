@@ -10,6 +10,7 @@ def search(request):
         except AttributeError:
             pass
         else:
-            registry = search_for_string(search_string)
-            return render_to_response('search.html', {'r': registry})
+            search_results = search_for_string(search_string)
+            return render_to_response('search.html',
+                                      {'results': search_results})
     return HttpResponseRedirect('/')
