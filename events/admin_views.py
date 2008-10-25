@@ -18,11 +18,12 @@ def email_signups(request,event_id):
             event = Event.objects.get(id=event_id)
             for signup in event.signup_set.all():
                 signup.user.email_user(subject, message, COMPSOC_EXEC_EMAIL)
-            return render_to_response('events/admin/email_signups_done.html',{})
+            return render_to_response('events/admin/email_signups_done.html',{'user':request.user})
     else:
         form = EmailForm()
 
     return render_to_response('events/admin/email_signups_form.html', {
         'form': form,
+        'user': request.user,
     })    
     
