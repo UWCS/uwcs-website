@@ -15,6 +15,15 @@
 {% block pretitle %}{% endblock %}
 <!-- start header -->
 <div id="header">
+    <div id="login">
+    {% if user.is_authenticated %}
+        Logged in as {{ user.username }}
+        <a href="/member/">profile</a>
+        <a href="/logout/">logout</a>
+    {% else %}
+        <a href="/login/">login</a>
+    {% endif %}
+    </div>
 	<div id="logo">
 		<img src="/static/img/si_logo_small.png" />
 		<h1><a href="/">Warwick Computing Society</a></h1>
@@ -30,16 +39,6 @@
             {% endif %}
 		</ul>
 	</div>
-    {# Put this section in the correct place on the page #}
-    <div id="login">
-    {% if user.is_authenticated %}
-        Logged in as {{ user.username }}
-        <a href="/member/">profile</a>
-        <a href="/logout/">logout</a>
-    {% else %}
-        <a href="/login/">login</a>
-    {% endif %}
-    </div>
     {% block nav-global %}{% endblock %}
 </div>
 <!-- end header -->

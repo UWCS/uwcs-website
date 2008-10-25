@@ -245,3 +245,7 @@ a:hover {
 	font-size: smaller;
 	/*color: #:q*/
 }
+
+#login {
+    float: right;
+}
