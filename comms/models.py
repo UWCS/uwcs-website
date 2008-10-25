@@ -1,5 +1,7 @@
 from django.db import models
 
+from compsoc.search import register
+
 COMMS_TYPE = (
     ('NL','Newsletter'),
     ('M','Minute'),
@@ -14,3 +16,5 @@ class Communication(models.Model):
 
     def __unicode__(self):
         return self.title
+
+register(Communication, ['title'])

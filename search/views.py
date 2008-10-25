@@ -1,4 +1,15 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 
+from compsoc.search import search_for_string
+
 def search(request):
-    return render_to_response('search.html')
+    if request.method == "POST":
+        try:
+            search_string = request.POST['searchBox']
+        except AttributeError:
+            pass
+        else:
+            registry = search_for_string(search_string)
+            return render_to_response('search.html', {'r': registry})
+    return HttpResponseRedirect('/')
