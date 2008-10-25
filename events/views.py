@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 import vobject
 
-from Compsoc.events.models import *
-from Compsoc.config import DATE_FORMAT_STRING
+from compsoc.events.models import *
+from compsoc.config import DATE_FORMAT_STRING
 
 def begin_week(of): return of - timedelta(days=of.weekday())
 

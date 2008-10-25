@@ -1,4 +1,4 @@
-from Compsoc.memberinfo.models import *
+from compsoc.memberinfo.models import *
 from django.contrib import admin
 
 class MemberJoinAdmin(admin.ModelAdmin):

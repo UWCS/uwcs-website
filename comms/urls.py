@@ -2,8 +2,8 @@ from time import strftime
 
 from django.conf.urls.defaults import *
 
-from Compsoc.comms.models import Communication,COMMS_TYPE
-from Compsoc.shorts import current_year,get
+from compsoc.comms.models import Communication,COMMS_TYPE
+from compsoc.shortcuts import current_year,get
 
 def from_date(date):
     return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))

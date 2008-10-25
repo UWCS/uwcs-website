@@ -5,7 +5,7 @@ import settings
 from django.core.management.base import NoArgsCommand
 from settings import UNION_API_KEY
 from django.contrib.auth.models import User
-from Compsoc.memberinfo.models import *
+from compsoc.memberinfo.models import *
 
 PREFIX = 'http://www.sunion.warwick.ac.uk/portal/membershipapi/listMembers/'
  
@@ -19,7 +19,7 @@ def get_data():
     '''
     Obtains name/id/email for members from the student's union database.
     Relies on their web service
-    PRECOND: Compsoc.settings.UNION_API_KEY is set
+    PRECOND: compsoc.settings.UNION_API_KEY is set
     '''
     content = urlopen(PREFIX+UNION_API_KEY+'/').read()
     doc = xml.dom.minidom.parseString(content)
@@ -49,7 +49,7 @@ class Command(NoArgsCommand):
         3. User information
             compsoc members who have just had an account created, should be emailed
         '''
-        from shorts import current_year
+        from compsoc.shortcuts import current_year
 
         #1. get data from the union
         union_lookup = get_data()

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta,datetime
-from Compsoc import config
+from compsoc import config
 
 TARGETS = (
     ('ACA', 'Academic'),

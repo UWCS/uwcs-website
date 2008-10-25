@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from Compsoc.config import *
-from Compsoc.shorts import *
+from compsoc.config import *
+from compsoc.shortcuts import *
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):

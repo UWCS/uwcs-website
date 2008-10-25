@@ -1,4 +1,4 @@
-from Compsoc.events.models import *
+from compsoc.events.models import *
 from django.contrib import admin
 
 admin.site.register(EventType)

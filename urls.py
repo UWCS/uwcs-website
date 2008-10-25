@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
-from Compsoc.feeds import *
-from Compsoc import settings
-from Compsoc.cms.views import handle
+from compsoc.feeds import *
+from compsoc import settings
+from compsoc.cms.views import handle
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -18,15 +18,15 @@ feeds = {
 }
 
 urlpatterns = patterns('',
-    (r'^', include('Compsoc.comms.urls')),
-    (r'^member/', include('Compsoc.memberinfo.urls')),
-    (r'^events/', include('Compsoc.events.urls')),
+    (r'^', include('compsoc.comms.urls')),
+    (r'^member/', include('compsoc.memberinfo.urls')),
+    (r'^events/', include('compsoc.events.urls')),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     
-    (r'^admin/cms/page/(?P<page_id>\d+)/$','Compsoc.cms.admin_views.add_edit'),
-    (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','Compsoc.cms.admin_views.revision'),
-    (r'^admin/cms/page/add/$','Compsoc.cms.admin_views.add_edit'),
-    (r'^admin/events/email/(?P<event_id>\d+)/$','Compsoc.events.admin_views.email_signups'),
+    (r'^admin/cms/page/(?P<page_id>\d+)/$','compsoc.cms.admin_views.add_edit'),
+    (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','compsoc.cms.admin_views.revision'),
+    (r'^admin/cms/page/add/$','compsoc.cms.admin_views.add_edit'),
+    (r'^admin/events/email/(?P<event_id>\d+)/$','compsoc.events.admin_views.email_signups'),
     (r'^admin/(.*)', admin.site.root),
 
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),

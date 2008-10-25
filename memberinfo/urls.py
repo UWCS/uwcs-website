@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
-from Compsoc.comms.models import Communication
+from compsoc.comms.models import Communication
 
-urlpatterns = patterns('Compsoc.memberinfo.views',
+urlpatterns = patterns('compsoc.memberinfo.views',
     (r'^$','index'),
     (r'^shell/$','shell'),
     (r'^database/$','database'),

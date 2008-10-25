@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django import forms
 from django.core.mail import send_mail
-from Compsoc.settings import COMPSOC_EXEC_EMAIL
-from Compsoc.events.models import Event
+from compsoc.settings import COMPSOC_EXEC_EMAIL
+from compsoc.events.models import Event
 
 class EmailForm(forms.Form):
     subject = forms.CharField(max_length=30)

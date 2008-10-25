@@ -1,4 +1,4 @@
-from Compsoc.cms.models import *
+from compsoc.cms.models import *
 from django.contrib.admin.views.decorators import staff_member_required
 from django import forms
 from django.shortcuts import render_to_response,get_object_or_404

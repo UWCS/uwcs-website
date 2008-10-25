@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
-from Compsoc.comms.models import Communication
+from compsoc.comms.models import Communication
 
-urlpatterns = patterns('Compsoc.events.views',
+urlpatterns = patterns('compsoc.events.views',
     (r'^$','events_list'),
     (r'^calendar/$','calendar_index'),
     (r'^calendar/(?P<delta>-?\d+)/$','calendar'),

@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response,get_object_or_404
 from django.http import HttpResponseRedirect
-from Compsoc.cms.models import *
+from compsoc.cms.models import *
     
 def cleanse(l):
     return map(lambda p: (p.slug,p.get_data().title),l)

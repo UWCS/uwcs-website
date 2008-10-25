@@ -8,9 +8,9 @@ from django.template import loader, Context
 from random import choice
 from string import *
 
-from Compsoc.memberinfo.models import *
-from Compsoc.shorts import template_mail
-from Compsoc.settings import *
+from compsoc.memberinfo.models import *
+from compsoc.shortcuts import template_mail
+from compsoc.settings import *
 
 @login_required()
 def index(request):

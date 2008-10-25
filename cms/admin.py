@@ -1,4 +1,4 @@
-from Compsoc.cms.models import Page,PageRevision
+from compsoc.cms.models import Page,PageRevision
 from django.contrib import admin
 
 
