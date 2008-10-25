@@ -7,12 +7,9 @@ Released for free under a Creative Commons Attribution 2.5 License
 body {
 	margin: 0;
 	padding: 0;
-	/*background:  #111111 url(images/bg01.jpg) repeat-x top left;*/
 	background: #111111;
 	font-size: 13px;
-	/*color: #7F7F7F;*/
-        /*color: #bbbbbb;*/
-		color: #ffffff;
+    color: #ffffff;
 }
 
 body, th, td, input, textarea, select, option {
@@ -22,18 +19,13 @@ body, th, td, input, textarea, select, option {
 
 h1, h2, h3 {
 	font-weight: normal;
-	/*color: #bbb;*/
 }
 
 h1 {
-	/*text-transform: lowercase;*/
-	/*letter-spacing: -1px;*/
 	font-size: 24px;
 }
 
 h2 {
-	/*text-transform: lowercase;*/
-	/*letter-spacing: -1px;*/
 	font-size: 24px;
 }
 
@@ -78,25 +70,18 @@ a:hover {
 
 /* Logo */
 #logo {
-	/*float: left;*/
-	/*padding: 40px 0 0 0;*/
 	margin-top: 20px;
 }
 
 #logo img {
 	float: left;
 	margin-top:8px;
-	/*padding: 20px 10px 0 0;*/
 }
 
 #logo h1 {
-	/*margin: 0;*/
-	/*text-transform: lowercase;*/
-	/*letter-spacing: -2px;*/
 	font-size: 3.6em;
 	font-weight: normal;
 	color: #FFFFFF;
-	/*padding: 60px 0 0 0;*/
 	padding-top: 40px;
 	padding-left: 3em;
 }
@@ -154,14 +139,16 @@ a:hover {
 /* Page */
 
 #page {
-	width: 890px;
-	margin: 0 auto;
+	width: 90%;
+    /* roughly width of logo */
+    margin-left: 150px;
 }
 
 /* Content */
 
 #content {
 	float: left;
+    width: 80%;
 }
 
 .post {
@@ -196,15 +183,12 @@ a:hover {
 }
 
 
-
 /* Sidebar */
-
 
 #sidebar {
 	float: right;
-	width: 30%;
+	width: 15%;
     margin-top: 30px;
-    margin-right: -100px;
     -moz-border-radius:20px 20px;
     border-style: solid;
     border-color: #FFFFFF;

@@ -6,6 +6,7 @@
     border-style:solid solid solid;
     border-width:1px 1px 1px;
     white-space:nowrap;
+    width:100%;
 }
 
 
@@ -16,4 +17,18 @@
 
 #events_table th {
     border-bottom:1px solid white;
+}
+
+
+#calendar table {
+}
+
+#calendar th {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#calendar td {
+    height:5em;
+    width:5em;
 }
