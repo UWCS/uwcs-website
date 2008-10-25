@@ -16,13 +16,16 @@
 <!-- start header -->
 <div id="header">
     <div id="top-right">
-    {% if user.is_authenticated %}
-        Logged in as {{ user.username }}
-        <a href="/member/">profile</a>
-        <a href="/logout/">logout</a>
-    {% else %}
-        <a href="/login/">login</a>
-    {% endif %}
+        {% if user.is_authenticated %}
+            Logged in as {{ user.username }}
+            <a href="/member/">profile</a>
+            <a href="/logout/">logout</a>
+        {% else %}
+            <a href="/login/">login</a>
+        {% endif %}
+        <form>
+            <input type="text" name="searchBox" />
+        </form>
     </div>
     <div id="logo">
         <img src="/static/img/si_logo_small.png" />

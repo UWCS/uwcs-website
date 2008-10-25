@@ -249,3 +249,9 @@ a:hover {
 #top-right {
     float: right;
 }
+
+#top-right form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}

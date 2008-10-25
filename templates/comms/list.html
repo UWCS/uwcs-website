@@ -3,41 +3,6 @@
 {% load markup %}
 
 {% block content %}
-<SCRIPT TYPE="text/javascript">
-<!-- 
-    var names = [];
-{% if object_list %} 
-    {% for comm_item in object_list %}
-    names.push('{{comm_item.title}}');
-    {% endfor %}
-{% endif %}
-    
-    function checkInput(value,e)
-    {
-        var code;
-        if (!e) var e = window.event;
-        if(e)
-        {
-            if (e.keyCode) code = e.keyCode;
-            else if (e.which) code = e.which;
-            var searchFor = (code == 8) ? value.substring(0,value.length-1) : value+String.fromCharCode(code);
-            for(var i = 0;i<names.length;i++)
-            {
-                var name = names[i];
-                var visible = (name.search(searchFor) > -1)?"block":"none";
-                var ele = document.getElementById(name);
-                if(ele) ele.style.display = visible;
-                else alert('fail');
-            }
-        }
-    }
-//-->
-</SCRIPT>
-
-<script type="text/javascript">
-
-</script>
-
 {% if object_list %}
     {% for comm_item in object_list %}
         <div id="{{ comm_item.title }}"/>
@@ -64,12 +29,6 @@
 
 {% block sidebar %}
 <ul>
-    <li>
-        <form>
-            <input type="text" name="searchBox"onkeypress="checkInput(this.value,event);" />
-        </form>
-        <br />
-    </li>
     <li>
         <h2>Categories</h2>
         <ul>
