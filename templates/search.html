@@ -7,8 +7,10 @@
     <ul>
     {% for result in results %}
         <li>
-          <a href="{{ result.get_absolute_url }}">{{ result }}</a> ( {{ result.get_type_display }} )<br />
-          {{ result.text|truncate:60 }}
+          <div class="search_result">
+            <a href="{{ result.get_absolute_url }}">{{ result }}</a> ({{ result.get_type_display }})<br />
+            <div class="result_text">{{ result.text|truncate:60 }}</div>
+          </div>
         </li>
     {% endfor %}
     </ul>

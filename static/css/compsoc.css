@@ -255,3 +255,11 @@ a:hover {
     margin: 0;
     padding: 0;
 }
+
+.search_result a {
+    font-size: large;
+}
+
+.result_text {
+    font-size: smaller;
+}
