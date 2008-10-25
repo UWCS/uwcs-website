@@ -17,8 +17,7 @@ body {
 
 body, th, td, input, textarea, select, option {
 	font-weight: normal;
-	/*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
-	font-family: Arial, sans-serif;
+	font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 
 h1, h2, h3 {
@@ -67,13 +66,12 @@ a:hover {
 /* Header */
 
 #header {
-	width: 890px;
+	width: 100%;
 	height: 190px;
-	margin: 0px auto;
+	margin: 0px; /*auto;*/
 }
 
 /* Logo */
-
 #logo {
 	/*float: left;*/
 	/*padding: 40px 0 0 0;*/
@@ -100,7 +98,7 @@ a:hover {
 
 #logo h1 a {
 	padding-right: 20px;
-	text-decoration: none;
+	text-decoration: none/
 	color: #FFFFFF;
 }
 
@@ -120,6 +118,7 @@ a:hover {
 
 #menu {
 	float: right;
+    margin-right: 15px;
 }
 
 #menu ul {
@@ -192,6 +191,8 @@ a:hover {
 	background: url(images/img04.gif) no-repeat left center;
 }
 
+
+
 /* Sidebar */
 
 #sidebar {
@@ -230,30 +231,27 @@ a:hover {
 #sidebar a:hover {
 }
 
-/* Footer */
-
-#footer {
-	clear: both;
-	margin: 0px;
-	height: 80px;
-	background: #F2F2F2 url(images/bg02.jpg) repeat-x left top;
-}
-
-#footer p {
-	padding: 20px 0;
-	text-align: center;
-	font-size: smaller;
-	/*color: #:q*/
-}
-
 #top-right {
     float: right;
+    margin-right: 15px;
 }
 
 #top-right form {
     display: inline;
     margin: 0;
     padding: 0;
+}
+
+#profile p {
+    margin-left: 10px;
+}
+
+#profile h3 {
+    font-size:2em;
+}
+
+#profile h2 {
+    font-size:3em;
 }
 
 .search_result a {

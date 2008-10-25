@@ -15,111 +15,114 @@
 {% endblock %}
 
 {% block content %}
-<h1>Compsoc Member Profile Settings</h1>
+<div id="profile">
+<h2>Profile</h2>
 
-<h2>Shell Account</h2>
-{% if shell %}
-    {% if shell.isPresent %}
-        You have a shell account with the username "{{ shell.name }}"
-    {% else %}
-        You have requested a shell account with the username "{{ shell.name }}"
-    {% endif %}
-{% else %}
-    You don't have a shell account, you may request one here.
-    <form action="/member/shell/" method="post">
-        <input type="text" name="shell" />
-        <input type="submit" value="request" />
-    </form>
-{% endif %}
-<hr />
-
-<h2>Database Account</h2>
-{% if db %}
-    {% if db.isPresent %}
-        You have a database account with the username "{{ db.name }}"
-    {% else %}
-        You have requested a database account with the username "{{ db.name }}"
-    {% endif %}
-{% else %}
-    You don't have a database account, you may request one here.
-    <form action="/member/database/" method="post">
-        <input type="text" name="db" />
-        <input type="submit" value="request" />
-    </form>
-{% endif %}
-<hr />
-
-<h2>Quota</h2>
-<p>Your total quota is {{ total_quota }}MB.</p>
-<p>The current base quota is 1000MB and you have additionally bought {{ quota }}
-blocks of extra quota.</p>
-{% if req_quota %}
-    <p>You have {{ req_quota }}MB of quota on request.</p>
-{% endif %}
-<p>Disk quota currently costs £2.50 for 500MB and more can be requested here.
-The society treasurer will contact you, in order to obtain payment.</p>
-<!-- TODO: some client side input validation -->
-<form action="/member/quota/" method="post">
-    <input type="text" name="quota" />
-    <input type="submit" value="request" />
-</form>
-<hr />
-
-<h2>Mailing Lists</h2>
-<form action="/member/lists/" method="post">
-<table>
-{% for list in my_lists %}
-    <tr>
-        <td><input type="checkbox" name="{{ list }}" checked="yes" /></td>
-        <td>{{ list }}</td>
-    </tr>
-{% endfor %}
-{% for list in other_lists %}
-    <tr>
-        <td><input type="checkbox" name="{{ list }}" /></td>
-        <td>{{ list }}</td>
-    </tr>
-{% endfor %}
-</table>
-<input type="submit" value="set" />
-</form>
-<hr />
-
-<h2>Website Details</h2>
-<p>Your nickname will be used throughout the site to identify you, e.g. on the
-list of signups for an event. If you don't specify a nickname, your real name
-will be used instead. Your nickname (or real name) and website (URL and title)
-will appear on the member list page (and any other public list of members) only
-if you allow the details to be published.</p>
-<table>
-    <form action="/member/details/" method="post">
-    <tr>
-        <td>Nickname:</td>
-        <td><input type="text" name="name" value="{{ name }}"/></td>
-    <tr>
-    <tr>
-        <td>Website URL:</td>
-        <td><input type="text" name="url" value="{{ url }}"/></td>
-    <tr>
-    <tr>
-        <td>Website Title:</td>
-        <td><input type="text" name="title" value="{{ title }}"/></td>
-    <tr>
-    <tr>
-        <td>Publish Details?:</td>
-        {% if publish_details %}
-            <td><input type="checkbox" name="publish" checked="yes"/></td>
+    <h3>Shell Account</h3>
+    {% if shell %}
+        {% if shell.isPresent %}
+            <p>You have a shell account with the username "{{ shell.name }}"</p>
         {% else %}
-            <td><input type="checkbox" name="publish" /></td>
+            <p>You have requested a shell account with the username "{{ shell.name }}"</p>
         {% endif %}
-    <tr>
-    <tr>
-        <td></td>
-        <td><input type="submit" value="save details" /></td>
-    </tr>
+    {% else %}
+        <p>You don't have a shell account, you may request one here.</p>
+        <form action="/member/shell/" method="post">
+            <p>
+                <label for="id_shell">Account Name:</label>
+                <input id="id_shell" type="text" name="shell" />
+            </p>
+            <input id="profile_submit" type="submit" value="request" />
+        </form>
+    {% endif %}
+    <hr />
+
+    <h3>Database Account</h3>
+    {% if db %}
+        {% if db.isPresent %}
+            <p>You have a database account with the username "{{ db.name }}"</p>
+        {% else %}
+            <p>You have requested a database account with the username "{{ db.name }}"</p>
+        {% endif %}
+    {% else %}
+        <p>You don't have a database account, you may request one here.</p>
+        <form action="/member/database/" method="post">
+            <p> 
+                <label for="id_db">Account Name:</label>
+                <input id="id_db" type="text" name="db" />
+            </p>
+            <input type="submit" value="request" />
+        </form>
+    {% endif %}
+    <hr />
+
+    <h3>Quota</h3>
+    <p>Your total quota is {{ total_quota }}MB.  The current base quota is 1000MB and you have additionally bought {{ quota }}
+    blocks of extra quota.</p>
+    {% if req_quota %}
+        <p>You have {{ req_quota }}MB of quota on request.</p>
+    {% endif %}
+    <p>Disk quota currently costs £2.50 for 500MB and more can be requested here.
+    The society treasurer will contact you, in order to obtain payment.</p>
+    <!-- TODO: some client side input validation -->
+    <form action="/member/quota/" method="post">
+        <p>
+            <label for="id_quota">Units (x500MB) quota:</label>
+            <input id="id_quota" type="text" name="quota" />
+        </p>
+        <input type="submit" value="request" />
     </form>
-</table>
-<hr />
+    <hr />
+
+    <h3>Mailing Lists</h3>
+    <form action="/member/lists/" method="post">
+    {% for list in my_lists %}
+        <p>
+            <label for="id_{{ list }}">{{ list }}</label>
+            <input id="id_{{ list }}" type="checkbox" name="{{ list }}" checked="yes" />
+        </p>
+    {% endfor %}
+    {% for list in other_lists %}
+        <p>
+            <label for="id_{{ list }}">{{ list }}</label>
+            <input id="id_{{ list }}" type="checkbox" name="{{ list }}" checked="yes" />
+        </p>
+    {% endfor %}
+    <input type="submit" value="set" />
+    </form>
+    <hr />
+
+    <h3>Website Details</h3>
+    <p>Your nickname will be used throughout the site to identify you, e.g. on the
+    list of signups for an event. If you don't specify a nickname, your real name
+    will be used instead. Your nickname (or real name) and website (URL and title)
+    will appear on the member list page (and any other public list of members) only
+    if you allow the details to be published.</p>
+    {# replace the following with django forms #}
+        <form action="/member/details/" method="post">
+        <p>
+            <label for="id_nick">Nickname:</label>
+            <input id="id_nick" type="text" name="name" value="{{ name }}"/>
+        </p>
+        <p>
+            <label for="id_url">Website URL:</label>
+            <input id="id_url" type="text" name="url" value="{{ url }}"/>
+        </p>
+        <p>
+            <label for="id_title">Website Title:</label>
+            <input id="id_title" type="text" name="title" value="{{ title }}"/>
+        </p>
+        <p>
+            <label for="id_pub">Publish Details?:</label>
+            {% if publish_details %}
+                <input id="id_pub" type="checkbox" name="publish" checked="yes"/>
+            {% else %}
+                <input id="id_pub" type="checkbox" name="publish" />
+            {% endif %}
+        </p>
+        <input type="submit" value="save details" />
+    </form>
+    <hr />
 
 <!--<h2>Change Website Password</h2>
     <form action="member/password/" method="post">
@@ -127,7 +130,7 @@ if you allow the details to be published.</p>
         <input type="submit" value="change" />
     </form>
 <hr />-->
-
+</div>
 {% endblock %}
 
 
