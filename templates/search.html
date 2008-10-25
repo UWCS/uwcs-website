@@ -8,8 +8,15 @@
     {% for result in results %}
         <li>
           <div class="search_result">
-            <a href="{{ result.get_absolute_url }}">{{ result }}</a> ({{ result.get_type_display }})<br />
-            <div class="result_text">{{ result.text|truncate:60 }}</div>
+            <a href="{{ result.get_absolute_url }}">{{ result }}</a>
+            {% if result.type %}({{ result.get_type_display }}){% endif %}<br />
+            <div class="result_text">
+            {% if not user.is_authenticated and result.login %}
+                You need to log in to see this page.
+            {% else %}
+                {{ result.text|truncate:60 }}
+            {% endif %}
+            </div>
           </div>
         </li>
     {% endfor %}

@@ -14,6 +14,8 @@ def search_for_string(search_string):
                     searchee = getattr(object, field)
                 except AttributeError:
                     pass
+                if callable(searchee):
+                    searchee = searchee()
                 if search_string in searchee.lower():
                     matches.append(object)
     return matches
