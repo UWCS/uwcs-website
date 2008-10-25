@@ -1,0 +1,19 @@
+
+#events_table table {
+    border-collapse:collapse;
+    border-color:white white -moz-use-text-color;
+    border-spacing:0;
+    border-style:solid solid solid;
+    border-width:1px 1px 1px;
+    white-space:nowrap;
+}
+
+
+#events_head th {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#events_table th {
+    border-bottom:1px solid white;
+}
