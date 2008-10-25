@@ -21,6 +21,9 @@
     <tr><td>Signups Close</td><td>{{ close }}</td></tr>
     </table>
 </td></tr>
+{% if has_seating %}
+<tr><td>Seating plan: <a href="seating/{{ event.id }}">here</a></td></tr>
+{% endif %}
 {% endif %}
 </table>
 {% if event.signupsRequired %}
@@ -29,7 +32,7 @@
         {% if signups %}
             {% for signup in signups %}
                 <tr><td>{{ signup.user.username }}</td><td>{{ signup.comment }}</td></tr>
-                <tr><td>{{ signup.time_form }}
+                <tr><td>{{ signup.time_form }}</td></tr>
             {% endfor %}
         {% else %}
             <tr><td colspan="2">There are no signups yet.</td></tr>

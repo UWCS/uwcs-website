@@ -119,6 +119,7 @@ def details(request,event_id):
             'limit':s.signupsLimit,
             'can_signup':valid_signup(request.user,event) and not signed_up,
             'signed_up':signed_up,
+            #'has_seating':has_seating,
         })
     except EventSignup.DoesNotExist:
         dict.update({ 'can_signup':False })
@@ -145,7 +146,6 @@ def seating(request, event_id):
         seating = Seating.objects.filter(event=e)
         seating_revisions = SeatingRevision.objects.filter(event=e).order_by('-revision')
         dict.update({
-            'has_seating':True,
             'seating':seating,
             'seating_revisions':seating_revisions,
             'new_revision_no':seating_revisions[0].revision + 1,
