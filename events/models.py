@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta,datetime
-from compsoc import config
+from compsoc.settings import DATE_FORMAT_STRING
 
 TARGETS = (
     ('ACA', 'Academic'),
@@ -39,7 +39,7 @@ class Event(models.Model):
         return days
 
     def time_string(self):
-        return self.start.strftime(config.DATE_FORMAT_STRING)+" - "+self.finish.strftime(config.DATE_FORMAT_STRING)
+        return self.start.strftime(DATE_FORMAT_STRING)+" - "+self.finish.strftime(DATE_FORMAT_STRING)
 
     def __unicode__(self):
         return self.type.name + " @ " + self.time_string()
@@ -85,7 +85,7 @@ class Signup(models.Model):
         return self.user.username
 
     def time_form(self):
-        return self.time.strftime(config.DATE_FORMAT_STRING)
+        return self.time.strftime(DATE_FORMAT_STRING)
 
 class Seating(models.Model):
     '''Information about a seat at a revision'''

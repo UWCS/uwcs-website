@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 import vobject
 
 from compsoc.events.models import *
-from compsoc.config import DATE_FORMAT_STRING
+from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING
 from compsoc.memberinfo.models import warwick_week_for,Term
 from compsoc.shortcuts import begin_week
 
@@ -36,13 +36,13 @@ class Week:
         self.end = begin + timedelta(days=6)
         self.week_number = 0
     def __str__(self):
-        return self.begin.strftime(DATE_FORMAT_STRING)+" - "+self.end.strftime(DATE_FORMAT_STRING)
+        return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
 def events_list(request):
     begin,end,events = get_events(0,10)
     lookup = defaultdict(lambda: [])
     for event in events:
-       lookup[begin_week(event.start)].append(event)
+       lookup[begin_week(event.start.date())].append(event)
 
     lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
     return render_to_response('events/list.html',{'user':request.user,'events':lookup})

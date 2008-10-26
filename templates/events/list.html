@@ -6,19 +6,22 @@
 {% for week,entries in events %}
     <tr>
         <th>Week {{ week.week_number }}</th>
-        <th colspan="5">{{ week }}</th>
+        <th colspan="3">{{ week }}</th>
     </tr>
     {% for event in entries %}
         <tr>
-            <td>{{ event.type.name }}</td>
-            <td>{{ event.time_string }}</td>
+            <td><a href="details/{{ event.id }}">{{ event.type.name }}</a></td>
+            <td class="time">{{ event.time_string }}</td>
             <td>{{ event.location }} </td>
             {% if event.has_signups %}
                 <td>{{ event.signup_tally }}/{{ event.signup_total }}</td>
             {% else %}
                 <td>N/A</td>
             {% endif %}
-            <td><a href="details/{{ event.id }}">Details</a></td>
+        </tr>
+        <tr>
+            <td class="short_desc" ></td>
+            <td class="short_desc" colspan="3" >{{ event.shortDescription }}</td>
         </tr>
     {% endfor %}
 {% endfor %}

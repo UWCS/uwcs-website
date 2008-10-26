@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from compsoc.config import *
+from compsoc.settings import DATE_FORMAT_STRING
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
 

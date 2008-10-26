@@ -1,24 +1,37 @@
 
-#events_table table {
+#events_table {
+    border-width: 1px 1px 1px 1px;
+    border-style: solid; /*outset outset outset outset;*/
     border-collapse:collapse;
-    border-color:white white -moz-use-text-color;
-    border-spacing:0;
-    border-style:solid solid solid;
-    border-width:1px 1px 1px;
-    white-space:nowrap;
+    border-spacing: 2px;
+    border-color:black;
+    background-color: black;
     width:100%;
 }
-
 
 #events_head th {
     font-size: larger;
     font-weight: bold;
+    background-color:#5C5555;
+}
+
+#events_table td {
+    background-color:#565656;
+}
+
+td.time {
+    width: 200px;
+    height:5em;
+}
+
+td.short_desc {
+    height:2em;
+    border-bottom: 1px solid black;
 }
 
 #events_table th {
-    border-bottom:1px solid white;
+    border: 1px solid black;
 }
-
 
 #calendar table {
     border-width: 1px 1px 1px 1px;
