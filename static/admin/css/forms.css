@@ -28,13 +28,13 @@ form h4 {
 
 label {
 	font-weight: normal !important;
-	color: #666;
+/*	color: #666;*/
 	font-size: 12px;
 }
 
 .required label,label.required {
 	font-weight: bold !important;
-	color: #333 !important;
+/*	color: #333 !important;*/
 }
 
 /* RADIO BUTTONS */
@@ -133,7 +133,7 @@ fieldset.collapsed h2,fieldset.collapsed {
 fieldset.collapsed h2 {
 	background-image: url(../img/admin/nav-bg.gif);
 	background-position: bottom left;
-	color: #999;
+/*	color: #999;*/
 }
 
 fieldset.collapsed .collapse-toggle {
@@ -232,7 +232,7 @@ fieldset.monospace textarea {
 
 .inline-related h3 {
 	margin: 0;
-	color: #666;
+/*	color: #666;*/
 	padding: 3px 5px;
 	font-size: 11px;
 	background: #e1e1e1 url(../img/admin/nav-bg.gif) top left repeat-x;
@@ -264,7 +264,7 @@ fieldset.monospace textarea {
 	text-align: left;
 	font-weight: bold;
 	background: #bcd;
-	color: #fff;
+/*	color: #fff;*/
 }
 
 .inline-related.tabular fieldset.module table {
@@ -298,7 +298,7 @@ fieldset.monospace textarea {
 	overflow: hidden;
 	font-size: 9px;
 	font-weight: bold;
-	color: #666;
+/*	color: #666;*/
 	_width: 700px;
 }
 

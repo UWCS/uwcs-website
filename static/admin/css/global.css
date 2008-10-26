@@ -1,14 +1,14 @@
 body {
-	margin: 0;
-	padding: 0;
-	font-size: 12px;
+/*	margin: 0;
+	padding: 0;*/
+/*	font-size: 12px; */
 /*	font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans",
 		Verdana, Arial, sans-serif;*/
-	color: #333;
+/*	color: #333; */
 /*	background: #fff;*/
 }
 
-/* LINKS */
+/* LINKS 
 a:link,a:visited {
 	color: #5b80b2;
 	text-decoration: none;
@@ -26,13 +26,14 @@ a.section:link,a.section:visited {
 	color: white;
 	text-decoration: none;
 }
+*/
 
-/* GLOBAL DEFAULTS */
+/* GLOBAL DEFAULTS 
 p,ol,ul,dl {
 	margin: .2em 0 .8em 0;
 }
 
-p {
+/*p {
 	padding: 0;
 	line-height: 140%;
 }
@@ -78,11 +79,11 @@ h5 {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
-
+*
 ul li {
-	list-style-type: square;
+/*	list-style-type: square;*
 	padding: 1px 0;
-}
+}*/
 
 ul.plainlist {
 	margin-left: 0 !important;
@@ -97,8 +98,8 @@ li ul {
 }
 
 li,dt,dd {
-	font-size: 11px;
-	line-height: 14px;
+/*	font-size: 11px;*/
+/*	line-height: 14px;*/
 }
 
 dt {
@@ -368,7 +369,7 @@ input[type=submit].default,.submit-row input.default {
 	border: 2px solid #5b80b2;
 /*	background: #7CA0C7 url(../img/admin/default-bg.gif) bottom repeat-x;*/
 	font-weight: bold;
-	color: white;
+/*	color: white;*/
 	float: right;
 }
 
@@ -378,11 +379,11 @@ input[type=submit].default:active {
 }
 
 /* MODULES */
-.module {
+/*.module {
 	border: 1px solid #ccc;
 	margin-bottom: 5px;
-/*	background: white;*/
-}
+/*	background: white;/
+}*/
 
 .module p,.module ul,.module h3,.module h4,.module dl,.module pre {
 	padding-left: 10px;
@@ -408,7 +409,7 @@ input[type=submit].default:active {
 	text-align: left;
 	font-weight: bold;
 /*	background: #7CA0C7 url(../img/admin/default-bg.gif) top left repeat-x;*/
-	color: white;
+/*	color: white;*/
 }
 
 .module table {
@@ -427,7 +428,7 @@ ul.messagelist li {
 	padding: 4px 5px 4px 25px;
 	margin: 0 0 3px 0;
 	border-bottom: 1px solid #ddd;
-	color: #666;
+/*	color: #666;*/
 	background: #ffc url(../img/admin/icon_success.gif) 5px .3em no-repeat;
 }
 
@@ -452,7 +453,7 @@ ul.errorlist {
 	padding: 4px 5px 4px 25px;
 	margin: 0 0 3px 0;
 	border: 1px solid red;
-	color: white;
+/*	color: white;*/
 	background: red url(../img/admin/icon_alert.gif) 5px .3em no-repeat;
 }
 
@@ -497,7 +498,7 @@ div.breadcrumbs {
 /*	background: white url(../img/admin/nav-bg-reverse.gif) 0 -10px repeat-x;*/
 	padding: 2px 8px 3px 8px;
 	font-size: 11px;
-	color: #999;
+/*	color: #999;*/
 	border-top: 1px solid white;
 	border-bottom: 1px solid #ccc;
 	text-align: left;
@@ -519,13 +520,13 @@ div.breadcrumbs {
 	background: url(../img/admin/icon_deletelink.gif) 0 .25em no-repeat;
 }
 
-a.deletelink:link,a.deletelink:visited {
+/*a.deletelink:link,a.deletelink:visited {
 	color: #CC3434;
-}
+}*/
 
-a.deletelink:hover {
+/*a.deletelink:hover {
 	color: #993333;
-}
+}*/
 
 /* OBJECT TOOLS */
 .object-tools {
@@ -563,7 +564,7 @@ a.deletelink:hover {
 .object-tools a:link,.object-tools a:visited {
 	display: block;
 	float: left;
-	color: white;
+/*	color: white;*/
 	padding: .1em 14px .1em 8px;
 	height: 14px;
 	background: #999 url(../img/admin/tool-right.gif) 100% 0 no-repeat;
