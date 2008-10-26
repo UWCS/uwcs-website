@@ -21,12 +21,12 @@
 }
 
 .selector .selector-available h2 {
-	background: white url(../img/admin/nav-bg.gif) bottom left repeat-x;
+/*	background: white url(../img/admin/nav-bg.gif) bottom left repeat-x;*/
 /*	color: #666;*/
 }
 
 .selector .selector-filter {
-	background: white;
+/*	background: white;*/
 	border: 1px solid #ccc;
 	border-width: 0 1px;
 	padding: 3px;

@@ -18,15 +18,16 @@ a:hover {
 	color: #036;
 }
 
-a img {
-	border: none;
-}
 
+*/
 a.section:link,a.section:visited {
 	color: white;
 	text-decoration: none;
 }
-*/
+
+a img {
+	border: none;
+}
 
 /* GLOBAL DEFAULTS 
 p,ol,ul,dl {
@@ -231,7 +232,9 @@ p img,h1 img,h2 img,h3 img,h4 img,td img {
 /* TABLES */
 table {
 	border-collapse: collapse;
-	border-color: #ccc;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
 }
 
 td,th {
@@ -240,7 +243,11 @@ td,th {
 	border-bottom: 1px solid #eee;
 	vertical-align: top;
 	padding: 5px;
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+/*	font-family: "Lucida Grande", Verdana, Arial, sans-serif;*/
+}
+
+td a,th a {
+    text-decoration: none;
 }
 
 th {
@@ -298,7 +305,7 @@ tr.alt {
 
 /* SORTABLE TABLES */
 thead th a:link,thead th a:visited {
-	color: #666;
+	color: #5B80B2;
 	display: block;
 }
 
@@ -338,7 +345,7 @@ input,textarea,select {
 	margin: 2px 0;
 	padding: 2px 3px;
 	vertical-align: middle;
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+/*	font-family: "Lucida Grande", Verdana, Arial, sans-serif;*/
 	font-weight: normal;
 	font-size: 11px;
 }
@@ -532,7 +539,7 @@ div.breadcrumbs {
 .object-tools {
 	font-size: 10px;
 	font-weight: bold;
-	font-family: Arial, Helvetica, sans-serif;
+/*	font-family: Arial, Helvetica, sans-serif;*/
 	padding-left: 0;
 	float: right;
 	position: relative;

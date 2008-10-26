@@ -82,18 +82,19 @@
 
 /*  FILTER COLUMN  */
 #changelist-filter {
-	position: absolute;
+/*	position: absolute;
 	top: 0;
 	right: 0;
 	z-index: 1000;
 	width: 160px;
-	border-left: 1px solid #ddd; /*background:#efefef;*/
+	border-left: 1px solid #ddd; */
+    /*background:#efefef;*/
 	margin: 0;
 }
 
 #changelist-filter h2 {
-	font-size: 11px;
-	padding: 2px 5px;
+/*	font-size: 11px;
+	padding: 2px 5px;*/
 	border-bottom: 1px solid #ddd;
 }
 
