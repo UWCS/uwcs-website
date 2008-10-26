@@ -15,8 +15,14 @@
             {% endif %}
             <div class="day">{{ day }}</div>
             {% for event in day_contents %}
-            <br /><a href="/events/details/{{ event.id }}">{{ event.shortDescription }}</a>
+                <a
+                    href="/events/details/{{event.id}}"
+                    title="{{event.shortDescription}}">
+
+                    {{event.type.name}}</a>
+                <br />
             {% endfor %}
+            </ul>
             </td>
         {% endfor %}
     </tr>
