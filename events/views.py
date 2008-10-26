@@ -12,8 +12,8 @@ import vobject
 
 from compsoc.events.models import *
 from compsoc.config import DATE_FORMAT_STRING
-
-def begin_week(of): return of - timedelta(days=of.weekday())
+from compsoc.memberinfo.models import warwick_week_for,Term
+from compsoc.shortcuts import begin_week
 
 def calendar_index(request): return calendar(request,0)
 
@@ -59,7 +59,15 @@ def calendar(request,delta):
     for event in events:
         for event_date in event.days():
             lookup[begin_week(event_date)][event_date.weekday()].append(event)
-    
+
+    def week_for(date):
+        dt = datetime(date.year,date.month,date.day)
+        try:
+            return str(warwick_week_for(dt))
+        except Term.DoesNotExist:
+            return ""
+
+    # tidy information
     iter,events = begin,[]
     while iter <= end:
         week = lookup[iter]
@@ -71,7 +79,7 @@ def calendar(request,delta):
             else:
                 val = ""
             week_vals.append((val+" "+str(iter_date.day),lookup[iter][i]))
-        events.append((iter,week_vals))
+        events.append((week_for(iter),week_vals))
         iter += a_week
 
     return render_to_response('events/calendar.html',{

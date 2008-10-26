@@ -139,9 +139,9 @@ a:hover {
 /* Page */
 
 #page {
+    margin-top: 30px;
+    margin-left: 150px; /* roughly width of logo */
 	width: 90%;
-    /* roughly width of logo */
-    margin-left: 150px;
 }
 
 /* Content */
@@ -188,7 +188,6 @@ a:hover {
 #sidebar {
 	float: right;
 	width: 15%;
-    margin-top: 30px;
     -moz-border-radius:20px 20px;
     border-style: solid;
     border-color: #FFFFFF;

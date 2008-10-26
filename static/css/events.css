@@ -21,14 +21,33 @@
 
 
 #calendar table {
+    border-width: 1px 1px 1px 1px;
+    border-style: solid; /*outset outset outset outset;*/
+    border-collapse:collapse;
+    border-spacing: 2px;
+    background-color: black;
 }
 
 #calendar th {
     font-size: larger;
     font-weight: bold;
+    background-color:#5C5555;
 }
 
 #calendar td {
-    height:5em;
-    width:5em;
+    height:10em;
+    width:10em;
+    background-color:#565656;
+}
+
+.day {
+    position:relative;
+    top:-35%;
+    float: right;
+}
+
+.week {
+    position:relative;
+    top:-35%;
+    float: left;
 }

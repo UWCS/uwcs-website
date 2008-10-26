@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.template import loader, Context
+from datetime import timedelta
 
 def template_mail(title,template,context,addr_from,addr_to,fail_silently=False):
     template = loader.get_template(template)
@@ -20,3 +21,5 @@ def get(tuples,key):
         if s == key:
             return l
     raise ValueError
+
+def begin_week(of): return of - timedelta(days=of.weekday())

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from compsoc.config import *
 from compsoc.shortcuts import *
+from datetime import datetime, timedelta
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -57,13 +58,29 @@ TERMS = (
 
 class Term(models.Model):
     '''Stores date information about terms'''
-    start_date = models.DateField()
+    start_date = models.DateTimeField()
     start_number = models.IntegerField()
     length = models.IntegerField()
     which = models.CharField(max_length=2,choices=TERMS)
 
     def __unicode__(self):
         return "%s term %i" % (self.get_which_display(), self.start_date.year)
+
+def term_for(date):
+    candidate = Term.objects.filter(start_date__lte=(date-timedelta(days=-7))).latest('start_date')
+    within = timedelta(days=(candidate.length-1)*7)
+    if date < (candidate.start_date + within):
+        return candidate
+    else:
+        raise Term.DoesNotExist
+
+def term_week_for(date):
+    term = term_for(date)
+    return ((date - term.start_date).days / 7) + 1
+
+def warwick_week_for(date):
+    term = term_for(date)
+    return ((date - term.start_date).days / 7) + term.start_number + 1
 
 STATUS = (
     ('RE','Requested'),
