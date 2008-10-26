@@ -1,0 +1,8 @@
+{% extends "admin/change_form.html" %}
+
+{% block sidebar %}
+  <h2>Actions</h2>
+  <ul>
+    <li><a href="/admin/events/email/{{ object_id}}">Email Signups</a></li>
+  </ul>
+{% endblock %}
