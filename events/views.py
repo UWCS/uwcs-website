@@ -24,7 +24,7 @@ a_week = timedelta(days=7)
 def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
-    events = filter(lambda event: begin < event.start and event.finish < end,Event.objects.order_by('start'))
+    events = Event.objects.order_by('start').filter(start__gte=begin).filter(finish__gte=end)
     return (begin.date(),end.date(),events)
 
 class Week:
