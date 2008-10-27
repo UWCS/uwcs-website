@@ -24,7 +24,7 @@ a_week = timedelta(days=7)
 def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
-    events = Event.objects.order_by('start').filter(start__gte=begin).filter(finish__gte=end)
+    events = Event.objects.order_by('start').filter(start__gte=begin)
     return (begin.date(),end.date(),events)
 
 class Week:
@@ -42,7 +42,7 @@ def events_list(request):
     begin,end,events = get_events(0,10)
     lookup = defaultdict(lambda: [])
     for event in events:
-       lookup[begin_week(event.start.date())].append(event)
+       lookup[begin_week(event.start)].append(event)
 
     lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
     return render_to_response('events/list.html',{'user':request.user,'events':lookup})
