@@ -1,0 +1,9 @@
+Dear {{ name }},
+
+Your request for a guest account has been accepted. Your password is:
+
+{{ password }}
+
+You may now login into the University of Warwick Computing Society Website.
+
+If you reply to this email, please delete your password from the response.

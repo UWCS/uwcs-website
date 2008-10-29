@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}
+    <h1>Accept or Reject guest accounts</h1>
+{% endblock %}
+
+{% block content %}
+    <table>
+    <tr><th>Username</th><th>Email</th><th></th<th></th>
+    {% for acc in guests %}
+        <tr>
+            <td>{{ acc.username }}</td>
+            <td>{{ acc.email }}</td>
+            <td><a href="/admin/memberinfo/acceptguest/{{ acc.id }}/">accept</a></td>
+            <td><a href="/admin/memberinfo/rejectguest/{{ acc.id }}/">reject</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <h2>Links</h2>
+    <ul>
+        <li><a href="/admin/memberinfo/member/">All Members</a></li>
+    </ul>
+{% endblock %}

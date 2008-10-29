@@ -3,6 +3,7 @@ from compsoc.feeds import *
 from compsoc import settings
 from compsoc.cms.views import handle
 from compsoc.search.views import search
+from django.contrib.auth.models import User
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -27,6 +28,9 @@ urlpatterns = patterns('',
     (r'^admin/cms/page/(?P<page_id>\d+)/$','compsoc.cms.admin_views.add_edit'),
     (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','compsoc.cms.admin_views.revision'),
     (r'^admin/cms/page/add/$','compsoc.cms.admin_views.add_edit'),
+    (r'^admin/memberinfo/guests/$','compsoc.memberinfo.admin_views.guest_list'),
+    (r'^admin/memberinfo/acceptguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.accept_guest'),
+    (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.reject_guest'),
     (r'^admin/events/email/(?P<event_id>\d+)/$','compsoc.events.admin_views.email_signups'),
     (r'^admin/(.*)', admin.site.root),
 

@@ -11,5 +11,7 @@ urlpatterns = patterns('compsoc.memberinfo.views',
     (r'^list/$','member_list'),
     (r'^reset/$','reset_password'),
     (r'^reset/(?P<account>.*)/$','reset_account'),
+    (r'^guest/$','create_guest'),
+
 )
 

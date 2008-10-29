@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
@@ -211,4 +212,24 @@ def reset_account(request,account):
     except ShellAccount.DoesNotExist:
         return render_to_response('memberinfo/request_error.html',
             {'user':u,'name':'Shell','error':"You don't have a shell account, so it can't be password reset"})
-        
+       
+def create_guest(request):
+    name = request.POST['name']
+    email = request.POST['email']
+    u = User.objects.create_user(name,email)
+    u.set_unusable_password()
+    u.is_active=False
+    u.save()
+    mem = Member.objects.create(user=u,guest=True,showDetails=False)
+    mem.save()
+    n = NicknameDetails(user=u,nickname='mullet')
+    n.save()
+    template_mail(
+        'Guest account request',
+        'memberinfo/guest_request_email',
+        {'name':name},
+        COMPSOC_TECHTEAM_EMAIL,
+        [COMPSOC_TECHTEAM_EMAIL,COMPSOC_EXEC_EMAIL,email])
+    return render_to_response('memberinfo/guest_request.html')
+
+
