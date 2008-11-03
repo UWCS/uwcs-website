@@ -51,16 +51,13 @@ td.short_desc {
     height:10em;
     width:10em;
     background-color:#565656;
+    vertical-align: top;
 }
 
 .day {
-    position:relative;
-    top:-35%;
     float: right;
 }
 
 .week {
-    position:relative;
-    top:-35%;
     float: left;
 }

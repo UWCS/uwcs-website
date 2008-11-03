@@ -14,6 +14,7 @@
                 <div class="week">Wk {{ week_no }}</div>
             {% endif %}
             <div class="day">{{ day }}</div>
+            <br />
             {% for event in day_contents %}
                 <a
                     href="/events/details/{{event.id}}"
