@@ -11,6 +11,9 @@ def search(request):
             pass
         else:
             search_results = search_for_string(search_string)
-            return render_to_response('search.html',
-                                      {'results':search_results,'user':request.user})
+            return render_to_response('search.html',{
+                'results':search_results,
+                'user':request.user,
+                'forwhat':search_string,
+            })
     return HttpResponseRedirect('/')

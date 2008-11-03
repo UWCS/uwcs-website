@@ -17,10 +17,10 @@ class Page(models.Model):
         return self.get_data().text
 
     def title(self):
-        return self.pagerevision_set.latest('date_written').title
+        return self.get_data().title
 
     def login(self):
-        return self.pagerevision_set.latest('date_written').login
+        return self.get_data().login
 
     def get_peers(self):
         parent_slug = '/'.join(self.slug.split('/')[:-1])+'/'
@@ -34,7 +34,10 @@ class Page(models.Model):
         url = self.slug+'/'
         return Page.objects.filter(slug__startswith=url)
 
-register(Page, ['title'])
+    def get_absolute_url(self):
+        return "/cms/%s" % self.slug
+
+register(Page, ['title','text'])
 
 class PageRevision(models.Model):
     page = models.ForeignKey(Page)

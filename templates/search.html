@@ -4,6 +4,7 @@
 
 {% block content %}
 {% if results %}
+    <p>Results for {{ forwhat }}</p>
     <ul>
     {% for result in results %}
         <li>
@@ -22,6 +23,6 @@
     {% endfor %}
     </ul>
 {% else %}
-<p>There were no search results.</p>
+<p>There were no search results for {{ forwhat }}.</p>
 {% endif %}
 {% endblock %}
