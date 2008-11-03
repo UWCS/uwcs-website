@@ -11,11 +11,7 @@ class Member(models.Model):
     guest = models.BooleanField()
 
     def is_fresher(self):
-        joins = self.user.memberjoin_set.all()
-        if joins.count() == 1:
-            return joins[0].year == current_year()
-        else:
-            return False
+        return self.user.username.startswith("%02d" % (date.today().year-2000))
 
     def name(self):
         try:
