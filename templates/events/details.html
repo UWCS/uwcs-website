@@ -40,16 +40,14 @@
     </table>
 {% endif %}
 
-{% endblock %}
+{% if can_signup %}
+<form action="/events/signup/{{ event.id }}/" method="post">
+    <input type="text" name="comment" />
+    <input type="submit" value="signup" />
+</form>
+{% endif %}
+{% if signed_up %}
+    <a href="/events/unsignup/{{ event.id }}/">unsignup</a>
+{% endif %}
 
-{% block sidebar %}
-    {% if can_signup %}
-    <form action="/events/signup/{{ event.id }}/" method="post">
-        <input type="text" name="comment" />
-        <input type="submit" value="signup" />
-    </form>
-    {% endif %}
-    {% if signed_up %}
-        <a href="/events/unsignup/{{ event.id }}/">unsignup</a>
-    {% endif %}
 {% endblock %}
