@@ -252,3 +252,11 @@ a:hover {
 .result_text {
     font-size: smaller;
 }
+
+.submit {
+    float: right;
+}
+
+.comment {
+    float: left;
+}
