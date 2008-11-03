@@ -37,5 +37,6 @@ def handle(request,url):
         'children':cleanse(page.get_children()),
         'user':request.user,
         'breadcrumbs':lookup(breadcrumbs),
+        'slug': url,
     }
     return render_to_response('cms/page.html',dict)

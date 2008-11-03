@@ -2,6 +2,18 @@
 
 {% load markup %}
 
+{% block contact %}
+    {% ifequal slug "contact" %}
+        class="active"
+    {% endifequal %}
+{% endblock %}
+
+{% block about %}
+    {% ifnotequal slug "contact" %}
+        class="active"
+    {% endifnotequal %}
+{% endblock %}
+
 {% block sidebar %}
 <ul>
     {% for slug,name in peers %}
