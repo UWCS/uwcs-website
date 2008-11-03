@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta,datetime
+
 from compsoc.settings import DATE_FORMAT_STRING
+from compsoc.search import register
 
 TARGETS = (
     ('ACA', 'Academic'),
@@ -59,7 +61,15 @@ class Event(models.Model):
 
     def signup_tally(self):
         return self.signup_set.count
+
+    def get_absolute_url(self):
+        return "/events/details/%i/" % self.id
+
+    def get_type_name(self):
+        return self.type.name
     
+register(Event,['shortDescription','longDescription','get_type_name'])
+
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):
     event = models.OneToOneField(Event)
