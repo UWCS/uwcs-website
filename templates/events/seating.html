@@ -2,56 +2,56 @@
 
 {% block content %}
 
-{% if has_seating %}
-<script type="text/javascript" src="/static/js/seating.js"></script>
-    <script type="text/javascript">
-function doSetupCrap(le)
-{
-    Seating.initialiseContainer(le);
-}
+{% if seating %}
+    <script type="text/javascript" src="/static/js/seating.js"></script>
+        <script type="text/javascript">
+    function doSetupCrap(le)
+    {
+        Seating.initialiseContainer(le);
+    }
 
-window.onload = function()
-{
-    /*doSetupCrap(document.getElementById("col0"));
-    doSetupCrap(document.getElementById("col1"));
-    doSetupCrap(document.getElementById("col2"));
-    doSetupCrap(document.getElementById("col3"));
-    doSetupCrap(document.getElementById("col4"));
-    doSetupCrap(document.getElementById("col5"));
-    doSetupCrap(document.getElementById("unassigned"));
-    doSetupCrap(document.getElementById("unassigned_empty"));*/
-};
-</script>
-<h1>Seating plan for {{ event.type.name }}</h1>
-<p>{{ event.start }}</p>
+    window.onload = function()
+    {
+        /*doSetupCrap(document.getElementById("col0"));
+        doSetupCrap(document.getElementById("col1"));
+        doSetupCrap(document.getElementById("col2"));
+        doSetupCrap(document.getElementById("col3"));
+        doSetupCrap(document.getElementById("col4"));
+        doSetupCrap(document.getElementById("col5"));
+        doSetupCrap(document.getElementById("unassigned"));
+        doSetupCrap(document.getElementById("unassigned_empty"));*/
+    };
+    </script>
+    <h1>Seating plan for {{ event.type.name }}, held in {{ room }}</h1>
+    <p>{{ event.start }}</p>
 
-<!-- visual seating plan goes here. -->
-{% for c in cols %}
-<ul>
-{% for seat in c %}
-<li>{{ seat.user.username }}</li>
-{% endfor %}
-</ul>
-{% endfor %}
+    <!-- visual seating plan goes here. -->
+    {% for c in cols %}
+        <ul>
+        {% for seat in c %}
+            <li>{{ seat.user.username }}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
 
-<table>
-{% if logged_in %}
-<tr>
-<td>{{ new_revision_no }} (new)</td>
-<td>{{ user.username }}</td>
-<td></td>
-</tr>
-{% endif %}
-{% for revision in seating_revisions %}
-<tr>
-<td><a href="{{ revision.revision }}">{{ revision.revision }}</a></td>
-<td>{{ revision.creator }}</td>
-<td>{{ revision.comment }}</td>
-</tr>
-{% endfor %}
-</table>
+    <table>
+    {% if logged_in %}
+        <tr>
+        <td>{{ new_revision_no }} (new)</td>
+        <td>{{ user.username }}</td>
+        <td></td>
+        </tr>
+    {% endif %}
+    {% for revision in seating_revisions %}
+        <tr>
+        <td><a href="{{ revision.revision }}">{{ revision.revision }}</a></td>
+        <td>{{ revision.creator }}</td>
+        <td>{{ revision.comment }}</td>
+        </tr>
+    {% endfor %}
+    </table>
 {% else %}
-<p>No seating plan available for {{ event.type.name }}, {{ event.start }}</p>
+    <p>No seating plan available for {{ event.type.name }}, {{ event.start }}</p>
 {% endif %}
 
 {% endblock %}

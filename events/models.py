@@ -69,6 +69,15 @@ class Event(models.Model):
     
 register(Event,['shortDescription','longDescription','get_type_name'])
 
+class SeatingRoom(models.Model):
+    '''Information a room that people are sat in'''
+    name = models.CharField(max_length=30)
+    max_cols = models.IntegerField()
+    max_rows = models.IntegerField()
+
+    def __unicode__(self):
+        return self.name
+
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):
     event = models.OneToOneField(Event)
@@ -77,6 +86,14 @@ class EventSignup(models.Model):
     close = models.DateTimeField()
     fresher_open = models.DateTimeField()
     guest_open = models.DateTimeField()
+    seating = models.ForeignKey(SeatingRoom,blank=True,null=True)
+    
+    def has_seating_plan(self):
+        try:
+            self.seating
+            return True
+        except SeatingRoom.DoesNotExist:
+            return False
 
     def __unicode__(self):
         return self.event.__unicode__()
@@ -96,19 +113,22 @@ class Signup(models.Model):
     def time_form(self):
         return self.time.strftime(DATE_FORMAT_STRING)
 
-class Seating(models.Model):
-    '''Information about a seat at a revision'''
-    event = models.ForeignKey(Event)
-    user = models.ForeignKey(User)
-    revision = models.IntegerField()
-    col = models.IntegerField()
-    row = models.IntegerField()
-    #dirty = models.BooleanField()
-    
 class SeatingRevision(models.Model):
     '''Information about a single seating plan revision'''
     event = models.ForeignKey(Event)
     creator = models.ForeignKey(User)
-    revision = models.IntegerField()
+    number = models.IntegerField()
     comment = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return "%i, %s" % (self.number, self.comment)
+
+class Seating(models.Model):
+    '''Information about a seat at a revision'''
+    user = models.ForeignKey(User)
+    revision = models.ForeignKey(SeatingRevision)
+    col = models.IntegerField()
+    row = models.IntegerField()
+
+    def __unicode__(self):
+        return "%s @ %i,%i" % (self.user.member.name(),self.col,self.row)

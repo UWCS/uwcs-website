@@ -47,5 +47,6 @@ admin.site.register(EventType)
 admin.site.register(Event,EventAdmin)
 admin.site.register(Signup)
 admin.site.register(Seating)
+admin.site.register(SeatingRoom)
 admin.site.register(SeatingRevision)
 

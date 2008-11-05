@@ -134,35 +134,34 @@ def details(request,event_id):
 
     return render_to_response('events/details.html',dict)
 
-def make_cols(seating):
-    cols = []
-    for s in seating:
-        try:
-            cols[s.col].append(s)
-        except IndexError:
-            cols.insert(s.col, [])
-            cols[s.col].append(s)
-    return cols
-
+# assumes initial revision
 def seating(request, event_id):
     e = Event.objects.get(id=event_id)
     dict = {
             'user':request.user,
             'event':e,
-            }
+           }
     try:
-        seating = Seating.objects.filter(event=e)
-        seating_revisions = SeatingRevision.objects.filter(event=e).order_by('-revision')
-        dict.update({
-            'seating':seating,
-            'seating_revisions':seating_revisions,
-            'new_revision_no':seating_revisions[0].revision + 1,
-            'cols':make_cols(seating)
-            })
-    except Seating.DoesNotExist:
-        dict.update({
-            'has_seating':False,
-            })
+        signup = e.eventsignup
+        if signup.has_seating_plan():
+            room = signup.seating
+            revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
+            # create a seat lookup dict
+            seat_dict = defaultdict(lambda: defaultdict(lambda: False))
+            for seat in revisions[0].seating_set.all():
+                seat_dict[seat.col][seat.row] = seat
+
+            # create nested lists for rows and columns
+            s = [[seat_dict[y][x] for x in range(0,room.max_rows)] for y in range(0,room.max_cols)]
+            
+            dict.update({
+                'room':room.name,
+                'seating':s,
+                'seating_revisions':revisions,
+                'new_revision_no':revisions[0].number + 1,
+                })
+    except EventSignup.DoesNotExist: pass
+
     return render_to_response('events/seating.html', dict)
 
 @login_required
