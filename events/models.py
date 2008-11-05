@@ -25,7 +25,6 @@ class Event(models.Model):
     shortDescription = models.CharField(max_length=20)
     location = models.CharField(max_length=30)
     longDescription = models.TextField()
-    signupsRequired = models.BooleanField()
     start = models.DateTimeField()
     finish = models.DateTimeField()
     displayFrom = models.DateTimeField()

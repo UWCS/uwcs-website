@@ -131,7 +131,7 @@ fieldset.collapsed h2,fieldset.collapsed {
 }
 
 fieldset.collapsed h2 {
-	background-image: url(../img/admin/nav-bg.gif);
+	/*background-image: url(../img/admin/nav-bg.gif);*/
 	background-position: bottom left;
 /*	color: #999;*/
 }
@@ -170,7 +170,7 @@ fieldset.monospace textarea {
 }
 
 .submit-row .deletelink {
-	background: url(../img/admin/icon_deletelink.gif) 0 50% no-repeat;
+	/*background: url(../img/admin/icon_deletelink.gif) 0 50% no-repeat;*/
 	padding-left: 14px;
 }
 
@@ -235,7 +235,7 @@ fieldset.monospace textarea {
 /*	color: #666;*/
 	padding: 3px 5px;
 	font-size: 11px;
-	background: #e1e1e1 url(../img/admin/nav-bg.gif) top left repeat-x;
+	/*background: #e1e1e1 url(../img/admin/nav-bg.gif) top left repeat-x;*/
 	border-bottom: 1px solid #ddd;
 }
 
@@ -253,7 +253,7 @@ fieldset.monospace textarea {
 
 .inline-related fieldset {
 	margin: 0;
-	background: #fff;
+	/*background: #fff;*/
 	border: none;
 }
 
@@ -263,7 +263,7 @@ fieldset.monospace textarea {
 	font-size: 11px;
 	text-align: left;
 	font-weight: bold;
-	background: #bcd;
+	/*background: #bcd;*/
 /*	color: #fff;*/
 }
 

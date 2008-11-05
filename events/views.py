@@ -93,7 +93,7 @@ def calendar(request,delta):
 def valid_signup(user,event):
     now = datetime.now()
     s = event.eventsignup
-    if event.signupsRequired and user.is_authenticated():
+    if event.has_signups() and user.is_authenticated():
         can_signup = now < s.close
         if user.member.is_fresher():
             can_signup &= s.fresher_open < now
