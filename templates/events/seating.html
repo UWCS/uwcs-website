@@ -1,8 +1,10 @@
 {% extends "events/base.html" %}
 
-{% block content %}
+{% block morehead %}
+<link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen">
+<link href="/static/css/seating.css" rel="stylesheet" type="text/css" media="screen">
 
-{% if seating %}
+    {% if seating %}
     <script type="text/javascript" src="/static/js/seating.js"></script>
         <script type="text/javascript">
     function doSetupCrap(le)
@@ -12,39 +14,81 @@
 
     window.onload = function()
     {
-        /*doSetupCrap(document.getElementById("col0"));
+        
+        doSetupCrap(document.getElementById("col0"));
         doSetupCrap(document.getElementById("col1"));
         doSetupCrap(document.getElementById("col2"));
         doSetupCrap(document.getElementById("col3"));
         doSetupCrap(document.getElementById("col4"));
         doSetupCrap(document.getElementById("col5"));
         doSetupCrap(document.getElementById("unassigned"));
-        doSetupCrap(document.getElementById("unassigned_empty"));*/
+        doSetupCrap(document.getElementById("unassigned_empty"));
     };
     </script>
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if seating %}
     <h1>Seating plan for {{ event.type.name }}, held in {{ room }}</h1>
     <p>{{ event.start }}</p>
-
     <!-- visual seating plan goes here. -->
-    {% for c in cols %}
-        <ul>
-        {% for seat in c %}
-            <li>{{ seat.user.username }}</li>
-        {% endfor %}
+<table class="seating">
+    <tbody><tr>
+        <th colspan="1"></th>
+            <th colspan="4"></th>
+            <th colspan="2">Doors</th>
+
+    </tr><tr>
+        <th colspan="1">Unassigned</th>
+        <th colspan="2">Table 1</th>
+        <th colspan="2">Table 2</th>
+        <th colspan="2">Table 3</th>
+    </tr><tr>
+    <td>
+        <ul id="unassigned_empty" class="seating">
+            <li class="empty">(empty)</li>
         </ul>
+        <ul id="unassigned" class="seating">
+        </ul>
+    </td>
+    
+    {% for col in seating %}
+    <td>
+    <ul id="col{{ forloop.counter0 }}" class="seating seatingcol{{ forloop.counter0 }}">
+        {% for seat in col %}
+            {% if seat %}
+                <li id="{{ seat.user.id }}"
+                    title="{{ seat.user.member.all_name }}">
+                    {{ seat.user.member.name }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    </td>
     {% endfor %}
+    </tr>
+    </tbody>
+</table>
 
     <table>
-    {% if logged_in %}
+{#    {% if logged_in %} #}
         <tr>
         <td>{{ new_revision_no }} (new)</td>
         <td>{{ user.username }}</td>
-        <td></td>
+        <td>
+            <form action="" method="post">
+                  <input type="text" name="comment" maxlength="255" size="50" />
+                  <input type="hidden" name="order" id="order" value="" />
+                  <input type="submit" value="Save" title="Save New Revision" />
+            </form>
+        </td>
         </tr>
-    {% endif %}
+{#    {% endif %} #}
     {% for revision in seating_revisions %}
         <tr>
-        <td><a href="{{ revision.revision }}">{{ revision.revision }}</a></td>
+        <td><a href="{{ revision.number }}">{{ revision.number }}</a></td>
         <td>{{ revision.creator }}</td>
         <td>{{ revision.comment }}</td>
         </tr>

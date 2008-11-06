@@ -18,6 +18,12 @@ class Member(models.Model):
             return self.user.nicknamedetails.nickname
         except NicknameDetails.DoesNotExist:
             return self.user.get_full_name()
+
+    def all_name(self):
+        try:
+            return self.user.nicknamedetails.nickname+" ("+self.user.get_full_name()+")"
+        except NicknameDetails.DoesNotExist:
+            return self.user.get_full_name()
     
     def get_nick(self):
         try:
