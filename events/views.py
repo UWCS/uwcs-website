@@ -46,7 +46,8 @@ def events_list(request):
        lookup[begin_week(event.start)].append(event)
 
     lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
-    return render_to_response('events/list.html',{'user':request.user,'events':lookup})
+    return render_to_response('events/list.html',
+        {'user':request.user,'events':lookup, 'future':future_events()})
 
 def calendar(request,delta):
     '''
@@ -89,6 +90,7 @@ def calendar(request,delta):
         'prev':offset-1,
         'next':offset+1,
         'user':request.user,
+        'future':future_events(),
     })
 
 def valid_signup(user,event):
@@ -116,6 +118,7 @@ def details(request,event_id):
         'signups':signups,
         'can_edit':request.user.is_staff if request.user else False,
         'user':u,
+        'future':future_events(),
     }
 
     try:
@@ -144,6 +147,7 @@ def seating(request, event_id, revision_no=None):
     dict = {
             'user':request.user,
             'event':e,
+            'future':future_events(),
            }
     try:
         signup = e.eventsignup

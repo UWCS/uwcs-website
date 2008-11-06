@@ -70,7 +70,20 @@ class Event(models.Model):
 
     def get_type_name(self):
         return self.type.name
-    
+
+def future_events(n=5):
+    '''
+    Generates a list of event types t and events e s.t. e is the
+    next event for t.  Restricted to the next n events
+    '''
+    types = EventType.objects.all()
+    future = []
+    for type in types:
+        try:
+            future.append((type,type.event_set.latest('start')))
+        except Event.DoesNotExist: pass
+    return sorted(future,key=lambda (t,e): e.start)[:n]
+
 register(Event,['shortDescription','longDescription','get_type_name'])
 
 class SeatingRoom(models.Model):
