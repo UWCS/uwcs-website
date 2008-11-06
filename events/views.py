@@ -108,24 +108,25 @@ def valid_signup(user,event):
 def details(request,event_id):
     event = Event.objects.get(id=event_id)
     signups = event.signup_set.all()
+    u = request.user
     
     dict = {
         'event':event,
         'signups':signups,
         'can_edit':request.user.is_staff if request.user else False,
-        'user':request.user,
+        'user':u,
     }
 
     try:
         s = event.eventsignup
-        signed_up = event.signup_set.filter(user=request.user)
+        signed_up = u.is_authenticated() and event.signup_set.get(user=request.user)
         dict.update({
             'open':s.open.strftime(DATE_FORMAT_STRING),
             'close':s.close.strftime(DATE_FORMAT_STRING),
             'fresher':s.fresher_open.strftime(DATE_FORMAT_STRING),
             'guest':s.guest_open.strftime(DATE_FORMAT_STRING),
             'limit':s.signupsLimit,
-            'can_signup':valid_signup(request.user,event) and not signed_up,
+            'can_signup':valid_signup(u,event) and not signed_up,
             'signed_up':signed_up,
             #'has_seating':has_seating,
         })
