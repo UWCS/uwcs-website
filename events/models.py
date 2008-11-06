@@ -58,8 +58,8 @@ class Event(models.Model):
     def signup_total(self):
         return self.eventsignup.signupsLimit
 
-    def signup_tally(self):
-        return self.signup_set.count
+    def signup_count(self):
+        return self.signup_set.count()
 
     def get_absolute_url(self):
         return "/events/details/%i/" % self.id
