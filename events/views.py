@@ -136,7 +136,7 @@ def details(request,event_id):
     return render_to_response('events/details.html',dict)
 
 # assumes initial revision
-def seating(request, event_id):
+def seating(request, event_id, revision_no=None):
     e = Event.objects.get(id=event_id)
     dict = {
             'user':request.user,
@@ -149,17 +149,23 @@ def seating(request, event_id):
             revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: False))
-            for seat in revisions[0].seating_set.all():
-                seat_dict[seat.col][seat.row] = seat
+            revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
+            unass = set([s.user for s in e.signup_set.all()])
+            for seat in revision.seating_set.all():
+                seat_dict[seat.col][seat.row] = seat.user
+                unass.remove(seat.user)
 
             # create nested lists for rows and columns
-            s = [[seat_dict[y][x] for x in range(0,room.max_rows)] for y in range(0,room.max_cols)]
+            cols = range(0,room.max_cols)
+            max_rows = [ max([-1]+seat_dict[y].keys())+1 for y in cols]
+            s = [[seat_dict[y][x] for x in range(0,max_rows[y])] for y in cols]
             
             dict.update({
                 'room':room.name,
                 'seating':s,
                 'seating_revisions':revisions,
-                'new_revision_no':revisions[0].number + 1,
+                'new_revision_no':revision.number + 1,
+                'unassigned':unass,
                 })
     except EventSignup.DoesNotExist: pass
 

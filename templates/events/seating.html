@@ -52,17 +52,26 @@
             <li class="empty">(empty)</li>
         </ul>
         <ul id="unassigned" class="seating">
+        {% for user in unassigned %}
+            {% if user %}
+                <li id="{{ user.id }}"
+                    title="{{ user.member.all_name }}">
+                    {{ user.member.name }}</li>
+            {% endif %}
+        {% endfor %}
         </ul>
     </td>
     
     {% for col in seating %}
     <td>
     <ul id="col{{ forloop.counter0 }}" class="seating seatingcol{{ forloop.counter0 }}">
-        {% for seat in col %}
-            {% if seat %}
-                <li id="{{ seat.user.id }}"
-                    title="{{ seat.user.member.all_name }}">
-                    {{ seat.user.member.name }}</li>
+        {% for user in col %}
+            {% if user %}
+                <li id="{{ user.id }}"
+                    title="{{ user.member.all_name }}">
+                    {{ user.member.name }}</li>
+            {% else %}
+                <li class="empty">(empty)</li>
             {% endif %}
         {% endfor %}
     </ul>
@@ -91,7 +100,7 @@
 
     {% for revision in seating_revisions %}
         <tr>
-        <td><a href="{{ revision.number }}">{{ revision.number }}</a></td>
+        <td><a href="/events/seating/{{ event.id }}/{{ revision.number }}">{{ revision.number }}</a></td>
         <td>{{ revision.creator }}</td>
         <td>{{ revision.comment }}</td>
         </tr>
