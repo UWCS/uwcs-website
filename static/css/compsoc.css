@@ -141,14 +141,12 @@ a:hover {
 #page {
     margin-top: 30px;
     margin-left: 150px; /* roughly width of logo */
-	width: 90%;
 }
 
 /* Content */
 
 #content {
-	float: left;
-    width: 80%;
+    margin-right: 250px;
 }
 
 .post {
@@ -187,7 +185,8 @@ a:hover {
 
 #sidebar {
 	float: right;
-	width: 15%;
+	width: 200px;
+    margin-right: 25px;
     -moz-border-radius:20px 20px;
     border-style: solid;
     border-color: #FFFFFF;
