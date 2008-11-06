@@ -14,7 +14,7 @@
             <td class="time">{{ event.time_string }}</td>
             <td>{{ event.location }} </td>
             {% if event.has_signups %}
-                <td>{{ event.signup_tally }}/{{ event.signup_total }}</td>
+                <td>{{ event.signup_count }}/{{ event.signup_total }}</td>
             {% else %}
                 <td>N/A</td>
             {% endif %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta,datetime
 
-from compsoc.settings import DATE_FORMAT_STRING
+from compsoc.settings import DATE_FORMAT_STRING,SAME_SECOND_FORMAT
 from compsoc.search import register
 
 TARGETS = (
@@ -40,7 +40,11 @@ class Event(models.Model):
         return days
 
     def time_string(self):
-        return self.start.strftime(DATE_FORMAT_STRING)+" - "+self.finish.strftime(DATE_FORMAT_STRING)
+        s,f = self.start,self.finish
+        if s.date() == f.date():
+            return s.strftime(DATE_FORMAT_STRING)+" - "+f.strftime(SAME_SECOND_FORMAT)
+        else:
+            return s.strftime(DATE_FORMAT_STRING)+" - "+f.strftime(DATE_FORMAT_STRING)
 
     def __unicode__(self):
         return self.type.name + " @ " + self.time_string()
