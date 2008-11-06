@@ -151,7 +151,7 @@ def seating(request, event_id, revision_no=None):
             room = signup.seating
             # KeyError
             if request.method == 'POST' and request.user.is_authenticated():
-                new_seats,order = [],request.POST['order']
+                order = request.POST['order']
                 last_no = SeatingRevision.objects.filter(event=e).order_by('-number')[0].number
                 revision = e.seatingrevision_set.create(creator=request.user, comment=request.POST['comment'], number=last_no+1)
                 for col in order.split(';'):
@@ -162,7 +162,7 @@ def seating(request, event_id, revision_no=None):
                             try:
                                 u = User.objects.get(id=int(id_string))
                                 revision.seating_set.create(user=u,col=column,row=row)
-                            except ValueError: pass
+                            except ValueError,User.DoesNotExist: pass
                 revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
             else:
                 revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
