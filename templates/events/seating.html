@@ -72,8 +72,10 @@
     </tbody>
 </table>
 
+    <br />
+    <hr />
     <table>
-{#    {% if logged_in %} #}
+    {% if user.is_authenticated %}
         <tr>
         <td>{{ new_revision_no }} (new)</td>
         <td>{{ user.username }}</td>
@@ -85,7 +87,8 @@
             </form>
         </td>
         </tr>
-{#    {% endif %} #}
+    {% endif %}
+
     {% for revision in seating_revisions %}
         <tr>
         <td><a href="{{ revision.number }}">{{ revision.number }}</a></td>

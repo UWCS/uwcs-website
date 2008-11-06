@@ -48,6 +48,9 @@
 <!-- end header -->
 <!-- start page -->
 <div id="page">
+    <!-- start sidebar -->
+    <div id="sidebar"><br />{% block sidebar %}{% endblock %}<br /></div>
+    <!-- end sidebar -->
     <!-- start content -->
     <div id="content">
     {% block content_title %}{% endblock %}
@@ -64,9 +67,6 @@
     {% block content %}{% endblock %}
     </div>
     <!-- end content -->
-    <!-- start sidebar -->
-    <div id="sidebar"><br />{% block sidebar %}{% endblock %}<br /></div>
-    <!-- end sidebar -->
 </div>
 <!-- end page -->
 </body></html>
