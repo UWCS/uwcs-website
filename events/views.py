@@ -9,6 +9,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
 
 import vobject
+import re
 
 from compsoc.events.models import *
 from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING
@@ -135,6 +136,8 @@ def details(request,event_id):
 
     return render_to_response('events/details.html',dict)
 
+p = re.compile(r"col([0-5])\((.*),\)")
+
 # assumes initial revision
 def seating(request, event_id, revision_no=None):
     e = Event.objects.get(id=event_id)
@@ -146,14 +149,32 @@ def seating(request, event_id, revision_no=None):
         signup = e.eventsignup
         if signup.has_seating_plan():
             room = signup.seating
-            revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
+            # KeyError
+            if request.method == 'POST' and request.user.is_authenticated():
+                new_seats,order = [],request.POST['order']
+                last_no = SeatingRevision.objects.filter(event=e).order_by('-number')[0].number
+                revision = e.seatingrevision_set.create(creator=request.user, comment=request.POST['comment'], number=last_no+1)
+                for col in order.split(';'):
+                    m = p.match(col)
+                    if m:
+                        column = int(m.group(1))
+                        for row,id_string in enumerate(m.group(2).split(',')):
+                            try:
+                                u = User.objects.get(id=int(id_string))
+                                revision.seating_set.create(user=u,col=column,row=row)
+                            except ValueError: pass
+                revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
+            else:
+                revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
+                revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
+            
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: False))
-            revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
             unass = set([s.user for s in e.signup_set.all()])
             for seat in revision.seating_set.all():
                 seat_dict[seat.col][seat.row] = seat.user
-                unass.remove(seat.user)
+                unass.discard(seat.user)
+                #unass.remove(seat.user)
 
             # create nested lists for rows and columns
             cols = range(0,room.max_cols)
