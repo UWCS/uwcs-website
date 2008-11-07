@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from datetime import timedelta,datetime
 
 from compsoc.settings import DATE_FORMAT_STRING,SAME_SECOND_FORMAT
 from compsoc.search import register
+from compsoc.events import write_file_callback
 
 TARGETS = (
     ('ACA', 'Academic'),
@@ -52,6 +54,9 @@ class Event(models.Model):
     def is_in_future(self):
         return datetime.now() < self.start
 
+    def is_running(self):
+        return self.start < datetime.now() and datetime.now() < self.finish
+
     def has_signups(self):
         try:
             self.eventsignup
@@ -60,10 +65,16 @@ class Event(models.Model):
             return False
     
     def signup_total(self):
-        return self.eventsignup.signupsLimit
+        try:
+            return self.eventsignup.signupsLimit
+        except EventSignup.DoesNotExist:
+            return 0
 
     def signup_count(self):
-        return self.signup_set.count()
+        try:
+            return self.signup_set.count()
+        except EventSignup.DoesNotExist:
+            return 0
 
     def get_absolute_url(self):
         return "/events/details/%i/" % self.id
@@ -85,6 +96,8 @@ def future_events(n=5):
     return sorted(future,key=lambda (t,e): e.start)[:n]
 
 register(Event,['shortDescription','longDescription','get_type_name'])
+
+post_save.connect(write_file_callback, sender=Event)
 
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
@@ -129,6 +142,8 @@ class Signup(models.Model):
 
     def time_form(self):
         return self.time.strftime(DATE_FORMAT_STRING)
+
+post_save.connect(write_file_callback, sender=Signup)
 
 class SeatingRevision(models.Model):
     '''Information about a single seating plan revision'''
