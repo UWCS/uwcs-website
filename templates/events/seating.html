@@ -32,8 +32,9 @@
 {% block content %}
 
 {% if seating %}
-    <h1>Seating plan for {{ event.type.name }}, held in {{ room }}</h1>
-    <p>{{ event.start }}</p>
+    <h1>Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>
+        , held in {{ room }}</h1>
+    <p>{{ event.time_string }}</p>
     <!-- visual seating plan goes here. -->
 <table class="seating">
     <tbody><tr>

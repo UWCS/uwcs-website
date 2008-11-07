@@ -61,3 +61,35 @@ td.short_desc {
 .week {
     float: left;
 }
+
+#comments table {
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 2px;
+    background-color: black;
+    width: 100%;
+}
+
+#comments th {
+    font-size: larger;
+    font-weight: bold;
+    background-color:#5C5555;
+    border: 5px solid #5C5555;
+}
+
+#comments td {
+    font-size: larger;
+    background-color:#565656;
+    height: 4em;
+    vertical-align: top;
+    border: 5px solid #565656;
+}
+
+.time {
+    vertical-align: bottom;
+    font-size: 10px;
+}
+
+.entry th {
+    font-weight: bold;
+    text-align: left;
+}

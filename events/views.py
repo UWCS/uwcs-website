@@ -132,7 +132,7 @@ def details(request,event_id):
             'limit':s.signupsLimit,
             'can_signup':valid_signup(u,event) and not signed_up,
             'signed_up':signed_up,
-            #'has_seating':has_seating,
+            'has_seating':s.seating,
         })
     except EventSignup.DoesNotExist:
         dict.update({ 'can_signup':False })

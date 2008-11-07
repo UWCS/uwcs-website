@@ -1,53 +1,65 @@
 {% extends "events/base.html" %}
 
 {% block content %}
-<h1>Event Details for {{ event.type.name }}</h1>
-{% if can_edit %}
-<p><a href="/admin/events/event/1/"/>edit</a></p>
-{% endif %}
-
-<table>
-<tr><td>Event: </td><td>{{ event.shortDescription }}</td></tr>
-<tr><td>Location: </td><td>{{ event.location }}</td></tr>
-<tr><td>Date: </td><td>{{ event.time_string }}</td></tr>
-<tr><td>Notes: </td><td>{{ event.longDescription }}</td></tr>
-<tr><td>General Information</td><td>{{ event.type.info }}</td></tr>
-{% if event.signupsRequired %}
-<tr><td>Signups</td><td>{{ event.signup_set.count }}/{{ limit }}
-    <table>
-    <tr><td>Fresher Signups Open</td><td>{{ fresher }}</td></tr>
-    <tr><td>Member Signups Open</td><td>{{ open }}</td></tr>
-    <tr><td>Guest Signups Open</td><td>{{ guest }}</td></tr>
-    <tr><td>Signups Close</td><td>{{ close }}</td></tr>
-    </table>
-</td></tr>
-{% if has_seating %}
-<tr><td>Seating plan: <a href="seating/{{ event.id }}">here</a></td></tr>
-{% endif %}
-{% endif %}
-</table>
-{% if event.signupsRequired %}
-    <table>
-        <tr><th>Member</th><th>Comment/Options</th></tr>
-        {% if signups %}
-            {% for signup in signups %}
-                <tr><td>{{ signup.user.username }}</td><td>{{ signup.comment }}</td></tr>
-                <tr><td>{{ signup.time_form }}</td></tr>
-            {% endfor %}
-        {% else %}
-            <tr><td colspan="2">There are no signups yet.</td></tr>
+<div class="post">
+    <h1 class="title">Event Details for {{ event.type.name }}</h1>
+    <p class="byline"><small>when: {{ event.time_string }} | 
+        {% if can_edit %}
+        <a href="/admin/events/event/{{ event.id }}/">Edit</a></small>
         {% endif %}
-    </table>
-{% endif %}
-
-{% if can_signup %}
-<form action="/events/signup/{{ event.id }}/" method="post">
-    <input type="text" name="comment" />
-    <input type="submit" value="signup" />
-</form>
-{% endif %}
-{% if signed_up %}
-    <a href="/events/unsignup/{{ event.id }}/">unsignup</a>
-{% endif %}
+    </p>
+    <div class="entry">
+        <table>
+        <tr><th>Event: </th><td>{{ event.shortDescription }}</td></tr>
+        <tr><th>Location: </th><td>{{ event.location }}</td></tr>
+        {% if event.has_signups %}
+            <tr><th>Signups</th><td>{{ event.signup_set.count }}/{{ limit }}</tr>
+            <tr><th></th><td>
+                <table>
+                    <tr><th>Fresher Signups Open</th><td>{{ fresher }}</td></tr>
+                    <tr><th>Member Signups Open</th><td>{{ open }}</td></tr>
+                    <tr><th>Guest Signups Open</th><td>{{ guest }}</td></tr>
+                    <tr><th>Signups Close</th><td>{{ close }}</td></tr>
+                </table>
+            </td></tr>
+        {% endif %}
+        <tr><th>Notes: </th><td>{{ event.longDescription }}</td></tr>
+        <tr><th>General Information:</th><td>{{ event.type.info }}</td></tr>
+        </table>
+        {% if has_seating %}
+            <p>Seating plan: <a href="/events/seating/{{ event.id }}">here</a></p>
+        {% endif %}
+        {% if event.has_signups %}
+            <div id="comments">
+            <table >
+                <tr><th>Member</th><th>Comment/Options</th></tr>
+                {% if signups %}
+                    {% for signup in signups %}
+                        <tr>
+                            <td>
+                                {{ signup.user.username }}<br />
+                                <div class="time">{{ signup.time_form }}</div>
+                            </td>
+                            <td>{{ signup.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="2">There are no signups yet.</td></tr>
+                {% endif %}
+            </table>
+        {% endif %}
+    </div>
+    <p class="meta">
+        {% if can_signup %}
+        <form action="/events/signup/{{ event.id }}/" method="post">
+            <input type="text" name="comment" />
+            <input type="submit" value="signup" />
+        </form>
+        {% endif %}
+        {% if signed_up %}
+            <a href="/events/unsignup/{{ event.id }}/">unsignup</a>
+        {% endif %}
+    </p>
+</div>
 
 {% endblock %}
