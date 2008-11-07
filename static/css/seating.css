@@ -92,3 +92,25 @@ ul.seating div {
 ul.seating div.insert {
     background: #888;
 }
+
+#comments table {
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 2px;
+    background-color: black;
+    width: 100%;
+}
+
+#comments th {
+    font-size: larger;
+    font-weight: bold;
+    background-color:#5C5555;
+    border: 5px solid #5C5555;
+}
+
+#comments td {
+    font-size: larger;
+    background-color:#565656;
+    vertical-align: center;
+    border: 5px solid #565656;
+}
+
