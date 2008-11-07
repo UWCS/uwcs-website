@@ -136,3 +136,19 @@ class MailingList(models.Model):
     def __unicode__(self):
         return self.list
 
+#class QuoteObject(models.Model):
+#    quoter = models.IntegerField()
+#    hostmask = models.CharField()
+#    lines = models.CharField()
+#    score = models.IntegerField()
+#    up = models.IntegerField()
+#    down = models.IntegerField()
+#    time = models.IntegerField()
+
+#class QuoteLine(models.Model):
+#    quote = models.ForeignKey(QuoteObject)
+#    lineNumber = models.IntegerField()
+#    nick = models.CharField()
+#    message = models.CharField()
+#    isAction = models.BooleanField()
+
