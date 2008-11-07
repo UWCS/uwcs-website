@@ -1,0 +1,21 @@
+{% extends "choob/base.html" %}
+
+{% block morecontent %}
+    <ol>
+    {% for quote in objects %}
+        <li>
+            <ol>
+            {% for line in quote.lines %}
+                <li>&lt;{{ line.nick }}&gt;
+                {{ line.message }}
+                </li>
+            {% endfor %}
+            </ol>
+            <p><a href="{{ quote.id }}">#{{ quote.id }}</a>
+                Quoted by {{ quote.quoter }}
+                on {{ quote.time }}
+            </p>
+        </li>
+    {% endfor %}
+    </ol>
+{% endblock %}

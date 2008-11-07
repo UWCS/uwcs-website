@@ -1,0 +1,32 @@
+{% extends "choob/base.html" %}
+
+{% block morecontent %}
+<p>Give me...</p>
+
+<p><form method="get" action="all_quotes">
+    <input type="submit" value="&raquo;" /> All quotes.
+</form></p>
+<p><form method="post" action="quotes_from">
+    <input type="submit" value="&raquo;" />
+    All quotes from 
+    <select name="val">
+        {% for person in quoted %}
+            <option>{{ person }}</option>
+        {% endfor %}
+    </select>
+</form></p>
+<p><form method="post" action="quotes_by">
+    <input type="submit" value="&raquo;" />
+    All quotes by
+    <select name="val">
+        {% for person in quoters %}
+            <option>{{ person }}</option>
+        {% endfor %}
+    </select>
+</form></p>
+<p><form method="post" action="quotes_with">
+    <input type="submit" value="&raquo;" />
+    All quotes with <input type="text" name="val" /> in them
+</form></p>
+
+{% endblock %}
