@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     (r'^member/', include('compsoc.memberinfo.urls')),
     (r'^events/', include('compsoc.events.urls')),
     (r'^irc/', include('compsoc.choob.urls')),
+    (r'^tickets/', include('compsoc.tracker.urls')),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     
     (r'^admin/cms/page/(?P<page_id>\d+)/$','compsoc.cms.admin_views.add_edit'),

@@ -258,3 +258,8 @@ a:hover {
 .comment {
     float: left;
 }
+
+#search table {
+    margin: 25px;
+    border: 0;
+}

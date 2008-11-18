@@ -1,0 +1,83 @@
+ {% extends "tracker/base.html" %}
+
+ {% block morehead %}
+    <link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen">
+ {% endblock %}
+
+ {% block sidebar %}
+    <ul>
+        <li>
+            <h2>Actions</h2>
+            <ul>
+                <li><a href="/tickets/new">New Ticket</a></li>
+            </ul>
+            <h2>Shortcuts</h2>
+            <ul>
+                {% for name,values in shorts %}
+                <li>
+                <form action="/tickets/" method="POST">
+                    {% for fname,val in values %}
+                        <input type="hidden" name="{{fname}}" value="{{val}}" />
+                    {% endfor %}
+                    <input type="submit" value="{{ name }}" />
+                </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+ {% endblock %}
+
+
+ {% block content %}
+     <h2>Ticket Search</h2>
+     <fieldset style="width:350px">
+         <legend>filters</legend>
+         <form action="/tickets/" method="POST">
+             <br />
+             <table>
+                 {% for field in form %}
+                     {# field.errors #}
+                     <tr>
+                         <td>{{ field.label_tag }} </td>
+                         <td>{{ field }}</td>
+                     </tr>
+                 {% endfor %}
+             </table>
+             <p class="submit"><input type="submit" value="search" /></p>
+         </form>
+     </fieldset>
+     <br />
+     <hr />
+   
+    {% if results %}
+        <table id="comments">
+            <tr>
+                <th>Name</th>
+                <th>Submitted by</td>
+                <th>Assigned to</td>
+                <th>Goal</th>
+                <th>Completed</td>
+            </tr>
+        {% for ticket in results %}
+            <tr>
+                <td><a href="{{ ticket.get_absolute_url }}">{{ticket.name}}</a></td>
+                <td>{{ ticket.submitter.member.name }}</td>
+                <td>{{ ticket.assignee.member.name }}</td>
+                <td>{{ ticket.goal }}</td>
+                <td>
+                    {% if ticket.completed %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No search results to display</p>
+    {% endif %}
+     
+ {% endblock %}
+

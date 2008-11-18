@@ -1,0 +1,22 @@
+{% extends "tracker/base.html" %}
+
+{% block content %}
+    <h2>Create New Ticket</h2>
+   
+    <fieldset style="width:450px">
+        <legend>ticket</legend>
+        <form action="/tickets/new/" method="POST">
+            <br />
+            <table>
+                {% for field in form %}
+                    <tr>
+                        <td>{{ field.label_tag }} </td>
+                        <td>{{ field }}</td>
+                        <td>{{ field.errors }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <p class="submit"><input type="submit" value="submit" /></p>
+        </form>
+    </fieldset>
+{% endblock %}

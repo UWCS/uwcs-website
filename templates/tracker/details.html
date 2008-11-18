@@ -1,0 +1,43 @@
+{% extends "tracker/base.html" %}
+
+{% block content %}
+<h2>{{ object.name }}</h2>
+<fieldset style="width:450px">
+    <legend>details</legend>
+    <table>
+        <tr>
+            <td>Ticket creation date:</td>
+            <td>{{ object.started|date:"D d M Y" }}</td>
+        </tr>
+        {% if object.due_date %}
+            <tr>
+                <td>Deadline:</td>
+                <td>{{ object.due_date|date:"D d M Y" }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>Submitted by:</td>
+        <td>{{ object.submitter }}</td>
+        </tr>
+        {% if object.assignee %}
+            <tr>
+                <td>Assigned To:</td>
+                <td>{{ object.assignee }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>Goal:</td>
+            <td>{{ object.goal }}</td>
+        </tr>
+        <tr>
+            <td>Completed:</td>
+            {% if object.completed %}
+                <td>Yes</td>
+            {% else %}
+                <td>No</td>
+            {% endif %}
+        </tr>
+    </table>
+    <p>{{ object.description }}</p>
+</fieldset>
+{% endblock %}
