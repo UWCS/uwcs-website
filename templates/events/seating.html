@@ -42,9 +42,11 @@
 
     </tr><tr>
         <th colspan="1">Unassigned</th>
-        <th colspan="2">Table 1</th>
-        <th colspan="2">Table 2</th>
-        <th colspan="2">Table 3</th>
+        {% for col in seating %}
+            {% if forloop.counter0|divisibleby:"2" %}
+                <th colspan="2">Table {{ forloop.counter0|tableno }}</th>
+            {% endif %}
+        {% endfor %}
     </tr><tr>
     <td>
         <ul id="unassigned_empty" class="seating">
