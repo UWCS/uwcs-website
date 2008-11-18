@@ -1,5 +1,7 @@
 {% extends "events/base.html" %}
 
+{% load number %}
+
 {% block morehead %}
 <link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen">
 <link href="/static/css/seating.css" rel="stylesheet" type="text/css" media="screen">
@@ -14,13 +16,9 @@
 
     window.onload = function()
     {
-        
-        doSetupCrap(document.getElementById("col0"));
-        doSetupCrap(document.getElementById("col1"));
-        doSetupCrap(document.getElementById("col2"));
-        doSetupCrap(document.getElementById("col3"));
-        doSetupCrap(document.getElementById("col4"));
-        doSetupCrap(document.getElementById("col5"));
+    {% for col in seating %}
+        doSetupCrap(document.getElementById("col{{ forloop.counter0 }}"));
+    {% endfor %}
         doSetupCrap(document.getElementById("unassigned"));
         doSetupCrap(document.getElementById("unassigned_empty"));
     };
@@ -65,7 +63,7 @@
     
     {% for col in seating %}
     <td>
-    <ul id="col{{ forloop.counter0 }}" class="seating seatingcol{{ forloop.counter0 }}">
+    <ul id="col{{ forloop.counter0 }}" class="seating seating{{forloop.counter0|colside}}">
         {% for user in col %}
             {% if user %}
                 <li id="{{ user.id }}"

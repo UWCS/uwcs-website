@@ -25,15 +25,11 @@ ul.seating {
     padding: 0em;
 }
 
-ul.seatingcol0,
-ul.seatingcol2,
-ul.seatingcol4 {
+ul.seatingleft {
     margin-left: 1em;
 }
 
-ul.seatingcol1,
-ul.seatingcol3,
-ul.seatingcol5 {
+ul.seatingright {
     margin-right: 1em;
 }
 
