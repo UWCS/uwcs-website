@@ -3,10 +3,10 @@
 {% block morecontent %}
 <p>Give me...</p>
 
-<p><form method="get" action="all_quotes">
+<p><form method="get" action="all_quotes/1/">
     <input type="submit" value="&raquo;" /> All quotes.
 </form></p>
-<p><form method="post" action="quotes_from">
+<p><form method="post" action="quotes_from/1/">
     <input type="submit" value="&raquo;" />
     All quotes from 
     <select name="val">
@@ -15,7 +15,7 @@
         {% endfor %}
     </select>
 </form></p>
-<p><form method="post" action="quotes_by">
+<p><form method="post" action="quotes_by/1/">
     <input type="submit" value="&raquo;" />
     All quotes by
     <select name="val">
@@ -24,7 +24,7 @@
         {% endfor %}
     </select>
 </form></p>
-<p><form method="post" action="quotes_with">
+<p><form method="post" action="quotes_with/1/">
     <input type="submit" value="&raquo;" />
     All quotes with <input type="text" name="val" /> in them
 </form></p>

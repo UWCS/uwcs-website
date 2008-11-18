@@ -1,8 +1,9 @@
 {% extends "choob/base.html" %}
 
 {% block morecontent %}
+    <p>{{ page.number}}/{{ page.paginator.num_pages }}</p>
     <ol>
-    {% for quote in objects %}
+    {% for quote in page.object_list %}
         <li>
             <ol>
             {% for line in quote.lines %}
@@ -18,4 +19,25 @@
         </li>
     {% endfor %}
     </ol>
+{% endblock %}
+
+{% block sidebar %}
+
+{% if page.has_previous %}
+    <p>
+        <form method="get" action="{{ url }}/{{ page.previous_page_number }}/">
+            <hidden name="val" value="{{ value }}" />
+            <input type="submit" value="previous" />
+        </form>
+    </p>
+{% endif %}
+
+{% if page.has_next %}
+    <p>
+        <form method="get" action="{{ url }}/{{ page.next_page_number }}/">
+            <hidden name="val" value="{{ value }}" />
+            <input type="submit" value="next" />
+        </form>
+{% endif %}
+
 {% endblock %}
