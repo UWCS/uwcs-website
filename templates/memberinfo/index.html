@@ -42,9 +42,11 @@
     {% if shell %}
         {% if shell.isPresent %}
             <p>You have a shell account with the username "{{ shell.name }}"</p>
+        {% else %} {% if shell.isDisabled %}
+            <p>Your shell account "{{ shell.name }}" is currently disabled</p>
         {% else %}
             <p>You have requested a shell account with the username "{{ shell.name }}"</p>
-        {% endif %}
+        {% endif %}{% endif %}
     {% else %}
         <p>You don't have a shell account, you may request one here.</p>
         <form action="/member/shell/" method="post">
@@ -65,9 +67,11 @@
     {% if db %}
         {% if db.isPresent %}
             <p>You have a database account with the username "{{ db.name }}"</p>
+        {% else %}{% if db.isDisabled %}
+            <p>Your database account is currently disabled</p>
         {% else %}
             <p>You have requested a database account with the username "{{ db.name }}"</p>
-        {% endif %}
+        {% endif %}{% endif %}
     {% else %}
         <p>You don't have a database account, you may request one here.</p>
         <form action="/member/database/" method="post">
@@ -85,7 +89,7 @@
         <h4><div id="qh" style="display:inline">&#x21E8;</div>Quota</h4>
     </a>
     <div id="quota" style="display:none">
-    <p>Your total quota is {{ total_quota }}MB.  The current base quota is 1000MB and you have additionally bought {{ quota }}
+    <p>This is the quota related to your shell account.  Your total quota is {{ total_quota }}MB.  The current base quota is 1000MB and you have additionally bought {{ quota }}
     blocks of extra quota.</p>
     {% if req_quota %}
         <p>You have {{ req_quota }}MB of quota on request.</p>
@@ -110,13 +114,13 @@
     <form action="/member/lists/" method="post">
     {% for list in my_lists %}
         <p>
-            <label for="id_{{ list }}">{{ list }}</label>
+            {{ list }}
             <input id="id_{{ list }}" type="checkbox" name="{{ list }}" checked="yes" />
         </p>
     {% endfor %}
     {% for list in other_lists %}
         <p>
-            <label for="id_{{ list }}">{{ list }}</label>
+            {{ list }}
             <input id="id_{{ list }}" type="checkbox" name="{{ list }}" checked="yes" />
         </p>
     {% endfor %}
