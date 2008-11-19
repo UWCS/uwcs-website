@@ -123,7 +123,7 @@ def details(request,event_id):
 
     try:
         s = event.eventsignup
-        signed_up = u.is_authenticated() and event.signup_set.get(user=request.user)
+        signed_up = u.is_authenticated() and event.signup_set.filter(user=request.user)
         dict.update({
             'open':s.open.strftime(DATE_FORMAT_STRING),
             'close':s.close.strftime(DATE_FORMAT_STRING),
@@ -134,8 +134,9 @@ def details(request,event_id):
             'signed_up':signed_up,
             'has_seating':s.seating,
         })
-    except EventSignup.DoesNotExist:
+    except EventSignup.DoesNotExist, e:
         dict.update({ 'can_signup':False })
+        print e.__class__
 
     return render_to_response('events/details.html',dict)
 
