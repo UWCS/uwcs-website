@@ -89,7 +89,14 @@ def new_ticket(request):
         'user': request.user,
         'form': form,
     })
- 
+
+common = [
+    ('completed','O'),
+    ('submitted_0','A'),
+    ('deadline_0','A'),
+]  
+DF = '%Y-%m-%d'
+TF = '%H:%M:%S'
 
 def index(request):
     '''
@@ -118,9 +125,14 @@ def index(request):
         results = Ticket.objects.by_completed('A')
 
     my_id = request.user.id
+    n = datetime.now()
     shorts = [
-        ('Tickets for me',[('assignee',my_id),('completed','O')]),
-        ('Tickets from me',[('submitter',my_id),('completed','O')]),
+        ('Tickets for me',common + [('assignee',my_id)]),
+        ('Tickets from me',common + [('submitter',my_id)]),
+        ('Overdue',common + [
+            ('deadline_1_0',n.strftime(DF)),
+            ('deadline_1_1',n.strftime(TF)),
+        ]),
     ]
 
     return render_to_response('tracker/search.html', {
