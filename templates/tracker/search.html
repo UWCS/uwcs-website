@@ -2,6 +2,12 @@
 
  {% block morehead %}
     <link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/media/css/forms.css" />
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <script type="text/javascript" src="/media/js/core.js"></script>
+    <script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+    <script type="text/javascript" src="/media/js/calendar.js"></script>
+    <script type="text/javascript" src="/media/js/admin/DateTimeShortcuts.js"></script>
  {% endblock %}
 
  {% block sidebar %}
@@ -31,24 +37,21 @@
 
  {% block content %}
      <h2>Ticket Search</h2>
-     <fieldset style="width:350px">
-         <legend>filters</legend>
-         <form action="/tickets/" method="POST">
-             <br />
-             <table>
-                 {% for field in form %}
-                     {# field.errors #}
-                     <tr>
-                         <td>{{ field.label_tag }} </td>
-                         <td>{{ field }}</td>
-                     </tr>
-                 {% endfor %}
-             </table>
-             <p class="submit"><input type="submit" value="search" /></p>
-         </form>
-     </fieldset>
-     <br />
+     <form action="/tickets/" method="POST">
+         <br />
+         <table>
+             {% for field in form %}
+                 <tr>
+                     <td>{{ field.label_tag }} </td>
+                     <td>{{ field }}</td>
+                     <td>{{ field.errors }}</td>
+                 </tr>
+             {% endfor %}
+         </table>
+         <p class="submit"><input type="submit" value="search" /></p>
+     </form>
      <hr />
+     <br />
    
     {% if results %}
         <table id="comments">

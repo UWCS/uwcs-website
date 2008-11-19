@@ -5,12 +5,49 @@ from django import forms
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.contrib.admin.widgets import AdminSplitDateTime
 
 COMPLETED_CHOICES = (
     ('C','Completed'),
     ('O','Open'),
     ('A','All'),
 )
+
+COMPARATORS = (
+    ('A','After'),
+    ('B','Before'),
+    ('O','On'),
+)
+
+class DateTimeQueryWidget(forms.MultiWidget):
+    def __init__(self, *args, **kwargs):
+        super(DateTimeQueryWidget,self).__init__(*args, **kwargs)
+
+    def decompress(self, value):
+        if value == None:
+            return [None,None]
+        else:
+            return [value[0],value[1]]
+
+class DateTimeQueryField(forms.MultiValueField):
+    def __init__(self, future=True, *args, **kwargs):
+        dt = forms.SplitDateTimeField(initial=datetime.now())
+        comp = forms.ChoiceField(
+            choices=COMPARATORS,
+            initial=('A' if future else 'B'),
+        )
+        super(DateTimeQueryField,self).__init__(
+            fields=(comp,dt),
+            widget=DateTimeQueryWidget((
+                comp.widget,
+                AdminSplitDateTime(),
+            )),
+            *args,
+            **kwargs
+        )
+
+    def compress(self,data_list):
+            return (data_list[0],data_list[1])
 
 class TicketSearchForm(forms.Form):
     '''
@@ -22,6 +59,8 @@ class TicketSearchForm(forms.Form):
     submitter = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
     assignee = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
     goal = forms.ModelChoiceField(queryset=Goal.objects.all(),required=False)
+    submitted = DateTimeQueryField(future=False)
+    deadline = DateTimeQueryField()
     completed = forms.ChoiceField(choices=COMPLETED_CHOICES)
 
 class TicketForm(forms.ModelForm):
@@ -68,8 +107,11 @@ def index(request):
                 name__contains=form.cleaned_data['name'],
                 description__contains=form.cleaned_data['description']
             )
+            print form.cleaned_data['submitted']
             if sub: results = results.filter(submitter=sub)
             if assign: results = results.filter(assignee=assign)
+        else:
+            results = Ticket.objects.none()
 
     else:
         form = TicketSearchForm()
