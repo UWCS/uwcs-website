@@ -22,6 +22,7 @@ COMPSOC_EXEC_EMAIL = ''
 COMPSOC_TECHTEAM_EMAIL = ''
 COMPSOC_TREASURER_EMAIL = ''
 UNION_API_KEY = ''
+CHOOB_FILE = os.path.join(os.getcwd(), 'choob.data')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -91,9 +92,15 @@ INSTALLED_APPS = (
     'compsoc.events',
     'compsoc.memberinfo',
     'compsoc.search',
+    'compsoc.tracker',
+    'compsoc.choob',
 )
-# Sun, 19 Oct 2008 01:32:47
-DATE_FORMAT_STRING = '%a, %d %b %Y %X'
+
+# Sun, 19 Oct 2008 01:32
+DATE_FORMAT_STRING = '%a, %d %b %Y %H:%M'
+
+# 01:32 
+SAME_SECOND_FORMAT = '%H:%M'
 
 # Sun, 19 Oct 2008
 WEEK_FORMAT_STRING = '%a, %d %b %Y'
