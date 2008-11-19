@@ -47,3 +47,18 @@ class LatestMinutes(Feed):
 class LatestAtomMinutes(LatestMinutes):
     feed_type = Atom1Feed
     subtitle = LatestMinutes.description
+
+class LatestNewsletters(Feed):
+    title = "Compsoc Exec Meeting Newsletters"
+    link = "/"
+    description = "Newsletters written by the University of Warwick Computing Society Exec"
+
+    def items(self):
+        return Communication.objects.filter(type='N').order_by('date')[:10]
+
+    def item_link(self,item):
+        return "/%i/" % item.id
+
+class LatestAtomNewsletters(LatestNewsletters):
+    feed_type = Atom1Feed
+    subtitle = LatestNewsletters.description

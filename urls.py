@@ -17,6 +17,8 @@ feeds = {
     'events/atom': NextAtomEvents,
     'minutes': LatestMinutes,
     'minutes/atom': LatestAtomMinutes,
+    'newsletters': LatestNewsletters,
+    'newsletters/atom': LatestNewsletters,
 }
 
 urlpatterns = patterns('',
