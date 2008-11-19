@@ -103,10 +103,13 @@ class ShellAccount(models.Model):
     user = models.OneToOneField(User)
     name = models.CharField(max_length=30)
     status = models.CharField(max_length=2,choices=STATUS)
-
+    
     def isPresent(self):
         return self.status == 'PR'
 
+    def isDisabled(self):
+        return self.status == 'DD'
+    
     def __unicode__(self):
         return self.name
 
@@ -118,6 +121,9 @@ class DatabaseAccount(models.Model):
     def isPresent(self):
         return self.status == 'PR'
     
+    def isDisabled(self):
+        return self.status == 'DD'
+
     def __unicode__(self):
         return self.name
 
