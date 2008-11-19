@@ -145,12 +145,19 @@ class Signup(models.Model):
 
 post_save.connect(write_file_callback, sender=Signup)
 
+
+class RevisionManager(models.Manager):
+    def for_event(self,e):
+        return self.filter(event=e).order_by('-number')
+
 class SeatingRevision(models.Model):
     '''Information about a single seating plan revision'''
     event = models.ForeignKey(Event)
     creator = models.ForeignKey(User)
     number = models.IntegerField()
     comment = models.CharField(max_length=30)
+
+    objects = RevisionManager()
 
     def __unicode__(self):
         return "%i, %s" % (self.number, self.comment)

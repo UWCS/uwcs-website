@@ -168,18 +168,20 @@ def seating(request, event_id, revision_no=None):
                                 u = User.objects.get(id=int(id_string))
                                 revision.seating_set.create(user=u,col=column,row=row)
                             except ValueError,User.DoesNotExist: pass
-                revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
+                revisions = SeatingRevision.objects.for_event(e)
             else:
-                revisions = SeatingRevision.objects.filter(event=e).order_by('-number')
-                revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
+                revisions = SeatingRevision.objects.for_event(e)
+                if revisions:
+                    revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
             
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: False))
             unass = set([s.user for s in e.signup_set.all()])
-            for seat in revision.seating_set.all():
-                seat_dict[seat.col][seat.row] = seat.user
-                unass.discard(seat.user)
-                #unass.remove(seat.user)
+            if revisions:
+                for seat in revision.seating_set.all():
+                    seat_dict[seat.col][seat.row] = seat.user
+                    unass.discard(seat.user)
+                    #unass.remove(seat.user)
 
             # create nested lists for rows and columns
             cols = range(0,room.max_cols)
@@ -190,7 +192,7 @@ def seating(request, event_id, revision_no=None):
                 'room':room.name,
                 'seating':s,
                 'seating_revisions':revisions,
-                'new_revision_no':revision.number + 1,
+                'new_revision_no':revision.number + 1 if revisions else 0,
                 'unassigned':unass,
                 })
     except EventSignup.DoesNotExist: pass
