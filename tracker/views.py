@@ -144,6 +144,7 @@ def index(request):
             ('deadline_1_0',n.strftime(DF)),
             ('deadline_1_1',n.strftime(TF)),
         ]),
+        ('Exec Tickets',common + [('assignee_group',1)]),
     ]
 
     return render_to_response('tracker/search.html', {
