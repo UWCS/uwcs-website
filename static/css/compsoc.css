@@ -259,7 +259,22 @@ a:hover {
     float: left;
 }
 
+.inl {
+    float: left;
+}
+.inr {
+    margin-left: 8em;
+}
+
 #search table {
     margin: 25px;
     border: 0;
 }
+
+.resize {
+    float: left;
+    width: 25em;
+    height 4em;
+    margin: 1em;
+}
+
