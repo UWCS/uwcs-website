@@ -22,17 +22,17 @@
     <ul>
         <li><a href="/password/">change website password</a></li>
         {% if shell.isPresent %}
-           <li><a href="/memberinfo/reset/shell/">request shell password reset</a></li>
+           <li><a href="/member/reset/shell/">request shell password reset</a></li>
         {% endif %}
         {% if db.isPresent %}
-            <li><a href="/memberinfo/reset/db/">request database password reset</a></li>
+            <li><a href="/member/reset/db/">request database password reset</a></li>
         {% endif %}
         <li>
     </ul>
     <br />
     <h2>Links</h2>
     <ul>
-        <li><a href="/memberinfo/list/">list of members</a></li>
+        <li><a href="/member/list/">list of members</a></li>
     </ul>
 {% endblock %}
 
@@ -126,7 +126,7 @@
     {% for list in other_lists %}
         <p>
             {{ list }}
-            <input id="id_{{ list }}" type="checkbox" name="{{ list }}" checked="yes" />
+            <input id="id_{{ list }}" type="checkbox" name="{{ list }}"/>
         </p>
     {% endfor %}
     <input type="submit" value="set" />

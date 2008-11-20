@@ -113,12 +113,13 @@ def quota(request):
 def lists(request):
     my_lists = request.user.mailinglist_set
     my_lists.clear()
-    for list in MailingList.objects.all():
-        try:
-            request.POST[list.list]
-            my_lists.add(list)
-        except: pass
+    for mlist in MailingList.objects.all():
+        if request.POST.has_key(mlist.list):
+            my_lists.add(mlist)
+    print "my_lists contains: ", my_lists.all()
+
     request.user.save()
+    print "request.user.mailinglist_set contains: ", request.user.mailinglist_set.all()
     return HttpResponseRedirect('/member/')
 
 @login_required()
@@ -133,6 +134,13 @@ def details(request):
     member = u.member
     member.showDetails = publish
     member.save()
+
+    try:
+        nickname = u.nicknamedetails
+        nickname.nickname = name
+    except NicknameDetails.DoesNotExist:
+        nickname = NicknameDetails(user=u, nickname=name)
+    nickname.save()
 
     try:
         website = u.websitedetails
@@ -154,7 +162,7 @@ def member_list(request):
             return False
 
     for user in User.objects.all():
-        if user.member.showDetails and user.is_active :
+        if user.member.showDetails and user.is_active:
             users.append((
                 user.get_full_name(),
                 user.member.get_nick(),
@@ -163,6 +171,7 @@ def member_list(request):
             ))
     
     dict = {
+        'user': request.user,
         'users': users
     }
     return render_to_response('memberinfo/list.html',dict)

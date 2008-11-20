@@ -131,6 +131,7 @@ class Quota(models.Model):
     user = models.ForeignKey(User)
     quantity = models.IntegerField()
     status = models.CharField(max_length=2,choices=QUOTA_STATUS)
+    date = models.DateTimeField()
     
     def __unicode__(self):
         return str(self.quantity) + " for " + self.user.username + ", currently " + self.status
