@@ -1,6 +1,6 @@
 from compsoc.tracker.models import *
 from datetime import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django import forms
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
@@ -57,7 +57,9 @@ class TicketSearchForm(forms.Form):
     name = forms.CharField(max_length=20,required=False)
     description = forms.CharField(required=False)
     submitter = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
+    submitter_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
     assignee = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
+    assignee_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
     goal = forms.ModelChoiceField(queryset=Goal.objects.all(),required=False)
     submitted = DateTimeQueryField(future=False)
     deadline = DateTimeQueryField()
@@ -108,15 +110,24 @@ def index(request):
         if form.is_valid():
             sub = form.cleaned_data['submitter']
             assign = form.cleaned_data['assignee']
+            agroup = form.cleaned_data['assignee_group']
+            sgroup = form.cleaned_data['submitter_group']
+
             results = Ticket.objects.by_completed(
                 form.cleaned_data['completed']
             ).filter(
                 name__contains=form.cleaned_data['name'],
                 description__contains=form.cleaned_data['description']
             )
-            print form.cleaned_data['submitted']
-            if sub: results = results.filter(submitter=sub)
-            if assign: results = results.filter(assignee=assign)
+            if sub:
+                results = results.filter(submitter=sub)
+            if assign:
+                results = results.filter(assignee=assign)
+            if agroup:
+                results.filter(assignee__in=agroup.user_set.all())
+            if sgroup:
+                results.filter(submitter__in=sgroup.user_set.all())
+
         else:
             results = Ticket.objects.none()
 
