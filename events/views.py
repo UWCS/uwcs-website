@@ -154,8 +154,11 @@ def seating(request, event_id, revision_no=None):
         signup = e.eventsignup
         if signup.has_seating_plan():
             room = signup.seating
-            # KeyError
+            closed = signup.close < datetime.now()
+
             if request.method == 'POST' and request.user.is_authenticated():
+                if closed:
+                    return render_to_response('events/plan_closed.html')
                 order = request.POST['order']
                 last_no = SeatingRevision.objects.filter(event=e).order_by('-number')[0].number
                 revision = e.seatingrevision_set.create(creator=request.user, comment=request.POST['comment'], number=last_no+1)
@@ -194,6 +197,7 @@ def seating(request, event_id, revision_no=None):
                 'seating_revisions':revisions,
                 'new_revision_no':revision.number + 1 if revisions else 0,
                 'unassigned':unass,
+                'notclosed':not closed,
                 })
     except EventSignup.DoesNotExist: pass
 
