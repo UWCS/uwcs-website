@@ -1,0 +1,4 @@
+This is a notification that {{ name }} has requested a guest account.
+
+Please go to: http://www.uwcs.co.uk/admin/memberinfo/guests/ in order to
+accept/reject this request.

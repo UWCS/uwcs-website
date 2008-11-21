@@ -231,14 +231,20 @@ def create_guest(request):
     u.save()
     mem = Member.objects.create(user=u,guest=True,showDetails=False)
     mem.save()
-    n = NicknameDetails(user=u,nickname='mullet')
+    n = NicknameDetails(user=u,nickname=name)
     n.save()
     template_mail(
         'Guest account request',
         'memberinfo/guest_request_email',
         {'name':name},
-        COMPSOC_TECHTEAM_EMAIL,
-        [COMPSOC_TECHTEAM_EMAIL,COMPSOC_EXEC_EMAIL,email])
+        COMPSOC_EXEC_EMAIL,
+        [email])
+    template_mail(
+        'Guest account request',
+        'memberinfo/exec_guest_request_email',
+        {'name':name},
+        COMPSOC_EXEC_EMAIL,
+        [COMPSOC_EXEC_EMAIL])
     return render_to_response('memberinfo/guest_request.html')
 
 
