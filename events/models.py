@@ -113,12 +113,12 @@ post_save.connect(write_file_callback, sender=Event)
 
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
-    name = models.CharField(max_length=30)
+    room = models.OneToOneField(Location)
     max_cols = models.IntegerField()
     max_rows = models.IntegerField()
 
     def __unicode__(self):
-        return self.name
+        return self.room.__unicode__()
 
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):

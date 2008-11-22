@@ -192,7 +192,7 @@ def seating(request, event_id, revision_no=None):
             s = [[seat_dict[y][x] for x in range(0,max_rows[y])] for y in cols]
             
             dict.update({
-                'room':room.name,
+                'room':room,
                 'seating':s,
                 'seating_revisions':revisions,
                 'new_revision_no':revision.number + 1 if revisions else 0,
