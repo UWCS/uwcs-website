@@ -1,0 +1,21 @@
+{% extends "events/base.html" %}
+
+{% block morehead %}
+    {% include "common/maps_head.html" %}
+{% endblock %}
+
+{% load markup %}
+
+{% block content %}
+    <h2>{{ object.name }}</h2>
+    <img src="{{ object.image_url}}"/>
+    <br />
+    <hr />
+    <br />
+    {% include "common/maps.html" %}
+    <br />
+    <hr />
+    <br />
+    {{ object.description|markdown }}
+
+{% endblock %}

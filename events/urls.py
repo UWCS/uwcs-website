@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from compsoc.comms.models import Communication
+from compsoc.events.models import Location 
 
 urlpatterns = patterns('compsoc.events.views',
     (r'^$','events_list'),
@@ -11,5 +11,6 @@ urlpatterns = patterns('compsoc.events.views',
     (r'^ical/$','ical_feed'),
     (r'^seating/(?P<event_id>\d+)/$', 'seating'),
     (r'^seating/(?P<event_id>\d+)/(?P<revision_no>\d+)/$', 'seating'),
+    (r'^location/(?P<object_id>\d+)/$','location'),
 )
 

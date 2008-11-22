@@ -258,3 +258,14 @@ def ical_feed(request):
     response['Filename'] = 'filename.ics'  # IE needs this
     response['Content-Disposition'] = 'attachment; filename=filename.ics'
     return response
+
+def location(request,object_id):
+    '''
+    Location details page controller
+    '''
+    loc = Location.objects.get(pk=object_id)
+    return render_to_response("events/location_detail.html", {
+        'object':loc,
+        'map_room':loc.map_loc,
+        'user':request.user,
+    })

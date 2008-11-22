@@ -44,6 +44,7 @@ class EventAdmin(admin.ModelAdmin):
     form = EventAdminForm
 
 admin.site.register(EventType)
+admin.site.register(Location)
 admin.site.register(Event,EventAdmin)
 admin.site.register(Signup)
 admin.site.register(Seating)

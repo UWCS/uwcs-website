@@ -22,10 +22,22 @@ class EventType(models.Model):
     def __unicode__(self):
         return self.name
 
+class Location(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.TextField()
+    image_url = models.CharField(max_length=255)
+    map_loc = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return "/events/location/%i/" % self.id
+
 class Event(models.Model):
     type = models.ForeignKey(EventType)
+    location = models.ForeignKey(Location)
     shortDescription = models.CharField(max_length=20)
-    location = models.CharField(max_length=30)
     longDescription = models.TextField()
     start = models.DateTimeField()
     finish = models.DateTimeField()
