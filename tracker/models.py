@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from compsoc.tracker.signals import *
 
 class Goal(models.Model):
     name = models.CharField(max_length=20)
@@ -16,7 +17,6 @@ class TicketManager(models.Manager):
             return self.all()
         else:
             return self.filter(completed=(choice == 'C'))
-
 
 class Ticket(models.Model):
     '''
@@ -38,3 +38,6 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return "/tickets/detail/%i/" % self.id
+
+#pre_save.connect(goal_email, sender=Goal)
+#pre_save.connect(ticket_email, sender=Goal)

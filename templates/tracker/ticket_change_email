@@ -1,0 +1,6 @@
+
+The {{ name }} ticket has been changed.  A list of the changes is as
+follows:
+
+{% include 'tracker/changes' %}
+{% include 'tracker/blurb' %}

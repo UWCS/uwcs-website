@@ -1,0 +1,5 @@
+
+{% for name,val in changes %}
+    {{ name }} has changed to {{ val }}
+{% endfor %}
+

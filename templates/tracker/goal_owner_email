@@ -1,0 +1,4 @@
+
+The owner of goal {{ name }} has changed from {{ from.nick }} to {{ to.nick }}.
+
+{% include 'tracker/blurb' %}
