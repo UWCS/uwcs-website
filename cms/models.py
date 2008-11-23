@@ -23,10 +23,11 @@ class Page(models.Model):
         return self.get_data().login
 
     def get_peers(self):
-        parent_slug = '/'.join(self.slug.split('/')[:-1])+'/'
+        parent_slug = '/'.join(self.slug.split('/')[:-1])
         peers = []
+        child_prefix = self.slug + '/'
         for p in Page.objects.filter(slug__startswith=parent_slug):
-            if not p.slug.startswith(self.slug):
+            if not p.slug.startswith(child_prefix):
                 peers.append(p)
         return peers
 

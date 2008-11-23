@@ -17,16 +17,18 @@
 {% block sidebar %}
 <ul>
     {% for slug,name in peers %}
+        {% ifequal name title %}
+        <li>{{ name }}
+            <ul>
+                {% for slug,name in children %}
+                    <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% else %}
         <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
+        {% endifequal %}
     {% endfor %}
-    <li>
-    {{ title }}
-    <ul>
-        {% for slug,name in children %}
-            <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
-        {% endfor %}
-    </ul>
-    </li>
 </ul>
 {% endblock %}
 
