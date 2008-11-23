@@ -2,6 +2,8 @@
 
 {% load markup %}
 
+{% block ttitle %}{{ title }}{% endblock %}
+
 {% block contact %}
     {% ifequal slug "contact" %}
         class="active"

@@ -1,5 +1,7 @@
 {% extends "comms/base.html" %}
 
+{% block ttitle %}{{ object.title }}{% endblock %}
+
 {% block content %}
 <h1>{{ object.title }}</h1>
 <p>{{ object.date }}</h1>

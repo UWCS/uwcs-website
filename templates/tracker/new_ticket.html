@@ -1,10 +1,11 @@
 {% extends "tracker/base.html" %}
 
+{% block ttitle %}New Issue{% endblock %}
+
 {% block content %}
-    <h2>Create New Ticket</h2>
+    <h2>Create New Issue</h2>
    
     <fieldset style="width:450px">
-        <legend>ticket</legend>
         <form action="/tickets/new/" method="POST">
             <br />
             <table>

@@ -199,6 +199,7 @@ a:hover {
 }
 
 #sidebar li {
+    margin-left: 10px;
 }
 
 #sidebar li ul {

@@ -1,5 +1,7 @@
 {% extends "tracker/base.html" %}
 
+{% block ttitle %}Issue Details for {{object.name }}{% endblock %}
+
 {% block content %}
 <h2>{{ object.name }}</h2>
 <fieldset style="width:450px">

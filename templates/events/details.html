@@ -1,5 +1,7 @@
 {% extends "events/base.html" %}
 
+{% block ttitle %}Event Details for {{ event.type.name }}{% endblock %}
+
 {% block content %}
 <div class="post">
     <h1 class="title">Event Details for {{ event.type.name }}</h1>
