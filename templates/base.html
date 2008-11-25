@@ -4,11 +4,11 @@
         <script defer type="text/javascript" src="pngfix.js"></script>
         <![endif]-->
 
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-<meta name="keywords" content="">
-<meta name="description" content="">
-<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen" />
 <title>{% block ttitle %}Warwick Computing Society{% endblock %}</title>
 {% block morehead %}{% endblock %}
 </head>
@@ -25,12 +25,14 @@
             <a href="/login/">login</a>
         {% endif %}
         <form action="/search/" method="post">
-            <span style="display: none"><input type="submit" /></span>
-            <input type="text" name="searchBox" />
+            <div>
+	    	<span style="display: none"><input type="submit" /></span>
+            	<input type="text" name="searchBox" />
+	    </div>
         </form>
     </div>
     <div id="logo">
-        <img src="/static/img/si_logo_small.png" />
+        <img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
         <h1><a href="/">Warwick Computing Society</a></h1>
     </div>
     <div id="menu">
