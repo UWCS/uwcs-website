@@ -6,7 +6,7 @@ from compsoc.events.models import Event
 class LatestNews(Feed):
     title = "Latest Compsoc news items"
     link = "/"
-    description = "All the updates the University of Warwick Computing Society"
+    description = "All the updates from the University of Warwick Computing Society"
 
     def items(self):
         return Communication.objects.filter(type='N').order_by('date')[:10]

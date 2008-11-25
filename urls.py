@@ -43,10 +43,26 @@ urlpatterns = patterns('',
     (r'^password/', 'django.contrib.auth.views.password_change', {'template_name':'password.html','post_change_redirect':'/'}),
 
     (r'^cms/(?P<url>.*)',handle),
-
     (r'^search/$', search),
-
 )
+
+# Some legacy link compatibility. I hope this doesn't break anything
+
+if settings.LEGACY_SITE:
+    urlpatterns += patterns('',
+    	(r'^society/events/', include('compsoc.events.urls')),
+    	(r'^society/members/website/', include('compsoc.memberinfo.urls')),
+    	(r'^auth/logout', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
+    )
+    urlpatterns += patterns('django.views.generic.simple',
+    	('^society/events/rss2.0', 'redirect_to', {'url': '/feeds/events/'}),
+	('^society/news/rss2.0', 'redirect_to', {'url': '/feeds/news/'}),
+	('^society/contact', 'redirect_to', {'url': '/cms/contact/'}),
+	('^society/newsletters', 'redirect_to', {'url': '/newsletters/1/'}),
+	('^society/minutes', 'redirect_to', {'url': '/minutes/1/'}),
+	('^society/news', 'redirect_to', {'url': '/news/1/'}),
+	('^society/members', 'redirect_to', {'url': '/member/list/'}),
+    )
 
 # if we are debugging serve the static content locally
 # when deployed we use an http server to do this

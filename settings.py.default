@@ -3,6 +3,7 @@
 import os
 
 DEBUG = True
+LEGACY_SITE = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
