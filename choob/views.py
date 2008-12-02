@@ -9,6 +9,7 @@ def quotes_page(request):
     quoted = map(lambda q:q[0],QuoteLine.objects.all().values_list('nick').distinct())
     
     return render_to_response('choob/quotes.html',{
+        'breadcrumbs': [('/','home'),('/irc/','irc')],
         'user':request.user,
         'quoters':quoters,
         'quoted':quoted,
@@ -21,10 +22,11 @@ def quotes_f(request,page_num,url,f):
     Generic quotes controller for making lists of quotes
     type(f) = String -> [QuoteObject]
     '''
-    if request.method == 'POST': 
+    if request.method == 'POST':
         val = request.POST['val']
         paginator = Paginator(f(val),PER_PAGE)
         return render_to_response('choob/quote_list.html',{
+            'breadcrumbs': [('/','home'),('/irc/','irc')],
             'user':request.user,
             'page':paginator.page(page_num),
             'value':val,
@@ -36,6 +38,7 @@ def quotes_f(request,page_num,url,f):
 def all_quotes(request,page_num):
     paginator = Paginator(QuoteObject.objects.all(),PER_PAGE)
     return render_to_response('choob/quote_list.html',{
+        'breadcrumbs': [('/','home'),('/irc/','irc'),('/irc/all_quotes/1/','all')],
         'user':request.user,
         'page':paginator.page(page_num),
     })

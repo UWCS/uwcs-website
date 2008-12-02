@@ -46,8 +46,12 @@ def events_list(request):
        lookup[begin_week(event.start)].append(event)
 
     lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
-    return render_to_response('events/list.html',
-        {'user':request.user,'events':lookup, 'future':future_events()})
+    return render_to_response('events/list.html', {
+        'breadcrumbs': [('/','home'),('/events/','events')],
+        'user':request.user,
+        'events':lookup,
+        'future':future_events()}
+    )
 
 def calendar(request,delta):
     '''
@@ -85,6 +89,7 @@ def calendar(request,delta):
         iter += a_week
 
     return render_to_response('events/calendar.html',{
+        'breadcrumbs': [('/','home'),('/events/','events'),('/events/calendar/','calendar')],
         'events':events,
         'current':date.today(),
         'prev':offset-1,

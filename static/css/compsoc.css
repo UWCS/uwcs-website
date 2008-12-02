@@ -61,12 +61,13 @@ a:hover {
 	width: 100%;
 	height: 190px;
 	margin: 0px; /*auto;*/
+	border-bottom: 1px solid #FFFFFF;
 }
 
-#header hr {
+/*#header hr {
     margin-left: 15%;
     margin-right: 15%;
-}
+}*/
 
 /* Logo */
 #logo {

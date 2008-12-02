@@ -88,6 +88,7 @@ def new_ticket(request):
         form = TicketForm()
 
     return render_to_response('tracker/new_ticket.html', {
+        'breadcrumbs': [('/','home'),('/tickets','tickets'),('/tickets/new/','new')],
         'user': request.user,
         'form': form,
     })
@@ -148,6 +149,7 @@ def index(request):
     ]
 
     return render_to_response('tracker/search.html', {
+        'breadcrumbs': [('/','home'),('/tickets','tickets')],
         'form': form,
         'shorts':shorts,
         'results':results.order_by('goal').order_by('completed'),
