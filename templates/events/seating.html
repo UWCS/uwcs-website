@@ -9,23 +9,16 @@
 <link href="/static/css/seating.css" rel="stylesheet" type="text/css" media="screen">
 
     {% if seating %}
-    <script type="text/javascript" src="/static/js/seating.js"></script>
+        <script type="text/javascript" src="/static/js/seating.js"></script>
         <script type="text/javascript">
-    function doSetupCrap(le)
-    {
-        Seating.initialiseContainer(le);
-    }
-
-    window.onload = function()
-    {
-    {% for col in seating %}
-        doSetupCrap(document.getElementById("col{{ forloop.counter0 }}"));
-    {% endfor %}
-        doSetupCrap(document.getElementById("unassigned"));
-        doSetupCrap(document.getElementById("unassigned_empty"));
-    };
-    </script>
-
+        $(document).ready(function() {
+            {% for col in seating %}
+                Seating.initialiseContainer($('#col{{ forloop.counter0 }}')[0]);
+            {% endfor %}
+            Seating.initialiseContainer($('#unassigned')[0]);
+            Seating.initialiseContainer($('#unassigned_empty')[0]);
+        });
+        </script>
     {% endif %}
 {% endblock %}
 
