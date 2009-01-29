@@ -90,7 +90,7 @@ a:hover {
 
 #logo h1 a {
 	padding-right: 20px;
-	text-decoration: none/
+	text-decoration: none;
 	color: #FFFFFF;
 }
 
@@ -277,7 +277,7 @@ a:hover {
 .resize {
     float: left;
     width: 25em;
-    height 4em;
+    height: 4em;
     margin: 1em;
 }
 

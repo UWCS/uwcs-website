@@ -105,8 +105,8 @@ ul.seating div.insert {
 
 #comments td {
     font-size: larger;
-    background-color:#565656;
-    vertical-align: center;
+    background-color: #565656;
+    vertical-align: middle;
     border: 5px solid #565656;
 }
 
