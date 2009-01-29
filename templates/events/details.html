@@ -45,6 +45,18 @@
                             <td>{{ signup.comment }}</td>
                         </tr>
                     {% endfor %}
+                    {% if reserved %}
+                        <tr><th colspan="2">Reserves</th></tr>
+                        {% for signup in reserved %}
+                            <tr>
+                                <td>
+                                    {{ signup.user.username }}<br />
+                                    <div class="time">{{ signup.time_form }}</div>
+                                </td>
+                                <td>{{ signup.comment }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
                 {% else %}
                     <tr><td colspan="2">There are no signups yet.</td></tr>
                 {% endif %}

@@ -115,12 +115,17 @@ def valid_signup(user,event):
     
 def details(request,event_id):
     event = Event.objects.get(id=event_id)
-    signups = event.signup_set.all()
+    signups = event.signup_set.order_by('time')#[:event.signup_count()]
+    max = event.signup_total()
+    reserved = signups[max:]
+    signups = signups[:max]
+
     u = request.user
     
     dict = {
         'event':event,
         'signups':signups,
+        'reserved':reserved,
         'can_edit':request.user.is_staff if request.user else False,
         'user':u,
         'future':future_events(),
