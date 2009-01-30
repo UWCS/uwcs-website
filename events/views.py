@@ -186,7 +186,7 @@ def seating(request, event_id, revision_no=None):
             else:
                 revisions = SeatingRevision.objects.for_event(e)
                 if revisions:
-                    revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no)
+                    revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no,event=e)
             
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: False))
