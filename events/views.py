@@ -170,7 +170,8 @@ def seating(request, event_id, revision_no=None):
                 if closed:
                     return render_to_response('events/plan_closed.html')
                 order = request.POST['order']
-                last_no = SeatingRevision.objects.filter(event=e).order_by('-number')[0].number
+                previous = SeatingRevision.objects.filter(event=e).order_by('-number')
+                last_no = previous[0].number if previous else 0
                 revision = e.seatingrevision_set.create(creator=request.user, comment=request.POST['comment'], number=last_no+1)
                 for col in order.split(';'):
                     m = p.match(col)
