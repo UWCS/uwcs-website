@@ -10,7 +10,11 @@
         <div id="{{ comm_item.title }}"/>
             <div class="post">
                 <h1 class="title">{{ comm_item.title }}</h1>
-                <p class="byline"><small>Posted on {{ comm_item.date }} | <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a></small></p>
+                <p class="byline"><small>Posted on {{ comm_item.date }} | 
+                    {% if user.is_staff %}
+                        <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a></small>
+                    {% endif %}
+                </p>
                 <div class="entry">
                 {{ comm_item.text|markdown }}
                 </div>
