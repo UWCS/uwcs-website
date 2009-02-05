@@ -20,7 +20,7 @@
 <div id="header">
     <div id="top-right">
         {% if user.is_authenticated %}
-            Logged in as {{ user.username }}
+            Logged in as {{ user.member.name }}
             <a href="/member/">profile</a>
             <a href="/logout/">logout</a>
         {% else %}
