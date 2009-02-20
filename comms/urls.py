@@ -9,7 +9,7 @@ def from_date(date):
     return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))
 
 def get_dict(item_type,paginate=True):
-    data = Communication.objects.filter(type=item_type).order_by('date')
+    data = Communication.objects.filter(type=item_type).order_by('-date')
     lookup = {}
     for comm in data: lookup[from_date(comm.date)] = True
     info_dict = {
