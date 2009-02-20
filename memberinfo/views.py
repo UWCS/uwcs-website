@@ -116,10 +116,8 @@ def lists(request):
     for mlist in MailingList.objects.all():
         if request.POST.has_key(mlist.list):
             my_lists.add(mlist)
-    print "my_lists contains: ", my_lists.all()
 
     request.user.save()
-    print "request.user.mailinglist_set contains: ", request.user.mailinglist_set.all()
     return HttpResponseRedirect('/member/')
 
 @login_required()

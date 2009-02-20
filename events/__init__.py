@@ -9,7 +9,6 @@ def write_file_callback(sender, **kwargs):
     from compsoc.events.models import Event
     choob_file = open(CHOOB_FILE,"w")
     events = filter(lambda e:e.is_in_future() or e.is_running(),Event.objects.all())
-    print events
     if events:
         choob_file.write(mapred(lambda x,y: x+' '+y,lambda e:str(e.id),events)+'\n')
         for event in events:

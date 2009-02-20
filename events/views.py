@@ -146,7 +146,6 @@ def details(request,event_id):
         })
     except EventSignup.DoesNotExist, e:
         dict.update({ 'can_signup':False })
-        print e.__class__
 
     return render_to_response('events/details.html',dict)
 
@@ -264,7 +263,6 @@ def ical_feed(request):
         url = "%s/events/details/%i/" % (Site.objects.get_current() , event.id)
         vevent.add('uid').value = url
         vevent.add('url').value = url
-    print cal.serialize()
     response = HttpResponse(cal.serialize(), mimetype='text/calendar')
     response['Filename'] = 'filename.ics'  # IE needs this
     response['Content-Disposition'] = 'attachment; filename=filename.ics'
