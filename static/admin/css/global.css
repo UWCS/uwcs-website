@@ -422,6 +422,13 @@ input[type=submit].default:active {
 
 .module table {
 	border-collapse: collapse;
+	margin-bottom: 15px;
+	margin-top: 5px;
+	width: 32em;
+}
+
+.module td {
+	width: 5em;
 }
 
 /* MESSAGES & ERRORS */
