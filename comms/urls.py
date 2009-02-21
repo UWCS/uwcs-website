@@ -33,6 +33,6 @@ urlpatterns = patterns('django.views.generic.list_detail',
 
 ) + patterns('django.views.generic.date_based',
     (r'^monthnews/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('N',False)),
-    (r'^monthminutes/(?P<year>\d{4})/(?P<month>[a-z]{3})/$','archive_month',get_dict('M',False)),
-    (r'^monthnewsletters/(?P<year>\d{4})/(?P<month>[a-z]{3})/$','archive_month',get_dict('NL',False)),
+    (r'^monthminute/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('M',False)),
+    (r'^monthnewsletter/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('NL',False)),
 )
