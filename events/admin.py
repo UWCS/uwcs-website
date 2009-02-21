@@ -39,15 +39,26 @@ class EventSignupInline(admin.StackedInline):
     max_num = 1
     form = EventSignupForm
 
+class SignupInline(admin.TabularInline):
+    model = Signup
+    extra = 1
+
 class EventAdmin(admin.ModelAdmin):
-    inlines = [ EventSignupInline, ]
+    inlines = [ EventSignupInline, SignupInline]
     form = EventAdminForm
+    list_display = ('type', 'location', 'start')
+
+class SeatingRoomInline(admin.StackedInline):
+    model = SeatingRoom
+
+class LocationAdmin(admin.ModelAdmin):
+    inlines = [SeatingRoomInline]
 
 admin.site.register(EventType)
-admin.site.register(Location)
+admin.site.register(Location, LocationAdmin)
 admin.site.register(Event,EventAdmin)
-admin.site.register(Signup)
-admin.site.register(Seating)
-admin.site.register(SeatingRoom)
-admin.site.register(SeatingRevision)
+#admin.site.register(Signup)
+#admin.site.register(Seating)
+#admin.site.register(SeatingRoom)
+#admin.site.register(SeatingRevision)
 
