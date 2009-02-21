@@ -7,19 +7,17 @@
 <br />
 {% if object_list %}
     {% for comm_item in object_list %}
-        <div id="{{ comm_item.title }}"/>
-            <div class="post">
-                <h1 class="title">{{ comm_item.title }}</h1>
-                <p class="byline"><small>Posted on {{ comm_item.date }} | 
-                    {% if user.is_staff %}
-                        <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a></small>
-                    {% endif %}
-                </p>
-                <div class="entry">
-                {{ comm_item.text|markdown }}
-                </div>
-                <p class="meta"><a href="/details/{{ comm_item.id }}" class="more">Details</a></p>
+        <div class="post">
+            <h1 class="title">{{ comm_item.title }}</h1>
+            <p class="byline"><small>Posted on {{ comm_item.date }} | 
+                {% if user.is_staff %}
+                    <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a>
+                {% endif %}
+            </small></p>
+            <div class="entry">
+            {{ comm_item.text|markdown }}
             </div>
+            <p class="meta"><a href="/details/{{ comm_item.id }}" class="more">Details</a></p>
         </div>
     {% endfor %}
 
