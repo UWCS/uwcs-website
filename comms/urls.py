@@ -8,16 +8,21 @@ from compsoc.shortcuts import current_year,get
 def from_date(date):
     return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))
 
+def lookup(item_type):
+    data = Communication.objects.filter(type=item_type).order_by('-date')
+    store = {}
+    for comm in data:
+        store[from_date(comm.date)] = True
+    return store.keys()
+
 def get_dict(item_type,paginate=True):
     data = Communication.objects.filter(type=item_type).order_by('-date')
-    lookup = {}
-    for comm in data: lookup[from_date(comm.date)] = True
     info_dict = {
         'queryset':data,
         'template_name':'comms/list.html',
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
-            'dates':lookup.keys(),
+            'dates':lambda: lookup(item_type),
         },
     }
     if paginate:    info_dict['paginate_by'] = 10
