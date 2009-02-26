@@ -50,7 +50,7 @@ def add_edit(request,page_id=None):
             )
             rev.save()
             return HttpResponseRedirect('/admin/cms/page/'+str(page.id))
-            
+        comments = []
     elif page_id != None:
         page = get_object_or_404(Page,id=page_id)
         rev = page.get_data()
