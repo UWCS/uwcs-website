@@ -4,12 +4,12 @@ http://www.freecsstemplates.org
 Released for free under a Creative Commons Attribution 2.5 License
 */
 
-body {
+body, html, form {
 	margin: 0;
 	padding: 0;
 	background: #111111;
 	font-size: 13px;
-    color: #ffffff;
+	color: #ffffff;
 }
 
 body, th, td, input, textarea, select, option {
@@ -55,13 +55,20 @@ a:hover {
 	color: #46B;
 }
 
+input, textarea, select {
+	color: #ddd;
+	border: 1px solid #888;
+	background-color: #181818;
+}
+
 /* Header */
 
 #header {
 	width: 100%;
-	height: 190px;
+	height: 175px;
+	padding-top: 20px;
 	margin: 0px; /*auto;*/
-	border-bottom: 1px solid #FFFFFF;
+	border-bottom: 1px solid #aaa;
 }
 
 /*#header hr {
@@ -70,8 +77,8 @@ a:hover {
 }*/
 
 /* Logo */
+
 #logo {
-	margin-top: 20px;
 	margin-left: 30px;
 }
 
@@ -86,6 +93,7 @@ a:hover {
 	color: #FFFFFF;
 	padding-top: 40px;
 	padding-left: 3em;
+	margin: 0px;
 }
 
 #logo h1 a {
@@ -106,11 +114,34 @@ a:hover {
 	color: #FFFFFF;
 }
 
+/* Top Right */
+
+#top-right {
+	float: right;
+	margin-right: 40px;
+	padding-top: 15px;
+	text-align: right;
+}
+
+#top-right input {
+	width: 170px;
+	margin-top: 10px;
+	background: #181818 url(/static/img/magnifier.png) no-repeat 2px center;
+	padding-left: 20px;
+}
+
+/* #top-right form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+} */
+
 /* Menu */
 
 #menu {
 	float: right;
-    margin-right: 15px;
+	margin-right: 40px;
+	margin-top: 50px;
 }
 
 #menu ul {
@@ -141,14 +172,14 @@ a:hover {
 /* Page */
 
 #page {
-    margin-top: 30px;
-    margin-left: 150px; /* roughly width of logo */
+	margin-top: 30px;
+	margin-left: 150px; /* roughly width of logo */
 }
 
 /* Content */
 
 #content {
-    margin-right: 250px;
+	margin-right: 250px;
 }
 
 .post {
@@ -188,10 +219,10 @@ a:hover {
 #sidebar {
 	float: right;
 	width: 200px;
-    margin-right: 25px;
-    -moz-border-radius:20px 20px;
-    border-style: solid;
-    border-color: #FFFFFF;
+	margin-right: 25px;
+	-moz-border-radius:20px 20px;
+	border-style: solid;
+	border-color: #FFFFFF;
 }
 
 #sidebar ul {
@@ -201,7 +232,7 @@ a:hover {
 }
 
 #sidebar li {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
 #sidebar li ul {
@@ -220,64 +251,52 @@ a:hover {
 
 #sidebar a {
 	text-decoration: none;
-    color: #3193FF;
+	color: #3193FF;
 }
-
-#top-right {
-    float: right;
-    margin-right: 15px;
-}
-
-/* #top-right form {
-    display: inline;
-    margin: 0;
-    padding: 0;
-} */
 
 #profile p {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
 #profile h3 {
-    font-size:2em;
+	font-size:2em;
 }
 
 #profile h2 {
-    font-size:3em;
+	font-size:3em;
 }
 
 .search_result a {
-    font-size: large;
+	font-size: large;
 }
 
 .result_text {
-    font-size: smaller;
+	font-size: smaller;
 }
 
 .submit {
-    float: right;
+	float: right;
 }
 
 .comment {
-    float: left;
+	float: left;
 }
 
 .inl {
-    float: left;
+	float: left;
 }
 .inr {
-    margin-left: 8em;
+	margin-left: 8em;
 }
 
 #search table {
-    margin: 25px;
-    border: 0;
+	margin: 25px;
+	border: 0;
 }
 
 .resize {
-    float: left;
-    width: 25em;
-    height: 5em;
-    margin: 1em;
+	float: left;
+	width: 25em;
+	height: 5em;
+	margin: 1em;
 }
-
