@@ -7,9 +7,12 @@ Released for free under a Creative Commons Attribution 2.5 License
 body, html, form {
 	margin: 0;
 	padding: 0;
-	background: #111111;
+}
+
+body, html {
+	background: #222;
 	font-size: 13px;
-	color: #ffffff;
+	color: #ccc;
 }
 
 body, th, td, input, textarea, select, option {
@@ -55,7 +58,7 @@ a:hover {
 	color: #46B;
 }
 
-input, textarea, select {
+#page input, input, textarea, select {
 	color: #ddd;
 	border: 1px solid #888;
 	background-color: #181818;
@@ -69,6 +72,8 @@ input, textarea, select {
 	padding-top: 20px;
 	margin: 0px; /*auto;*/
 	border-bottom: 1px solid #aaa;
+	background-color: #111;
+	color: #ddd;
 }
 
 /*#header hr {
@@ -90,7 +95,7 @@ input, textarea, select {
 #logo h1 {
 	font-size: 2em;
 	font-weight: normal;
-	color: #FFFFFF;
+	color: #ddd;
 	padding-top: 40px;
 	padding-left: 3em;
 	margin: 0px;
@@ -99,7 +104,7 @@ input, textarea, select {
 #logo h1 a {
 	padding-right: 20px;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #ddd;
 }
 
 #logo p {
@@ -111,7 +116,7 @@ input, textarea, select {
 
 #logo a {
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #ddd;
 }
 
 /* Top Right */
@@ -161,11 +166,11 @@ input, textarea, select {
 	text-decoration: none;
 	/*text-transform: lowercase;*/
 	font-size: 1.36em;
-	color: #FFFFFF;
+	color: #ddd;
 }
 
 #menu a:hover, .active a {
-	border-bottom: 3px solid #FFFFFF;
+	border-bottom: 3px solid #ddd;
 }
 
 
@@ -222,7 +227,7 @@ input, textarea, select {
 	margin-right: 25px;
 	-moz-border-radius:20px 20px;
 	border-style: solid;
-	border-color: #FFFFFF;
+	border-color: #aaa;
 }
 
 #sidebar ul {
