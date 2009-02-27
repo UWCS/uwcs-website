@@ -1,82 +1,96 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-        <!--[if lt IE 7.]>
-        <script defer type="text/javascript" src="pngfix.js"></script>
-        <![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	
+	<title>{% block ttitle %}Welcome{% endblock %} - University of Warwick Computing Society</title>
 
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen" />
+	<!--[if lt IE 7.]>
+		<script defer type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
 
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link href="/static/css/compsoc.css" rel="stylesheet" type="text/css" media="screen" />
-<title>{% block ttitle %}Welcome{% endblock %} - University of Warwick Computing Society</title>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-{% block morehead %}{% endblock %}
-<script type="text/javascript" src="/static/js/sidebar.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/sidebar.js"></script>
+
+	{% block morehead %}{% endblock %}
 </head>
+
 <body>
 {% block pretitle %}{% endblock %}
-<!-- start header -->
-<div id="header">
-    <div id="top-right">
-        {% if user.is_authenticated %}
-            Logged in as {{ user.member.name }}
-            <a href="/member/">profile</a>
-            <a href="/logout/">logout</a>
-        {% else %}
-            <a href="/login/">login</a>
-        {% endif %}
-        <form action="/search/" method="post">
-            <div>
-	    	<span style="display: none"><input type="submit" /></span>
-            	<input type="text" name="searchBox" />
-	    </div>
-        </form>
-    </div>
-    <div id="logo">
-        <img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
-        <h1><a href="/">Warwick Computing Society</a></h1>
-    </div>
-    <div id="menu">
-        <ul>
-            <li {% block home %}{% endblock %} ><a href="/">Home</a></li>
-            <li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
-            <li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
-            <li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact</a></li>
-            {% if user.is_authenticated %}
-                <li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
-            {% endif %}
-            {% if user.is_staff %}
-                <li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    {% block nav-global %}{% endblock %}
+
+<div id="container">
+	<!-- start header -->
+	<div id="header">
+		<div id="top-right">
+			{% if user.is_authenticated %}
+				Logged in as {{ user.member.name }}
+				<a href="/member/">profile</a>
+				<a href="/logout/">logout</a>
+			{% else %}
+				<a href="/login/">login</a>
+			{% endif %}
+			<form action="/search/" method="post">
+				<div>
+					<input type="text" name="searchBox" />
+					<span style="display: none"><input type="submit" /></span>
+				</div>
+			</form>
+		</div>
+		<div id="logo">
+			<img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
+			<h1><a href="/">Warwick Computing Society</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li {% block home %}{% endblock %} ><a href="/">Home</a></li>
+				<li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
+				<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
+				<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact</a></li>
+				{% if user.is_authenticated %}
+					<li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
+				{% endif %}
+				{% if user.is_staff %}
+					<li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		{% block nav-global %}{% endblock %}
+	</div>
+	<!-- end header -->
+	<!-- start page -->
+	<div id="page">
+		<!-- start sidebar -->
+		<div id="sidebar"><br />{% block sidebar %}{% endblock %}<br /></div>
+		<!-- end sidebar -->
+		<!-- start content -->
+		<div id="content">
+		{% block content_title %}{% endblock %}
+		{% block breadcrumbs %}
+			{% if breadcrumbs %}
+				<div class="crumbs">
+				{% for url,name in breadcrumbs %}
+					<a href="{{ url }}">{{ name }}</a>
+					{% if not forloop.last %}
+					   &rsaquo; 
+					{% endif %}
+				{% endfor %}
+				</div>
+			{% endif %}
+		{% endblock %}
+		{% block content %}{% endblock %}
+		</div>
+		<!-- end content -->
+	</div>
+	<!-- end page -->
+	<div id="footer-spacer"></div> 
 </div>
-<!-- end header -->
-<!-- start page -->
-<div id="page">
-    <!-- start sidebar -->
-    <div id="sidebar"><br />{% block sidebar %}{% endblock %}<br /></div>
-    <!-- end sidebar -->
-    <!-- start content -->
-    <div id="content">
-    {% block content_title %}{% endblock %}
-    {% block breadcrumbs %}
-        {% if breadcrumbs %}
-			<div class="crumbs">
-            {% for url,name in breadcrumbs %}
-                <a href="{{ url }}">{{ name }}</a>
-                {% if not forloop.last %}
-                   &rsaquo; 
-                {% endif %}
-            {% endfor %}
-			</div>
-        {% endif %}
-    {% endblock %}
-    {% block content %}{% endblock %}
-    </div>
-    <!-- end content -->
+<!-- start footer -->
+<div id="footer">
+	<span>&copy; University of Warwick Computing Society</span>
 </div>
-<!-- end page -->
-</body></html>
+<!-- end footer -->
+</body>
+</html>

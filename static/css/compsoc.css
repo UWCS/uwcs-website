@@ -13,6 +13,7 @@ body, html {
 	background: #222;
 	font-size: 13px;
 	color: #ccc;
+    height: 100%;
 }
 
 body, th, td, input, textarea, select, option {
@@ -62,6 +63,30 @@ a:hover {
 	color: #ddd;
 	border: 1px solid #888;
 	background-color: #181818;
+}
+
+/* Footer */
+
+#container {
+    min-height: 100%;
+    margin-bottom: -40px;
+}
+* html #container {
+    height: 100%;
+}
+#footer-spacer {
+    height: 40px;
+	clear: both;
+}
+
+#footer {
+	border-top: 1px solid #aaa;
+	background-color: #111;
+	color: #aaa;
+	height: 29px;
+	font-size: 85%;
+	text-align: right;
+	padding: 5px;
 }
 
 /* Header */
