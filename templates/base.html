@@ -64,12 +64,14 @@
     {% block content_title %}{% endblock %}
     {% block breadcrumbs %}
         {% if breadcrumbs %}
+			<div class="crumbs">
             {% for url,name in breadcrumbs %}
                 <a href="{{ url }}">{{ name }}</a>
                 {% if not forloop.last %}
                    &rsaquo; 
                 {% endif %}
             {% endfor %}
+			</div>
         {% endif %}
     {% endblock %}
     {% block content %}{% endblock %}

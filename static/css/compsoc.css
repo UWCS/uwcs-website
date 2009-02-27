@@ -251,7 +251,7 @@ a:hover {
 
 #sidebar li li a {
 	padding-left: 20px;
-	width: 140px;
+	width: 141px;
 	display: block;
 	border-bottom: 1px dotted #bbb;
 }
@@ -309,6 +309,9 @@ a:hover {
 .resize {
 	float: left;
 	width: 25em;
-	height: 5em;
 	margin: 1em;
+}
+
+.crumbs {
+	margin-bottom: 20px;
 }
