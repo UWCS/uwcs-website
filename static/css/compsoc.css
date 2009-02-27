@@ -204,6 +204,7 @@ a:hover {
 #page {
 	margin-top: 30px;
 	margin-left: 150px; /* roughly width of logo */
+	margin-bottom: 20px;
 }
 
 /* Content */
