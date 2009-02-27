@@ -228,6 +228,7 @@ a:hover {
 	-moz-border-radius:20px 20px;
 	border-style: solid;
 	border-color: #aaa;
+	margin-bottom: 20px;
 }
 
 #sidebar ul {
@@ -244,8 +245,14 @@ a:hover {
 	padding: 15px 0;
 }
 
-#sidebar li li {
+#sidebar li li a, #sidebar li li form  {
 	padding-left: 20px;
+}
+
+#sidebar li li a {
+	padding-left: 20px;
+	width: 140px;
+	display: block;
 	border-bottom: 1px dotted #bbb;
 }
 
