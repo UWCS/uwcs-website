@@ -45,13 +45,13 @@ def events_list(request):
     for event in events:
        lookup[begin_week(event.start)].append(event)
 
-    lookup = map(lambda (begin,events): (Week(begin),events),lookup.iteritems())
+    lookup = map(lambda (begin,events): (Week(begin),events),reversed(lookup.items()))
     return render_to_response('events/list.html', {
         'breadcrumbs': [('/','home'),('/events/','events')],
         'user':request.user,
         'events':lookup,
-        'future':future_events()}
-    )
+        'future':future_events()
+    })
 
 def calendar(request,delta):
     '''
@@ -171,7 +171,11 @@ def seating(request, event_id, revision_no=None):
                 order = request.POST['order']
                 previous = SeatingRevision.objects.filter(event=e).order_by('-number')
                 last_no = previous[0].number if previous else 0
-                revision = e.seatingrevision_set.create(creator=request.user, comment=request.POST['comment'], number=last_no+1)
+                revision = e.seatingrevision_set.create(
+                    creator=request.user,
+                    comment=request.POST['comment'],
+                    number=last_no+1
+                )
                 for col in order.split(';'):
                     m = p.match(col)
                     if m:

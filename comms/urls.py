@@ -4,6 +4,7 @@ from django.conf.urls.defaults import *
 
 from compsoc.comms.models import Communication,COMMS_TYPE
 from compsoc.shortcuts import current_year,get
+from compsoc.events.models import future_events
 
 def from_date(date):
     return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))
@@ -23,6 +24,7 @@ def get_dict(item_type,paginate=True):
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
             'dates':lambda: lookup(item_type),
+            'future':future_events(),
         },
     }
     if paginate:    info_dict['paginate_by'] = 10

@@ -28,16 +28,9 @@
                     <li><a href="/events/calendar/1">next week</a></li>
                 {% endif %}
             </ul>
-        </li><li>
-            {% if future %}
-            <h2>Upcoming</h2>
-            <ul>
-                {% for type,event in future %}
-                    <li><a href="/events/details/{{event.id}}/">{{type.name}}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </li><li>
+        </li>
+        {% include "events/future.html" %}
+        <li>
             <h2>Feeds</h2>
             <ul>
                 <li><a href="/feeds/events/">RSS</a></li>

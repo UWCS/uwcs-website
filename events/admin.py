@@ -31,6 +31,8 @@ class EventSignupForm(forms.ModelForm):
             raise forms.ValidationError('Fresher Signups must close after they start')
         if close < data.get('guest_open'):
             raise forms.ValidationError('Guest Signups must close after they start')
+        if data.get('signupsLimit') < 0:
+            raise forms.ValidationError('The signup limit must be positive')
         
         return data
 
