@@ -5,27 +5,22 @@
 {% block content %}
 
 <table id="calendar">
-    <tr>
-        <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-    </tr>
-    {% for week_no,week_contents in events %}
-    <tr>
-        {% for day,day_contents in week_contents %}
-            <td>
-            {% if forloop.first %}
-                <div class="week">Wk {{ week_no }}</div>
-            {% endif %}
-            <div class="day">{{ day }}</div>
-            <br />
-            {% for event in day_contents %}
-                <a
-                    href="/events/details/{{event.id}}"
-                    title="{{event.shortDescription}}">
-
-                    {{event.type.name}}</a>
-                <br />
-            {% endfor %}
-            </ul>
+	<tr>
+		<th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+	</tr>
+	{% for week_no,week_contents in events %}
+	<tr>
+		{% for day,day_contents in week_contents %}
+			<td>
+				<ul>
+					{% if forloop.first %}
+						<li class="week">Wk {{ week_no }}</li>
+					{% endif %}
+					<li class="day">{{ day }}</li>
+					{% for event in day_contents %}
+						<li class="event"><a href="/events/details/{{event.id}}" title="{{event.shortDescription}}">{{event.type.name}}</a></li>
+					{% endfor %}
+				</ul>
             </td>
         {% endfor %}
     </tr>

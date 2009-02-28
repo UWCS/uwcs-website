@@ -1,67 +1,3 @@
-
-#events_table {
-    border-width: 1px 1px 1px 1px;
-    border-style: solid; /*outset outset outset outset;*/
-    border-collapse:collapse;
-    border-spacing: 2px;
-    border-color:black;
-    background-color: black;
-    width:100%;
-}
-
-#events_head th {
-    font-size: larger;
-    font-weight: bold;
-    background-color:#5C5555;
-}
-
-#events_table td {
-    background-color:#565656;
-}
-
-td.time {
-    width: 220px;
-    height:5em;
-}
-
-td.short_desc {
-    height:2em;
-    border-bottom: 1px solid black;
-}
-
-#events_table th {
-    border: 1px solid black;
-}
-
-#calendar table {
-    border-width: 1px 1px 1px 1px;
-    border-style: solid; /*outset outset outset outset;*/
-    border-collapse:collapse;
-    border-spacing: 2px;
-    background-color: black;
-}
-
-#calendar th {
-    font-size: larger;
-    font-weight: bold;
-    background-color:#5C5555;
-}
-
-#calendar td {
-    height:10em;
-    width:10em;
-    background-color:#565656;
-    vertical-align: top;
-}
-
-.day {
-    float: right;
-}
-
-.week {
-    float: left;
-}
-
 #comments table {
     border-width: 1px 1px 1px 1px;
     border-spacing: 2px;
@@ -84,12 +20,139 @@ td.short_desc {
     border: 5px solid #565656;
 }
 
-.time {
+#comments .time {
     vertical-align: bottom;
     font-size: 10px;
 }
 
-.entry th {
+#comments .entry th {
     font-weight: bold;
     text-align: left;
+}
+
+/* Event list */
+
+ul#eventlist, #eventlist ul {
+	margin: 0;
+	padding: 0;
+}
+
+#eventlist .week {
+	width: 100%;
+	background-color: #333;
+	overflow: hidden;
+}
+
+#eventlist li {
+	display: block;
+}
+
+#eventlist .fullweek {
+	float: right;
+	text-align: right;
+	width: 100%;
+	margin-right: -90px;
+}
+
+#eventlist .weekno {
+	float: left;
+	width: 90px;
+}
+
+#eventlist .weekno, #eventlist .fullweek {
+	border-bottom: 1px solid #aaa;
+	border-top: 1px solid #aaa;
+	background-color: #222;
+}
+
+#eventlist .events li {
+	clear: both;
+}
+
+#eventlist .events {
+	min-width: 500px;
+}
+
+#eventlist .events .name {
+	border-top: 1px solid #111;
+}
+
+#eventlist .events .name a {
+	display: block;
+	width: 150px;
+	float: left;
+	padding: 15px;
+	font-size: 1.2em
+}
+
+#eventlist .events .eventdetail {
+	float: left;
+}
+
+#eventlist .events .description {
+	font-size: 1.2em;
+	padding-bottom: 5px;
+}
+
+#eventlist .weekno span {
+	padding-left: 10px;
+}
+
+#eventlist .fullweek span {
+	padding-right: 100px;
+}
+
+#eventlist .signups {
+	position: absolute;
+	margin-left: -160px;
+	margin-top: -10px;
+}
+
+#eventlist .time {
+	font-size: 0.8em;
+}
+
+#eventlist li {
+	list-style-type: none;
+}
+
+/* Calendar */
+
+#calendar th {
+	font-size: 1.1em;
+	font-weight: bold;
+	background-color:#444;
+}
+
+#calendar td {
+	height: 5em;
+	width: 10em;
+	background-color: #333;
+	vertical-align: top;
+	padding: 5px;
+}
+
+#calendar .day {
+	float: right;
+}
+
+#calendar .week {
+	float: left;
+}
+
+#calendar li {
+	display: block;
+	line-height: 1.1em;
+	margin-bottom: 5px;
+}
+
+#calendar ul {
+	margin: 0;
+	padding: 0;
+}
+
+#calendar .event {
+	clear: both;
+	padding-left: 5px;
+	padding-right: 5px;
 }
