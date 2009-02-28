@@ -4,6 +4,20 @@
 
 {% block content %}
 
+<div>
+<ul class="calendarnav">
+	{% if prev %}
+		<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
+	{% else %}
+		<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
+	{% endif %}
+	{% if next %}
+		<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
+	{% else %}
+		<li class="next"><a href="/events/calendar/1">next week</a></li>
+	{% endif %}
+	<li class="cur"><a href="/events/calendar/">current week</a></li>
+</ul>
 <table id="calendar">
 	<tr>
 		<th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
@@ -26,4 +40,18 @@
     </tr>
     {% endfor %}
 </table>
+<ul class="calendarnav">
+	{% if prev %}
+		<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
+	{% else %}
+		<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
+	{% endif %}
+	{% if next %}
+		<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
+	{% else %}
+		<li class="next"><a href="/events/calendar/1">next week</a></li>
+	{% endif %}
+	<li class="cur"><a href="/events/calendar/">current week</a></li>
+</ul>
+</div>
 {% endblock %}

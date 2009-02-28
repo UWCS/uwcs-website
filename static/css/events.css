@@ -156,3 +156,30 @@ ul#eventlist, #eventlist ul {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+.calendarnav li {
+	display: block;
+	list-style-type: none;
+}
+
+.calendarnav {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.calendarnav .prev {
+	float: left;
+}
+
+.calendarnav .cur {
+	margin: 0 auto;
+}
+
+.calendarnav .next{
+	float: right;
+}
+
+#calendar tr {
+	clear: both;
+}
