@@ -115,10 +115,17 @@ def valid_signup(user,event):
     
 def details(request,event_id):
     event = Event.objects.get(id=event_id)
-    signups = event.signup_set.order_by('time')#[:event.signup_count()]
+    signups = event.signup_set.order_by('time')
     max = event.signup_total()
-    reserved = signups[max:]
-    signups = signups[:max]
+    # 0 = inifnite signups
+    if max:
+        reserved = signups[max:]
+        signups = signups[:max]
+    else:
+        reserved = []
+
+    print reserved
+    print signups
 
     u = request.user
     
