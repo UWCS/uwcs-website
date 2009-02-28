@@ -60,7 +60,7 @@ TERMS = (
 
 class Term(models.Model):
     '''Stores date information about terms'''
-    start_date = models.DateTimeField()
+    start_date = models.DateField()
     start_number = models.IntegerField()
     length = models.IntegerField()
     which = models.CharField(max_length=2,choices=TERMS)
@@ -82,7 +82,7 @@ def term_week_for(date):
 
 def warwick_week_for(date):
     term = term_for(date)
-    return ((date - term.start_date).days / 7) + term.start_number + 1
+    return ((date - term.start_date).days / 7) + term.start_number# + 1
 
 STATUS = (
     ('RE','Requested'),
