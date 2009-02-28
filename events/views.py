@@ -124,9 +124,6 @@ def details(request,event_id):
     else:
         reserved = []
 
-    print reserved
-    print signups
-
     u = request.user
     
     dict = {
