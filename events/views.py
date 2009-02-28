@@ -35,7 +35,7 @@ class Week:
     def __init__(self,begin):
         self.begin = begin
         self.end = begin + timedelta(days=6)
-        self.week_number = 0
+        self.week_number = warwick_week_for(begin)
     def __str__(self):
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
