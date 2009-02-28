@@ -3,29 +3,25 @@
 {% block ttitle %}Events List{% endblock %}
 
 {% block content %}
-<table id="events_table">
-<tr id="events_head"><th>Event</th><th>When</th><th>Location</th><th>Signups</th></tr>
+<ul id="eventlist">
 {% for week,entries in events %}
-    <tr>
-        <th>Week {{ week.week_number }}</th>
-        <th colspan="3">{{ week }}</th>
-    </tr>
-    {% for event in entries %}
-        <tr>
-            <td><a href="details/{{ event.id }}">{{ event.type.name }}</a></td>
-            <td class="time">{{ event.time_string }}</td>
-            <td>{{ event.location }} </td>
-            {% if event.has_signups %}
-                <td>{{ event.signup_count }}/{{ event.signup_total }}</td>
-            {% else %}
-                <td>N/A</td>
-            {% endif %}
-        </tr>
-        <tr>
-            <td class="short_desc" ></td>
-            <td class="short_desc" colspan="3" >{{ event.shortDescription }}</td>
-        </tr>
-    {% endfor %}
+	<li><ul class="week">
+		<li class="weekno"><span>Week {{ week.week_number }}</span></li>
+		<li class="fullweek"><span>{{ week }}</span></li>
+		<li class="events"><ul>
+	        {% for event in entries %}
+			<li class="name"><a href="details/{{ event.id }}">{{ event.type.name }}</a>
+			<ul class="eventdetail">
+				<li class="time">{{ event.time_string }}</li>
+				<li class="location">Location: {{ event.location }}</li>
+				{% if event.has_signups %}
+        			       	<li class="signups">Signups: {{ event.signup_count }}/{{ event.signup_total }}</li>
+				{% endif %}
+                        	<li class="description">{{ event.shortDescription }}</li>
+			</ul></li>
+		{% endfor %}
+		</ul></li>
+	</ul></li>
 {% endfor %}
-</table>
+</ul>
 {% endblock %}

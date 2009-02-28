@@ -13,7 +13,8 @@ body, html {
 	background: #222;
 	font-size: 13px;
 	color: #ccc;
-    height: 100%;
+	height: 100%;
+	min-width: 800px;
 }
 
 body, th, td, input, textarea, select, option {
@@ -110,6 +111,7 @@ a:hover {
 
 #logo {
 	margin-left: 30px;
+	margin-bottom: 50px;
 }
 
 #logo img {
@@ -171,7 +173,6 @@ a:hover {
 #menu {
 	float: right;
 	margin-right: 40px;
-	margin-top: 50px;
 }
 
 #menu ul {
@@ -252,8 +253,7 @@ a:hover {
 	width: 200px;
 	margin-right: 25px;
 	-moz-border-radius:20px 20px;
-	border-style: solid;
-	border-color: #aaa;
+	border: 4px solid #aaa;
 	margin-bottom: 20px;
 }
 
@@ -340,4 +340,87 @@ a:hover {
 
 .crumbs {
 	margin-bottom: 20px;
+}
+
+/* Event list */
+
+ul#eventlist, #eventlist ul {
+	margin: 0;
+	padding: 0;
+}
+
+#eventlist .week {
+	width: 100%;
+	background-color: #333;
+	overflow: hidden;
+}
+
+
+#eventlist li {
+	display: block;
+}
+
+.week .fullweek {
+	float: right;
+	text-align: right;
+	width: 100%;
+	margin-right: -90px;
+}
+
+.week .weekno {
+	float: left;
+	width: 90px;
+}
+
+.week .weekno, .week .fullweek {
+	border-bottom: 1px solid #aaa;
+	border-top: 1px solid #aaa;
+	background-color: #222;
+}
+
+.week .events li {
+	clear: both;
+}
+
+.week .events {
+	min-width: 500px;
+}
+
+.week .events .name {
+	border-top: 1px solid #111;
+}
+
+.week .events .name a {
+	display: block;
+	width: 150px;
+	float: left;
+	padding: 15px;
+	font-size: 1.2em
+}
+
+.week .events .eventdetail {
+	float: left;
+}
+
+.week .events .description {
+	font-size: 1.2em;
+	padding-bottom: 5px;
+}
+
+.weekno span {
+	padding-left: 10px;
+}
+
+.fullweek span {
+	padding-right: 100px;
+}
+
+.signups {
+	position: absolute;
+	margin-left: -170px;
+	margin-top: -10px;
+}
+
+#eventlist li {
+	list-style-type: none;
 }
