@@ -1,0 +1,22 @@
+/*
+	Stylesheet for physical printouts
+*/
+
+img {
+	display: none;
+}
+
+#top-right {
+	display: none;
+}
+
+h1#pagetitle {
+}
+
+#menu {
+	display: none;
+}
+
+#sidebar {
+	display: none;
+}
