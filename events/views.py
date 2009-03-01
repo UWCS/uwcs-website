@@ -21,6 +21,13 @@ def calendar_index(request): return calendar(request,0)
 def month(dat): return strftime("%b",(0,dat,0,0,0,0,0,0,0))
 
 a_week = timedelta(days=7)
+    
+def safe_week_for(date):
+    dt = datetime(date.year,date.month,date.day)
+    try:
+        return str(warwick_week_for(dt))
+    except Term.DoesNotExist:
+        return ""
 
 def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
@@ -35,7 +42,7 @@ class Week:
     def __init__(self,begin):
         self.begin = begin
         self.end = begin + timedelta(days=6)
-        self.week_number = warwick_week_for(begin)
+        self.week_number = safe_week_for(begin)
     def __str__(self):
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
@@ -66,13 +73,6 @@ def calendar(request,delta):
         for event_date in event.days():
             lookup[begin_week(event_date)][event_date.weekday()].append(event)
 
-    def week_for(date):
-        dt = datetime(date.year,date.month,date.day)
-        try:
-            return str(warwick_week_for(dt))
-        except Term.DoesNotExist:
-            return ""
-
     # tidy information
     iter,events = begin,[]
     while iter <= end:
@@ -85,7 +85,7 @@ def calendar(request,delta):
             else:
                 val = ""
             week_vals.append((val+" "+str(iter_date.day),lookup[iter][i]))
-        events.append((week_for(iter),week_vals))
+        events.append((safe_week_for(iter),week_vals))
         iter += a_week
 
     return render_to_response('events/calendar.html',{
