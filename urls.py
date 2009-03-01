@@ -63,7 +63,7 @@ if settings.LEGACY_SITE:
     	('^society/news', 'redirect_to', {'url': '/news/1/'}),
     	('^society/members', 'redirect_to', {'url':'/member'}),
     	('^society/members/list', 'redirect_to', {'url': '/member/list/'}),
-    	('^society', 'redirect_to', {'url': '/cms/about/'}),
+    	('^society/', 'redirect_to', {'url': '/cms/about/'}),
     )
 
 # if we are debugging serve the static content locally
