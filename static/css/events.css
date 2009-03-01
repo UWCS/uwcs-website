@@ -1,35 +1,3 @@
-#comments table {
-    border-width: 1px 1px 1px 1px;
-    border-spacing: 2px;
-    background-color: black;
-    width: 100%;
-}
-
-#comments th {
-    font-size: larger;
-    font-weight: bold;
-    background-color:#5C5555;
-    border: 5px solid #5C5555;
-}
-
-#comments td {
-    font-size: larger;
-    background-color:#565656;
-    height: 4em;
-    vertical-align: top;
-    border: 5px solid #565656;
-}
-
-#comments .time {
-    vertical-align: bottom;
-    font-size: 10px;
-}
-
-#comments .entry th {
-    font-weight: bold;
-    text-align: left;
-}
-
 /* Event list */
 
 ul#eventlist, #eventlist ul {
@@ -182,4 +150,116 @@ ul#eventlist, #eventlist ul {
 
 #calendar tr {
 	clear: both;
+}
+
+/* Event Details */
+
+#event dl {
+	margin: 10px;
+	padding: 0px
+}
+
+#event dt {
+	float: left;
+	width: 13em;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 20px;
+	line-height: 1em;
+}
+
+#event dd {
+	margin-bottom: 5px;
+}
+
+#event dl.signupdetals {
+	padding: 5px 5px 5px 170px;
+}
+
+#event .details .signupdetals dt {
+	text-align: left;
+}
+
+#event a.edit {
+	float: right;
+	padding: 5px;
+	font-weight: bold;
+}
+
+#event .signups {
+	clear: left;
+}
+
+#event .signedup {
+	text-align: center;
+	background-color: #333;
+	margin-bottom: 0px;
+}
+
+#event .notsignedup {
+	text-align: center;
+	background-color: #333;
+	padding: 10px;
+}
+#event .notsignedup p, #event .notsignedup input {
+	margin: 5px;
+	line-height: 1em;
+}
+#event .notsignedup .commentfield {
+	width: 60%;
+}
+
+#event .signups ul {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	overflow: hidden;
+	background-color: #444;
+}
+
+#event .signups li {
+	display: block;
+	list-style-type: none;
+}
+
+#event .signups .username {
+	float: left;
+	width: 180px;
+	padding: 10px;
+	font-weight: bold;
+}
+
+#event .signups .comment {
+	float: right;
+	width: 100%;
+	margin-right: -210px;
+	background-color: #333;
+	padding-left: 10px;
+}
+
+#event .signups .comment p {
+	padding-right: 220px;
+	margin: 0;
+}
+
+#event .signups .time {
+	width: 200px;
+	float: right;
+	width: 100%;
+	margin-right: -210px;
+	font-size: 0.8em;
+	background-color: #333;
+	padding-left: 10px;
+}
+
+#event .signup, #event .signedup, #event .notsignedup {
+	border-bottom: 1px solid #222;
+}
+
+#event .reserved {
+	color: #888;
+}
+
+#event .nosignups {
+	padding: 10px;
 }

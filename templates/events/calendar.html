@@ -4,54 +4,54 @@
 
 {% block content %}
 
-<div>
-<ul class="calendarnav">
-	{% if prev %}
-		<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
-	{% else %}
-		<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
-	{% endif %}
-	{% if next %}
-		<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
-	{% else %}
-		<li class="next"><a href="/events/calendar/1">next week</a></li>
-	{% endif %}
-	<li class="cur"><a href="/events/calendar/">current week</a></li>
-</ul>
-<table id="calendar">
-	<tr>
-		<th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-	</tr>
-	{% for week_no,week_contents in events %}
-	<tr>
-		{% for day,day_contents in week_contents %}
-			<td>
-				<ul>
-					{% if forloop.first %}
-						<li class="week">Wk {{ week_no }}</li>
-					{% endif %}
-					<li class="day">{{ day }}</li>
-					{% for event in day_contents %}
-						<li class="event"><a href="/events/details/{{event.id}}" title="{{event.shortDescription}}">{{event.type.name}}</a></li>
-					{% endfor %}
-				</ul>
-            </td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
-<ul class="calendarnav">
-	{% if prev %}
-		<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
-	{% else %}
-		<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
-	{% endif %}
-	{% if next %}
-		<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
-	{% else %}
-		<li class="next"><a href="/events/calendar/1">next week</a></li>
-	{% endif %}
-	<li class="cur"><a href="/events/calendar/">current week</a></li>
-</ul>
+<div id="calendar">
+	<ul class="calendarnav">
+		{% if prev %}
+			<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
+		{% else %}
+			<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
+		{% endif %}
+		{% if next %}
+			<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
+		{% else %}
+			<li class="next"><a href="/events/calendar/1">next week</a></li>
+		{% endif %}
+		<li class="cur"><a href="/events/calendar/">current week</a></li>
+	</ul>
+	<table>
+		<tr>
+			<th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+		</tr>
+		{% for week_no,week_contents in events %}
+		<tr>
+			{% for day,day_contents in week_contents %}
+				<td>
+					<ul>
+						{% if forloop.first %}
+							<li class="week">Wk {{ week_no }}</li>
+						{% endif %}
+						<li class="day">{{ day }}</li>
+						{% for event in day_contents %}
+							<li class="event"><a href="/events/details/{{event.id}}" title="{{event.shortDescription}}">{{event.type.name}}</a></li>
+						{% endfor %}
+					</ul>
+				</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+	<ul class="calendarnav">
+		{% if prev %}
+			<li class="prev"><a href="/events/calendar/{{ prev }}">previous week</a></li>
+		{% else %}
+			<li class="prev"><a href="/events/calendar/-1">previous week</a></li>
+		{% endif %}
+		{% if next %}
+			<li class="next"><a href="/events/calendar/{{ next }}">next_week</a></li>
+		{% else %}
+			<li class="next"><a href="/events/calendar/1">next week</a></li>
+		{% endif %}
+		<li class="cur"><a href="/events/calendar/">current week</a></li>
+	</ul>
 </div>
 {% endblock %}

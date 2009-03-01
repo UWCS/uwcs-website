@@ -3,77 +3,77 @@
 {% block ttitle %}Event Details for {{ event.type.name }}{% endblock %}
 
 {% block content %}
-<div class="post">
-    <h1 class="title">Event Details for {{ event.type.name }}</h1>
-    <p class="byline"><small>when: {{ event.time_string }} | 
-        {% if can_edit %}
-        <a href="/admin/events/event/{{ event.id }}/">Edit</a></small>
-        {% endif %}
-    </p>
-    <div class="entry">
-        <table>
-        <tr><th>Event: </th><td>{{ event.shortDescription }}</td></tr>
-        <tr><th>Location: </th><td>{{ event.location }}</td></tr>
-        {% if event.has_signups %}
-            <tr><th>Signups</th><td>{{ event.signup_set.count }}/{{ limit }}</tr>
-            <tr><th></th><td>
-                <table>
-                    <tr><th>Fresher Signups Open</th><td>{{ fresher }}</td></tr>
-                    <tr><th>Member Signups Open</th><td>{{ open }}</td></tr>
-                    <tr><th>Guest Signups Open</th><td>{{ guest }}</td></tr>
-                    <tr><th>Signups Close</th><td>{{ close }}</td></tr>
-                </table>
-            </td></tr>
-        {% endif %}
-        <tr><th>Notes: </th><td>{{ event.longDescription }}</td></tr>
-        <tr><th>General Information:</th><td>{{ event.type.info }}</td></tr>
-        </table>
-        {% if has_seating %}
-            <p>Seating plan: <a href="/events/seating/{{ event.id }}">here</a></p>
-        {% endif %}
-        {% if event.has_signups %}
-            <div id="comments">
-            <table >
-                <tr><th>Member</th><th>Comment/Options</th></tr>
-                {% if signups %}
-                    {% for signup in signups %}
-                        <tr>
-                            <td>
-                                {{ signup.user.username }}<br />
-                                <div class="time">{{ signup.time_form }}</div>
-                            </td>
-                            <td>{{ signup.comment }}</td>
-                        </tr>
-                    {% endfor %}
-                    {% if reserved %}
-                        <tr><th colspan="2">Reserves</th></tr>
-                        {% for signup in reserved %}
-                            <tr>
-                                <td>
-                                    {{ signup.user.username }}<br />
-                                    <div class="time">{{ signup.time_form }}</div>
-                                </td>
-                                <td>{{ signup.comment }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                {% else %}
-                    <tr><td colspan="2">There are no signups yet.</td></tr>
-                {% endif %}
-            </table>
-        {% endif %}
-    </div>
-    <p class="meta">
-        {% if can_signup %}
-        <form action="/events/signup/{{ event.id }}/" method="post">
-            <input type="text" name="comment" />
-            <input type="submit" value="signup" />
-        </form>
-        {% endif %}
-        {% if signed_up %}
-            <a href="/events/unsignup/{{ event.id }}/">unsignup</a>
-        {% endif %}
-    </p>
+<div id="event">
+	{% if can_edit %}<a class="edit" href="/admin/events/event/{{ event.id }}/">Edit</a>{% endif %}
+	<h2 class="title">Event Details for {{ event.type.name }}</h2>
+	<dl class="details">
+		<dt>Event</dt>
+		<dd>{{ event.shortDescription }}</dd>
+		<dt>Location</dt>
+		<dd>{{ event.location }}</dd>
+		<dt>When</dt>
+		<dd>{{ event.time_string }}</dd>
+		{% if event.has_signups %}
+			<dt>Signups</dt>
+			<dd>
+				<span>{{ event.signup_set.count }}/{{ limit }}</span>
+				<dl class="signupdetals">
+					<dt>Fresher Signups Open</dt>
+					<dd>{{ fresher }}</dd>
+					<dt>Member Signups Open</dt>
+					<dd>{{ open }}</dd>
+					<dt>Guest Signups Open</dt>
+					<dd>{{ guest }}</dd>
+					<dt>Signups Close</dt>
+					<dd>{{ close }}</dd>
+				</dl>
+			</dd>
+		{% endif %}
+		<dt>Notes</dt>
+		<dd>{{ event.longDescription }}</dd>
+		<dt>General Information</dt>
+		<dd>{{ event.type.info }}</dd>
+		{% if has_seating %}
+			<dt>Seating plan</dt>
+			<dd><a href="/events/seating/{{ event.id }}">View or edit seating plan</a></dd>
+		{% endif %}
+		
+		<dt></dt>
+		<dd></dd>
+	</dl>
+	{% if event.has_signups %}
+		<div class="signups">
+			{% if can_signup %}
+				<form action="/events/signup/{{ event.id }}/" method="post" class="notsignedup">
+					<p>You are not signed up to this event, you may signup:</p>
+					<input class="commentfield" type="text" size="50" name="comment" />
+					<input type="submit" value="signup" />
+				</form>
+			{% endif %}
+			{% if signed_up %}
+				<p class="signedup">You are signed up to this event, you may <a href="/events/unsignup/{{ event.id }}/">unsignup</a></p>
+			{% endif %}
+			<ul>
+				{% if signups %}
+					{% for signup in signups %}
+						<li class="signup"><ul>
+							<li class="username">{{ signup.user.username }}</li>
+							<li class="time">{{ signup.time_form }}</li>
+							<li class="comment"><p>{{ signup.comment }}</p></li>
+						</ul></li>
+					{% endfor %}
+					{% for signup in reserved %}
+						<li class="reserved"><ul>
+							<li class="username">{{ signup.user.username }}</li>
+							<li class="time">{{ signup.time_form }}</li>
+							<li class="comment"><p>{{ signup.comment }}</p></li>
+						</ul></li>
+					{% endfor %}
+				{% else %}
+					<li class="nosignups">There are no signups yet.</li>
+				{% endif %}
+			</ul>
+		</div>
+	{% endif %}
 </div>
-
 {% endblock %}
