@@ -52,7 +52,7 @@ def events_list(request):
     for event in events:
        lookup[begin_week(event.start)].append(event)
 
-    lookup = map(lambda (begin,events): (Week(begin),events),reversed(lookup.items()))
+    lookup = map(lambda (begin,events): (Week(begin),reversed(events)),lookup.items())
     return render_to_response('events/list.html', {
         'breadcrumbs': [('/','home'),('/events/','events')],
         'user':request.user,
