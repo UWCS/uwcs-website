@@ -148,6 +148,7 @@ class Signup(models.Model):
 
     class Meta:
         ordering = ["time"]
+        unique_together = ("event", "user")
 
     def __unicode__(self):
         return self.user.username
