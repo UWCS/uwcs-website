@@ -1,0 +1,12 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+    <form action="/events/signup/{{ event_id }}/" method="POST">
+    {{ form.as_p }}
+    <input type="submit" value="save" />
+    </form>
+{% endblock %}
+
+{% block sidebar %}
+<a href="/events/details/{{ event_id }}/">event</a>
+{% endblock %}

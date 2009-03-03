@@ -48,7 +48,7 @@
 				</form>
 			{% endif %}
 			{% if signed_up %}
-				<p class="signedup">You are signed up to this event, you may <a href="/events/unsignup/{{ event.id }}/">unsignup</a></p>
+				<p class="signedup">You are signed up to this event, you may <a href="/events/unsignup/{{ event.id }}/">unsignup</a>, or <a href="/events/signup/{{ event.id }}/">edit</a> your signup comment.</p>
 			{% endif %}
 			<ul>
 				{% if signups %}

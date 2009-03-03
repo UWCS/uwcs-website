@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 import vobject
 import re
@@ -221,23 +222,51 @@ def seating(request, event_id, revision_no=None):
 
     return render_to_response('events/seating.html', dict)
 
+class CommentForm(forms.Form):
+    comment = forms.CharField(max_length=100)
+
 @login_required
 def do_signup(request,event_id):
+    '''
+    Post:
+        If a user is signed up then change their comment
+        otherwise add signup entry if its valid to
+    Get:
+        return a form, if they are signed up, it should have their contacts in
+    '''
     try:
         event = Event.objects.get(id=event_id)
-        c = request.POST['comment']
-        if event.signup_set.filter(user=request.user):
-            return render_to_response('events/alreadysignedup.html',{'event':event})
-        elif valid_signup(request.user,event):
-            event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
-            event.save()
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                c = form.cleaned_data['comment']
+                try:
+                    e = event.signup_set.get(user=request.user)
+                    e.comment = c
+                    e.save()
+                except Signup.DoesNotExist:
+                    if valid_signup(request.user,event):
+                        event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
+                    else:
+                        return render_to_response('events/cantsignup.html',{'event':event})
+                    
+# TODo: add to admin section
+#                if event.signup_set.filter(user=request.user):
+#                    return render_to_response('events/alreadysignedup.html',{'event':event})
+            return render_to_response('events/signup.html',{'event_id':event_id})
         else:
-            return render_to_response('events/cantsignup.html',{'event':event})
+            form = CommentForm()
+            try:
+                e = event.signup_set.get(user=request.user)
+            except Signup.DoesNotExist: pass
+
+        return render_to_response('events/edit_signup.html', {
+            'form': form,
+            'event_id': event_id,
+        })
     except Event.DoesNotExist:
         return render_to_response('events/nonevent.html')
-    except MultiValueDictKeyError:
-        return render_to_response('events/cantsignup.html',{'event':event})
-    return render_to_response('events/signup.html',{'event_id':event_id})
+
 
 @login_required
 def do_unsignup(request,event_id):
