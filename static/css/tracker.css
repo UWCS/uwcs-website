@@ -1,0 +1,114 @@
+/* Search form */
+
+img { border: 0 }
+
+.inl {
+	float: left;
+	width: 10em;
+	font-weight: bold;
+}
+.inr {
+	margin-left: 10em;
+	width: 17em;
+}
+
+#search table {
+	margin: 25px;
+	border: 0;
+}
+
+.resize {
+	float: left;
+	margin: 1em;
+}
+
+/* Calendar and clock */
+
+.calendarbox, .clockbox {
+	background-color: #333;
+	border: 1px solid #aaa;
+	padding: 5px;
+}
+
+.calendarbox table td {
+	background-color: #222 !important;
+}
+
+.clockbox a, .calendarbox a {
+	text-decoration: none;
+}
+
+.calendar th {
+	font-size: 10px;
+	padding: 2px 3px;
+	text-align: center;
+}
+
+.calendar td {
+	font-size: 11px;
+	text-align: center;
+	padding: 0;
+	background-color: #222;
+}
+
+.calendar td a, .timelist a {
+	display: block;
+	font-weight: bold;
+	padding: 4px;
+	text-decoration: none;
+}
+
+.calendar-shortcuts {
+	font-size: 10px;
+	line-height: 11px;
+	border-top: 1px solid #eee;
+	padding: 3px 0 4px;
+	padding: 5px;
+	text-align: center;
+}
+
+.calendarbox .calendarnav-previous,.calendarbox .calendarnav-next {
+	display: block;
+	position: absolute;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 1px 4px 2px 4px;
+}
+
+.calendarnav-previous {
+	top: 5px;
+	left: 5px;
+}
+
+.calendarnav-next {
+	top: 5px;
+	right: 5px;
+}
+
+.calendar-cancel {
+	margin: 0 !important;
+	padding: 0;
+	font-size: 10px;
+	border-top: 1px solid #ddd;
+	text-align: right;
+}
+
+.calendar-cancel a {
+	padding: 5px;
+}
+
+ul.timelist,.timelist li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.timelist a {
+	padding: 2px;
+}
+
+.clockbox h2 {
+	font-size: 14px;
+	font-weight: bold;
+	margin: 5px;
+}

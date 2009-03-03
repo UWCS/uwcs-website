@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
+{% block extrastyle %}{% endblock %}
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+<link href="/static/css/admin.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/static/css/print.css" rel="stylesheet" type="text/css" media="print" />
+<link href="/static/img/logo.icon.png" rel="icon" type="img/png" />
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+<!-- Container -->
+<div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+	<div id="admin-header">
+		<div id="top-right">
+			{% if user.is_authenticated %}
+				Logged in as {{ user.member.name }}<br />
+				<a href="/member/">profile</a>
+				<a href="/logout/">logout</a>
+			{% else %}
+				<a href="/login/">login</a>
+			{% endif %}
+			<form action="/search/" method="post">
+				<div>
+					<input type="text" name="searchBox" />
+					<span style="display: none"><input type="submit" /></span>
+				</div>
+			</form>
+		</div>
+		<div id="logo">
+			<img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
+			<h1 id="pagetitle"><a href="/">Warwick Computing Society</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li {% block home %}{% endblock %} ><a href="/">Home</a></li>
+				<li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
+				<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
+				<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact</a></li>
+				{% if user.is_authenticated %}
+					<li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
+				{% endif %}
+				{% if user.is_staff %}
+					<li class="active"><a href="/admin">Admin</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		{% block nav-global %}{% endblock %}
+	</div>
+    <!-- END Header -->
+    {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
+    {% endif %}
+
+        {% if messages %}
+        <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+        {% endif %}
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+		{% block precontent %}{% endblock %}
+        {% block content %}
+        {% block object-tools %}{% endblock %}
+        {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+	<div id="footer-spacer"></div> 
+</div>
+<!-- END Container -->
+<div id="footer">
+	<span>&copy; University of Warwick Computing Society</span>
+</div>
+</body>
+</html>
