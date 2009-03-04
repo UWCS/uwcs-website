@@ -33,7 +33,7 @@ def safe_week_for(date):
 def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
-    events = Event.objects.order_by('-start').filter(finish__gte=begin)
+    events = Event.objects.order_by('start').filter(finish__gte=begin)
     return (begin.date(),end.date(),events)
 
 class Week:
@@ -53,7 +53,7 @@ def events_list(request):
     for event in events:
        lookup[begin_week(event.start)].append(event)
 
-    lookup = map(lambda (begin,events): (Week(begin),reversed(events)),lookup.items())
+    lookup = map(lambda (begin,events): (Week(begin),events),sorted(lookup.items()))
     return render_to_response('events/list.html', {
         'breadcrumbs': [('/','home'),('/events/','events')],
         'user':request.user,
