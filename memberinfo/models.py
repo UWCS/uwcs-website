@@ -15,9 +15,11 @@ class Member(models.Model):
 
     def name(self):
         try:
-            return self.user.nicknamedetails.nickname
-        except NicknameDetails.DoesNotExist:
-            return self.user.get_full_name()
+            nick = self.user.nicknamedetails.nickname
+            if nick.strip():
+                return nick
+        except: pass
+        return self.user.get_full_name()
 
     def all_name(self):
         try:
