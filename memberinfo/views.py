@@ -133,6 +133,11 @@ def details(request):
     member.showDetails = publish
     member.save()
 
+    # disallow empty or whitespace only nicknames
+    if not name.strip():
+        return render_to_response('memberinfo/request_error.html',
+            {'user':u,'name':'Nickname','error':"Nicknames cannot be empty or all whitespace."})
+
     try:
         nickname = u.nicknamedetails
         nickname.nickname = name
