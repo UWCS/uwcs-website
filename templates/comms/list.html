@@ -8,12 +8,11 @@
 {% if object_list %}
     {% for comm_item in object_list %}
         <div class="post">
+			{% if user.is_staff %}
+                <a class="edit" href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a>
+            {% endif %}
             <h1 class="title">{{ comm_item.title }}</h1>
-            <p class="byline"><small>Posted on {{ comm_item.date }} | 
-                {% if user.is_staff %}
-                    <a href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a>
-                {% endif %}
-            </small></p>
+            <p class="byline"><small>Posted on {{ comm_item.date }}</small></p>
             <div class="entry">
             {{ comm_item.text|markdown }}
             </div>

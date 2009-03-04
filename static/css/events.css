@@ -28,9 +28,8 @@ ul#eventlist, #eventlist ul {
 }
 
 #eventlist .weekno, #eventlist .fullweek {
-	border-bottom: 1px solid #aaa;
-	border-top: 1px solid #aaa;
-	background-color: #222;
+	border-top: 1px solid #222;
+	background-color: #444;
 }
 
 #eventlist .events li {
@@ -42,7 +41,7 @@ ul#eventlist, #eventlist ul {
 }
 
 #eventlist .events .name {
-	border-top: 1px solid #111;
+	border-top: 1px solid #222;
 }
 
 #eventlist .events .name a {
@@ -178,12 +177,6 @@ ul#eventlist, #eventlist ul {
 
 #event .details .signupdetals dt {
 	text-align: left;
-}
-
-#event a.edit {
-	float: right;
-	padding: 5px;
-	font-weight: bold;
 }
 
 #event .signups {
