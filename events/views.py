@@ -33,7 +33,7 @@ def safe_week_for(date):
 def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
-    events = Event.objects.order_by('start').filter(finish__gte=begin)
+    events = Event.objects.order_by('-start').filter(finish__gte=begin)
     return (begin.date(),end.date(),events)
 
 class Week:
