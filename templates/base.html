@@ -15,8 +15,13 @@
 	<![endif]-->
 
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
-	<script type="text/javascript" src="/static/js/sidebar.js"></script>
-
+	<script type="text/javascript" src="/static/js/jquery.corner.js"></script>
+	<script type="text/javascript">
+	 $(document).ready(function() {
+            $('#sidebarinner').corner("round 15px").parent().css('padding', '5px').corner("round 19px");
+        });
+	</script>
+	
 	{% block morehead %}{% endblock %}
 </head>
 
@@ -65,7 +70,7 @@
 	<!-- start page -->
 	<div id="page">
 		<!-- start sidebar -->
-		<div id="sidebar"><br />{% block sidebar %}{% endblock %}<br /></div>
+		<div id="sidebar"><div id="sidebarinner"><br />{% block sidebar %}{% endblock %}<br /></div></div>
 		<!-- end sidebar -->
 		<!-- start content -->
 		<div id="content">
