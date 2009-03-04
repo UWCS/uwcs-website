@@ -160,11 +160,6 @@ body, html {
 
 /* Admin page elements */
 
-#changelist-filter {
-	top: 253px;
-	right: 14px;
-}
-
 #actions h2 {
 	float: left;
 	width: 150px;
