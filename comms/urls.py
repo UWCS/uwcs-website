@@ -25,6 +25,7 @@ def get_dict(item_type,paginate=True):
             'type':get(COMMS_TYPE,item_type).lower(),
             'dates':lambda: lookup(item_type),
             'future':future_events(),
+            'intro':paginate,
         },
     }
     if paginate:    info_dict['paginate_by'] = 10
