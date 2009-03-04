@@ -54,11 +54,7 @@
 				{% if signups %}
 					{% for signup in signups %}
 						<li class="signup"><ul>
-							{% if signup.user.member %}
-								<li class="username">{{ signup.user.member.name }}</li>
-							{% else %}
-								<li class="username">{{ signup.user.first_name }} {{ signup.user.last_name }}</li>
-							{% endif %}
+							<li class="username">{{ signup.user.member.name }}</li>
 							<li class="time">{{ signup.time_form }}</li>
 							<li class="comment"><p>{{ signup.comment }}</p></li>
 						</ul></li>
