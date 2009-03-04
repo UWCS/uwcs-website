@@ -3,7 +3,7 @@
 {% load markup %}
 
 {% block content %}
-    <h1>{{ revision.title }}</h1>
+    <h1>{{ revision.title }} @ {{ revision.date_written|date:"D d b, H:i" }}</h1>
     <p>{{ revision.comment }}</p>
     <p>{{ revision.text|markdown }}</p>
     <hr />
