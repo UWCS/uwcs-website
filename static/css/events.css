@@ -245,7 +245,7 @@ ul#eventlist, #eventlist ul {
 	padding-left: 10px;
 }
 
-#event .signup, #event .signedup, #event .notsignedup {
+#event .signup, #event .signedup, #event .notsignedup, #event .reserved {
 	border-bottom: 1px solid #222;
 }
 
