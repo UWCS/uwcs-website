@@ -1,5 +1,9 @@
 /* Seating plan */
 
+#seating {
+	min-width: 645px;
+}
+
 .events-seating-key {
     margin-top: 0px;
     padding: 2px 0px;
@@ -16,13 +20,28 @@ table.seating td {
 ul.seating {
     list-style-type: none;
     margin: 0px;
-    border: 1px solid #CCC;
+    border: 1px solid #666;
     padding: 0.25em;
+	min-height: 5em;
+	background-color: #333;
 }
 
-#unassigned, #unassigned_empty {
+ul#unassigned {
+	background-color: #222;
+	min-height: 0;
+}
+
+#unassigned {
     border: none;
     padding: 0em;
+}
+
+
+#unassigned_empty {
+    border: none;
+    padding: 0em;
+	min-height: 0;
+	background-color: #222;
 }
 
 ul.seatingleft {
@@ -35,24 +54,16 @@ ul.seatingright {
 
 ul.seating li {
     position: relative;
-    padding: 0em 0.1em;
+    padding: 0;
     width: 5em;
     height: 2.4em;
     overflow: hidden;
-    text-align: center;
+	text-align: center;
+	border: 1px solid #555;
 }
 
 ul.seating li, span.seating {
-    border: 1px solid #CCC;
-    background-color: #EEE;
-}
-
-ul.seating li, span.seating_here {
-    color: #000;
-}
-
-ul.seating li.seating_not_here, span.seating_not_here {
-    color: #888;
+    background-color: #444;
 }
 
 ul.seating li.allow_edit {
@@ -68,45 +79,85 @@ ul.seating li table.seating_item td {
     vertical-align: middle;
 }
 
-ul.seating li.empty {
-    background-color: #FFF;
-}
-
 ul.seating li.seating_moving {
     z-index: 1;
 }
 
 ul.seating div {
-    border: 1px solid #FFF;
     padding: 0em 0.1em;
     width: 5em;
     height: 3px;
-    background: #FFF;
     overflow: hidden; /* For IE6 only. */
 }
 
 ul.seating div.insert {
     background: #888;
+	height: 2.58em;
+	border-top: 3px solid #333;
+	border-bottom: 3px solid #333;
 }
 
-#comments table {
-    border-width: 1px 1px 1px 1px;
-    border-spacing: 2px;
-    background-color: black;
-    width: 100%;
+/* Comments */
+
+#comments {
+	margin: 10px 0 0 0;
+	padding: 0;
 }
 
-#comments th {
-    font-size: larger;
-    font-weight: bold;
-    background-color:#5C5555;
-    border: 5px solid #5C5555;
+#comments li {
+	display: block;
 }
 
-#comments td {
-    font-size: larger;
-    background-color: #565656;
-    vertical-align: middle;
-    border: 5px solid #565656;
+#comments ul {
+	padding: 0;
+	margin: 0;
 }
 
+#comments #commentheader .rev, #comments #commentheader .creator, #comments #commentheader .comment {
+	background-color: #444;
+	font-weight: bold;
+}
+
+
+#comments #commentheader {
+	background-color: #444;
+}
+
+#comments .newrevision ul, #comments .revision ul {
+	background-color: #333;
+}
+
+#comments  .rev {
+	width: 90px;
+	padding-left: 10px;
+	float: left;
+	background-color: #333;
+}
+
+#comments .creator {
+	width: 90px;
+	padding-left: 10px;
+	float: left;
+	border-left: 1px solid #222;
+	border-right: 1px solid #222;
+	margin-right: 10px;
+	background-color: #333;
+}
+
+#comments .comment {
+	width: 100%;
+	background-color: #333;
+	float: left;
+	margin-right: -240px;
+}
+
+#comments li ul {
+	clear: left;
+	overflow: hidden;
+	border-bottom: 1px solid #222;
+}
+
+
+#comments .submit {
+	float: none;
+}

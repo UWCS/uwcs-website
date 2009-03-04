@@ -5,8 +5,8 @@
 {% load number %}
 
 {% block morehead %}
-<link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen">
-<link href="/static/css/seating.css" rel="stylesheet" type="text/css" media="screen">
+<link href="/static/css/events.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/static/css/seating.css" rel="stylesheet" type="text/css" media="screen" />
 
     {% if seating %}
         <script type="text/javascript" src="/static/js/seating.js"></script>
@@ -25,9 +25,10 @@
 {% block content %}
 
 {% if seating %}
-    <h1>Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>
-        , held in <a href="{{ room.room.get_absolute_url }}">{{ room }}</a></h1>
-    <p>{{ event.time_string }}</p>
+<div id="seating">
+    <h2 class="title">Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>,
+        held in <a href="{{ room.room.get_absolute_url }}">{{ room }}</a></h2>
+    <p class="byline"><small>{{ event.time_string }}</small></p>
     <!-- visual seating plan goes here. -->
 <table class="seating">
     <tbody><tr>
@@ -76,45 +77,40 @@
     </tr>
     </tbody>
 </table>
-
-    <br />
-    <hr />
-    <br />
-    <div id="comments">
-    <table>
-    <tbody>
-        <tr>
-            <th>Revision</th>
-            <th>Creator</th>
-            <th>Comment</th>
-        </tr>
-    {% if user.is_authenticated %}
-    {% if notclosed %}
-        <tr>
-        <td>{{ new_revision_no }} (new)</td>
-        <td>{{ user.username }}</td>
-        <td>
-            <form action="" method="post">
-                  <input class="submit" type="submit" value="Save" title="Save New Revision" />
-                  <input type="text" name="comment" maxlength="255" size="50" />
-                  <input type="hidden" name="order" id="order" value="" />
-            </form>
-        </td>
-        </tr>
-    {% endif %}
-    {% endif %}
-
-    {% for revision in seating_revisions %}
-        <tr>
-        <td><a href="/events/seating/{{ event.id }}/{{ revision.number }}">{{ revision.number }}</a></td>
-        <td>{{ revision.creator }}</td>
-        <td>{{ revision.comment }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
-    </div>
-{% else %}
+	
+	<ul id="comments">
+		<li id="commentheader"><ul>
+			<li class="rev">Revision</li>
+			<li class="creator">Creator</li>
+			<li class="comment">Comment</li>
+		</ul></li>
+		{% if user.is_authenticated %}
+		{% if notclosed %}
+		<li class="newrevision"><ul>
+			<li class="rev">{{ new_revision_no }} (new)</li>
+			<li class="creator">{{ user.username }}</li>
+			<li class="comment">
+				<div class="form">
+				<form action="" method="post">
+					<input class="text" type="text" name="comment" maxlength="255" size="50" />
+					<input class="submit" type="submit" value="Save" title="Save New Revision" />
+					<input type="hidden" name="order" id="order" value="" />
+				</form>
+				</div>
+			</li>
+		</li></ul>
+		{% endif %}
+		{% endif %}
+		{% for revision in seating_revisions %}
+			<li class="revision"><ul>
+				<li class="rev"><a href="/events/seating/{{ event.id }}/{{ revision.number }}">{{ revision.number }}</a></li>
+				<li class="creator">{{ revision.creator }}</li>
+				<li class="comment">{{ revision.comment }}</li>
+			</ul></li>
+		{% endfor %}
+	</ul>
+</div>
+ {% else %}
     <p>No seating plan available for {{ event.type.name }}, {{ event.start }}</p>
 {% endif %}
 
