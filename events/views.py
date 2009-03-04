@@ -4,7 +4,7 @@ from time import strftime
 
 from django.utils.datastructures import MultiValueDictKeyError
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
 from django import forms
@@ -115,7 +115,7 @@ def valid_signup(user,event):
     return can_signup
     
 def details(request,event_id):
-    event = Event.objects.get(id=event_id)
+    event = get_object_or_404(Event, id=event_id)
     signups = event.signup_set.order_by('time')
     max = event.signup_total()
     # 0 = inifnite signups
@@ -158,7 +158,7 @@ p = re.compile(r"col([0-5])\((.*),\)")
 
 # assumes initial revision
 def seating(request, event_id, revision_no=None):
-    e = Event.objects.get(id=event_id)
+    e = get_object_or_404(Event, id=event_id)
     dict = {
             'user':request.user,
             'event':e,
