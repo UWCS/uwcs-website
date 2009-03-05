@@ -1,3 +1,27 @@
 {% extends "base.html" %}
 
 {% block home %}class="active"{% endblock %}
+
+{% block sidebar %}
+<ul>
+    <li>
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="/news/1/">News</a></li>
+            <li><a href="/minutes/1/">Minutes</a></li>
+            <li><a href="/newsletters/1/">Newsletters</a></li>
+        </ul>
+    </li>
+    {% include "events/future.html" %}
+    <li>
+    {% if dates %}
+        <h2>Archives</h2>
+        <ul>
+            {% for year,month in dates %}
+                <li><a href="/month{{ type|slugify }}s/{{ year }}/{{ month }}/">{{ month }} {{ year }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </li>
+</ul>
+{% endblock %}

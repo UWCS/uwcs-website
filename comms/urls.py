@@ -37,7 +37,12 @@ urlpatterns = patterns('django.views.generic.list_detail',
     (r'^news/(?P<page>[0-9]+)/$','object_list',get_dict('N')),
     (r'^minutes/(?P<page>[0-9]+)/$','object_list',get_dict('M')),
     (r'^newsletters/(?P<page>[0-9]+)/$','object_list',get_dict('NL')),
-    (r'^details/(?P<object_id>\d+)/$', 'object_detail',{'queryset':Communication.objects.all()}),
+    (r'^details/(?P<object_id>\d+)/$', 'object_detail',{
+        'queryset':Communication.objects.all(),
+        'extra_context':{
+            'future':future_events(),
+        },
+    }),
 
 ) + patterns('django.views.generic.date_based',
     (r'^monthnews-items/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('N',False)),
