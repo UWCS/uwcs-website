@@ -25,8 +25,8 @@ class EventType(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField()
-    image_url = models.CharField(max_length=255)
-    map_loc = models.CharField(max_length=30)
+    image_url = models.CharField(max_length=255, default="/static/img/no_location.png")
+    map_loc = models.CharField(max_length=30, blank=True)
 
     def __unicode__(self):
         return self.name
