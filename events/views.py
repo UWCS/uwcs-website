@@ -286,7 +286,7 @@ def ical_feed(request):
     for event in filter(lambda e: e.is_in_future(),Event.objects.order_by('start')):
         vevent = cal.add('vevent')
         vevent.add('summary').value = event.type.name
-        vevent.add('location').value = event.location
+        vevent.add('location').value = str(event.location)
         vevent.add('dtstart').value = event.start
         vevent.add('dtend').value = event.finish
         vevent.add('dtstamp').value = event.start # again, for Outlook
