@@ -24,18 +24,7 @@ body, th, td, input, textarea, select, option {
 
 h1, h2, h3 {
 	font-weight: normal;
-}
-
-h1 {
 	font-size: 24px;
-}
-
-h2 {
-	font-size: 24px;
-}
-
-h3 {
-	font-size: 1em;
 }
 
 p, ul, ol {

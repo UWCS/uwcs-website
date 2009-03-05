@@ -6,8 +6,8 @@
 {% if intro %}
     <p>The Computing Society serves two purposes. The first is to organise both computer and non-computer related socials, so that people with similar interests can go out and have fun. These socials range from LAN parties and gaming sessions in ITS (yes, they let us play games!) to going to LaserQuest, with pub crawls thrown in for good measure. The second is to organise and encourage the academic development of our members, by involving them in such things as our Open Source project. If you are interested in computers - and want to have a good time, then give us a go! See our website if you want more details.</p>
 {% endif %}
-{% if month %}<h1>{{ type|capfirst }}s from {{ month|date:"M Y"}}</h1>
-{% else %}<h1>Recent {{ type|capfirst }}s</h1>
+{% if month %}<h2>{{ type|capfirst }}s from {{ month|date:"M Y"}}</h2>
+{% else %}<h2>Recent {{ type|capfirst }}s</h2>
 {% endif %}
 <br />
 {% if object_list %}
@@ -16,7 +16,7 @@
 			{% if user.is_staff %}
                 <a class="edit" href="/admin/comms/communication/{{ comm_item.id }}/">Edit</a>
             {% endif %}
-            <h1 class="title">{{ comm_item.title }}</h1>
+            <h3 class="title">{{ comm_item.title }}</h3>
             <p class="byline"><small>Posted on {{ comm_item.date }}</small></p>
             <div class="entry">
             {{ comm_item.text|markdown }}

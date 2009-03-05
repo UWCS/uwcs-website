@@ -8,7 +8,7 @@
     {% if user.is_staff %}
         <a class="edit" href="/admin/comms/communication/{{ object.id }}/">Edit</a>
     {% endif %}
-    <h1 class="title">{{ object.title }}</h1>
+    <h2 class="title">{{ object.title }}</h2>
     <p class="byline"><p><small>{{ object.get_type_display }} Posted on {{ object.date }}</small></p>
     <div class="entry">
     {{ object.text|markdown }}
