@@ -24,7 +24,7 @@ def get_dict(item_type,paginate=True,intro=False):
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
             'dates':lambda: lookup(item_type),
-            'future':future_events(),
+            'future':lambda: future_events(),
             'intro':intro,
         },
     }
@@ -40,7 +40,7 @@ urlpatterns = patterns('django.views.generic.list_detail',
     (r'^details/(?P<object_id>\d+)/$', 'object_detail',{
         'queryset':Communication.objects.all(),
         'extra_context':{
-            'future':future_events(),
+            'future':lambda: future_events(),
         },
     }),
 
