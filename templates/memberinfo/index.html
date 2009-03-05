@@ -55,11 +55,8 @@
     {% else %}
         <p>You don't have a shell account, you may request one here.</p>
         <form action="/member/shell/" method="post">
-            <p>
-                <label for="id_shell">Account Name:</label>
-                <input id="id_shell" type="text" name="shell" />
-            </p>
-            <input id="profile_submit" type="submit" value="request" />
+            {{ shell_form.as_p }}
+            <input type="submit" value="request" />
         </form>
     {% endif %}
     <hr />
@@ -80,10 +77,7 @@
     {% else %}
         <p>You don't have a database account, you may request one here.</p>
         <form action="/member/database/" method="post">
-            <p> 
-                <label for="id_db">Account Name:</label>
-                <input id="id_db" type="text" name="db" />
-            </p>
+            {{ db_form.as_p }}
             <input type="submit" value="request" />
         </form>
     {% endif %}
@@ -101,12 +95,8 @@
     {% endif %}
     <p>Disk quota currently costs £2.50 for 500MB and more can be requested here.
     The society treasurer will contact you, in order to obtain payment.</p>
-    <!-- TODO: some client side input validation -->
     <form action="/member/quota/" method="post">
-        <p>
-            <label for="id_quota">Units (x500MB) quota:</label>
-            <input id="id_quota" type="text" name="quota" />
-        </p>
+        {{ quota_form.as_p }}
         <input type="submit" value="request" />
     </form>
     <hr />
@@ -140,32 +130,23 @@
     <div id="web" style="display:none">
     <p>Your nickname will be used throughout the site to identify you, e.g. on the
     list of signups for an event. If you don't specify a nickname, your real name
-    will be used instead. Your nickname (or real name) and website (URL and title)
+    will be used instead. </p>
+    <form action="/member/nickname/" method="post">
+        {{ name_form.as_p }}
+        <input type="submit" value="submit" />
+    </form>
+    <hr />
+    <p>Your nickname (or real name) and website (URL and title)
     will appear on the member list page (and any other public list of members) only
     if you allow the details to be published.</p>
-    {# replace the following with django forms #}
-        <form action="/member/details/" method="post">
-        <p>
-            <label for="id_nick">Nickname:</label>
-            <input id="id_nick" type="text" name="name" value="{{ name }}"/>
-        </p>
-        <p>
-            <label for="id_url">Website URL:</label>
-            <input id="id_url" type="text" name="url" value="{{ url }}"/>
-        </p>
-        <p>
-            <label for="id_title">Website Title:</label>
-            <input id="id_title" type="text" name="title" value="{{ title }}"/>
-        </p>
-        <p>
-            <label for="id_pub">Publish Details?:</label>
-            {% if publish_details %}
-                <input id="id_pub" type="checkbox" name="publish" checked="yes"/>
-            {% else %}
-                <input id="id_pub" type="checkbox" name="publish" />
-            {% endif %}
-        </p>
-        <input type="submit" value="save details" />
+    <form action="/member/website/" method="post">
+        {{ website_form.as_p }}
+        <input type="submit" value="submit" />
+    </form>
+    <hr />
+    <form action="/member/publish/" method="post">
+        {{ publish_form.as_p }}
+        <input type="submit" value="submit" />
     </form>
     <hr />
     </div>

@@ -10,14 +10,19 @@ from random import choice
 from string import *
 
 from compsoc.memberinfo.models import *
+from compsoc.memberinfo.forms import *
 from compsoc.shortcuts import template_mail
 from compsoc.settings import *
+
+'''
+The following views are all related to the member profile section of the website.
+'''
 
 @login_required()
 def index(request):
 
     # catch a DoesNotExist exception
-    # and convert it to a falsehood
+    # and convert it to a value
     def failsafe(f,val):
         try: return f()
         except: return val
@@ -29,11 +34,20 @@ def index(request):
     u = request.user
     shell = failsafe(lambda: u.shellaccount,False)
     db = failsafe(lambda: u.databaseaccount,False)
-    name = failsafe(lambda: u.nicknamedetails.nickname,"")
-    website = failsafe(lambda: u.websitedetails,False)
-    pub = failsafe(lambda: u.member.showDetails,False)
 
-    quota,req_quota = (getQuota('PR'),getQuota('RE'))
+    try:
+        name_form = NicknameForm(initial={'name': u.nicknamedetails.nickname})
+    except NicknameDetails.DoesNotExist:
+        name_form = NicknameForm()
+
+    try:
+        website = u.websitedetails
+        website_form = WebsiteForm(initial={
+            'url':website.websiteUrl,
+            'title':website.websiteTitle,
+        })
+    except WebsiteDetails.DoesNotExist:
+        website_form = WebsiteForm()
 
     my_lists = u.mailinglist_set.all()
     other_lists = []
@@ -41,73 +55,81 @@ def index(request):
         if list not in my_lists:
             other_lists.append(list.list)
 
-    dict = {
+    return render_to_response('memberinfo/index.html',{
         'shell': shell,
+        'shell_form':ShellForm(),
         'db': db,
-        'quota': quota,
-        'req_quota': req_quota*500,
-        'total_quota':quota*500+1000,
-        'name':name,
-        'url':website.websiteUrl if website else "",
-        'title':website.websiteTitle if website else "",
+        'db_form':DatabaseForm(),
+        'quota': getQuota('PR'),
+        'req_quota': getQuota('RE')*QUOTA_INC,
+        'total_quota':getQuota('PR')*QUOTA_INC+BASE_QUOTA,
+        'quota_form':QuotaForm(),
+        'name_form':name_form,
+        'website_form':website_form,
+        'publish_form': PublishForm(initial={'publish':u.member.showDetails}),
+        'user':u,
         'my_lists':my_lists,
         'other_lists':other_lists,
-        'publish_details': pub,
-        'user':u,
-    }
-    return render_to_response('memberinfo/index.html',dict)
+    })
 
 @login_required()
 def shell(request):
-    return do_service(request,'shell',ShellAccount, 'shell',
+    return do_service(request,ShellForm,ShellAccount, 'shell',
         lambda acc: "You already own a shell account called %s" % acc.name)
 
 @login_required()
 def database(request):
-    return do_service(request,'db',DatabaseAccount, 'database',
+    return do_service(request,DatabaseForm,DatabaseAccount, 'database',
         lambda acc: "You already own a database account called %s" % acc.name)
 
-def do_service(request,param,klass,name,error):
-    n = request.POST[param]
-    u = request.user
+def do_service(request,form,klass,name,error):
+    f = form(request.POST)
+    if f.is_valid():
+        n = f.cleaned_data['name']
+        u = request.user
 
-    try:
-        acc = klass.objects.get(user=u)
-        return render_to_response('memberinfo/request_error.html',
-            {'user':u,'name':name,'error':error(acc)})
-    except klass.DoesNotExist:
-        obj = klass(user=u,name=n,status='RE')
-        obj.save()
+        try:
+            acc = klass.objects.get(user=u)
+            return render_to_response('memberinfo/request_error.html',
+                {'user':u,'name':name,'error':error(acc)})
+        except klass.DoesNotExist:
+            obj = klass(user=u,name=n,status='RE')
+            obj.save()
 
-        template_mail(
-            'New service request',
-            'memberinfo/service_techteam.html',
-            {'realname':("%s %s"%(u.first_name,u.last_name)),'username':n,'what':name},
-            COMPSOC_TECHTEAM_EMAIL,
-            [COMPSOC_TECHTEAM_EMAIL])
-    return HttpResponseRedirect('/member/')
+            template_mail(
+                'New service request',
+                'memberinfo/service_techteam.html',
+                {'realname':("%s %s"%(u.first_name,u.last_name)),'username':n,'what':name},
+                COMPSOC_TECHTEAM_EMAIL,
+                [COMPSOC_TECHTEAM_EMAIL])
+        return HttpResponseRedirect('/member/')
+    else:
+        return render_to_response('memberinfo/form_errors.html',
+            {'user':u,'name':name,'all_errors':f.errors.items()})
 
 @login_required()
 def quota(request):
-    amount = request.POST['quota']
+    form = QuotaForm(request.POST)
     user = request.user
-    try:
-        acc_name = user.shellaccount.name
-        q = Quota(user=user,quantity=amount,status='RE')
-        q.save()
-        template_mail(
-            'Quota request',
-            'membeinfo/quota_techteam',
-            {'realname':("%s %s"%(u.first_name,u.last_name)),'username':acc_name,'amount':amount},
-            user.email,
-            [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
-        return HttpResponseRedirect('/member/')
-    except ValueError:
+    if form.is_valid():
+        amount = form.cleaned_data['quota']
+        try:
+            acc_name = user.shellaccount.name
+            q = Quota(user=user,quantity=amount,status='RE')
+            q.save()
+            template_mail(
+                'Quota request',
+                'membeinfo/quota_techteam',
+                {'realname':("%s %s"%(u.first_name,u.last_name)),'username':acc_name,'amount':amount},
+                user.email,
+                [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
+            return HttpResponseRedirect('/member/')
+        except ShellAccount.DoesNotExist:
+            return render_to_response('memberinfo/request_error.html',
+                {'user':user,'name':'Quota','error':'You don\'t have a shell account'})
+    else:
         return render_to_response('memberinfo/request_error.html',
-            {'user':user,'name':'Quota','error':"%s is not an integer" % amount})
-    except ShellAccount.DoesNotExist:
-        return render_to_response('memberinfo/request_error.html',
-            {'user':user,'name':'Quota','error':'You don\'t have a shell account'})
+            {'user':user,'name':'Quota','error':"You must enter an integer as the amount"})
 
 @login_required()
 def lists(request):
@@ -120,40 +142,62 @@ def lists(request):
     request.user.save()
     return HttpResponseRedirect('/member/')
 
+
 @login_required()
-def details(request):
+def set_nickname(request):
     u = request.user
-    name = request.POST['name']
-    url = request.POST['url']
-    title = request.POST['title']
-    try: publish = request.POST['publish']
-    except: publish = False
+    form = NicknameForm(request.POST)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        try:
+            nickname = u.nicknamedetails
+            if name:
+                nickname.nickname = name
+                nickname.save()
+            else:
+                #empty nicks remove the nickname
+                nickname.delete()
+        except NicknameDetails.DoesNotExist:
+            nickname = NicknameDetails.objects.create(user=u, nickname=name)
+        return HttpResponseRedirect('/member/')
+    else:
+        return render_to_response('memberinfo/form_errors.html',
+            {'user':u,'name':'Nickname','all_errors':form.errors.items()})
 
-    member = u.member
-    member.showDetails = publish
-    member.save()
+@login_required()
+def set_website(request):
+    u = request.user
+    form = WebsiteForm(request.POST)
+    if form.is_valid():
+        print 'foo'
+        try:
+            website = u.websitedetails
+            website.websiteTitle = form.cleaned_data['title']
+            website.websiteUrl = form.cleaned_data['url']
+            website.save()
+        except WebsiteDetails.DoesNotExist:
+            WebsiteDetails.objects.create(user=u,websiteTitle=title,websiteUrl=url)
+        return HttpResponseRedirect('/member/')
+    else:
+        return render_to_response('memberinfo/form_errors.html',
+            {'user':u,'name':'Website Details','all_errors':form.errors.items()})
 
-    # disallow empty or whitespace only nicknames
-    if not name.strip():
-        return render_to_response('memberinfo/request_error.html',
-            {'user':u,'name':'Nickname','error':"Nicknames cannot be empty or all whitespace."})
+@login_required()
+def set_publish(request):
+    u = request.user
+    form = PublishForm(request.POST)
+    if form.is_valid():
+        member = u.member
+        member.showDetails = form.cleaned_data['publish']
+        member.save()
+        return HttpResponseRedirect('/member/')
+    else:
+        return render_to_response('memberinfo/form_errors.html',
+            {'user':u,'name':'Publish Details','all_errors':form.errors.items()})
 
-    try:
-        nickname = u.nicknamedetails
-        nickname.nickname = name
-    except NicknameDetails.DoesNotExist:
-        nickname = NicknameDetails(user=u, nickname=name)
-    nickname.save()
-
-    try:
-        website = u.websitedetails
-        website.websiteTitle = title
-        website.websiteUrl = url
-    except WebsiteDetails.DoesNotExist:
-        website = WebsiteDetails(user=u,websiteTitle=title,websiteUrl=url)
-    website.save()
-    
-    return HttpResponseRedirect('/member/')
+'''
+End of Member Profile Section
+'''
 
 def member_list(request):
     users = []

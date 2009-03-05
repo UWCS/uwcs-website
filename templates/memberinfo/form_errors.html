@@ -1,0 +1,13 @@
+{% extends "memberinfo/base.html" %}
+
+{% block content %}
+    <h1>Request Error</h1>
+    <p>Your {{ name }} request has been denied because of the following errors:</p>
+    {% for field,errors in all_errors %}
+        <h3>{{ field }}</h3>
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <hr />
+    {% endfor %}
+{% endblock %}

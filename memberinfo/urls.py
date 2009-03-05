@@ -7,11 +7,12 @@ urlpatterns = patterns('compsoc.memberinfo.views',
     (r'^database/$','database'),
     (r'^quota/$','quota'),
     (r'^lists/$','lists'),
-    (r'^details/$','details'),
     (r'^list/$','member_list'),
     (r'^reset/$','reset_password'),
     (r'^reset/(?P<account>.*)/$','reset_account'),
     (r'^guest/$','create_guest'),
-
+    (r'^nickname/$','set_nickname'),
+    (r'^website/$','set_website'),
+    (r'^publish/$','set_publish'),
 )
 
