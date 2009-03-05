@@ -32,7 +32,7 @@ ul#eventlist, #eventlist ul {
 	background-color: #444;
 }
 
-#eventlist .events li {
+#eventlist .events, #eventlist .events li {
 	clear: both;
 }
 
