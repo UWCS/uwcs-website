@@ -49,14 +49,19 @@ class EventAdmin(admin.ModelAdmin):
     inlines = [ EventSignupInline, SignupInline]
     form = EventAdminForm
     list_display = ('type', 'location', 'start')
+    ordering = ('-start',)
 
 class SeatingRoomInline(admin.StackedInline):
     model = SeatingRoom
 
 class LocationAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
     inlines = [SeatingRoomInline]
 
-admin.site.register(EventType)
+class EventTypeAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
+
+admin.site.register(EventType, EventTypeAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Event,EventAdmin)
 #admin.site.register(Signup)

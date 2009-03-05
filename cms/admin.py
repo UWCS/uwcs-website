@@ -7,8 +7,7 @@ class RevisionInline(admin.StackedInline):
     extra = 1
 
 class PageAdmin(admin.ModelAdmin):
+    search_fields = ('slug',)
     inlines = [RevisionInline]
 
 admin.site.register(Page,PageAdmin)
-admin.site.register(PageRevision)
-
