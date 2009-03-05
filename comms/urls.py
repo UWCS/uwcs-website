@@ -16,7 +16,7 @@ def lookup(item_type):
         store[from_date(comm.date)] = True
     return store.keys()
 
-def get_dict(item_type,paginate=True):
+def get_dict(item_type,paginate=True,intro=False):
     data = Communication.objects.filter(type=item_type).order_by('-date')
     info_dict = {
         'queryset':data,
@@ -25,7 +25,7 @@ def get_dict(item_type,paginate=True):
             'type':get(COMMS_TYPE,item_type).lower(),
             'dates':lambda: lookup(item_type),
             'future':future_events(),
-            'intro':paginate,
+            'intro':intro,
         },
     }
     if paginate:    info_dict['paginate_by'] = 10
@@ -33,7 +33,7 @@ def get_dict(item_type,paginate=True):
     return info_dict
 
 urlpatterns = patterns('django.views.generic.list_detail',
-    (r'^$','object_list',get_dict('N')),
+    (r'^$','object_list',get_dict('N', intro=True)),
     (r'^news/(?P<page>[0-9]+)/$','object_list',get_dict('N')),
     (r'^minutes/(?P<page>[0-9]+)/$','object_list',get_dict('M')),
     (r'^newsletters/(?P<page>[0-9]+)/$','object_list',get_dict('NL')),

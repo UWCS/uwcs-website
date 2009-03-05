@@ -8,6 +8,7 @@
 {% endif %}
 {% if month %}<h1>{{ type|capfirst }} items from {{ month|date:"M Y"}}</h1>{% endif %}
 <br />
+<h1>Recent {{ type|capfirst }}s</h1>
 {% if object_list %}
     {% for comm_item in object_list %}
         <div class="post">

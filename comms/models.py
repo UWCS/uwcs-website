@@ -5,7 +5,7 @@ from compsoc.search import register
 COMMS_TYPE = (
     ('NL','Newsletter'),
     ('M','Minute'),
-    ('N','News'),
+    ('N','News Item'),
 )
 
 class Communication(models.Model):
