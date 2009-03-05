@@ -234,51 +234,46 @@ def do_signup(request,event_id):
     Get:
         return a form, if they are signed up, it should have their contacts in
     '''
-    try:
-        event = Event.objects.get(id=event_id)
-        if request.method == 'POST':
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                c = form.cleaned_data['comment']
-                try:
-                    e = event.signup_set.get(user=request.user)
-                    e.comment = c
-                    e.save()
-                except Signup.DoesNotExist:
-                    if valid_signup(request.user,event):
-                        event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
-                    else:
-                        return render_to_response('events/cantsignup.html',{'event':event})
-                    
+    event = get_object_or_404(Event, id=event_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            c = form.cleaned_data['comment']
+            try:
+                e = event.signup_set.get(user=request.user)
+                e.comment = c
+                e.save()
+            except Signup.DoesNotExist:
+                if valid_signup(request.user,event):
+                    event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
+                else:
+                    return render_to_response('events/cantsignup.html',{'event':event})
+                
 # TODo: add to admin section
 #                if event.signup_set.filter(user=request.user):
 #                    return render_to_response('events/alreadysignedup.html',{'event':event})
-            return render_to_response('events/signup.html',{'event_id':event_id})
-        else:
-            form = CommentForm()
-            try:
-                e = event.signup_set.get(user=request.user)
-            except Signup.DoesNotExist: pass
+        return render_to_response('events/signup.html',{'event_id':event_id, 'user':request.user})
+    else:
+        form = CommentForm()
+        try:
+            e = event.signup_set.get(user=request.user)
+        except Signup.DoesNotExist: pass
 
-        return render_to_response('events/edit_signup.html', {
-            'form': form,
-            'event_id': event_id,
-        })
-    except Event.DoesNotExist:
-        return render_to_response('events/nonevent.html')
-
+    return render_to_response('events/edit_signup.html', {
+        'form': form,
+        'event_id': event_id,
+        'user':request.user,
+    })
 
 @login_required
 def do_unsignup(request,event_id):
     try:
-        event = Event.objects.get(id=event_id)
+        event = get_object_or_404(Event, id=event_id)
         signup = event.signup_set.get(user=request.user)
         signup.delete()
-    except Event.DoesNotExist:
-        return render_to_response('events/nonevent.html')
     except Signup.DoesNotExist:
-        return render_to_response('events/nonsignup.html',{'event':event})
-    return render_to_response('events/unsignup.html',{'event_id':event_id})
+        return render_to_response('events/nonsignup.html',{'event':event,'user':request.user})
+    return render_to_response('events/unsignup.html',{'event_id':event_id,'user':request.user})
 
 def ical_feed(request):
     '''

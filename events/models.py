@@ -113,7 +113,7 @@ post_save.connect(write_file_callback, sender=Event)
 
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
-    room = models.OneToOneField(Location)
+    room = models.ForeignKey(Location)
     max_cols = models.IntegerField()
     max_rows = models.IntegerField()
 
