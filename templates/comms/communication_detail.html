@@ -5,6 +5,6 @@
 {% block content %}
 <h1>{{ object.title }}</h1>
 <p>{{ object.date }}</h1>
-<p>{{ object.text }}</p>
+<p>{{ object.text|markdown }}</p>
 <p>{{ object.type }}</p>
 {% endblock %}
