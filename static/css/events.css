@@ -169,10 +169,11 @@ ul#eventlist, #eventlist ul {
 
 #event dd {
 	margin-bottom: 5px;
+	margin-left: 190px;
 }
 
 #event dl.signupdetals {
-	padding: 5px 5px 5px 170px;
+	padding: 5px;
 }
 
 #event .details .signupdetals dt {
