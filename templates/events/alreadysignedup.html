@@ -1,9 +1,16 @@
 {% extends "events/base.html" %}
 
 {% block content %}
-You are already signed up to {{ event.type.name }}.
+<p class="notification">You are already signed up to {{ event.type.name }}.</p>
 {% endblock %}
 
 {% block sidebar %}
-<a href="/events/details/{{ event.id }}/">event</a>
+    <ul>
+        <li>
+            <h2>Event</h2>
+            <ul>
+                <li><a href="/events/details/{{ event.id }}/">Back to event</a></li>
+            </ul>
+        </li>
+	</ul>
 {% endblock %}

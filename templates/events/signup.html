@@ -1,9 +1,16 @@
 {% extends "events/base.html" %}
 
 {% block content %}
-signup successful
+<p class="notification">Signup successful.<br /><a href="/events/details/{{ event_id }}/">Back to event</a></p>
 {% endblock %}
 
 {% block sidebar %}
-<a href="/events/details/{{ event_id }}/">event</a>
+    <ul>
+        <li>
+            <h2>Event</h2>
+            <ul>
+                <li><a href="/events/details/{{ event_id }}/">Back to event</a></li>
+            </ul>
+        </li>
+	</ul>
 {% endblock %}

@@ -111,7 +111,7 @@
 	</ul>
 </div>
  {% else %}
-    <p>No seating plan available for {{ event.type.name }}, {{ event.start }}</p>
+    <p class="notification">No seating plan available for {{ event.type.name }}, {{ event.start }}.</p>
 {% endif %}
 
 {% endblock %}
