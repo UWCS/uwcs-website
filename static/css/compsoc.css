@@ -322,6 +322,29 @@ dd {
 	color: #3193FF;
 }
 
+#sidebar .cms {
+	margin: 0;
+	padding: 10px 0;
+}
+
+#sidebar ul .cms ul {
+	margin: 0;
+	padding: 0 0 0 10px;
+	list-style: none;
+}
+
+#sidebar ul .cms li {
+	padding: 10px 0 0 0;
+	line-height: 1.2em;
+}
+
+#sidebar ul .cms li a {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	border: 0;
+}
+
 #profile p {
 	margin-left: 10px;
 }

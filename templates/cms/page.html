@@ -17,29 +17,34 @@
 {% endblock %}
 
 {% block sidebar %}
-<ul>
+    <ul>
+        <li>
+            <h2>Browse</h2>
+<ul class="cms">
     {% for page_url,name in breadcrumbs %}
         {% if not forloop.first %}
             {% if not forloop.last %}
-                <li><a href="{{ page_url }}">{{ name }}</a>
+                <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a>
                 <ul>
             {% else %}
-                <li>{{ name }}</li>
+                <li>&rsaquo;&nbsp;{{ name }}
                 <ul>
                 {% for page_url,name in children %}
-                    <li><a href="{{ page_url }}">{{ name }}</a></li>
+                    <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
                 {% endfor %}
-                </ul>
+                </ul></li>
             {% endif %}
         {% endif %}
     {% endfor %}
     {% for page_url,name in siblings %}
-        <li><a href="{{ page_url }}">{{ name }}</a></li>
+        <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
     {% endfor %}
     {% for a,b in breadcrumbs %}
         {% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
     {% endfor %}
 </ul>
+		</li>
+	</ul>
 {% endblock %}
 
 {% block content %}
