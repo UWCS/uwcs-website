@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     (r'^logout/', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
     (r'^password/', 'django.contrib.auth.views.password_change', {'template_name':'password.html','post_change_redirect':'/'}),
 
-    (r'^cms/(?P<url>.*)/',handle),
+    (r'^cms/(?P<url>.*)/$',handle),
     (r'^search/$', search),
 )
 
