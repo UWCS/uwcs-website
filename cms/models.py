@@ -32,8 +32,12 @@ class Page(models.Model):
         return peers
 
     def get_children(self):
-        url = self.slug+'/'
-        return Page.objects.filter(slug__startswith=url)
+        url = self.slug + '/'
+        children = []
+        for p in Page.objects.filter(slug__startswith=url):
+            if p.slug[len(url):].count('/') == 0:
+                children.append(p)
+        return children
 
     def get_absolute_url(self):
         return "/cms/%s" % self.slug
