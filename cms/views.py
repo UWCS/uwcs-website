@@ -6,7 +6,7 @@ def cleanse(l):
     return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
 
 def lookup(l):
-    breadcrumbs = [('../','home')]
+    breadcrumbs = [('/','home')]
     for url in l:
         try:
             page = Page.objects.get(slug=url)
