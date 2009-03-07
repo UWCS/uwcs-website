@@ -103,7 +103,9 @@ def future_events(n=5):
     future = []
     for type in types:
         try:
-            future.append((type,type.event_set.latest('start')))
+            event = type.event_set.latest('start')
+            if event.is_in_future():
+                future.append((type,event))
         except Event.DoesNotExist: pass
     return sorted(future,key=lambda (t,e): e.start)[:n]
 
