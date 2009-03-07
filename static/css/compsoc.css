@@ -372,3 +372,26 @@ dd {
 .crumbs {
 	margin-bottom: 20px;
 }
+
+.box label, .box input {
+	margin: 10px 20px;
+	float: left;
+}
+
+.box label {
+	width: 70px;
+	font-weight: bold;
+}
+
+.box label, .box h2 {
+	clear: left;
+}
+
+.box {
+	border-bottom: 1px solid #888;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+}
+.box p {
+	margin-left: 20px;
+}

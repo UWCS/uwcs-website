@@ -9,39 +9,51 @@
 {% endif %}
 
 
-<h2>Login</h2>
-<form method="post" action=".">
-<table>
-<tr><td>{{ form.username.label_tag }}</td><td>{{ form.username }}</td></tr>
-<tr><td>{{ form.password.label_tag }}</td><td>{{ form.password }}</td></tr>
-</table>
-<div class="formfield">
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="/" />
-</div>
-</form>
-<hr />
+<div class="box">
+	<h2>Login</h2>
+	<form method="post" action=".">
+	<div>
+		{{ form.username.label_tag }}
+		{{ form.username }}
 
-<h2>Password Reset</h2>
+		{{ form.password.label_tag }}
+		{{ form.password }}
+
+	    <input type="submit" value="login" />
+	    <input type="hidden" name="next" value="/" />
+	</div>
+	</form>
+	<div style="clear: both;"></div>
+</div>
+
+
+<div class="box">
+	<h2>Password Reset</h2>
     <p>If you have forgotten your password, you can reset it.  A new password will be automatically emailed to you, at your contact email address.</p>
     <form method="post" action="/member/reset/">
-    <div class="formfield">
-        <input type="text" name="user_name" />
-        <input type="submit" value="reset" />
-    </div>
+	<div>
+        <label for="reset_username">Username</label><input type="text" name="user_name" id="reset_username" />
+        <input class="clear" type="submit" value="reset" />
+	</div>
     </form>
-<hr />
+	<div style="clear: both;"></div>
+</div>
 
-<h2>Guest Account</h2>
-    <p>If you wish to request a guest account please complete the following
-    form.</p>
+<div class="box">
+	<h2>Guest Account</h2>
+    <p>If you wish to request a guest account please complete the following form.</p>
     <form method="post" action="/member/guest/">
-    <table>
-        <tr><td>Name</td><td><input type="text" name="name" /></td></tr>
-        <tr><td>Email</td><td><input type="text" name="email" /></td></tr>
-        <tr><td><input type="submit" value="request" /></td><td></td></tr>
-    </table>
+	<div>
+        <label for="guest_name">Name</label>
+		<input type="text" name="name" id="guest_name" />
+		
+		<label for="guest_email">Email</label>
+		<input type="text" name="email" id="guest_email" />
+		
+		<input type="submit" value="request" />
+	</div>
     </form>
-<hr />
+	<div style="clear: both;"></div>
+</div>
 
 {% endblock %}
