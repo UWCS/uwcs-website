@@ -12,6 +12,10 @@ class PageForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
 
+    def clean_slug(self):
+        slug = self.cleaned_data['slug']
+        return slug.rstrip('/')
+
 @staff_member_required
 def revision(request,rev_id):
     rev = get_object_or_404(PageRevision,id=rev_id)
