@@ -26,7 +26,10 @@ class Page(models.Model):
         parent_slug = '/'.join(self.slug.split('/')[:-1])
         peers = []
         child_prefix = parent_slug + '/'
-        return Page.objects.filter(slug__startswith=child_prefix).exclude(slug=self.slug)
+        for p in Page.objects.filter(slug__startswith=child_prefix).exclude(slug=self.slug):
+            if p.slug[len(child_prefix):].count('/') == 0:
+                peers.append(p)
+        return peers
 
     def get_children(self):
         url = self.slug+'/'

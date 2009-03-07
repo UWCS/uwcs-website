@@ -25,6 +25,11 @@
                 <ul>
             {% else %}
                 <li>{{ name }}</li>
+                <ul>
+                {% for page_url,name in children %}
+                    <li><a href="{{ page_url }}">{{ name }}</a></li>
+                {% endfor %}
+                </ul>
             {% endif %}
         {% endif %}
     {% endfor %}
