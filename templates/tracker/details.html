@@ -2,44 +2,38 @@
 
 {% block ttitle %}Issue Details for {{object.name }}{% endblock %}
 
+ {% block sidebar %}
+    <ul>
+        <li>
+            <h2>Actions</h2>
+            <ul>
+				<li><a href="/tickets/">Issue Search</a></li>
+                <li><a href="/tickets/new">New Issue</a></li>
+            </ul>
+        </li>
+    </ul>
+ {% endblock %}
+
 {% block content %}
-<h2>{{ object.name }}</h2>
-<fieldset style="width:450px">
-    <legend>details</legend>
-    <table>
-        <tr>
-            <td>Ticket creation date:</td>
-            <td>{{ object.started|date:"D d M Y" }}</td>
-        </tr>
-        {% if object.due_date %}
-            <tr>
-                <td>Deadline:</td>
-                <td>{{ object.due_date|date:"D d M Y" }}</td>
-            </tr>
-        {% endif %}
-        <tr>
-            <td>Submitted by:</td>
-        <td>{{ object.submitter }}</td>
-        </tr>
-        {% if object.assignee %}
-            <tr>
-                <td>Assigned To:</td>
-                <td>{{ object.assignee }}</td>
-            </tr>
-        {% endif %}
-        <tr>
-            <td>Goal:</td>
-            <td>{{ object.goal }}</td>
-        </tr>
-        <tr>
-            <td>Completed:</td>
-            {% if object.completed %}
-                <td>Yes</td>
-            {% else %}
-                <td>No</td>
-            {% endif %}
-        </tr>
-    </table>
-    <p>{{ object.description }}</p>
-</fieldset>
+<h2 class="title">{{ object.name }}</h2>
+<dl class="details">
+	<dt>Ticket creation date</dt>
+	<dd>{{ object.started|date:"D d M Y" }}</dd>
+	{% if object.due_date %}
+		<dt>Deadline</dt>
+		<dd>{{ object.due_date|date:"D d M Y" }}</dd>
+	{% endif %}
+	<dt>Submitted by</dt>
+	<dd>{{ object.submitter }}</dd>
+	{% if object.assignee %}	
+		<dt>Assigned To</dt>
+		<dd>{{ object.assignee }}</dd>
+	{% endif %}
+	<dt>Goal</dt>
+	<dd>{{ object.goal }}</dd>
+	<dt>Completed</dt>
+	<dd>{% if object.completed %}Yes{% else %}No{% endif %}</dd>
+	<dt>Details</dt>
+	<dd>{{ object.description }}</dd>
+</dl>
 {% endblock %}

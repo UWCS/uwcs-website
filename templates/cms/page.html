@@ -20,7 +20,7 @@
 <ul>
     {% for slug,name in peers %}
         {% ifequal name title %}
-        <strong>{{ name }}</strong>
+        <li><strong>{{ name }}</strong>
             <ul>
                 {% for slug,name in children %}
                     <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
@@ -31,7 +31,7 @@
         <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
         {% endifequal %}
     {% endfor %}
-</ul></li></ul>
+</ul>
 {% endblock %}
 
 {% block content %}

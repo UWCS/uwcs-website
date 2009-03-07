@@ -64,7 +64,7 @@
 	<!-- start page -->
 	<div id="page">
 		<!-- start sidebar -->
-		<div id="sidebar"><div id="sidebarinner">{% block sidebar %}{% endblock %}</div></div>
+		{% block sidebar-outer %}<div id="sidebar">{% block sidebar %}{% endblock %}</div>{% endblock %}
 		<!-- end sidebar -->
 		<!-- start content -->
 		<div id="content">

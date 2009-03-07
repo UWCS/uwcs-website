@@ -257,6 +257,25 @@ a.edit {
 	padding: 10px;
 }
 
+dl {
+	margin: 10px;
+	padding: 0px
+}
+
+dt {
+	float: left;
+	width: 13em;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 20px;
+	line-height: 1em;
+}
+
+dd {
+	margin-bottom: 5px;
+	margin-left: 190px;
+}
+
 /* Sidebar */
 
 #sidebar {
