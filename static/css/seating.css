@@ -5,24 +5,24 @@
 }
 
 .events-seating-key {
-    margin-top: 0px;
-    padding: 2px 0px;
+	margin-top: 0px;
+	padding: 2px 0px;
 }
 
 table.seating {
-    border: none;
+	border: none;
 }
 
 table.seating td {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 ul.seating {
-    list-style-type: none;
-    margin: 0px;
-    border: 1px solid #666;
-    padding: 0.25em;
-	min-height: 5em;
+	list-style-type: none;
+	margin: 0px;
+	border: 1px solid #666;
+	padding: 0.25em;
+	min-height: 3em;
 	background-color: #333;
 }
 
@@ -32,66 +32,66 @@ ul#unassigned {
 }
 
 #unassigned {
-    border: none;
-    padding: 0em;
+	border: none;
+	padding: 0em;
 }
 
 
 #unassigned_empty {
-    border: none;
-    padding: 0em;
+	border: none;
+	padding: 0em;
 	min-height: 0;
 	background-color: #222;
 }
 
 ul.seatingleft {
-    margin-left: 1em;
+	margin-left: 1em;
 }
 
 ul.seatingright {
-    margin-right: 1em;
+	margin-right: 1em;
 }
 
 ul.seating li {
-    position: relative;
-    padding: 0;
-    width: 5em;
-    height: 2.4em;
-    overflow: hidden;
+	position: relative;
+	padding: 0;
+	width: 5em;
+	height: 2.4em;
+	overflow: hidden;
 	text-align: center;
 	border: 1px solid #555;
 }
 
 ul.seating li, span.seating {
-    background-color: #444;
+	background-color: #444;
 }
 
 ul.seating li.allow_edit {
-    cursor: move;
+	cursor: move;
 }
 
 ul.seating li table.seating_item {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 ul.seating li table.seating_item td {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 ul.seating li.seating_moving {
-    z-index: 1;
+	z-index: 1;
 }
 
 ul.seating div {
-    padding: 0em 0.1em;
-    width: 5em;
-    height: 3px;
-    overflow: hidden; /* For IE6 only. */
+	padding: 0em 0.1em;
+	width: 5em;
+	height: 3px;
+	overflow: hidden; /* For IE6 only. */
 }
 
 ul.seating div.insert {
-    background: #888;
+	background: #888;
 	height: 2.58em;
 	border-top: 3px solid #333;
 	border-bottom: 3px solid #333;

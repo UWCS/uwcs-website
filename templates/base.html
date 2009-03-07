@@ -15,13 +15,7 @@
 	<![endif]-->
 
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.corner.js"></script>
-	<script type="text/javascript">
-	 $(document).ready(function() {
-            $('#sidebarinner').corner("round 15px").parent().css('padding', '5px').corner("round 19px");
-        });
-	</script>
-	
+
 	{% block morehead %}{% endblock %}
 </head>
 
@@ -48,7 +42,7 @@
 		</div>
 		<div id="logo">
 			<img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
-			<h1 id="pagetitle"><a href="/">Warwick Computing Society</a></h1>
+			<div id="pagetitle"><a href="/"><img src="/static/img/title.png" alt="Warwick Computing Society" /></a></div>
 		</div>
 		<div id="menu">
 			<ul>

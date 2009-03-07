@@ -20,7 +20,7 @@
 <ul>
     {% for slug,name in peers %}
         {% ifequal name title %}
-        <li>{{ name }}
+        <strong>{{ name }}</strong>
             <ul>
                 {% for slug,name in children %}
                     <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
@@ -31,13 +31,13 @@
         <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
         {% endifequal %}
     {% endfor %}
-</ul>
+</ul></li></ul>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
-    {% if user.is_staff %}
-       <a href="/admin/cms/page/{{ page_id }}/">edit</a>
-    {% endif %}
-    {{ text|markdown }}
+	<div class="post">
+		{% if user.is_staff %}<a class="edit" href="/admin/cms/page/{{ page_id }}/">edit</a>{% endif %}
+		<h1 class="title">{{ title }}</h1>
+    	{{ text|markdown }}
+	</div>
 {% endblock%}
