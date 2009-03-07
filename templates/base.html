@@ -73,9 +73,11 @@
 			{% if breadcrumbs %}
 				<div class="crumbs">
 				{% for url,name in breadcrumbs %}
-					<a href="{{ url }}">{{ name }}</a>
 					{% if not forloop.last %}
-					   &rsaquo; 
+						<a href="{{ url }}">{{ name }}</a>
+						&rsaquo;
+					{% else %}
+						{{ name }}
 					{% endif %}
 				{% endfor %}
 				</div>
