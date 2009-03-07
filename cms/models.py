@@ -22,14 +22,11 @@ class Page(models.Model):
     def login(self):
         return self.get_data().login
 
-    def get_peers(self):
+    def get_siblings(self):
         parent_slug = '/'.join(self.slug.split('/')[:-1])
         peers = []
-        child_prefix = self.slug + '/'
-        for p in Page.objects.filter(slug__startswith=parent_slug):
-            if not p.slug.startswith(child_prefix):
-                peers.append(p)
-        return peers
+        child_prefix = parent_slug + '/'
+        return Page.objects.filter(slug__startswith=child_prefix).exclude(slug=self.slug)
 
     def get_children(self):
         url = self.slug+'/'

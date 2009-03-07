@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from compsoc.cms.models import *
     
 def cleanse(l):
-    return map(lambda p: (p.slug,p.get_data().title),l)
+    return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
 
 def lookup(l):
     breadcrumbs = [('../','home')]
@@ -34,7 +34,7 @@ def handle(request,url):
         'page_id':page.id,
         'title':data.title,
         'text':data.text,
-        'peers':cleanse(page.get_peers()),
+        'siblings':cleanse(page.get_siblings()),
         'children':cleanse(page.get_children()),
         'user':request.user,
         'breadcrumbs':lookup(breadcrumbs),

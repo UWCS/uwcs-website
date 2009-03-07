@@ -18,18 +18,21 @@
 
 {% block sidebar %}
 <ul>
-    {% for slug,name in peers %}
-        {% ifequal name title %}
-        <li><strong>{{ name }}</strong>
-            <ul>
-                {% for slug,name in children %}
-                    <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% else %}
-        <li><a href="/cms/{{ slug }}">{{ name }}</a></li>
-        {% endifequal %}
+    {% for page_url,name in breadcrumbs %}
+        {% if not forloop.first %}
+            {% if not forloop.last %}
+                <li><a href="{{ page_url }}">{{ name }}</a>
+                <ul>
+            {% else %}
+                <li>{{ name }}</li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% for page_url,name in siblings %}
+        <li><a href="{{ page_url }}">{{ name }}</a></li>
+    {% endfor %}
+    {% for a,b in breadcrumbs %}
+        {% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
     {% endfor %}
 </ul>
 {% endblock %}
