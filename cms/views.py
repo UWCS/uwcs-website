@@ -9,8 +9,9 @@ def lookup(l):
     breadcrumbs = [('../','home')]
     for url in l:
         try:
-            abs_url = "/cms/%s" % (url,)
-            breadcrumbs.append((abs_url,Page.objects.get(slug=url).get_data().title))
+            page = Page.objects.get(slug=url)
+            breadcrumbs.append(
+                (page.get_absolute_url(),page.get_data().title))
         # There may not be a parent, if so, we want
         except Page.DoesNotExist: pass
     return breadcrumbs
