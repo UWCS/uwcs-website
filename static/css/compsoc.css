@@ -373,9 +373,13 @@ dd {
 	margin-bottom: 20px;
 }
 
-.box label, .box input {
+.box label, .box input, .box textarea {
 	margin: 10px 20px;
 	float: left;
+}
+
+.box textarea {
+	width: 90%;
 }
 
 .box label {
@@ -386,7 +390,15 @@ dd {
 .box label, .box h2 {
 	clear: left;
 }
-
+.box ul {
+	clear: left;
+	padding-left: 100px;
+	margin: 0;
+}
+.box li, .box p {
+	margin: 0;
+	padding: 0
+}
 .box {
 	border-bottom: 1px solid #888;
 	margin-bottom: 20px;

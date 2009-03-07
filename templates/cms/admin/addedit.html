@@ -1,12 +1,22 @@
 {% extends "cms/admin/base.html" %}
 
 {% block sidebar %}
-    <a href="/admin/cms/page/">page list</a>
     <ul>
-    {% for comment,id in comments %}
-        <li><a href="/admin/cms/pagerevision/{{ id }}/">{{ comment }}</a></li>
-    {% endfor %}
-    </ul>
+        <li>
+            <h2>CMS Admin</h2>
+            <ul>
+                <li><a href="/admin/cms/page/">Page List</a></li>
+            </ul>
+		</li>
+        <li>
+            <h2>Revisions</h2>
+            <ul>
+			    {% for comment,id in comments %}
+			        <li><a href="/admin/cms/pagerevision/{{ id }}/">{{ comment }}</a></li>
+			    {% endfor %}
+            </ul>
+		</li>
+	</ul>
 {% endblock %}
 
 {% block content %}
@@ -17,13 +27,17 @@
         {% endfor %}
         </ol>
     {% endif %}
+	<div class="box">
     {% if id %}
-        <form action="/admin/cms/page/{{ id }}/" method="POST">
+        <form action="/admin/cms/page/{{ id }}/" method="post">
     {% else %}
-        <form action="/admin/cms/page/add/" method="POST">
+        <form action="/admin/cms/page/add/" method="post">
     {% endif %}
         {{ form.as_p }}
+		<div style="clear: both;"></div>
         <input type="submit" value="submit" />
-    </form>
+		</form>
+		<div style="clear: both;"></div>
+	</div>
 {% endblock %}
 
