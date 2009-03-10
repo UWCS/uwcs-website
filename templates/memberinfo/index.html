@@ -7,10 +7,10 @@
             var arrow = document.getElementById(arrow_id);
             if(style.display == 'none') {
                 style.display = 'block';
-                arrow.innerHTML = '&#x21E9;';
+                arrow.innerHTML = '&#x21E9;&nbsp;';
             } else {
                 style.display = 'none';
-                arrow.innerHTML = '&#x21E8;';
+                arrow.innerHTML = '&#x21E8;&nbsp;';
             }
         }
     </script>
@@ -18,22 +18,23 @@
 
 
 {% block sidebar %}
-    <h2>Actions</h2>
-    <ul>
-        <li><a href="/password/">change website password</a></li>
-        {% if shell.isPresent %}
-           <li><a href="/member/reset/shell/">request shell password reset</a></li>
-        {% endif %}
-        {% if db.isPresent %}
-            <li><a href="/member/reset/db/">request database password reset</a></li>
-        {% endif %}
-        <li>
-    </ul>
-    <br />
-    <h2>Links</h2>
-    <ul>
-        <li><a href="/member/list/">list of members</a></li>
-    </ul>
+	<ul>
+		<li><h2>Actions</h2>
+	    <ul>
+	        <li><a href="/password/">change website password</a></li>
+	        {% if shell.isPresent %}
+	           <li><a href="/member/reset/shell/">request shell password reset</a></li>
+	        {% endif %}
+	        {% if db.isPresent %}
+	            <li><a href="/member/reset/db/">request database password reset</a></li>
+	        {% endif %}
+	        <li>
+	    </ul></li>
+	    <li><h2>Links</h2>
+	    <ul>
+	        <li><a href="/member/list/">list of members</a></li>
+	    </ul></li>
+	</ul>
 {% endblock %}
 
 {% block content %}
@@ -41,7 +42,7 @@
 <h2>Profile</h2>
 
     <a onClick="flip('shell','sh')">
-        <h4><div id="sh" style="display:inline">&#x21E8;</div>Shell Account</h4>
+        <h4><div id="sh" style="display:inline">&#x21E8;&nbsp;</div>Shell Account</h4>
     </a>
     <div id="shell" style="display:none">
     {% if shell %}
@@ -63,7 +64,7 @@
     </div>
 
     <a onClick="flip('db','dh')">
-        <h4><div id="dh" style="display:inline">&#x21E8;</div>Database Account</h4>
+        <h4><div id="dh" style="display:inline">&#x21E8;&nbsp;</div>Database Account</h4>
     </a>
     <div id="db" style="display:none">
     {% if db %}
@@ -85,7 +86,7 @@
     </div>
 
     <a onClick="flip('quota','qh')">
-        <h4><div id="qh" style="display:inline">&#x21E8;</div>Quota</h4>
+        <h4><div id="qh" style="display:inline">&#x21E8;&nbsp;</div>Quota</h4>
     </a>
     <div id="quota" style="display:none">
     <p>This is the quota related to your shell account.  Your total quota is {{ total_quota }}MB.  The current base quota is 1000MB and you have additionally bought {{ quota }}
@@ -103,7 +104,7 @@
     </div>
 
     <a onClick="flip('lists','lh')">
-        <h4><div id="lh" style="display:inline">&#x21E8;</div>Mailing Lists</h4>
+        <h4><div id="lh" style="display:inline">&#x21E8;&nbsp;</div>Mailing Lists</h4>
     </a>
     <div id="lists" style="display:none">
     <form action="/member/lists/" method="post">
@@ -125,7 +126,7 @@
     </div>
 
     <a onClick="flip('web','wh')">
-        <h4><div id="wh" style="display:inline">&#x21E8;</div>Website Details</h4>
+        <h4><div id="wh" style="display:inline">&#x21E8;&nbsp;</div>Website Details</h4>
     </a>
     <div id="web" style="display:none">
     <p>Your nickname will be used throughout the site to identify you, e.g. on the
