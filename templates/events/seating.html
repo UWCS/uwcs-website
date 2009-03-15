@@ -26,8 +26,9 @@
 
 {% if seating %}
 <div id="seating">
-    <h2 class="title">Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>,
-        held in <a href="{{ room.room.get_absolute_url }}">{{ room }}</a></h2>
+    <h2>{{ room.name }}</h2>
+    <h3 class="title">Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>,
+        held in <a href="{{ room.room.get_absolute_url }}">{{ room }}</a></h3>
     <p class="byline"><small>{{ event.time_string }}</small></p>
     <!-- visual seating plan goes here. -->
 <table class="seating">
