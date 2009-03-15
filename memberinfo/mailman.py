@@ -112,8 +112,8 @@ def unsubscribe_member(user,list):
         Removes a compsoc member from a mailing list
     '''
     try:
+        mailman_list = MailList.MailList(list.list)
         try:
-            mailman_list = MailList.MailList(list.list)
             if not mailman_list.isMember(user.email):
                 raise MailmanError("User isn't subscribed to the list")
             #last 2 args: is admin notified, is user notified

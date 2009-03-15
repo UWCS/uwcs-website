@@ -133,15 +133,35 @@ def quota(request):
 
 @login_required()
 def lists(request):
+    # update database
+    user = request.user
     my_lists = request.user.mailinglist_set
+    previous = set(my_lists.all())
     my_lists.clear()
     for mlist in MailingList.objects.all():
         if request.POST.has_key(mlist.list):
             my_lists.add(mlist)
-
     request.user.save()
-    return HttpResponseRedirect('/member/')
 
+    # update mailman
+    now = set(my_lists.all())
+    add,remove = now - previous,previous - now
+    try:
+        from compsoc.memberinfo.mailman import *
+        try:
+            for list in add: subscribe_member(user,list)
+            for list in remove: unsubscribe_member(user,list)
+            return HttpResponseRedirect('/member/')
+        except MailmanError, e:
+            return render_to_response('memberinfo/request_error.html',
+                {'user':user,'name':'Mailing Lists','error':e.msg})
+    except ImportError:
+        if not DEBUG:
+            return render_to_response('memberinfo/request_error.html',
+                {'user':user,'name':'Mailing Lists','error':"You don't have mailman installed and the site is running outside of DEBUG mode."})
+        else:
+            return render_to_response('memberinfo/request_error.html',
+                {'user':user,'name':'Mailing Lists','error':("If mailman had been installed we would have added %s and removed %s" % (str(add),str(remove)))})
 
 @login_required()
 def set_nickname(request):
@@ -198,7 +218,6 @@ def set_publish(request):
 '''
 End of Member Profile Section
 '''
-
 def member_list(request):
     users = []
 
