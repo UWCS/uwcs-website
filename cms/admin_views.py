@@ -61,7 +61,7 @@ def add_edit(request,page_id=None):
         data = {
             'slug':page.slug,
             'title':rev.title,
-            'comment':rev.comment,
+            'comment':'',
             'text':rev.text,
             'login':rev.login,
         }
