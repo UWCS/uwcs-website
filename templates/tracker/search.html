@@ -69,35 +69,38 @@
      </div>
      <hr />
      <br />
-   
+  
+    <div id="results">
     {% if results %}
-        <table id="comments">
-            <tr>
-                <th>Name</th>
-                <th>Submitted by</td>
-                <th>Assigned to</td>
-                <th>Goal</th>
-                <th>Completed</td>
-            </tr>
-        {% for ticket in results %}
-            <tr>
-                <td><a href="{{ ticket.get_absolute_url }}">{{ticket.name}}</a></td>
-                <td>{{ ticket.submitter.member.name }}</td>
-                <td>{{ ticket.assignee.member.name }}</td>
-                <td>{{ ticket.goal }}</td>
-                <td>
-                    {% if ticket.completed %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
-                </td>
-            </tr>
+        {% for goal,tickets in results %}
+        <h3>{{ goal }}</h4>
+            <table class="comments">
+                <tr>
+                    <th>Name</th>
+                    <th>Submitted by</td>
+                    <th>Assigned to</td>
+                    <th>Completed</td>
+                </tr>
+            {% for ticket in tickets %}
+                <tr>
+                    <td><a href="{{ ticket.get_absolute_url }}">{{ticket.name}}</a></td>
+                    <td>{{ ticket.submitter.member.name }}</td>
+                    <td>{{ ticket.assignee.member.name }}</td>
+                    <td>
+                        {% if ticket.completed %}
+                        Yes
+                        {% else %}
+                        No
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
         {% endfor %}
-        </table>
     {% else %}
         <p>No search results to display</p>
     {% endif %}
+    </div>
      
  {% endblock %}
 

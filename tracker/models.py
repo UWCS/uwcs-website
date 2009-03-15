@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from compsoc.tracker.signals import *
 
 class Goal(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20,unique=True)
     supervisor = models.ForeignKey(User)
     description = models.TextField()
     completed = models.BooleanField()

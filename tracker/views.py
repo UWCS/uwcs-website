@@ -1,5 +1,7 @@
 from compsoc.tracker.models import *
 from datetime import datetime
+from collections import defaultdict
+
 from django.contrib.auth.models import User, Group
 from django import forms
 from django.shortcuts import render_to_response
@@ -148,11 +150,16 @@ def index(request):
         ('Exec Tickets',common + [('assignee_group',1)]),
     ]
 
+    #group results by goal
+    by_goal = defaultdict(lambda: [])
+    for ticket in results.order_by('goal').order_by('completed'):
+        by_goal[ticket.goal.name].append(ticket)
+
     return render_to_response('tracker/search.html', {
         'breadcrumbs': [('/','home'),('/tickets','tickets')],
         'form': form,
         'shorts':shorts,
-        'results':results.order_by('goal').order_by('completed'),
+        'results':by_goal.iteritems(),
         'user': request.user,
     })
 
