@@ -8,6 +8,19 @@
     <script type="text/javascript" src="/media/js/core.js"></script>
     <script type="text/javascript" src="/media/js/calendar.js"></script>
     <script type="text/javascript" src="/static/js/DateTimeShortcuts.js"></script>
+    <script type="text/javascript">
+        function flip(block_id,arrow_id) {
+            var style = document.getElementById(block_id).style;
+            var arrow = document.getElementById(arrow_id);
+            if(style.display == 'none') {
+                style.display = 'block';
+                arrow.innerHTML = '&#x21E9;&nbsp;';
+            } else {
+                style.display = 'none';
+                arrow.innerHTML = '&#x21E8;&nbsp;';
+            }
+        }
+    </script>
  {% endblock %}
 
  {% block sidebar %}
@@ -36,20 +49,24 @@
 
 
  {% block content %}
-     <h2>Issue Search</h2>
-     <form action="/tickets/" method="POST">
-         <br />
-         <fieldset>
-         {% for field in form %}
-             <div class="resize">
-                <div class="inl">{{ field.label_tag }} </div>
-                <div class="inr">{{ field }}</div>
-                <div >{{ field.errors }}</div>
-             </div>
-         {% endfor %}
-         </fieldset>
-         <p class="submit"><input type="submit" value="search" /></p>
-     </form>
+     <h2><a onClick="flip('tickets','tk')">
+        <div id="tk" style="display:inline" >&#x21E8;&nbsp;</div> Issue Search
+     </a></h2>
+     <div id="tickets" style="display:none">
+         <form action="/tickets/" method="POST">
+             <br />
+             <fieldset>
+             {% for field in form %}
+                 <div class="resize">
+                    <div class="inl">{{ field.label_tag }} </div>
+                    <div class="inr">{{ field }}</div>
+                    <div >{{ field.errors }}</div>
+                 </div>
+             {% endfor %}
+             </fieldset>
+             <p class="submit"><input type="submit" value="search" /></p>
+         </form>
+     </div>
      <hr />
      <br />
    
