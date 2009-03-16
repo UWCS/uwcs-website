@@ -48,4 +48,9 @@ urlpatterns = patterns('django.views.generic.list_detail',
     (r'^monthnews-items/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('N',False)),
     (r'^monthminutes/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('M',False)),
     (r'^monthnewsletters/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('NL',False)),
+) + patterns('django.views.generic.simple',
+    ('^news/$', 'redirect_to', {'url': '/news/1/'}),
+    ('^minutes/$', 'redirect_to', {'url': '/minutes/1/'}),
+    ('^newsletters/$', 'redirect_to', {'url': '/newsletters/1/'}),
 )
+
