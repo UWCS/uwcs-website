@@ -22,6 +22,20 @@
             {% endfor %}
         </ul>
     {% endif %}
+    {% if type %}
+        <h2>Feeds</h2>
+        {% ifequal type "news item" %}
+            <ul>
+                <li><a href="/feeds/news/">RSS</a></li>
+                <li><a href="/feeds/news/atom/">Atom</a></li>
+            </ul>
+        {% else %}
+            <ul>
+                <li><a href="/feeds/{{ type }}s/">RSS</a></li>
+                <li><a href="/feeds/{{ type }}s/atom/">Atom</a></li>
+            </ul>
+        {% endifequal %}
+    {% endif %}
     </li>
 </ul>
 {% endblock %}
