@@ -1,99 +1,71 @@
-/*
-Design by Free CSS Templates
-http://www.freecsstemplates.org
-Released for free under a Creative Commons Attribution 2.5 License
-*/
+/*** Basic Setup ***/
 
-html, form {
-	padding: 0;
+/* Reset everything to give us a chance of a clean start in all browsers */
+html, body, p, ul, ol, li, form, fieldset, blockquote, h1, h2, h3, h4, h5, h6, img {
 	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 1em;
+	list-style: none;
+	border: 0;
 }
 
-body, html {
-	font-size: 13px;
-	color: #ccc;
-	height: 100%;
-	min-width: 800px;
+input {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 1em;
 }
+
+/* Set some defaults */
 
 body {
-	background-color: #222;
+	font-size: 0.85em;
+	font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+
+p {
+	line-height: 200%;
+}
+
+/*** Layout ***/
+
+body, html {
+	height: 100%;
+} 
+
+body {
 	margin: 0 auto;
+	min-width: 800px;
 	max-width: 1200px;
 	text-align: left;
 }
 
 html {
-	background-color: #444;
 	text-align: center;
 }
-
-#footer, #container {
-	border-right: 1px solid #888;
-	border-left: 1px solid #888;
-	background-color: #222;
-}
-
-body, th, td, input, textarea, select, option {
-	font-weight: normal;
-	font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
-}
-
-h1, h2, h3 {
-	font-weight: normal;
-	font-size: 24px;
-}
-
-p, ul, ol {
-	line-height: 200%;
-}
-
-blockquote {
-	padding-left: 1em;
-}
-
-blockquote p, blockquote ul, blockquote ol {
-	line-height: normal;
-	font-style: italic;
-}
-
-a {
-	color: #F0BC20;
-}
-
-a:hover {
-	text-decoration: none;
-	color: #46B;
-}
-
-#page input, input, textarea, select {
-	color: #ddd;
-	border: 1px solid #888;
-	background-color: #181818;
-}
-
-/* Footer */
 
 #container {
     min-height: 100%;
     margin-bottom: -40px;
 }
 
+/* IE6 Hack for min-height */
 * html #container {
     height: 100%;
 }
 
+/* Footer */
+
 #footer-spacer {
+	margin-top: 20px;
     height: 40px;
 	clear: both;
 }
 
 #footer {
-	border-top: 1px solid #aaa;
-	background-color: #111;
-	color: #aaa;
 	height: 29px;
-	font-size: 85%;
+	font-size: 0.8em;
 	text-align: right;
 	padding: 5px;
 }
@@ -102,85 +74,51 @@ a:hover {
 
 #header {
 	width: 100%;
+	padding-top: 20px;	
 	height: 175px;
-	padding-top: 20px;
-	margin: 0px; /*auto;*/
-	border-bottom: 1px solid #aaa;
-	background-color: #111;
-	color: #ddd;
 }
 
-/*#header hr {
-    margin-left: 15%;
-    margin-right: 15%;
-}*/
-
-/* Logo */
-
 #logo {
-	margin-left: 30px;
-	margin-bottom: 50px;
+	padding: 5px 0 0 30px;
 }
 
 #logo img {
-	float: left;
-	margin-top:8px;
+	vertical-align: top;
 }
 
-#logo #pagetitle img {
-	padding-top: 20px;
-	margin: 0px;
-	border-width: 0;
-	float: none;
-}
-#logo #pagetitle {
-	height: 80px;
+#logo h1 {
+	display: inline;
 }
 
-#logo p {
-	margin: -5px 0 0 0;
-	/*text-transform: uppercase;*/
-	font-size: 1.22em;
-	/*letter-spacing: -1px;*/
+#logo h1 img {
+	padding-top: 10px;
 }
 
-#logo a {
-	text-decoration: none;
-	color: #ddd;
-}
-
-/* Top Right */
+/* Top right box */
 
 #top-right {
 	float: right;
-	margin-right: 30px;
+	padding-right: 30px;
 	padding-top: 15px;
 	text-align: right;
 }
 
+/* Search box */
 #top-right input {
 	width: 170px;
 	margin-top: 10px;
-	background: #181818 url(/static/img/magnifier.png) no-repeat 2px center;
 	padding-left: 20px;
 }
-
-/* #top-right form {
-    display: inline;
-    margin: 0;
-    padding: 0;
-} */
 
 /* Menu */
 
 #menu {
+	margin-top: -10px;
 	float: right;
-	margin-right: 30px;
+	padding-right: 30px;
 }
 
 #menu ul {
-	margin: 0px;
-	/*padding: 93px 0px 0px 0px;*/
 	list-style: none;
 }
 
@@ -193,69 +131,78 @@ a:hover {
 	float: left;
 	margin-left: 20px;
 	text-decoration: none;
-	/*text-transform: lowercase;*/
 	font-size: 1.36em;
-	color: #ddd;
 }
 
-#menu a:hover, .active a {
-	border-bottom: 3px solid #ddd;
+/* Sidebar */
+
+#sidebar {
+	float: right;
+	width: 200px;
+	margin-left: 20px;
+	margin-right: 30px;
+	/* Horrific IE6 Hack */
+	-margin-right: 15px;
 }
 
+#sidebar ul {
+	padding: 10px 0;
+}
 
-/* Page */
+#sidebar li {
+	margin-left: 10px;
+}
+
+#sidebar li li form  {
+	padding-left: 15px;
+	margin: 10px;
+}
+
+#sidebar li li a {
+	padding: 5px 5px 5px 20px;
+	width: 141px;
+	display: block;
+}
+
+#sidebar h2 {
+	padding: 5px 0 0 20px;
+}
+
+#sidebar .cms {
+	margin: 10px 10px 10px 5px;
+	padding-bottom: 10px;
+}
+
+#sidebar ul .cms ul {
+	padding: 0 0 0 15px;
+}
+
+#sidebar ul .cms li {
+	padding-top: 5px;
+}
+
+#sidebar ul .cms li a {
+	display: inline;
+	border: 0;
+	padding: 0;
+}
+
+#sidebar form.revisions input {
+ margin: 10px;
+}
+
+/* Page layout */
 
 #page {
 	margin-top: 30px;
-	margin-left: 30px; /* roughly width of logo */
-	margin-bottom: 20px;
+	margin-left: 30px;
 }
-
-/* Content */
 
 #content {
 	margin-right: 260px;
 }
 
-/* News */
-
-a.edit {
-	float: right;
-	padding: 5px;
-	font-weight: bold;
-}
-
-.entry p {
-	margin: 10px;
-}
-
-.post {
-	padding: 20px;
-	margin-bottom: 20px;
-	background: #222 url(/static/img/postbg.png) repeat-x top;
-	border: 1px solid #333;
-}
-
-.title {
-	margin: 0;
-	border-bottom: 2px solid #484848;
-}
-
-.byline {
-	margin: 0;
-}
-
-.meta, .meta p {
-	text-align: right;
-	margin: 0;
-	padding: 0px;
-}
-
-.notification {
-	text-align: center;
-	background-color: #333;
-	padding: 10px;
-}
+/* Content layout */
 
 dl {
 	margin: 10px;
@@ -276,77 +223,141 @@ dd {
 	margin-left: 190px;
 }
 
-/* Sidebar */
+h2, h3 {
+	font-weight: normal;
+	font-size: 24px;
+}
+
+p {
+	margin: 10px;
+}
+
+/* Specific items */
+
+/* Admin edit buttons */
+a.edit {
+	float: right;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.post {
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.meta, .meta p {
+	text-align: right;
+	margin: 0;
+}
+
+
+/*** Colours ***/
+
+body {
+	color: #ccc;
+	background-color: #222;
+}
+
+html {
+	background-color: #444;
+}
+
+a {
+	color: #F0BC20;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #46B;
+}
+
+input, input, textarea {
+	color: #ddd;
+	border: 1px solid #888;
+	background-color: #181818;
+}
+
+#footer, #container {
+	border-right: 1px solid #888;
+	border-left: 1px solid #888;
+}
+
+#container {
+	background-color: #222;
+}
+
+#footer {
+	border-top: 1px solid #aaa;
+	background-color: #111;
+	color: #aaa;
+}
+
+#header {
+	border-bottom: 1px solid #aaa;
+	background-color: #111;
+	color: #ddd;
+}
+
+#menu a {
+	color: #ddd;
+}
+
+#menu a:hover, .active a {
+	border-bottom: 3px solid #ddd;
+}
 
 #sidebar {
-	float: right;
-	width: 200px;
-	margin-right: 30px;
-	margin-bottom: 20px;
 	background: #333 url(/static/img/sidebg.png) repeat-y left;
 	border: 1px solid #444;
 }
 
-#sidebar ul {
-	margin: 0;
-	padding: 10px 0;
-	list-style: none;
-}
-
-#sidebar li {
-	margin-left: 10px;
-}
-
-#sidebar li ul {
-	padding: 15px 0;
-}
-
-#sidebar li li a, #sidebar li li form  {
-	padding-left: 20px;
+#sidebar {
+	float: right;
+	width: 200px;
+	margin-left: 20px;
+	margin-right: 30px;
+	/* Horrific IE6 Hack */
+	-margin-right: 15px;
 }
 
 #sidebar li li a {
-	padding-left: 20px;
-	width: 141px;
-	display: block;
 	border-bottom: 1px dotted #bbb;
-}
-
-#sidebar h2 {
-	margin: 0;
-	padding: 5px 0 0 20px;
-}
-
-#sidebar a {
 	text-decoration: none;
 	color: #3193FF;
 }
 
 #sidebar .cms {
-	margin: 10px 10px 10px 5px;
-	padding: 0px 0px 10px 0px;
 	border-top: 1px dotted #bbb;
 	border-bottom: 1px dotted #bbb;
 }
 
-#sidebar ul .cms ul {
-	margin: 0;
-	padding: 0 0 0 15px;
-	list-style: none;
+
+/* Search box */
+#top-right input {
+	background: #181818 url(/static/img/magnifier.png) no-repeat 2px center;
+	border: 1px solid #888;
 }
 
-#sidebar ul .cms li {
-	padding: 10px 0 0 0;
-	line-height: 1.2em;
-	margin: 0;
+/* Specific items */
+
+.post {
+	background: #222 url(/static/img/postbg.png) repeat-x top;
+	border: 1px solid #333;
 }
 
-#sidebar ul .cms li a {
-	margin: 0;
-	padding: 0;
-	display: inline;
-	border: 0;
+.title {
+	border-bottom: 2px solid #484848;
 }
+
+/* TODO: Tidy up the rest of this */
+
+.notification {
+	text-align: center;
+	background-color: #333;
+	padding: 10px;
+}
+
 
 #profile p {
 	margin-left: 10px;
@@ -398,9 +409,9 @@ dd {
 	padding-left: 100px;
 	margin: 0;
 }
-.box li, .box p {
+.box li, .box p, .box ul, .box li, .box input, .box label, .box * {
 	margin: 0;
-	padding: 0
+	padding: 0;
 }
 .box {
 	border-bottom: 1px solid #888;
@@ -409,4 +420,30 @@ dd {
 }
 .box p {
 	margin-left: 20px;
+}
+
+.box .errorlist li {
+	display: block;
+	padding: 0px;
+	margin: 0px;
+}
+
+.box .errorlist {
+	display: block;
+	padding: 5px 10px;
+	margin-left: 50px;
+	width: 300px;
+	background-color: #333;
+}
+
+p.comment {
+	background-color: #444;
+	padding: 5px 10px;
+	margin: 10px;
+}
+
+.clear {
+	clear: both;
+	height: 0;
+	width: 0;
 }

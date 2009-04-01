@@ -2,13 +2,24 @@
 
 {% load markup %}
 
-{% block content %}
-    <h1>{{ revision.title }} @ {{ revision.date_written|date:"D d b, H:i" }}</h1>
-    <p>{{ revision.comment }}</p>
-    <p>{{ revision.text|markdown }}</p>
-    <hr />
-    <form action="/admin/cms/pagerevision/{{ revision.id }}/" method="post">
-        <input class="comment" type="text" name="comment"/>
-        <input class="submit" type="submit" value="revert to this" />
-    </form>
+{% block sidebar %}
+    <ul>
+        <li>
+            <h2>Revert</h2>
+			    <form class="revisions" action="/admin/cms/pagerevision/{{ revision.id }}/" method="post">
+			        <input class="comment" type="text" name="comment"/>
+			        <input class="submit" type="submit" value="revert to this" />
+			    </form>
+		</li>
+	</ul>
 {% endblock %}
+
+{% block content %}
+	<div class="post">
+		<h2 class="title">{{ revision.title }} @ {{ revision.date_written|date:"D d b, H:i" }}</h2>
+		<p class="comment">{{ revision.comment }}</p>
+		<div class="entry">
+			{{ revision.text|markdown }}
+		</div>
+	</div>
+{% endblock%}

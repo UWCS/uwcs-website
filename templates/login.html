@@ -15,7 +15,7 @@
 	<div>
 		{{ form.username.label_tag }}
 		{{ form.username }}
-		<div style="clear: both;"></div>
+		<div class="clear"></div>
 		{{ form.password.label_tag }}
 		{{ form.password }}
 
@@ -23,7 +23,7 @@
 	    <input type="hidden" name="next" value="/" />
 	</div>
 	</form>
-	<div style="clear: both;"></div>
+	<div class="clear"></div>
 </div>
 
 
@@ -33,10 +33,10 @@
     <form method="post" action="/member/reset/">
 	<div>
         <label for="reset_username">Username</label><input type="text" name="user_name" id="reset_username" />
-        <input class="clear" type="submit" value="reset" />
+        <input type="submit" value="reset" />
 	</div>
     </form>
-	<div style="clear: both;"></div>
+	<div class="clear"></div>
 </div>
 
 <div class="box">
@@ -46,14 +46,14 @@
 	<div>
         <label for="guest_name">Name</label>
 		<input type="text" name="name" id="guest_name" />
-		<div style="clear: both;"></div>
+		<div class="clear"></div>
 		<label for="guest_email">Email</label>
 		<input type="text" name="email" id="guest_email" />
 		
 		<input type="submit" value="request" />
 	</div>
     </form>
-	<div style="clear: both;"></div>
+	<div class="clear"></div>
 </div>
 
 {% endblock %}

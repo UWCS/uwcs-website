@@ -50,7 +50,9 @@
 {% block content %}
 	<div class="post">
 		{% if user.is_staff %}<a class="edit" href="/admin/cms/page/{{ page_id }}/">edit</a>{% endif %}
-		<h1 class="title">{{ title }}</h1>
-    	{{ text|markdown }}
+		<h2 class="title">{{ title }}</h2>
+		<div class="entry">
+			{{ text|markdown }}
+		</div>
 	</div>
 {% endblock%}
