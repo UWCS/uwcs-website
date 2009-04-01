@@ -1,6 +1,7 @@
 /*** Basic Setup ***/
 
 /* Reset everything to give us a chance of a clean start in all browsers */
+
 html, body, p, ul, ol, li, form, fieldset, blockquote, h1, h2, h3, h4, h5, h6, img {
 	margin: 0;
 	padding: 0;
@@ -232,6 +233,10 @@ p {
 	margin: 10px;
 }
 
+input {
+	padding: 1px;
+}
+
 /* Specific items */
 
 /* Admin edit buttons */
@@ -251,6 +256,52 @@ a.edit {
 	margin: 0;
 }
 
+.box label {
+	margin: 0 20px;
+	font-weight: bold;
+}
+
+.box .input {
+	padding: 10px;
+}
+
+.box textarea {
+	vertical-align: top;
+}
+
+.box .errorlist li {
+	display: block;
+}
+
+.box .errorlist {
+	display: block;
+	float: right;
+	padding: 5px 10px;
+	margin-left: 50px;
+	background-color: #333;
+}
+
+.crumbs {
+	margin-bottom: 20px;
+}
+
+.notification {
+	text-align: center;
+	padding: 10px;
+}
+
+.comment {
+	padding: 5px 10px;
+	margin: 10px;
+}
+
+.search_result a {
+	font-size: large;
+}
+
+.result_text {
+	font-size: smaller;
+}
 
 /*** Colours ***/
 
@@ -272,7 +323,7 @@ a:hover {
 	color: #46B;
 }
 
-input, input, textarea {
+input, input, textarea, select{
 	color: #ddd;
 	border: 1px solid #888;
 	background-color: #181818;
@@ -350,100 +401,10 @@ input, input, textarea {
 	border-bottom: 2px solid #484848;
 }
 
-/* TODO: Tidy up the rest of this */
-
 .notification {
-	text-align: center;
-	background-color: #333;
-	padding: 10px;
-}
-
-
-#profile p {
-	margin-left: 10px;
-}
-
-#profile h3 {
-	font-size:2em;
-}
-
-#profile h2 {
-	font-size:3em;
-}
-
-.search_result a {
-	font-size: large;
-}
-
-.result_text {
-	font-size: smaller;
-}
-
-.submit {
-	float: right;
-}
-
-.crumbs {
-	margin-bottom: 20px;
-}
-
-.box label, .box input, .box textarea {
-	margin: 10px 20px;
-	float: left;
-}
-
-.box textarea {
-	width: 90%;
-}
-
-.box label {
-	width: 70px;
-	font-weight: bold;
-}
-
-.box label, .box h2 {
-	clear: left;
-}
-.box ul {
-	clear: left;
-	padding-left: 100px;
-	margin: 0;
-}
-.box li, .box p, .box ul, .box li, .box input, .box label, .box * {
-	margin: 0;
-	padding: 0;
-}
-.box {
-	border-bottom: 1px solid #888;
-	margin-bottom: 20px;
-	padding-bottom: 10px;
-}
-.box p {
-	margin-left: 20px;
-}
-
-.box .errorlist li {
-	display: block;
-	padding: 0px;
-	margin: 0px;
-}
-
-.box .errorlist {
-	display: block;
-	padding: 5px 10px;
-	margin-left: 50px;
-	width: 300px;
 	background-color: #333;
 }
 
-p.comment {
+.comment {
 	background-color: #444;
-	padding: 5px 10px;
-	margin: 10px;
-}
-
-.clear {
-	clear: both;
-	height: 0;
-	width: 0;
 }
