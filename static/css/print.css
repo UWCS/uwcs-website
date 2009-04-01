@@ -1,22 +1,228 @@
-/*
-	Stylesheet for physical printouts
-*/
+/*** Basic Setup ***/
 
-img {
-	display: none;
+/* Reset everything to give us a chance of a clean start in all browsers */
+
+html, body, p, ul, ol, li, form, fieldset, blockquote, h1, h2, h3, h4, h5, h6, img {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 1em;
+	list-style: none;
+	border: 0;
 }
+
+input {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 1em;
+}
+
+/* Set some defaults */
+
+body {
+	font-size: 0.85em;
+	font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+
+p {
+	line-height: 200%;
+}
+
+/*** Layout ***/
+
+body, html {
+	height: 100%;
+} 
+
+body {
+	margin: 0 auto;
+	min-width: 800px;
+	max-width: 1200px;
+	text-align: left;
+}
+
+html {
+	text-align: center;
+}
+
+#container {
+    min-height: 100%;
+    margin-bottom: -40px;
+}
+
+/* IE6 Hack for min-height */
+* html #container {
+    height: 100%;
+}
+
+/* Footer */
+
+#footer-spacer {
+	margin-top: 20px;
+    height: 40px;
+	clear: both;
+}
+
+#footer {
+	height: 29px;
+	font-size: 0.8em;
+	text-align: right;
+	padding: 5px;
+}
+
+/* Header */
+
+#header {
+	width: 100%;
+	padding-top: 20px;	
+	height: 175px;
+}
+
+#logo {
+	padding: 5px 0 0 30px;
+}
+
+#logo img {
+	vertical-align: top;
+}
+
+#logo h1 {
+	display: inline;
+}
+
+#logo h1 img {
+	padding-top: 10px;
+}
+
+/* Top right box */
 
 #top-right {
 	display: none;
 }
 
-h1#pagetitle {
-}
+/* Menu */
 
 #menu {
 	display: none;
 }
 
+/* Sidebar */
+
 #sidebar {
 	display: none;
+}
+
+/* Page layout */
+
+#page {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+/* Content layout */
+
+dl {
+	margin: 10px;
+	padding: 0px
+}
+
+dt {
+	float: left;
+	width: 13em;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 20px;
+	line-height: 1em;
+}
+
+dd {
+	margin-bottom: 5px;
+	margin-left: 190px;
+}
+
+h2, h3 {
+	font-weight: normal;
+	font-size: 24px;
+}
+
+p {
+	margin: 10px;
+}
+
+input {
+	padding: 1px;
+}
+
+/* Specific items */
+
+/* Admin edit buttons */
+a.edit {
+	display: none;
+}
+
+.post {
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.meta, .meta p {
+	display: none
+}
+
+.box label {
+	margin: 0 20px;
+	font-weight: bold;
+}
+
+.box .input {
+	padding: 10px;
+}
+
+.box textarea {
+	vertical-align: top;
+}
+
+.box .errorlist li {
+	display: block;
+}
+
+.box .errorlist {
+	display: block;
+	float: right;
+	padding: 5px 10px;
+	margin-left: 50px;
+	background-color: #333;
+}
+
+.crumbs {
+	margin-bottom: 20px;
+}
+
+.notification {
+	text-align: center;
+	padding: 10px;
+}
+
+.comment {
+	padding: 5px 10px;
+	margin: 10px;
+}
+
+.search_result a {
+	font-size: large;
+}
+
+.result_text {
+	font-size: smaller;
+}
+
+/*** Colours ***/
+
+#footer {
+	border-top: 1px solid black;
+}
+
+#header {
+	border-bottom: 1px solid black;
 }
