@@ -108,11 +108,6 @@ ul.seating div.insert {
 	display: block;
 }
 
-#comments ul {
-	padding: 0;
-	margin: 0;
-}
-
 #comments #commentheader .rev, #comments #commentheader .creator, #comments #commentheader .comment {
 	background-color: #444;
 	font-weight: bold;
@@ -157,6 +152,9 @@ ul.seating div.insert {
 	border-bottom: 1px solid #222;
 }
 
+#comments {
+	line-height: 2em;
+}
 
 #comments .submit {
 	float: none;

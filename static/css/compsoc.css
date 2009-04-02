@@ -26,7 +26,7 @@ body {
 }
 
 p {
-	line-height: 200%;
+	line-height: 2em;
 }
 
 /*** Layout ***/
@@ -59,8 +59,8 @@ html {
 /* Footer */
 
 #footer-spacer {
-	margin-top: 20px;
-    height: 40px;
+	padding-top: 20px;
+	height: 40px;
 	clear: both;
 }
 
@@ -210,9 +210,13 @@ dl {
 	padding: 0px
 }
 
+dl dl {
+	margin-left: -150px;
+}
+
 dt {
 	float: left;
-	width: 13em;
+	width: 14em;
 	font-weight: bold;
 	text-align: right;
 	padding-right: 20px;
@@ -221,7 +225,7 @@ dt {
 
 dd {
 	margin-bottom: 5px;
-	margin-left: 190px;
+	margin-left: 210px;
 }
 
 h2, h3 {
@@ -256,13 +260,17 @@ a.edit {
 	margin: 0;
 }
 
+.box {
+	margin: 10px 0;
+}
+
 .box label {
 	margin: 0 20px;
 	font-weight: bold;
 }
 
 .box .input {
-	padding: 10px;
+	margin: 10px;
 }
 
 .box textarea {
@@ -290,7 +298,7 @@ a.edit {
 	padding: 10px;
 }
 
-.comment {
+p.comment {
 	padding: 5px 10px;
 	margin: 10px;
 }
@@ -301,6 +309,10 @@ a.edit {
 
 .result_text {
 	font-size: smaller;
+}
+
+.byline {
+	margin: 0;
 }
 
 /*** Colours ***/
@@ -405,6 +417,10 @@ input, input, textarea, select{
 	background-color: #333;
 }
 
-.comment {
+p.comment {
 	background-color: #444;
+}
+
+.box {
+	border-bottom: 1px solid #aaa;
 }

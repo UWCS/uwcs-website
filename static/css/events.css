@@ -1,8 +1,13 @@
 /* Event list */
 
+/* IE6 gets upset without this */
+#eventlist  {
+	width: 100%;
+	-margin-left: -3px;
+}
+
 ul#eventlist, #eventlist ul {
-	margin: 0;
-	padding: 0;
+	line-height: 2em;
 }
 
 #eventlist .week {
@@ -32,15 +37,17 @@ ul#eventlist, #eventlist ul {
 	background-color: #444;
 }
 
+/* Another IE6 fix */
+#eventlist li li {
+	-height: 2em;
+	min-height: 2em;
+}
+
 #eventlist .events, #eventlist .events li {
 	clear: both;
 }
 
 #eventlist .events {
-	min-width: 500px;
-}
-
-#eventlist .events .name {
 	border-top: 1px solid #222;
 }
 
@@ -79,9 +86,6 @@ ul#eventlist, #eventlist ul {
 	font-size: 0.8em;
 }
 
-#eventlist li {
-	list-style-type: none;
-}
 
 /* Calendar */
 
@@ -89,6 +93,7 @@ ul#eventlist, #eventlist ul {
 	font-size: 1.1em;
 	font-weight: bold;
 	background-color:#444;
+	text-align: center;
 }
 
 #calendar td {
@@ -97,6 +102,10 @@ ul#eventlist, #eventlist ul {
 	background-color: #333;
 	vertical-align: top;
 	padding: 5px;
+}
+
+#calendar tr {
+	clear: both;
 }
 
 #calendar .day {
@@ -111,11 +120,6 @@ ul#eventlist, #eventlist ul {
 	display: block;
 	line-height: 1.1em;
 	margin-bottom: 5px;
-}
-
-#calendar ul {
-	margin: 0;
-	padding: 0;
 }
 
 #calendar .event {
@@ -147,21 +151,20 @@ ul#eventlist, #eventlist ul {
 	float: right;
 }
 
-#calendar tr {
-	clear: both;
-}
-
 /* Event Details */
+
+.signups p {
+	margin: 0;
+}
 
 #event dl.signupdetals {
 	padding: 5px;
 }
 
-#event .details .signupdetals dt {
-	text-align: left;
-}
-
+/* IE6 fix again */
 #event .signups {
+	width: 100%;
+	-margin-left: -3px;
 	clear: left;
 }
 
@@ -237,4 +240,8 @@ ul#eventlist, #eventlist ul {
 
 #event .nosignups {
 	padding: 10px;
+}
+
+.signup li {
+	padding: 5px 0;
 }
