@@ -9,7 +9,7 @@ COMMS_TYPE = (
 )
 
 class Communication(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     date = models.DateField()
     text = models.TextField()
     type = models.CharField(max_length=2,choices=COMMS_TYPE)

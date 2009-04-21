@@ -14,7 +14,7 @@ def lookup(item_type):
     store = {}
     for comm in data:
         store[from_date(comm.date)] = True
-    return store.keys()
+    return sorted(store.keys(),reverse=True)
 
 def get_dict(item_type,paginate=True,intro=False):
     data = Communication.objects.filter(type=item_type).order_by('-date')
