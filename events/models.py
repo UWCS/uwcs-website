@@ -23,7 +23,7 @@ class EventType(models.Model):
         return self.name
 
 class Location(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=60)
     description = models.TextField()
     image_url = models.CharField(max_length=255, default="/static/img/no_location.png")
     map_loc = models.CharField(max_length=30, blank=True)
@@ -42,6 +42,7 @@ class Event(models.Model):
     start = models.DateTimeField()
     finish = models.DateTimeField()
     displayFrom = models.DateTimeField()
+    cancelled = models.BooleanField()
 
     def days(self):
         days = []
@@ -117,7 +118,7 @@ post_save.connect(write_file_callback, sender=Event)
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
     room = models.ForeignKey(Location)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
     max_cols = models.IntegerField()
     max_rows = models.IntegerField()
 
