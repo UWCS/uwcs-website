@@ -27,7 +27,7 @@
 
     {% if is_paginated %}
         {% ifnotequal page "last" %}
-            <a href="{{ page|add:"1" }}">more</a>
+            <a href="/minutes/{{ page|add:"1" }}/">more</a>
         {% endifnotequal %}
     {% endif %}
 {% else %}
