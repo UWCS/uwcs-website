@@ -7,6 +7,10 @@
 	{% if can_edit %}<a class="edit" href="/admin/events/event/{{ event.id }}/">Edit</a>{% endif %}
 	<h2 class="title">Event Details for {{ event.type.name }}</h2>
 	<dl class="details">
+        {% if event.cancelled %}
+            <dt>Cancelled</dt>
+            <dd>Please note this event has been <b>cancelled!</b></dd>
+        {% endif %}
 		<dt>Event</dt>
 		<dd>{{ event.shortDescription }}</dd>
 		<dt>Location</dt>

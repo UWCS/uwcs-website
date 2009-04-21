@@ -17,7 +17,11 @@
 				{% if event.has_signups %}
         			       	<li class="signups">Signups: {{ event.signup_count }}/{{ event.signup_total }}</li>
 				{% endif %}
-                        	<li class="description">{{ event.shortDescription }}</li>
+                <li class="description">
+                    {% if event.cancelled %}<del>{% endif %}
+                    {{ event.shortDescription }}
+                    {% if event.cancelled %}</del>{% endif %}
+                </li>
 			</ul></li>
 		{% endfor %}
 		</ul></li>
