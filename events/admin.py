@@ -60,6 +60,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 class EventTypeAdmin(admin.ModelAdmin):
     search_fields = ('name',)
+    list_filter = ['target']
 
 admin.site.register(EventType, EventTypeAdmin)
 admin.site.register(Location, LocationAdmin)
