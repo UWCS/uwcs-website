@@ -83,6 +83,8 @@ def term_week_for(date):
     return ((date - term.start_date).days / 7) + 1
 
 def warwick_week_for(date):
+    if type(date) is datetime:
+        date = date.date()
     term = term_for(date)
     return ((date - term.start_date).days / 7) + term.start_number# + 1
 
