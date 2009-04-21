@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+    <p> Unifies location with the location selected below. A unification moves 
+    all events and rooms from the location selected below, to the location {{ location }}.
+    One may optionally also delete the location selected below.</p>
+    <form action="/admin/events/location/unify/{{ location_id }}/" method="POST">
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

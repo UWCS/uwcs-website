@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     (r'^admin/memberinfo/acceptguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.accept_guest'),
     (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.reject_guest'),
     (r'^admin/events/email/(?P<event_id>\d+)/$','compsoc.events.admin_views.email_signups'),
+    (r'^admin/events/location/unify/(?P<location_id>\d+)/$','compsoc.events.admin_views.unify'),
     (r'^admin/(.*)', admin.site.root),
 
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
