@@ -6,6 +6,7 @@ from django.core.management.base import NoArgsCommand
 from settings import UNION_API_KEY
 from django.contrib.auth.models import User
 from compsoc.memberinfo.models import *
+from compsoc.events.models import *
 from compsoc.comms.models import *
 from os import listdir
 from datetime import datetime
@@ -25,7 +26,7 @@ class Command(NoArgsCommand):
         '''
         conn = MySQLdb.connect (host = "localhost", user = "webmaster", passwd = "Faeng1go", db = "uwcs", use_unicode=1)
         cursor = conn.cursor ()
-
+        
         # News Items
         cursor.execute ("select date,title,text from newsitems")
         for (date,title,text) in cursor.fetchall():
@@ -50,6 +51,7 @@ class Command(NoArgsCommand):
         # Import Users
         cursor.execute("select uni_code,first_name,surname,email from members where not (uni_code is null or uni_code = 0) and (suspended = 0)")
         used_codes = set()
+        
         for (uni_code,first_name,surname,email) in cursor.fetchall():
             if len(str(uni_code)) >= 6:
                 if uni_code in used_codes:
@@ -61,7 +63,9 @@ class Command(NoArgsCommand):
                 print "Unknown or invalid university code for: %s %s - perhaps they are a guest?" % (first_name,surname)
 
         #Import nicknames
+        
         cursor.execute("select uni_code,nickname from members where guest = 0 and not (nickname is NULL or uni_code is NULL)")
+        
         used_codes = set()
         for (uni_code,nickname) in cursor.fetchall():
             if uni_code in used_codes:
@@ -89,6 +93,7 @@ class Command(NoArgsCommand):
 
         cursor.execute('select uni_code,join_year from memberjoin,members where id = member_id')
         used_codes = set()
+        
         for (uni_code,join_year) in cursor.fetchall():
             if (uni_code,join_year) in used_codes:
                 print "THIS DATABASE IS EPIC FAIL %i is a duplicate university code" % uni_code
@@ -135,8 +140,65 @@ class Command(NoArgsCommand):
                     DatabaseAccount.objects.create(user=u,name=data,status='PR')
                 except User.DoesNotExist:
                     print "%i - no user entry - maybe a guest?" % (uni_code)
+        targets = {
+            'ACADEMIC': 'ACA',
+            'GAMING': 'GAM',
+            'SOCIAL': 'SCL',
+            'SOCIETY': 'SCT',
+            '': 'SCT',
+        }
+        
+        cursor.execute("select id,name,info,target from eventtypes")
+        for (id,name,info,target) in cursor.fetchall():
+            EventType.objects.create(pk=id,name=name,info=info,target=targets[target])
 
+        cursor.execute("select distinct location from events")
+        for (location,) in cursor.fetchall():
+            if location:
+                Location.objects.create(name=location,description="an historical location, migrated from the old website")
 
+        Location.objects.create(name="Unknown location", description="an historical artifact, for migration from the old database")
+        
+        cursor.execute("select id,type_id,location,desc_short,desc_long,start,finish,display_from from events")
+        from datetime import datetime
+        for (id,type_id,loc_str,desc_short,desc_long,start,finish,display_from) in cursor.fetchall():
+            type = EventType.objects.get(pk=type_id)
+            location = Location.objects.get(name=(loc_str if loc_str else "Unknown location"))
+            if not display_from:
+                display_from = datetime.now()
+            if not finish:
+                finish = datetime.now()
+            if not desc_long:
+                desc_long = ""
+            if not desc_short:
+                desc_short = ""
+            Event.objects.create(pk=id,type=type,location=location,shortDescription=desc_short[:20],longDescription=desc_long,start=start,finish=finish,displayFrom=display_from)
+        
+        cursor.execute("select id, signups_limit, signups_members_open, signups_guests_open, signups_freshers_open, signups_close from events where signups_required = 1")
+        for (event_id,limit,open,guests,freshers,close) in cursor.fetchall():
+            event = Event.objects.get(pk=event_id)
+            if not open:
+                open = event.displayFrom
+            if not close:
+                close = event.start
+            if not guests:
+                guests = open
+            if not freshers:
+                freshers = open
+
+            EventSignup.objects.create(event=event,signupsLimit=limit,open=open,close=close,guest_open=guests,fresher_open=freshers)
+
+        cursor.execute("select event_id, uni_code, time, comment from signups, members where signups.member_id = members.id")
+        for (event_id,uni_code,time,comment) in cursor.fetchall():
+            event = Event.objects.get(pk=event_id)
+            try:
+                member = User.objects.get(username=uni_code)
+                if not comment:
+                    comment = ""
+                if time:
+                    Signup.objects.create(event=event,user=member,time=time,comment=comment)
+            except User.DoesNotExist:
+                print "unknown user, maybe guest, unicode = %s" % uni_code
 
         cursor.close()
         conn.close()
