@@ -103,7 +103,7 @@ def valid_signup(user,event):
     now = datetime.now()
     s = event.eventsignup
     if event.has_signups() and user.is_authenticated():
-        can_signup = now < s.close
+        can_signup = now < s.close and not event.cancelled
         if user.member.is_fresher():
             can_signup &= s.fresher_open < now
         elif user.member.guest:

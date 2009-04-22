@@ -50,6 +50,10 @@
 					<input class="commentfield" type="text" size="50" name="comment" />
 					<input type="submit" value="signup" />
 				</form>
+            {% else %}
+                {% if event.cancelled %}
+                    <li class="nosignups">You may not signup, since this event has been cancelled.</li>
+                {% endif %}
 			{% endif %}
 			{% if signed_up %}
 				<p class="signedup">You are signed up to this event, you may <a href="/events/unsignup/{{ event.id }}/">unsignup</a>, or <a href="/events/signup/{{ event.id }}/">edit</a> your signup comment.</p>
@@ -71,7 +75,7 @@
 						</ul></li>
 					{% endfor %}
 				{% else %}
-					<li class="nosignups">There are no signups yet.</li>
+                    <li class="nosignups">There are no signups yet.</li>
 				{% endif %}
 			</ul>
 		</div>
