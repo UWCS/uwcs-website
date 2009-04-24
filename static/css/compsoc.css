@@ -424,3 +424,15 @@ p.comment {
 .box {
 	border-bottom: 1px solid #aaa;
 }
+
+#archivelist {
+	overflow: hidden;
+	height: 200px;
+}
+
+#archivemore {
+	display: block;
+	padding: 5px 10px 0px 100px;
+	color: #3193FF;
+	text-decoration: none;
+}
