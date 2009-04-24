@@ -446,6 +446,7 @@ table, td, tr, th {
 }
 th {
 	border-bottom: 1px solid;
+	padding: 2px 10px;
 }
 td {
 	width: auto;
