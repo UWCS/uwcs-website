@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}
+    Accept or Reject Account Requests
+{% endblock %}
+
+{% block content %}
+    <table>
+    <tr><th>User</th><th>Account Type</th></tr>
+    {% for acc in shell_requests %}
+        <tr>
+            <td><a href="/admin/auth/user/{{ acc.user.id }}/">{{ acc.user.member.all_name }}</a></td>
+            <td>Shell Account</td>
+        </tr>
+    {% endfor %}
+    {% for acc in database_requests %}
+        <tr>
+            <td><a href="/admin/auth/user/{{ acc.user.id }}/">{{ acc.user.member.all_name }}</a></td>
+            <td>Database Account</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block precontent %}
+<div style="height: 50px;">
+  <div id="actions">
+    <h2>Links</h2>
+    <ul>
+        <li><a href="/admin/auth/user/">All Members</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
