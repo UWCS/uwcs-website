@@ -19,7 +19,7 @@
 		<h2 class="title">{{ revision.title }} @ {{ revision.date_written|date:"D d b, H:i" }}</h2>
 		<p class="comment">{{ revision.comment }}</p>
 		<div class="entry">
-			{{ revision.text|markdown }}
+			{{ revision.text|textile }}
 		</div>
 	</div>
 {% endblock%}

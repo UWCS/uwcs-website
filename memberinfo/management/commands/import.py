@@ -58,7 +58,8 @@ class Command(NoArgsCommand):
                     print "THIS DATABASE IS EPIC FAIL %i is a duplicate university code for %s %s " % (uni_code,first_name,surname)
                 else:
                     used_codes.add(uni_code)
-                    User.objects.create(username=uni_code,first_name=first_name,last_name=surname,email=email,is_staff=False,is_superuser=False)
+                    u = User.objects.create(username=uni_code,first_name=first_name,last_name=surname,email=email,is_staff=False,is_superuser=False)
+                    Member.objects.create(user=u)
             else:
                 print "Unknown or invalid university code for: %s %s - perhaps they are a guest?" % (first_name,surname)
 

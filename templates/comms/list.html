@@ -19,7 +19,7 @@
             <h3 class="title">{{ comm_item.title }}</h3>
             <p class="byline"><small>Posted on {{ comm_item.date }}</small></p>
             <div class="entry">
-            {{ comm_item.text|markdown }}
+            {{ comm_item.text|textile }}
             </div>
             <p class="meta"><a href="/details/{{ comm_item.id }}" class="more">Details</a></p>
         </div>

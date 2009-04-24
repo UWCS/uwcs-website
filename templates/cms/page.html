@@ -52,7 +52,7 @@
 		{% if user.is_staff %}<a class="edit" href="/admin/cms/page/{{ page_id }}/">edit</a>{% endif %}
 		<h2 class="title">{{ title }}</h2>
 		<div class="entry">
-			{{ text|markdown }}
+			{{ text|textile }}
 		</div>
 	</div>
 {% endblock%}

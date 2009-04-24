@@ -11,7 +11,7 @@
     <h2 class="title">{{ object.title }}</h2>
     <p class="byline"><p><small>{{ object.get_type_display }} Posted on {{ object.date }}</small></p>
     <div class="entry">
-    {{ object.text|markdown }}
+    {{ object.text|textile }}
     </div>
 </div>
 {% endblock %}
