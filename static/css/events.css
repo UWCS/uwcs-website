@@ -47,7 +47,7 @@ ul#eventlist, #eventlist ul {
 	clear: both;
 }
 
-#eventlist .events {
+#eventlist li.name {
 	border-top: 1px solid #222;
 }
 
