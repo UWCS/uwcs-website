@@ -71,6 +71,8 @@ if settings.LEGACY_SITE:
     	('^society/members', 'redirect_to', {'url':'/member'}),
     	('^society/members/list', 'redirect_to', {'url': '/member/list/'}),
     	('^society/', 'redirect_to', {'url': '/cms/about/'}),
+        ('^gaming/', 'redirect_to', {'url': '/cms/gaming/'}),
+        ('^gaming/(?P<id>\d+)/$', 'redirect_to', {'url': '/cms/gaming/%(id)s/'}),
     )
 
 # if we are debugging serve the static content locally
