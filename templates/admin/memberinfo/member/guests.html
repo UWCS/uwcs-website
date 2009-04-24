@@ -1,12 +1,12 @@
 {% extends "admin/base_site.html" %}
 
 {% block title %}
-    <h1>Accept or Reject guest accounts</h1>
+    Accept or Reject guest accounts
 {% endblock %}
 
 {% block content %}
     <table>
-    <tr><th>Username</th><th>Email</th><th></th<th></th>
+    <tr><th>Username</th><th>Email</th></tr>
     {% for acc in guests %}
         <tr>
             <td>{{ acc.username }}</td>
@@ -19,10 +19,12 @@
 {% endblock %}
 
 {% block precontent %}
+<div style="height: 50px;">
   <div id="actions">
     <h2>Links</h2>
     <ul>
-        <li><a href="/admin/memberinfo/member/">All Members</a></li>
+        <li><a href="/admin/auth/user/">All Members</a></li>
     </ul>
   </div>
+</div>
 {% endblock %}
