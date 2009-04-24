@@ -279,7 +279,7 @@ def reset_account(request,account):
             {'name':u.get_full_name(),'type':type,'accname':name},
             u.email,
             [COMPSOC_TECHTEAM_EMAIL])
-        render_to_response('memberinfo/account_reset.html')
+        return render_to_response('memberinfo/account_reset.html',{'user':u,})
     except DatabaseAccount.DoesNotExist:
         return render_to_response('memberinfo/request_error.html',
             {'user':u,'name':'Database','error':"You don't have a database, so it can't be password reset"})

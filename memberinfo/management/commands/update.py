@@ -70,6 +70,13 @@ class Command(NoArgsCommand):
             password = User.objects.make_random_password()
             user = User.objects.create_user(id,email,password)
             print user
+            template_mail(
+                'Welcome to Compsoc',
+                'memberinfo/new_user_email',
+                {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
+                COMPSOC_TECHTEAM_EMAIL,
+                [u.email])
+
             user.first_name = first
             user.last_name = last 
             user.save()
