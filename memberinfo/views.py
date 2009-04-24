@@ -189,7 +189,6 @@ def set_website(request):
     u = request.user
     form = WebsiteForm(request.POST)
     if form.is_valid():
-        print 'foo'
         try:
             website = u.websitedetails
             website.websiteTitle = form.cleaned_data['title']
