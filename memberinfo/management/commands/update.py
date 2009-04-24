@@ -70,7 +70,6 @@ class Command(NoArgsCommand):
             password = User.objects.make_random_password()
             user = User.objects.create_user(id,email,password)
             print user
-            print password
             user.first_name = first
             user.last_name = last 
             user.save()

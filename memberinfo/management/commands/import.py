@@ -9,7 +9,7 @@ from compsoc.memberinfo.models import *
 from compsoc.events.models import *
 from compsoc.comms.models import *
 from os import listdir
-from datetime import datetime
+from datetime import datetime, timedelta
 import MySQLdb
 import sys
 
@@ -26,11 +26,11 @@ class Command(NoArgsCommand):
         '''
         conn = MySQLdb.connect (host = "localhost", user = "webmaster", passwd = "Faeng1go", db = "uwcs", use_unicode=1)
         cursor = conn.cursor ()
-        
         # News Items
         cursor.execute ("select date,title,text from newsitems")
         for (date,title,text) in cursor.fetchall():
             Communication.objects.create(date=date,title=title,text=text,type='N')
+	'''        
 
         # Minutes
         for name in listdir(self.MINUTES_DIR):
@@ -41,14 +41,13 @@ class Command(NoArgsCommand):
                 title = "\n".join(minutes.split("\n")[:2])
                 minutes = "\n".join(minutes.split("\n")[2:])
                 Communication.objects.create(date=when,title=title,text=minutes,type='M')
+	        file.close()
             except IOError, e:
                 if e.errno != 21:
                     print file
                     print e
-            finally:
-                file.close()
         
-        # Import Users
+	# Import Users
         cursor.execute("select uni_code,first_name,surname,email from members where not (uni_code is null or uni_code = 0) and (suspended = 0)")
         used_codes = set()
         
@@ -159,35 +158,36 @@ class Command(NoArgsCommand):
                 Location.objects.create(name=location,description="an historical location, migrated from the old website")
 
         Location.objects.create(name="Unknown location", description="an historical artifact, for migration from the old database")
-        
-        cursor.execute("select id,type_id,location,desc_short,desc_long,start,finish,display_from from events")
-        from datetime import datetime
+      
+	one_hour = timedelta(hours=1)
+ 
+	cursor.execute("select id,type_id,location,desc_short,desc_long,start,finish,display_from from events")
         for (id,type_id,loc_str,desc_short,desc_long,start,finish,display_from) in cursor.fetchall():
             type = EventType.objects.get(pk=type_id)
             location = Location.objects.get(name=(loc_str if loc_str else "Unknown location"))
             if not display_from:
                 display_from = datetime.now()
             if not finish:
-                finish = datetime.now()
+                finish = start + one_hour
             if not desc_long:
                 desc_long = ""
             if not desc_short:
                 desc_short = ""
-            Event.objects.create(pk=id,type=type,location=location,shortDescription=desc_short[:20],longDescription=desc_long,start=start,finish=finish,displayFrom=display_from)
+	    Event.objects.create(pk=id,type=type,location=location,shortDescription=desc_short[:255],longDescription=desc_long,start=start,finish=finish,displayFrom=display_from)
         
         cursor.execute("select id, signups_limit, signups_members_open, signups_guests_open, signups_freshers_open, signups_close from events where signups_required = 1")
-        for (event_id,limit,open,guests,freshers,close) in cursor.fetchall():
+        for (event_id,limit,m_open,guests,freshers,close) in cursor.fetchall():
             event = Event.objects.get(pk=event_id)
-            if not open:
-                open = event.displayFrom
+            if not m_open:
+                m_open = event.displayFrom
             if not close:
                 close = event.start
             if not guests:
-                guests = open
+                guests = m_open
             if not freshers:
-                freshers = open
+                freshers = m_open
 
-            EventSignup.objects.create(event=event,signupsLimit=limit,open=open,close=close,guest_open=guests,fresher_open=freshers)
+            EventSignup.objects.create(event=event,signupsLimit=limit,open=m_open,close=close,guest_open=guests,fresher_open=freshers)
 
         cursor.execute("select event_id, uni_code, time, comment from signups, members where signups.member_id = members.id")
         for (event_id,uni_code,time,comment) in cursor.fetchall():
@@ -200,6 +200,6 @@ class Command(NoArgsCommand):
                     Signup.objects.create(event=event,user=member,time=time,comment=comment)
             except User.DoesNotExist:
                 print "unknown user, maybe guest, unicode = %s" % uni_code
-
+	'''
         cursor.close()
         conn.close()

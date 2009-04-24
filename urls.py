@@ -39,9 +39,15 @@ urlpatterns = patterns('',
     (r'^admin/events/location/unify/(?P<location_id>\d+)/$','compsoc.events.admin_views.unify'),
     (r'^admin/(.*)', admin.site.root),
 
+# django stuff for authentication
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     (r'^logout/', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
     (r'^password/', 'django.contrib.auth.views.password_change', {'template_name':'password.html','post_change_redirect':'/'}),
+# doesn't work for no reason
+    (r'^password_reset/$', 'django.contrib.auth.views.password_reset'),
+    (r'^password_reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+    (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
     (r'^cms/(?P<url>.*)/$',handle),
     (r'^search/$', search),
@@ -71,7 +77,7 @@ if settings.LEGACY_SITE:
 # when deployed we use an http server to do this
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
+#        (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
         (r'^ajax/lvsch/$','django.views.generic.simple.redirect_to',{'url':'http://search.warwick.ac.uk/'}),
         (r'^sitebuilder2$','django.views.generic.simple.redirect_to',{'url':'http://www2.warwick.ac.uk/sitebuilder2/'}),
     )

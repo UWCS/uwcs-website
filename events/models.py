@@ -37,7 +37,7 @@ class Location(models.Model):
 class Event(models.Model):
     type = models.ForeignKey(EventType)
     location = models.ForeignKey(Location)
-    shortDescription = models.CharField(max_length=20)
+    shortDescription = models.CharField(max_length=255)
     longDescription = models.TextField()
     start = models.DateTimeField()
     finish = models.DateTimeField()
