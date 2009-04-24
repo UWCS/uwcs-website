@@ -448,6 +448,33 @@ th {
 	border-bottom: 1px solid;
 }
 td {
-	padding: 2px;
-	width: 200px;
+	width: auto;
+	padding: 2px 10px;
+}
+
+.entry h1 {
+	font-size: 1.2em;
+	padding: 10px 5px;
+	font-weight: bold;
+}
+
+.entry h2 {
+	font-size: 1.1em;
+	padding: 0 10px;
+	font-weight: bold;
+}
+
+.entry h3 {
+	font-size: 1.1em;
+	padding: 0 15px;
+	font-weight: bold;
+}
+
+.entry {
+	padding-top: 10px;
+}
+
+textarea {
+	width: 100%;
+	height: 500px;
 }
