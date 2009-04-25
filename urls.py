@@ -88,7 +88,7 @@ if settings.LEGACY_SITE:
 # when deployed we use an http server to do this
 if settings.DEBUG:
     urlpatterns += patterns('',
-#        (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
         (r'^ajax/lvsch/$','django.views.generic.simple.redirect_to',{'url':'http://search.warwick.ac.uk/'}),
         (r'^sitebuilder2$','django.views.generic.simple.redirect_to',{'url':'http://www2.warwick.ac.uk/sitebuilder2/'}),
     )

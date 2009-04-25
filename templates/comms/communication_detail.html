@@ -13,5 +13,13 @@
     <div class="entry">
     {{ object.text|textile }}
     </div>
+    {% if object.has_prev_item %}
+        <div class="prev"><a href="{{ object.prev_item.get_absolute_url }}">prev</a></div>
+    {% endif %}
+    {% if object.has_next_item %}
+        <div class="next"><a href="{{ object.next_item.get_absolute_url }}">next</a></div>
+    {% endif %}
+
 </div>
+
 {% endblock %}
