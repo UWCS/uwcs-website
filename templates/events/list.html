@@ -11,7 +11,7 @@
 		<li class="events"><ul>
 	        {% for event in entries %}
 			<li class="name"><a href="details/{{ event.id }}">{{ event.type.name }}</a>
-			<ul class="eventdetail">
+                        <ul class="{% if event.is_in_past %}eventpast{% endif %} eventdetail">
 				<li class="time">{{ event.time_string }}</li>
 				<li class="location">Location: {{ event.location }}</li>
 				{% if event.has_signups %}
