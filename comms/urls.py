@@ -2,19 +2,9 @@ from time import strftime
 
 from django.conf.urls.defaults import *
 
-from compsoc.comms.models import Communication,COMMS_TYPE
+from compsoc.comms.models import *
 from compsoc.shortcuts import current_year,get
 from compsoc.events.models import future_events
-
-def from_date(date):
-    return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))
-
-def lookup(item_type):
-    data = Communication.objects.filter(type=item_type).order_by('-date')
-    store = {}
-    for comm in data:
-        store[from_date(comm.date)] = True
-    return sorted(store.keys(),reverse=True)
 
 def get_dict(item_type,paginate=True,intro=False):
     data = Communication.objects.filter(type=item_type).order_by('-date')
@@ -43,14 +33,17 @@ urlpatterns = patterns('django.views.generic.list_detail',
             'future':lambda: future_events(),
         },
     }),
-
 ) + patterns('django.views.generic.date_based',
     (r'^monthnews-items/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('N',False)),
     (r'^monthminutes/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('M',False)),
     (r'^monthnewsletters/(?P<year>\d{4})/(?P<month>[A-Za-z]{3})/$','archive_month',get_dict('NL',False)),
+    (r'^yearnews/(?P<year>\d{4})/$','archive_year',get_dict('N',False)),
+    (r'^yearminutes/(?P<year>\d{4})/$','archive_year',get_dict('M',False)),
+    (r'^yearnewsletters/(?P<year>\d{4})/$','archive_year',get_dict('NL',False)),
 ) + patterns('django.views.generic.simple',
     ('^news/$', 'redirect_to', {'url': '/news/1/'}),
     ('^minutes/$', 'redirect_to', {'url': '/minutes/1/'}),
     ('^newsletters/$', 'redirect_to', {'url': '/newsletters/1/'}),
 )
+
 

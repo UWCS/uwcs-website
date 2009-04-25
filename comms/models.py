@@ -2,11 +2,23 @@ from django.db import models
 
 from compsoc.search import register
 
+from time import strftime
+
 COMMS_TYPE = (
     ('NL','Newsletter'),
     ('M','Minute'),
     ('N','News Item'),
 )
+
+def from_date(date):
+    return (date.year,strftime("%b",(0,date.month,0,0,0,0,0,0,0)))
+
+def lookup(item_type):
+    data = Communication.objects.filter(type=item_type).order_by('-date')
+    store = {}
+    for comm in data:
+        store[from_date(comm.date)] = True
+    return sorted(store.keys(),reverse=True)
 
 class Communication(models.Model):
     title = models.CharField(max_length=100)
