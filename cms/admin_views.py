@@ -6,9 +6,9 @@ from datetime import datetime
 from django.http import HttpResponseRedirect
 
 class PageForm(forms.Form):
-    slug = forms.CharField(max_length=100)
-    title = forms.CharField(max_length=100)
-    comment = forms.CharField(max_length=100)
+    slug = forms.CharField(max_length=30)
+    title = forms.CharField(max_length=30)
+    comment = forms.CharField(max_length=30)
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
 
