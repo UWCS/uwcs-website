@@ -9,7 +9,7 @@ class LatestNews(Feed):
     description = "All the updates from the University of Warwick Computing Society"
 
     def items(self):
-        return Communication.objects.filter(type='N').order_by('date')[:10]
+        return Communication.objects.filter(type='N').order_by('-date')[:10]
 
     def item_link(self,item):
         return "/%i/" % item.id
@@ -39,7 +39,7 @@ class LatestMinutes(Feed):
     description = "Minutes written by the secretary of the University of Warwick Computing Society"
 
     def items(self):
-        return Communication.objects.filter(type='M').order_by('date')[:10]
+        return Communication.objects.filter(type='M').order_by('-date')[:10]
 
     def item_link(self,item):
         return "/%i/" % item.id
@@ -54,7 +54,7 @@ class LatestNewsletters(Feed):
     description = "Newsletters written by the University of Warwick Computing Society Exec"
 
     def items(self):
-        return Communication.objects.filter(type='N').order_by('date')[:10]
+        return Communication.objects.filter(type='N').order_by('-date')[:10]
 
     def item_link(self,item):
         return "/%i/" % item.id
