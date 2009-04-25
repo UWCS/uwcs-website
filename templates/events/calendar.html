@@ -34,7 +34,7 @@
 						{% for event in day_contents %}
 							<li class="event">
                             {% if event.cancelled %}<del>{% endif %}
-                                <a href="/events/details/{{event.id}}" title="{{event.shortDescription}}">{{event.type.name}}</a>
+                                <a href="/events/details/{{event.id}}" title="{{event.shortDescription}} @ {{ event.time_string }}">{{event.type.name}}</a>
                             {% if event.cancelled %}</del>{% endif %}
                             </li>
 						{% endfor %}
