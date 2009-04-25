@@ -75,10 +75,10 @@
 				<div class="crumbs">
 				{% for url,name in breadcrumbs %}
 					{% if not forloop.last %}
-						<a href="{{ url }}">{{ name }}</a>
+						<a href="{{ url }}">{{ name.lower }}</a>
 						&rsaquo;
 					{% else %}
-						{{ name }}
+						{{ name.lower }}
 					{% endif %}
 				{% endfor %}
 				</div>
