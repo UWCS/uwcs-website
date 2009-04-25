@@ -58,7 +58,7 @@ urlpatterns = patterns('',
 
 if settings.LEGACY_SITE:
     urlpatterns += patterns('',
-    	(r'^society/events', include('compsoc.events.urls')),
+    	(r'^society/events/', include('compsoc.events.urls')),
     	(r'^society/members/website', include('compsoc.memberinfo.urls')),
     	(r'^auth/logout', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
     )

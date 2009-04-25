@@ -241,6 +241,20 @@ input {
 	padding: 1px;
 }
 
+/* Content appearance */
+
+.entry p {
+	line-height: 1.35em;
+}
+
+.entry li {
+	line-height: 1.35em;
+}
+
+.entry h2 {
+	margin-top: 1em;
+}
+
 /* Specific items */
 
 /* Admin edit buttons */
