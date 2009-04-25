@@ -11,8 +11,10 @@
 		    <dt>Cancelled</dt>
 		    <dd>Please note this event has been <b>cancelled!</b></dd>
 		{% endif %}
-		<dt>Event</dt>
-		<dd>{{ event.shortDescription }}</dd>
+        {% if event.shortDescription.trim %}
+            <dt>Event</dt>
+            <dd>{{ event.shortDescription }}</dd>
+        {% endif %}
 		<dt>Location</dt>
 		<dd><a href="{{ event.location.get_absolute_url }}">{{ event.location }}</a></dd>
 		<dt>When</dt>
@@ -33,7 +35,7 @@
 				</dl>
 			</dd>
 		{% endif %}
-		{% if event.longDescription %}
+		{% if event.longDescription.trim %}
 			<dt>Notes</dt>
 			<dd>{{ event.longDescription }}</dd>
 		{% endif %}
