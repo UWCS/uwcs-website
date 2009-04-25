@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block feedlinks %}
+	<link href="/feeds/events/" rel="alternate" type="application/rss+xml" title="Future event feed" />
+{% endblock %}
+
 {% block events %}class="active"{% endblock %}
 
 {% block morehead %}
