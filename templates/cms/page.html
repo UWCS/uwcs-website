@@ -28,11 +28,13 @@
                 <ul>
             {% else %}
                 <li>&rsaquo;&nbsp;{{ name }}
-                <ul>
-                {% for page_url,name in children %}
-                    <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
-                {% endfor %}
-                </ul></li>
+                {% if children %}
+                        <ul>
+                        {% for page_url,name in children %}
+                            <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                {% endif %}</li>
             {% endif %}
         {% endif %}
     {% endfor %}
