@@ -29,6 +29,13 @@ class NextEvents(Feed):
     def item_link(self,event):
         return "/events/details/%i/" % event.id
 
+    def item_pubdate(self, item):
+        """
+        Takes an item, as returned by items(), and returns the item's
+        pubdate.
+        """
+	return item.start
+
 class NextAtomEvents(NextEvents):
     feed_type = Atom1Feed
     subtitle = NextEvents.description
