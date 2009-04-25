@@ -74,10 +74,14 @@ if settings.LEGACY_SITE:
     	('^society/members/list', 'redirect_to', {'url': '/member/list/'}),
     	('^society/', 'redirect_to', {'url': '/cms/about/'}),
         ('^gaming/', 'redirect_to', {'url': '/cms/about/gaming/'}),
-        ('^gaming/(?P<id>\d+)/$', 'redirect_to', {'url': '/cms/about/gaming/%(id)s/'}),
-        ('^gaming/lans/(?P<id>\d+)/$', 'redirect_to', {'url': '/cms/about/gaming/lans/%(id)s/'}),
+        ('^gaming/(?P<id>\d+)', 'redirect_to', {'url': '/cms/about/gaming/%(id)s/'}),
+        ('^gaming/lans/(?P<id>\d+)', 'redirect_to', {'url': '/cms/about/gaming/lans/%(id)s/'}),
         ('^academic/', 'redirect_to', {'url': '/cms/about/academic/'}),
-        ('^academic/(?P<id>\d+)/$', 'redirect_to', {'url': '/cms/about/academic/%(id)s/'}),
+        ('^academic/(?P<id>\d+)', 'redirect_to', {'url': '/cms/about/academic/%(id)s/'}),
+        ('^socials/', 'redirect_to', {'url': '/cms/socials/'}),
+        ('^socials/(?P<id>\d+)', 'redirect_to', {'url': '/cms/socials/%(id)s/'}),
+        ('^services/', 'redirect_to', {'url': '/cms/services/'}),
+        ('^services/(?P<id>\d+)', 'redirect_to', {'url': '/cms/services/%(id)s/'}),
     )
 
 # if we are debugging serve the static content locally
