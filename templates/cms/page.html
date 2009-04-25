@@ -20,33 +20,33 @@
     <ul>
         <li>
             <h2>Browse</h2>
-<ul class="cms">
-    {% for page_url,name in breadcrumbs %}
-        {% if not forloop.first %}
-            {% if not forloop.last %}
-                <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a>
-                <ul>
-            {% else %}
-                <li>&rsaquo;&nbsp;{{ name }}
-                {% if children %}
-                        <ul>
-                        {% for page_url,name in children %}
-                            <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
-                        {% endfor %}
-                        </ul>
-                {% endif %}</li>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
-    {% for page_url,name in siblings %}
-        <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
-    {% endfor %}
-    {% for a,b in breadcrumbs %}
-        {% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
-    {% endfor %}
-</ul>
-		</li>
-	</ul>
+		<ul class="cms">
+		    {% for page_url,name in breadcrumbs %}
+			{% if not forloop.first %}
+			    {% if not forloop.last %}
+				<li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a>
+				<ul>
+			    {% else %}
+				<li>&rsaquo;&nbsp;{{ name }}
+				{% if children %}
+					<ul>
+					{% for page_url,name in children %}
+					    <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+					{% endfor %}
+					</ul>
+				{% endif %}</li>
+			    {% endif %}
+			{% endif %}
+		    {% endfor %}
+		    {% for page_url,name in siblings %}
+			<li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+		    {% endfor %}
+		    {% for a,b in breadcrumbs %}
+			{% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
+		    {% endfor %}
+		</ul>
+	 </li>
+    </ul>
 {% endblock %}
 
 {% block content %}
