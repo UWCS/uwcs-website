@@ -33,8 +33,10 @@
 				</dl>
 			</dd>
 		{% endif %}
-		<dt>Notes</dt>
-		<dd>{{ event.longDescription }}</dd>
+		{% if event.longDescription %}
+			<dt>Notes</dt>
+			<dd>{{ event.longDescription }}</dd>
+		{% endif %}
 		<dt>General Information</dt>
 		<dd>{{ event.type.info }}</dd>
 		{% if has_seating %}
