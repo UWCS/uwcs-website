@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
+{% block feedlinks %}
+   {% if type %}
+      {% ifequal type "news items" %}
+	<link href="feeds/news/" rel="alternate" type="application/rss+xml" title="Latest news items" />
+      {% else %}
+	<link href="/feeds/{{ type }}s/" rel="alternate" type="application/rss+xml" title="Latest {{ type }} items" />
+      {% endifequal %}
+   {% endif %}
+{% endblock %}
+
 {% block home %}class="active"{% endblock %}
 
 {% block sidebar %}
