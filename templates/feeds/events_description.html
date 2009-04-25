@@ -1,1 +1,23 @@
-{{ obj.longDescription }}
+<table>
+<tr><td valign="top">Event:</td><td><a href="{{ obj.get_absolute_url }}">{{ obj.type.name }}</a></td></tr>
+
+{% if obj.shortDescription %}
+	<tr><td valign="top">Summary:</td><td>{{ obj.shortDescription }}</td></tr>
+{% endif %}
+<tr><td valign="top">Location:</td><td>{{ obj.location.name }}</td></tr>
+
+<tr><td valign="top">Date:</td><td>{{ obj.time_string }}</td></tr>
+{% if event.has_signups %}
+	<tr><td valign="top">Signups:</td><td><span>{{ event.signup_count }}/
+	{% if event.signup_total %}{{ event.signup_total }}{% else %}&#8734;{% endif %}</span></td></tr>
+{% else %}
+	<tr><td valign="top">Signups:</td><td>Not required</td></tr>
+{% endif %}
+
+{% if obj.longDescription %}
+	<tr><td valign="top">Notes:</td><td>{{ obj.longDescription }}</td></tr>
+{% endif %}
+
+</table>
+
+
