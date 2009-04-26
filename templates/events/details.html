@@ -11,7 +11,7 @@
 		    <dt>Cancelled</dt>
 		    <dd>Please note this event has been <b>cancelled!</b></dd>
 		{% endif %}
-        {% if event.shortDescription.trim %}
+        {% if event.shortDescription.rstrip %}
             <dt>Event</dt>
             <dd>{{ event.shortDescription }}</dd>
         {% endif %}
@@ -35,7 +35,7 @@
 				</dl>
 			</dd>
 		{% endif %}
-		{% if event.longDescription.trim %}
+		{% if event.longDescription.rstrip %}
 			<dt>Notes</dt>
 			<dd>{{ event.longDescription }}</dd>
 		{% endif %}
