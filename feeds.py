@@ -2,6 +2,7 @@ from django.contrib.syndication.feeds import Feed
 from django.utils.feedgenerator import Atom1Feed
 from compsoc.comms.models import Communication
 from compsoc.events.models import Event
+from datetime import datetime
 
 class LatestNews(Feed):
     title = "Latest Compsoc news items"
