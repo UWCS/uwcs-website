@@ -22,15 +22,6 @@ class Page(models.Model):
     def login(self):
         return self.get_data().login
 
-    def get_siblings(self):
-        parent_slug = '/'.join(self.slug.split('/')[:-1])
-        peers = []
-        child_prefix = parent_slug + '/'
-        for p in Page.objects.filter(slug__startswith=child_prefix).exclude(slug=self.slug):
-            if p.slug[len(child_prefix):].count('/') == 0:
-                peers.append(p)
-        return peers
-
     def get_siblings_and_self(self):
         parent_slug = '/'.join(self.slug.split('/')[:-1])
         peers = []
