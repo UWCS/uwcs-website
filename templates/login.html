@@ -4,6 +4,9 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+<p class="notification">You are already logged in. <a href="/logout">Click here</a> to log out.</p>
+{% else %}
 {% if form.errors %}
 <p class="notification">Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -63,3 +66,4 @@
 </div>
 
 {% endblock %}
+{% endif %}
