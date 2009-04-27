@@ -3,6 +3,9 @@
 {% block ttitle %}Event Details for {{ event.type.name }}{% endblock %}
 
 {% block content %}
+{% if not can_edit and not is_displayed %}
+<p>Whoops! You're really not supposed to be here, stupidface.</p>
+{% else %}
 <div id="event">
 	{% if can_edit %}<a class="edit" href="/admin/events/event/{{ event.id }}/">Edit</a>{% endif %}
 	<h2 class="title">Event Details for {{ event.type.name }}</h2>
@@ -85,4 +88,6 @@
 		</div>
 	{% endif %}
 </div>
+{% endif %}
 {% endblock %}
+

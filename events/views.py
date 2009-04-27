@@ -34,6 +34,11 @@ def get_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
     events = Event.objects.order_by('start').filter(finish__gte=begin)
+
+def get_listable_events(offset,span):
+    begin = begin_week(datetime.today())+timedelta(days=7*offset)
+    end = begin + timedelta(days=7*span)
+    events = Event.objects.order_by('start').filter(finish__gte=begin).exclude(displayFrom__gte=datetime.now())
     return (begin.date(),end.date(),events)
 
 class Week:
@@ -48,7 +53,7 @@ class Week:
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
 def events_list(request):
-    begin,end,events = get_events(0,10)
+    begin,end,events = get_listable_events(0,10)
     lookup = defaultdict(lambda: [])
     for event in events:
        lookup[begin_week(event.start)].append(event)
@@ -134,6 +139,7 @@ def details(request,event_id):
         'can_edit':request.user.is_staff if request.user else False,
         'user':u,
         'future':future_events(),
+        'is_displayed':event.is_displayed(),
     }
 
     try:

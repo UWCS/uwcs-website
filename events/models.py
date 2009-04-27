@@ -64,6 +64,9 @@ class Event(models.Model):
     def __unicode__(self):
         return self.type.name + " @ " + self.time_string()
 
+    def is_displayed(self):
+        return datetime.now() > self.displayFrom
+    
     def is_in_future(self):
         return datetime.now() < self.start
 
