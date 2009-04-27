@@ -30,19 +30,16 @@ def handle(request,url):
         breadcrumbs.append(prefix)
         prefix += '/' + item
     breadcrumbs.append(prefix)
+    breadcrumbs.sort(key=lambda x:x.title())
 
     # find the siblings that go before and after
     sibs = sorted(page.get_siblings_and_self(), key=lambda x: x.title())
-    i = [str(p) for p in sibs].index(prefix)
-    pre_siblings = sibs[:i]
-    post_siblings = sibs[i+1:]
 
     dict = {
         'page_id':page.id,
         'title':data.title,
         'text':data.text,
-        'pre_siblings':cleanse(pre_siblings),
-        'post_siblings':cleanse(post_siblings),
+        'siblings':[(p.get_absolute_url(),p.get_data().title,p.slug == prefix) for p in sibs],
         'children':cleanse(page.get_children()),
         'user':request.user,
         'breadcrumbs':lookup(breadcrumbs),
