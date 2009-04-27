@@ -289,7 +289,7 @@ def ical_feed(request):
     # IE/Outlook needs this:
     cal.add('method').value = 'PUBLISH'
     # Only publish events in the future
-    for event in filter(lambda e: e.is_in_future(),Event.objects.order_by('start')):
+    for event in filter(lambda e: e.is_in_future(),Event.objects.order_by('start').exclude(displayFrom__gte=datetime.now())):
         vevent = cal.add('vevent')
         vevent.add('summary').value = event.type.name + '; ' + event.shortDescription if event.shortDescription else event.type.name
         vevent.add('location').value = str(event.location)
