@@ -3,6 +3,12 @@
 {% block ttitle %}Events Calendar{% endblock %}
 
 {% block content %}
+<p class="calendar-key">
+	<span class="academic">academic</span>
+	<span class="social">social</span>
+	<span class="gaming">gaming</span>
+	<span class="society">society</span>
+</p>
 
 <div id="calendar">
 	<ul class="calendarnav">
@@ -32,7 +38,7 @@
 						{% endif %}
 						<li class="day">{{ day }}</li>
 						{% for event in day_contents %}
-							<li class="event">
+							<li class="event {{ event.type.get_target_display|lower }}">
                             {% if event.cancelled %}<del>{% endif %}
                                 <a href="/events/details/{{event.id}}" title="{{event.shortDescription}} @ {{ event.time_string }}">{{event.type.name}}</a>
                             {% if event.cancelled %}</del>{% endif %}

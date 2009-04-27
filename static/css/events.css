@@ -128,6 +128,29 @@ ul#eventlist, #eventlist ul {
 	padding-right: 5px;
 }
 
+.gaming a, .gaming {
+	color: green;
+	display: inline;
+}
+
+.academic a, .academic {
+	color: #FF8040;
+	display: inline;
+}
+
+.social a, .social {
+	color: #800000;
+}
+
+.society a, .society {
+	color: #FF0080;
+}
+
+
+.calendar-key {
+	margin-left:70%;
+}
+
 .calendarnav li {
 	display: block;
 	list-style-type: none;
