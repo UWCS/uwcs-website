@@ -109,3 +109,6 @@ SAME_SECOND_FORMAT = '%H:%M'
 # Sun, 19 Oct 2008
 WEEK_FORMAT_STRING = '%a, %d %b %Y'
 
+# Mon, 27 Apr
+LOGIN_URL = /login
+LOGOUT_URL = /logout
