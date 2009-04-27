@@ -30,11 +30,6 @@ def safe_week_for(date):
     except Term.DoesNotExist:
         return ""
 
-def get_events(offset,span):
-    begin = begin_week(datetime.today())+timedelta(days=7*offset)
-    end = begin + timedelta(days=7*span)
-    events = Event.objects.order_by('start').filter(finish__gte=begin)
-
 def get_listable_events(offset,span):
     begin = begin_week(datetime.today())+timedelta(days=7*offset)
     end = begin + timedelta(days=7*span)
@@ -72,7 +67,7 @@ def calendar(request,delta):
     presents a Table of events for the current week, and 4 successors
     '''
     offset = int(delta)
-    begin,end,events = get_events(offset,4)
+    begin,end,events = get_listable_events(offset,4)
     # lookup :: BEGIN_WEEK -> DAY -> EVENT
     lookup = defaultdict(lambda: defaultdict(lambda:[]))
     for event in events:
