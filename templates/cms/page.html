@@ -21,6 +21,10 @@
         <li>
             <h2>Browse</h2>
 		<ul class="cms">
+		    {% for page_url,name in pre_siblings %}
+			<li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+		    {% endfor %}
+
 		    {% for page_url,name in breadcrumbs %}
 			{% if not forloop.first %}
 			    {% if not forloop.last %}
@@ -38,9 +42,11 @@
 			    {% endif %}
 			{% endif %}
 		    {% endfor %}
-		    {% for page_url,name in siblings %}
+
+		    {% for page_url,name in post_siblings %}
 			<li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
 		    {% endfor %}
+
 		    {% for a,b in breadcrumbs %}
 			{% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
 		    {% endfor %}

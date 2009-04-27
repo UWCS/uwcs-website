@@ -31,11 +31,18 @@ def handle(request,url):
         prefix += '/' + item
     breadcrumbs.append(prefix)
 
+    # find the siblings that go before and after
+    sibs = sorted(page.get_siblings_and_self(), key=lambda x: x.title())
+    i = [str(p) for p in sibs].index(prefix)
+    pre_siblings = sibs[:i]
+    post_siblings = sibs[i+1:]
+
     dict = {
         'page_id':page.id,
         'title':data.title,
         'text':data.text,
-        'siblings':cleanse(page.get_siblings()),
+        'pre_siblings':cleanse(pre_siblings),
+        'post_siblings':cleanse(post_siblings),
         'children':cleanse(page.get_children()),
         'user':request.user,
         'breadcrumbs':lookup(breadcrumbs),
