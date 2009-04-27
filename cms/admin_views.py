@@ -76,4 +76,5 @@ def add_edit(request,page_id=None):
         'user': request.user,
         'id': page_id,
         'comments':comments,
+        'slug': page.slug,
     })
