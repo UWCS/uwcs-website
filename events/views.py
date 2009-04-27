@@ -291,7 +291,7 @@ def ical_feed(request):
         vevent.add('dtend').value = event.finish
         vevent.add('dtstamp').value = event.start # again, for Outlook
         vevent.add('description').value = event.longDescription
-        vevent.add('categories').value = event.type.get_target_display()
+        vevent.add('categories').value = [event.type.get_target_display()]
         url = "http://%s/events/details/%i/" % (Site.objects.get_current() , event.id)
         vevent.add('uid').value = url
         vevent.add('url').value = url
