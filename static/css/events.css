@@ -43,7 +43,7 @@ ul#eventlist, #eventlist ul {
 	min-height: 2em;
 }
 
-#eventlist .events, #eventlist .events li {
+#eventlist .events {
 	clear: both;
 }
 
@@ -60,7 +60,7 @@ ul#eventlist, #eventlist ul {
 }
 
 #eventlist .events .eventdetail {
-	float: left;
+	margin-left: 180px;
 }
 
 #eventlist .events .description {
