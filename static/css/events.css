@@ -130,12 +130,10 @@ ul#eventlist, #eventlist ul {
 
 .gaming a, .gaming {
 	color: green;
-	display: inline;
 }
 
 .academic a, .academic {
 	color: #FF8040;
-	display: inline;
 }
 
 .social a, .social {
@@ -148,7 +146,7 @@ ul#eventlist, #eventlist ul {
 
 
 .calendar-key {
-	margin-left:70%;
+	text-align:right;
 }
 
 .calendarnav li {
