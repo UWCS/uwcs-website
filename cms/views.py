@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from compsoc.cms.models import *
     
 def cleanse(l):
-    return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
+    return sorted(map(lambda p: (p.get_absolute_url(),p.get_data().title),l),key=lambda (u,t): t)
 
 def lookup(l):
     breadcrumbs = [('/','home')]
