@@ -70,11 +70,12 @@ def add_edit(request,page_id=None):
     else:
         form = PageForm()
         comments = []
+        page = None
 
     return render_to_response('cms/admin/addedit.html', {
         'form': form,
         'user': request.user,
         'id': page_id,
         'comments':comments,
-        'slug': page.slug,
+        'slug': page.slug if page else None,
     })

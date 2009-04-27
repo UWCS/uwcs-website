@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from compsoc.feeds import *
 from compsoc import settings
-from compsoc.cms.views import handle
+from compsoc.cms.views import handle,list
 from compsoc.search.views import search
 from django.contrib.auth.models import User
 
@@ -51,6 +51,7 @@ urlpatterns = patterns('',
     (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
     (r'^cms/(?P<url>.*)/$',handle),
+    (r'^info_map/$',list),
     (r'^search/$', search),
 )
 

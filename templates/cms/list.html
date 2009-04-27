@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% autoescape off %}
+
+    <div class="post">
+        <div class="entry">
+            <ul>
+                {{ list|unordered_list }}
+            </ul>
+        </div>
+    </div>
+    {% endautoescape %}
+
+{% endblock %}

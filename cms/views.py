@@ -1,9 +1,10 @@
 from django.shortcuts import render_to_response,get_object_or_404
 from django.http import HttpResponseRedirect
 from compsoc.cms.models import *
-    
+from collections import defaultdict
+
 def cleanse(l):
-    return sorted(map(lambda p: (p.get_absolute_url(),p.get_data().title),l),key=lambda (u,t): t)
+    return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
 
 def lookup(l):
     breadcrumbs = [('/','home')]
@@ -46,3 +47,20 @@ def handle(request,url):
         'slug': url,
     }
     return render_to_response('cms/page.html',dict)
+
+def list(request):
+    def rec(page):
+        '''
+            Recursively generates a list of pages for a site map
+        '''
+        # If anyone knows a way of using sane tags without shoving this
+        # in the view, please rewrite
+        val = '<a href="%s">%s</a>' % (page.get_absolute_url(),page.title())
+        pages = reduce(lambda x,y: x+y,map(rec,page.get_children()),[])
+        return [val,pages] if pages else [val]
+
+    return render_to_response('cms/list.html',{
+        'list':rec(get_object_or_404(Page,slug='about')) + rec(get_object_or_404(Page,slug='contact')),
+        'user':request.user,
+    })
+

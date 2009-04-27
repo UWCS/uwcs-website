@@ -42,7 +42,7 @@ class Page(models.Model):
         for p in Page.objects.filter(slug__startswith=url):
             if p.slug[len(url):].count('/') == 0:
                 children.append(p)
-        return children
+        return sorted(children, key=lambda x: x.title())
 
     def get_absolute_url(self):
         return "/cms/%s" % self.slug
