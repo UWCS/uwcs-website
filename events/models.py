@@ -110,7 +110,7 @@ def future_events(n=5):
     future = []
     for type in types:
         try:
-            event = type.event_set.filter(start__gte=datetime.now()).order_by('start')[0]
+            event = type.event_set.filter(start__gte=datetime.now()).exclude(displayFrom__gte=datetime.now()).order_by('start')[0]
         except IndexError:
             pass
         else:
