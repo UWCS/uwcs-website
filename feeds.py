@@ -15,6 +15,9 @@ class LatestNews(Feed):
     def item_link(self,item):
         return "/details/%i/" % item.id
 
+    def item_pubdate(self,item):
+        return item.date
+
 class LatestAtomNews(LatestNews):
     feed_type = Atom1Feed
     subtitle = LatestNews.description
@@ -52,6 +55,9 @@ class LatestMinutes(Feed):
     def item_link(self,item):
         return "/details/%i/" % item.id
 
+    def item_pubdate(self,item):
+        return item.date
+
 class LatestAtomMinutes(LatestMinutes):
     feed_type = Atom1Feed
     subtitle = LatestMinutes.description
@@ -66,6 +72,9 @@ class LatestNewsletters(Feed):
 
     def item_link(self,item):
         return "/details/%i/" % item.id
+
+    def item_pubdate(self,item):
+        return item.date
 
 class LatestAtomNewsletters(LatestNewsletters):
     feed_type = Atom1Feed
