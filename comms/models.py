@@ -45,9 +45,10 @@ class Communication(models.Model):
         return bool(self.predecessors())
 
     def next_item(self):
-        return self.successors()[0]
+        # earliest successor
+        return self.successors().order_by('date')[0]
 
     def prev_item(self):
-        return self.predecessors()[0]
+        return self.predecessors().latest('date')
 
 register(Communication, ['title'])
