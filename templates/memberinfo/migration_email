@@ -1,6 +1,8 @@
 Dear {{ first }} {{ last }}
 
-A new Computing Society website has been rolled out [0] 
+A new Computing Society website has been rolled out [0]
+If you have received a previous email, then ignore the 
+earlier one. 
 You have a login on this account with the following details:
 
 Your Username is {{ username }}
