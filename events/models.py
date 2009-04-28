@@ -70,6 +70,9 @@ class Event(models.Model):
     def is_in_future(self):
         return datetime.now() < self.start
 
+    def is_now_or_later(self):
+        return datetime.now() < self.finish
+
     def is_in_past(self):
         return datetime.now() > self.start
 

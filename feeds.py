@@ -25,7 +25,7 @@ class NextEvents(Feed):
     description = "Next 10 events from the University of Warwick Computing Society"
 
     def items(self):
-        return filter(lambda e: e.is_in_future(),Event.objects.order_by('start').exclude(displayFrom__gte=datetime.now()))[:10]
+        return filter(lambda e: e.is_now_or_later(),Event.objects.order_by('start').exclude(displayFrom__gte=datetime.now()))[:10]
 
     def item_link(self,event):
         return "/events/details/%i/" % event.id
