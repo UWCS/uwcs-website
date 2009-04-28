@@ -14,11 +14,16 @@ class Command(BaseCommand):
             password = User.objects.make_random_password()
 	    u.set_password(password)
 	    u.save()
-	    template_mail(
-	        'New Website Password',
-		'memberinfo/migration_email',
-                {'first': u.first_name, 'last':u.last_name, 'username':u.username, 'password':password},
-	        COMPSOC_TECHTEAM_EMAIL,
-	        [u.email])
+            try:
+	        template_mail(
+	            'New Website Password',
+		    'memberinfo/migration_email',
+                    {'first': u.first_name, 'last':u.last_name, 'username':u.username, 'password':password},
+	            COMPSOC_TECHTEAM_EMAIL,
+	            [u.email])
+            except Exception, e:
+                print u.username
+                print e
+                
 
     def usage(self, subcommand): pass

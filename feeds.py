@@ -16,7 +16,7 @@ class LatestNews(Feed):
         return "/details/%i/" % item.id
 
     def item_pubdate(self,item):
-        return item.date
+        return datetime.fromordinal(item.date.toordinal())
 
 class LatestAtomNews(LatestNews):
     feed_type = Atom1Feed
@@ -56,7 +56,7 @@ class LatestMinutes(Feed):
         return "/details/%i/" % item.id
 
     def item_pubdate(self,item):
-        return item.date
+        return datetime.fromordinal(item.date.toordinal())
 
 class LatestAtomMinutes(LatestMinutes):
     feed_type = Atom1Feed
@@ -74,7 +74,7 @@ class LatestNewsletters(Feed):
         return "/details/%i/" % item.id
 
     def item_pubdate(self,item):
-        return item.date
+        return datetime.fromordinal(item.date.toordinal())
 
 class LatestAtomNewsletters(LatestNewsletters):
     feed_type = Atom1Feed
