@@ -195,7 +195,7 @@ def set_website(request):
             website.websiteUrl = form.cleaned_data['url']
             website.save()
         except WebsiteDetails.DoesNotExist:
-            WebsiteDetails.objects.create(user=u,websiteTitle=title,websiteUrl=url)
+            WebsiteDetails.objects.create(user=u,websiteTitle=form.cleaned_data['title'],websiteUrl=form.cleaned_data['url'])
         return HttpResponseRedirect('/member/')
     else:
         return render_to_response('memberinfo/form_errors.html',
