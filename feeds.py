@@ -13,7 +13,7 @@ class LatestNews(Feed):
         return Communication.objects.filter(type='N').order_by('-date')[:10]
 
     def item_link(self,item):
-        return "/%i/" % item.id
+        return "/details/%i/" % item.id
 
 class LatestAtomNews(LatestNews):
     feed_type = Atom1Feed
@@ -50,7 +50,7 @@ class LatestMinutes(Feed):
         return Communication.objects.filter(type='M').order_by('-date')[:10]
 
     def item_link(self,item):
-        return "/%i/" % item.id
+        return "/details/%i/" % item.id
 
 class LatestAtomMinutes(LatestMinutes):
     feed_type = Atom1Feed
@@ -65,7 +65,7 @@ class LatestNewsletters(Feed):
         return Communication.objects.filter(type='N').order_by('-date')[:10]
 
     def item_link(self,item):
-        return "/%i/" % item.id
+        return "/details/%i/" % item.id
 
 class LatestAtomNewsletters(LatestNewsletters):
     feed_type = Atom1Feed
