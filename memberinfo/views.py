@@ -246,7 +246,7 @@ def reset_password(request):
         # Do the password reset
         user_name = request.POST['user_name']
         user = User.objects.get(username__exact=user_name)
-        password = user.make_random_password()
+        password = user.objects.make_random_password()
         user.save()
 
         # Email the user
