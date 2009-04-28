@@ -27,7 +27,11 @@
 
     {% if is_paginated %}
         {% ifnotequal page "last" %}
-            <a href="/minutes/{{ page|add:"1" }}/">more</a>
+            {% ifequal type "news item" %}
+                <a href="/news/{{ page|add:"1" }}/">more</a>
+            {% else %}
+                <a href="/{{ type }}s/{{ page|add:"1" }}/">more</a>
+            {% endifequal %}
         {% endifnotequal %}
     {% endif %}
 {% else %}
