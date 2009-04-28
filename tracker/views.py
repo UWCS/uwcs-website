@@ -56,7 +56,7 @@ class TicketSearchForm(forms.Form):
     Search limited by conjunction of restrictions present
     in this form.
     '''
-    name = forms.CharField(max_length=20,required=False)
+    title = forms.CharField(max_length=20,required=False)
     description = forms.CharField(required=False)
     submitter = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
     submitter_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
@@ -70,7 +70,7 @@ class TicketSearchForm(forms.Form):
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ('name','description','goal')
+        fields = ('title','description','goal')
 
 @login_required
 def new_ticket(request):
@@ -119,7 +119,7 @@ def index(request):
             results = Ticket.objects.by_completed(
                 form.cleaned_data['completed']
             ).filter(
-                name__contains=form.cleaned_data['name'],
+                title__contains=form.cleaned_data['title'],
                 description__contains=form.cleaned_data['description']
             )
             if sub:

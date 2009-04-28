@@ -22,7 +22,7 @@ class Ticket(models.Model):
     '''
     Represents an atomic unit of work within the tracker.
     '''
-    name = models.CharField(max_length=20)
+    title = models.CharField(max_length=60)
     started = models.DateTimeField()
     due_date = models.DateTimeField(blank=True,null=True)
     description = models.TextField()
