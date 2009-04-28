@@ -461,6 +461,7 @@ table, td, tr, th {
 th {
 	border-bottom: 1px solid;
 	padding: 2px 10px;
+	text-align: center;
 }
 td {
 	width: auto;

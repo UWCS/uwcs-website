@@ -105,7 +105,7 @@
 		{% for revision in seating_revisions %}
 			<li class="revision"><ul>
 				<li class="rev"><a href="/events/seating/{{ event.id }}/{{ revision.number }}">{{ revision.number }}</a></li>
-				<li class="creator">{{ revision.creator }}</li>
+				<li class="creator">{{ revision.creator.member.name }}</li>
 				<li class="comment">{{ revision.comment }}</li>
 			</ul></li>
 		{% endfor %}
