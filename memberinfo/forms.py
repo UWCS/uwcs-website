@@ -7,7 +7,7 @@ class ShellForm(forms.Form):
     name = forms.CharField()
 
 class QuotaForm(forms.Form):
-    quota = forms.IntegerField(label='Units (x500MB) quota:')
+    quota = forms.IntegerField(label='Units (x1000MB) quota:')
 
 class NicknameForm(forms.Form):
     name = forms.CharField(required=False)
