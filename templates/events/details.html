@@ -40,7 +40,7 @@
 		{% endif %}
 		{% if event.longDescription.rstrip %}
 			<dt>Notes</dt>
-			<dd>{{ event.longDescription }}</dd>
+			<dd>{{ event.longDescription|textile }}</dd>
 		{% endif %}
 		<dt>General Information</dt>
 		<dd>{{ event.type.info }}</dd>
