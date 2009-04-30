@@ -1,14 +1,19 @@
 registry = {}
 
-def register(model, fields):
-    registry[str(model)] = (model, fields)
+def register(model, fields, order='pk', filter=False, results=5):
+    registry[str(model)] = (model, fields, results, order, filter)
 
 def search_for_string(search_string):
     search_string = search_string.lower()
     matches = []
     for key in registry:
-        model, fields = registry[key]
-        for object in model.objects.all():
+        model, fields, results, order, filter_by = registry[key]
+        # partial application didn't seem sane in python ... so:
+        if filter_by:
+            objects = model.objects.filter(filter_by)
+        else:
+            objects = model.objects.all()
+        for object in objects.order_by(order)[:results]:
             for field in fields:
                 try:
                     searchee = getattr(object, field)

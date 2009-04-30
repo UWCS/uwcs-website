@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.db.models import Q
 from datetime import timedelta,datetime
 
 from compsoc.settings import DATE_FORMAT_STRING,SAME_SECOND_FORMAT
@@ -120,7 +121,7 @@ def future_events(n=5):
             future.append((type,event))
     return sorted(future,key=lambda (t,e): e.start)[:n]
 
-register(Event,['shortDescription','longDescription','get_type_name'])
+register(Event,['shortDescription','longDescription','get_type_name'],order='start',filter=Q(displayFrom__lte=datetime.now(), cancelled=False))
 
 post_save.connect(write_file_callback, sender=Event)
 
