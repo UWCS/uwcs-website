@@ -48,8 +48,6 @@ class Week:
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
 def events_list(request):
-    print dir(request)
-    print request.get_host()
     begin,end,events = get_listable_events(0,10)
     lookup = defaultdict(lambda: [])
     for event in events:
