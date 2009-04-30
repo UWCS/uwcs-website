@@ -238,7 +238,7 @@ def member_list(request):
     
     dict = {
         'user': request.user,
-        'users': users
+        'users': sorted(users,key=lambda (name,nick,title,url):name)
     }
     return render_to_response('memberinfo/list.html',dict)
 
