@@ -10,6 +10,8 @@ def search_for_string(search_string):
         model, fields, results, order, filter_by = registry[key]
         # partial application didn't seem sane in python ... so:
         if filter_by:
+            if callable(filter_by):
+                filter_by = filter_by()
             objects = model.objects.filter(filter_by)
         else:
             objects = model.objects.all()

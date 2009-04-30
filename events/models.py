@@ -121,7 +121,7 @@ def future_events(n=5):
             future.append((type,event))
     return sorted(future,key=lambda (t,e): e.start)[:n]
 
-register(Event,['shortDescription','longDescription','get_type_name'],order='start',filter=Q(displayFrom__lte=datetime.now(), cancelled=False))
+register(Event,['shortDescription','longDescription','get_type_name'],order='start',filter=lambda: Q(displayFrom__lte=datetime.now(), cancelled=False))
 
 post_save.connect(write_file_callback, sender=Event)
 
