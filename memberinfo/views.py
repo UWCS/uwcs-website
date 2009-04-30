@@ -14,6 +14,8 @@ from compsoc.memberinfo.forms import *
 from compsoc.shortcuts import template_mail
 from compsoc.settings import *
 
+from datetime import datetime
+
 '''
 The following views are all related to the member profile section of the website.
 '''
@@ -115,12 +117,11 @@ def quota(request):
         amount = form.cleaned_data['quota']
         try:
             acc_name = user.shellaccount.name
-            q = Quota(user=user,quantity=amount,status='RE')
-            q.save()
+            q = Quota.objects.create(user=user,quantity=amount,status='RE',date=datetime.now())
             template_mail(
                 'Quota request',
-                'membeinfo/quota_techteam',
-                {'realname':("%s %s"%(u.first_name,u.last_name)),'username':acc_name,'amount':amount},
+                'memberinfo/quota_techteam',
+                {'realname':user.member.all_name(),'username':acc_name,'amount':amount},
                 user.email,
                 [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
             return HttpResponseRedirect('/member/')
