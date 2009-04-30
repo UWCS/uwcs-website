@@ -2,6 +2,8 @@
 
 {% block ttitle %}Event Details for {{ event.type.name }}{% endblock %}
 
+{% load markup %}
+
 {% block content %}
 {% if not can_edit and not is_displayed %}
 <p>Whoops! You're really not supposed to be here, stupidface.</p>
@@ -54,7 +56,7 @@
 			{% if can_signup %}
 				<form action="/events/signup/{{ event.id }}/" method="post" class="notsignedup">
 					<p>You are not signed up to this event, you may signup:</p>
-					<input class="commentfield" type="text" size="50" name="comment" />
+					<input class="commentfield" type="text" size="255" name="comment" />
 					<input type="submit" value="signup" />
 				</form>
             {% else %}

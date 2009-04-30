@@ -48,6 +48,8 @@ class Week:
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
 def events_list(request):
+    print dir(request)
+    print request.get_host()
     begin,end,events = get_listable_events(0,10)
     lookup = defaultdict(lambda: [])
     for event in events:
@@ -224,8 +226,11 @@ def seating(request, event_id, revision_no=None):
     return render_to_response('events/seating.html', dict)
 
 class CommentForm(forms.Form):
-    comment = forms.CharField(max_length=100)
+    comment = forms.CharField(max_length=255)
 
+# TODo: add to admin section
+#                if event.signup_set.filter(user=request.user):
+#                    return render_to_response('events/alreadysignedup.html',{'event':event})
 @login_required
 def do_signup(request,event_id):
     '''
@@ -249,10 +254,13 @@ def do_signup(request,event_id):
                     event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
                 else:
                     return render_to_response('events/cantsignup.html',{'event':event})
+        else:
+            return render_to_response('events/comment_fail.html',{
+                'event':event,
+                'user':request.user,
+                'errors':form.errors,
+            })
                 
-# TODo: add to admin section
-#                if event.signup_set.filter(user=request.user):
-#                    return render_to_response('events/alreadysignedup.html',{'event':event})
         return render_to_response('events/signup.html',{'event_id':event_id, 'user':request.user})
     else:
         form = CommentForm()
