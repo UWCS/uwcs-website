@@ -15,6 +15,7 @@ def search_for_string(search_string):
             objects = model.objects.filter(filter_by)
         else:
             objects = model.objects.all()
+        counter = 0
         for object in objects.order_by(order):
             for field in fields:
                 try:
@@ -25,4 +26,9 @@ def search_for_string(search_string):
                     searchee = searchee()
                 if search_string in searchee.lower():
                     matches.append(object)
+                    counter += 1
+                    if counter >= results:
+                        break
+                        
+
     return matches
