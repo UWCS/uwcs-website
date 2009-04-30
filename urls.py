@@ -66,6 +66,7 @@ if settings.LEGACY_SITE:
     urlpatterns += patterns('django.views.generic.simple',
     	('^society/events/rss2.0', 'redirect_to', {'url': '/feeds/events/'}),
     	('^society/news/rss2.0', 'redirect_to', {'url': '/feeds/news/'}),
+        ('^society/events/ical', 'redirect_to', {'url': '/events/ical/'}),
     	('^society/contact', 'redirect_to', {'url': '/cms/contact/'}),
         ('^society/exec', 'redirect_to', {'url': '/cms/contact/'}),
     	('^society/newsletters', 'redirect_to', {'url': '/newsletters/1/'}),
