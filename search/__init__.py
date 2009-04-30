@@ -15,7 +15,7 @@ def search_for_string(search_string):
             objects = model.objects.filter(filter_by)
         else:
             objects = model.objects.all()
-        for object in objects.order_by(order)[:results]:
+        for object in objects.order_by(order):
             for field in fields:
                 try:
                     searchee = getattr(object, field)
