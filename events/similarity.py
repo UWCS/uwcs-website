@@ -41,6 +41,7 @@ def distance_matrix():
     """
     # Build lookup map
     # TODO: remove duplicate computations
+    # weight score by frequency
     lookup = defaultdict(lambda: defaultdict(lambda: []))
     for event in Event.objects.all():
         seating = SeatingRevision.objects.filter(event=event).order_by('-number')

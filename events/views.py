@@ -17,6 +17,8 @@ from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING
 from compsoc.memberinfo.models import warwick_week_for,Term
 from compsoc.shortcuts import begin_week
 
+from compsoc.events.similarity import closest_person
+
 def calendar_index(request): return calendar(request,0)
 
 def month(dat): return strftime("%b",(0,dat,0,0,0,0,0,0,0))
@@ -323,5 +325,11 @@ def location(request,object_id):
     return render_to_response("events/location_detail.html", {
         'object':loc,
         'map_room':loc.map_loc,
+        'user':request.user,
+    })
+
+def lan_friends(request):
+    return render_to_response('events/lan_friends.html', {
+        'friends':closest_person(),
         'user':request.user,
     })

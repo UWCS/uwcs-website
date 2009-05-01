@@ -1,0 +1,27 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<h1>LAN Friends</h1>
+
+<p>A LAN Friend is someone who you often sit beside at LANs.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Member</th>
+        <th>LAN Friend</th>
+        <th>Website</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user,friend,score in friends %}
+        <tr>
+            <td>{{ user.member.name }}</td>
+            <td>{{ friend.member.name }}</td>
+            <td>{{ score }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
