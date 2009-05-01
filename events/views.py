@@ -187,7 +187,7 @@ def seating(request, event_id, revision_no=None):
                     if m:
                         column = int(m.group(1))
                         for row,id_string in enumerate(m.group(2).split(',')):
-                            if row > room.max_rows or column > room.max_cols:
+                            if row >= room.max_rows or column >= room.max_cols:
                                 revision.delete()
                                 return render_to_response('events/seating_size_failure.html',{
                                     'user':request.user,
