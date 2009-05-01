@@ -182,6 +182,11 @@ ul#eventlist, #eventlist ul {
 	padding: 5px;
 }
 
+#event dd.activesignup {
+	color:#FF8040;
+}
+
+
 /* IE6 fix again */
 #event .signups {
 	width: 100%;

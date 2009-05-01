@@ -30,11 +30,11 @@
 				<span>{{ event.signup_set.count }}/{{ limit }}</span>
 				<dl class="signupdetals">
 					<dt>Fresher Signups Open</dt>
-					<dd>{{ fresher }}</dd>
+					<dd {% if user.member.is_fresher %} class="activesignup" {% endif %}>{{ fresher }}</dd>
 					<dt>Member Signups Open</dt>
-					<dd>{{ open }}</dd>
+					<dd {% if not user.member.guest and not user.member.is_fresher %} class="activesignup" {% endif %} >{{ open }}</dd>
 					<dt>Guest Signups Open</dt>
-					<dd>{{ guest }}</dd>
+					<dd {% if user.member.guest %} class="activesignup" {% endif %}>{{ guest }}</dd>
 					<dt>Signups Close</dt>
 					<dd>{{ close }}</dd>
 				</dl>
