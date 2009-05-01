@@ -1,0 +1,9 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+<p class="notification">You have created a seating plan thats too large for {{ event.location }}.
+    You are only allowed {{ room.max_rows }} rows and {{ room.max_cols }} columns.
+</p>
+
+<p class="notification">Please fix the <a href="/events/seating/{{ event.id }}/">Seating Plan</a>.</p>
+{% endblock %}

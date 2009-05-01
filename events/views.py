@@ -187,10 +187,18 @@ def seating(request, event_id, revision_no=None):
                     if m:
                         column = int(m.group(1))
                         for row,id_string in enumerate(m.group(2).split(',')):
-                            try:
-                                u = User.objects.get(id=int(id_string))
-                                revision.seating_set.create(user=u,col=column,row=row)
-                            except ValueError,User.DoesNotExist: pass
+                            if row > room.max_rows or column > room.max_cols:
+                                revision.delete()
+                                return render_to_response('events/seating_size_failure.html',{
+                                    'user':request.user,
+                                    'event':e,
+                                    'room':room,
+                                })
+                            else:
+                                try:
+                                    u = User.objects.get(id=int(id_string))
+                                    revision.seating_set.create(user=u,col=column,row=row)
+                                except ValueError,User.DoesNotExist: pass
                 revisions = SeatingRevision.objects.for_event(e)
             else:
                 revisions = SeatingRevision.objects.for_event(e)
