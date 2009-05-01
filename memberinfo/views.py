@@ -255,18 +255,18 @@ def reset_password(request):
             'Compsoc Password Reset',
             'memberinfo/reset_email',
             {'name':user_name,'password':password},
-            COMPSOC_EXEC_EMAIL,
+            WEBMASTER_EMAIL,
             [user.email])
-        render_to_response('memberinfo/password_reset_success.html',{'user':request.user})
+        return render_to_response('memberinfo/password_reset_success.html',{'user':request.user})
     # If someone tries to reset the password of a user who doesn't exist, then report it
     except User.DoesNotExist:
         template_mail(
             'Warning: Failed Password Reset Attempt',
             'memberinfo/techteam_reset_email',
             {'name':user_name, 'ip':request.META['REMOTE_ADDR']},
-            COMPSOC_TECHTEAM_EMAIL,
-            [COMPSOC_TECHTEAM_EMAIL])
-        render_to_response('memberinfo/password_reset_no_name.html', {'tech':COMPSOC_TECHTEAM_EMAIL,})
+            WEBMASTER_EMAIL,
+            [WEBMASTER_EMAIL])
+        return render_to_response('memberinfo/password_reset_no_name.html', {'tech':WEBMASTER_EMAIL,})
 
 @login_required()
 def reset_account(request,account):
