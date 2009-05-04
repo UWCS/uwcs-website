@@ -52,15 +52,15 @@ def distance_matrix():
             latest = seating[0]
             cache = {}
             for s in latest.seating_set.all():
-                cache[s.user_id] = Point(s.col,s.row)
+                cache[s.user] = Point(s.col,s.row)
             for user in cache.keys():
                 for other in cache.keys():
                     if other != user:
                         lookup[user][other].append(cache[user].distance(cache[other]))
     
     results = defaultdict(lambda:{})
+    
     # Average distances
-    # TODO: weight distances
     for user,others in lookup.items():
         for other,values in others.items():
             results[user][other] = ave(values)
@@ -72,6 +72,7 @@ def closest_person():
     results = []
     for user,others in distances.items():
         other,score = sorted(others.items(),key=lambda (u,v):v)[0]
-        results.append((User.objects.get(pk=user),User.objects.get(pk=other),score))
+        #results.append((User.objects.get(pk=user),User.objects.get(pk=other),score))
+        results.append((user,other,score))
     return results
 
