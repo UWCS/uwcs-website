@@ -56,7 +56,7 @@ ul.seatingright {
 ul.seating li {
 	position: relative;
 	padding: 0;
-	width: 5em;
+	min-width: 5em;
 	height: 2.4em;
 	overflow: hidden;
 	text-align: center;
