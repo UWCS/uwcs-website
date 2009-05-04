@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 class Point:
     def __init__(self, x = 0, y = 0):
-        self.x = float(x)
-        self.y = float(y)
+        self.x = int(x)
+        self.y = int(y)
         
     def __getitem__(self, key):
         if( key == 0):
@@ -30,7 +30,10 @@ class Point:
     
     def distance(self, point2):
         """Returns the distance between to another point"""
-        return math.sqrt( ( (self[0]-point2[0])**2 + (self[1]-point2[1])**2) )
+        # this is to insert gutters between tables
+        self_x = self.x + (self.x/2)
+        point2_x = point2.x + (point2.x/2)
+        return math.sqrt( ( (self_x-point2_x)**2 + (self.y-point2.y)**2) )
         
 def ave(points):
     return reduce(lambda x,y:x+y,points)/len(points)
@@ -49,7 +52,7 @@ def distance_matrix():
             latest = seating[0]
             cache = {}
             for s in latest.seating_set.all():
-                cache[s.user_id] = Point(s.row,s.col)
+                cache[s.user_id] = Point(s.col,s.row)
             for user in cache.keys():
                 for other in cache.keys():
                     if other != user:
