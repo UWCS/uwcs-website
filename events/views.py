@@ -234,7 +234,7 @@ def seating(request, event_id, revision_no=None):
     return render_to_response('events/seating.html', dict)
 
 class CommentForm(forms.Form):
-    comment = forms.CharField(max_length=255)
+    comment = forms.CharField(max_length=255, required=False)
 
 # TODo: add to admin section
 #                if event.signup_set.filter(user=request.user):
