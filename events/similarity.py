@@ -72,7 +72,6 @@ def closest_person():
     results = []
     for user,others in distances.items():
         other,score = sorted(others.items(),key=lambda (u,v):v)[0]
-        #results.append((User.objects.get(pk=user),User.objects.get(pk=other),score))
         results.append((user,other,score))
     return results
 
