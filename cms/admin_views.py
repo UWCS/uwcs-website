@@ -4,6 +4,7 @@ from django import forms
 from django.shortcuts import render_to_response,get_object_or_404
 from datetime import datetime
 from django.http import HttpResponseRedirect
+from django.forms.util import ErrorList
 
 class PageForm(forms.Form):
     slug = forms.CharField(max_length=30)
@@ -15,6 +16,13 @@ class PageForm(forms.Form):
     def clean_slug(self):
         slug = self.cleaned_data['slug']
         return slug.rstrip('/')
+    
+    def clean_comment(self):
+        comment = self.cleaned_data['comment']
+        if comment == 'Please type a comment':
+            raise forms.ValidationError("Don't just enter the same comment, actually enter one")
+        return comment
+
 
 @staff_member_required
 def revision(request,rev_id):
@@ -54,7 +62,9 @@ def add_edit(request,page_id=None):
             )
             rev.save()
             return HttpResponseRedirect('/admin/cms/page/'+str(page.id))
-        comments = []
+        else:
+            comments = []
+            page = None
     elif page_id != None:
         page = get_object_or_404(Page,id=page_id)
         rev = page.get_data()
@@ -66,6 +76,8 @@ def add_edit(request,page_id=None):
             'login':rev.login,
         }
         form = PageForm(data)
+        # remove the 'please type a comment' error on first binding
+        form.errors['comment'] = ErrorList()
         comments = map(lambda rev: (rev.comment,rev.id),page.pagerevision_set.order_by('-date_written'))
     else:
         form = PageForm()
