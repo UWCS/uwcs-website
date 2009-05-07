@@ -1,5 +1,15 @@
 {% extends "cms/admin/base.html" %}
 
+{% block morehead %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#id_comment").click(function(event){
+                $("#id_comment").attr('value','')
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block sidebar %}
     <ul>
         <li>
