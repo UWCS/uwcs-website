@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 from django.db.models import Q
 from datetime import timedelta,datetime
 
@@ -124,6 +124,7 @@ def future_events(n=5):
 register(Event,['shortDescription','longDescription','get_type_name'],order='-start',filter=lambda: Q(displayFrom__lte=datetime.now(), cancelled=False))
 
 post_save.connect(write_file_callback, sender=Event)
+post_delete.connect(write_file_callback, sender=Event)
 
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
@@ -155,6 +156,9 @@ class EventSignup(models.Model):
     def __unicode__(self):
         return self.event.__unicode__()
 
+post_save.connect(write_file_callback, sender=EventSignup)
+post_delete.connect(write_file_callback, sender=EventSignup)
+
 class Signup(models.Model):
     event = models.ForeignKey(Event)
     time = models.DateTimeField()
@@ -172,6 +176,7 @@ class Signup(models.Model):
         return self.time.strftime(DATE_FORMAT_STRING)
 
 post_save.connect(write_file_callback, sender=Signup)
+post_delete.connect(write_file_callback, sender=Signup)
 
 
 class RevisionManager(models.Manager):
