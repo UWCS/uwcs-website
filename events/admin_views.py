@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 class EmailForm(forms.Form):
     subject = forms.CharField(max_length=30)
-    message = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea)
 
 @staff_member_required
 def email_signups(request,event_id):
@@ -25,6 +25,7 @@ def email_signups(request,event_id):
         form = EmailForm()
 
     return render_to_response('events/admin/email_signups_form.html', {
+        'event_id':event_id,
         'form': form,
         'user': request.user,
     })    
