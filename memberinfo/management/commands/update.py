@@ -58,6 +58,11 @@ class Command(NoArgsCommand):
         for user in User.objects.all():
             if user.is_active:
                 if union_lookup.has_key(user.username):
+                    (first,last,email) = union_lookup[user.username]
+                    user.first_name = first
+                    user.last_name = last
+                    user.email = email
+                    user.save()
                     del union_lookup[user.username]
                 else:
                     user.is_active = False
@@ -74,7 +79,7 @@ class Command(NoArgsCommand):
                 'Welcome to Compsoc',
                 'memberinfo/new_user_email',
                 {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
-                COMPSOC_TECHTEAM_EMAIL,
+                settings.WEBMASTER_EMAIL,
                 [u.email])
 
             user.first_name = first

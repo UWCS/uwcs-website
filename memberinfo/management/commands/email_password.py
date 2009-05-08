@@ -16,7 +16,7 @@ class Command(BaseCommand):
         u.save()
         template_mail(
             'New Website Password',
-            'memberinfo/migration_email',
+            'memberinfo/new_user_email',
             {'first': u.first_name, 'last':u.last_name, 'username':u.username, 'password':password},
             COMPSOC_TECHTEAM_EMAIL,
             [u.email])
