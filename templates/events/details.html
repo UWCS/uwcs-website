@@ -32,7 +32,7 @@
 					<dt>Fresher Signups Open</dt>
 					<dd {% if user.member.is_fresher %} class="activesignup" {% endif %}>{{ fresher }}</dd>
 					<dt>Member Signups Open</dt>
-					<dd {% if not user.member.guest and not user.member.is_fresher %} class="activesignup" {% endif %} >{{ open }}</dd>
+					<dd {% if user.member.is_normal %} class="activesignup" {% endif %} >{{ open }}</dd>
 					<dt>Guest Signups Open</dt>
 					<dd {% if user.member.guest %} class="activesignup" {% endif %}>{{ guest }}</dd>
 					<dt>Signups Close</dt>

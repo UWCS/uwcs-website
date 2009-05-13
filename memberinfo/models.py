@@ -13,6 +13,9 @@ class Member(models.Model):
     def is_fresher(self):
         return self.user.username.startswith("%02d" % (date.today().year-2000))
 
+    def is_normal(self):
+        return not (self.is_fresher() or self.guest)
+
     def name(self):
         try:
             nick = self.user.nicknamedetails.nickname
