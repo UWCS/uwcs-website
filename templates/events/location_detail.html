@@ -9,7 +9,9 @@
 {% load markup %}
 
 {% block content %}
-    <h2>{{ object.name }}</h2>
+	{% if user.is_staff %}<a class="edit" href="/admin/events/location/{{ object.id }}/">Edit</a>{% endif %}
+    <h2 class="title">{{ object.name }}</h2>
+    <br />
     <img src="{{ object.image_url}}"/>
     <br />
     <hr />
