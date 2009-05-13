@@ -7,6 +7,7 @@ from datetime import timedelta,datetime
 from compsoc.settings import DATE_FORMAT_STRING,SAME_SECOND_FORMAT
 from compsoc.search import register
 from compsoc.events import write_file_callback
+from compsoc.shortcuts import flatten
 
 TARGETS = (
     ('ACA', 'Academic'),
@@ -195,6 +196,40 @@ class SeatingRevision(models.Model):
     def __unicode__(self):
         return "%i, %s" % (self.number, self.comment)
 
+    def prev(self):
+        return SeatingRevision.objects.get(event=self.event,number=self.number-1)
+
+    def users(self):
+        return val_users(self.seating_set)
+
+    def added(self):
+        '''
+        People who were added to the seating plan in the current
+        revision.
+        Returns an iterable of Seating Objects
+        '''
+        try:
+            return self.seating_set.exclude(user__in=self.prev().users())
+        except SeatingRevision.DoesNotExist:
+            return self.seating_set.all()
+
+    def removed(self):
+        try:
+            return self.prev().seating_set.exclude(user__in=self.users())
+        except SeatingRevision.DoesNotExist:
+            return self.seating_set.none()
+
+    def moved(self):
+        try:
+            current = self.seating_set.filter(user__in=self.prev().users()).order_by('user')
+            previous = self.prev().seating_set.filter(user__in=self.users()).order_by('user')
+            return filter(lambda (curr,prev): curr.col != prev.col or curr.row != prev.row,zip(current,previous))
+        except SeatingRevision.DoesNotExist:
+            return self.seating_set.none()
+
+def val_users(query):
+    return flatten(query.values_list('user'))
+
 class Seating(models.Model):
     '''Information about a seat at a revision'''
     user = models.ForeignKey(User)
@@ -204,3 +239,4 @@ class Seating(models.Model):
 
     def __unicode__(self):
         return "%s @ %i,%i" % (self.user.member.name(),self.col,self.row)
+

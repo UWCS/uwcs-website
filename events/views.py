@@ -208,19 +208,32 @@ def seating(request, event_id, revision_no=None):
                     revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no,event=e)
             
             # create a seat lookup dict
-            seat_dict = defaultdict(lambda: defaultdict(lambda: False))
+            seat_dict = defaultdict(lambda: defaultdict(lambda: (False,False)))
             unass = set([s.user for s in e.signup_set.all()])
             if revisions:
+                added = val_users(revision.added())
+                moved = map(lambda (curr,prev):curr.user.pk,revision.moved())
+                removed = val_users(revision.removed())
                 for seat in revision.seating_set.all():
-                    seat_dict[seat.col][seat.row] = seat.user
+                    uid = seat.user.pk
+                    if uid in added:
+                        type = 'added'
+                    elif uid in moved:
+                        type = 'moved'
+                    else:
+                        type = 'static'
+                    seat_dict[seat.col][seat.row] = (seat.user,type)
                     unass.discard(seat.user)
-                    #unass.remove(seat.user)
+
+                unass = map(lambda u: (u,'removed' if u.pk in removed else 'static'),unass)
 
             # create nested lists for rows and columns
             cols = range(0,room.max_cols)
             max_rows = [ max([-1]+seat_dict[y].keys())+1 for y in cols]
             s = [[seat_dict[y][x] for x in range(0,max_rows[y])] for y in cols]
-            
+           
+            print s
+
             dict.update({
                 'room':room,
                 'seating':s,

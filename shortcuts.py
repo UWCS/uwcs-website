@@ -35,3 +35,6 @@ def begin_week(of):
         return datetime.combine((of - timedelta(days=of.weekday())).date(),notime)
     except AttributeError:
         return of - timedelta(days=of.weekday())
+
+def flatten(list):
+    return map(lambda (x,):x,list)

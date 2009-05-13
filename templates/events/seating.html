@@ -30,6 +30,11 @@
     <h3 class="title">Seating plan for <a href="/events/details/{{ event.id }}/">{{ event.type.name }}</a>,
         held in <a href="{{ room.room.get_absolute_url }}">{{ room }}</a></h3>
     <p class="byline"><small>{{ event.time_string }}</small></p>
+    <p class="calendar-key">
+        <span class="added">added</span>
+        <span class="moved">moved</span>
+        <span class="removed">removed</span>
+    </p>
     <!-- visual seating plan goes here. -->
 <table class="seating">
     <tbody><tr>
@@ -50,10 +55,11 @@
             <li class="empty">(empty)</li>
         </ul>
         <ul id="unassigned" class="seating">
-        {% for user in unassigned %}
+        {% for user,type in unassigned %}
             {% if user %}
                 <li id="{{ user.id }}"
-                    title="{{ user.member.all_name }}">
+                    title="{{ user.member.all_name }}"
+                    class="{{ type }}">
                     {{ user.member.name }}</li>
             {% endif %}
         {% endfor %}
@@ -63,10 +69,11 @@
     {% for col in seating %}
     <td>
     <ul id="col{{ forloop.counter0 }}" class="seating seating{{forloop.counter0|colside}}">
-        {% for user in col %}
+        {% for user,type in col %}
             {% if user %}
                 <li id="{{ user.id }}"
-                    title="{{ user.member.all_name }}">
+                    title="{{ user.member.all_name }}"
+                    class="{{ type }}">
                     {{ user.member.name }}</li>
             {% else %}
                 <li class="empty">(empty)</li>
