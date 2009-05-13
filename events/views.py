@@ -232,8 +232,6 @@ def seating(request, event_id, revision_no=None):
             max_rows = [ max([-1]+seat_dict[y].keys())+1 for y in cols]
             s = [[seat_dict[y][x] for x in range(0,max_rows[y])] for y in cols]
            
-            print s
-
             dict.update({
                 'room':room,
                 'seating':s,
