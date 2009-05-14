@@ -15,7 +15,9 @@
  {% endblock %}
 
 {% block content %}
-<h2 class="title">{{ object.name }}</h2>
+{% if user.is_staff %}<a class="edit" href="/admin/tracker/ticket/{{ object.id }}/">Edit</a>{% endif %}
+<h2 class="title">{{ object.title }}</h2>
+<br />
 <dl class="details">
 	<dt>Ticket creation date</dt>
 	<dd>{{ object.started|date:"D d M Y" }}</dd>
