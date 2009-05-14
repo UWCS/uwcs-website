@@ -504,6 +504,9 @@ td {
     float: left;
 }
 
+.advanced {
+    text-align:right;
+}
 
 textarea {
 	width: 100%;
