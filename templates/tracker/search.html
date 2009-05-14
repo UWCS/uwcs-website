@@ -83,7 +83,7 @@
                 </tr>
             {% for ticket in tickets %}
                 <tr>
-                    <td><a href="{{ ticket.get_absolute_url }}">{{ticket.name}}</a></td>
+                    <td><a href="{{ ticket.get_absolute_url }}">{{ticket.title}}</a></td>
                     <td>{{ ticket.submitter.member.name }}</td>
                     <td>{{ ticket.assignee.member.name }}</td>
                     <td>

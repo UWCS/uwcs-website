@@ -34,7 +34,7 @@ class Ticket(models.Model):
     objects = TicketManager()
 
     def __unicode__(self):
-        return self.name
+        return self.title
 
     def get_absolute_url(self):
         return "/tickets/detail/%i/" % self.id
