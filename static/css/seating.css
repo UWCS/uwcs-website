@@ -99,15 +99,15 @@ ul.seating div.insert {
 }
 
 li.added td, span.added {
-    background: #990099;
+    background: #006600;
 }
 
 li.removed td, span.removed {
-    background: green;
+    background: #660000;
 }
 
 li.moved td, span.moved {
-    background: #800000;
+    background: #660066;
 }
 
 /* Comments */
