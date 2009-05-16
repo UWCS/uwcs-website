@@ -239,6 +239,7 @@ ul#eventlist, #eventlist ul {
 	margin-right: -210px;
 	background-color: #333;
 	padding-left: 10px;
+    min-height:10px;
 }
 
 #event .signups .comment p {
