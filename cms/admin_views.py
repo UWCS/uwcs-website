@@ -1,10 +1,11 @@
 from compsoc.cms.models import *
 from django.contrib.admin.views.decorators import staff_member_required
 from django import forms
-from django.shortcuts import render_to_response,get_object_or_404
+from django.shortcuts import *
 from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.forms.util import ErrorList
+from django.template import RequestContext
 
 class PageForm(forms.Form):
     slug = forms.CharField(max_length=30)
@@ -38,8 +39,7 @@ def revision(request,rev_id):
     else: 
         return render_to_response('cms/admin/view_revision.html', {
             'revision':rev,
-            'user':request.user,
-        })
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @staff_member_required
 def add_edit(request,page_id=None):
@@ -86,8 +86,8 @@ def add_edit(request,page_id=None):
 
     return render_to_response('cms/admin/addedit.html', {
         'form': form,
-        'user': request.user,
         'id': page_id,
         'comments':comments,
         'slug': page.slug if page else None,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
+

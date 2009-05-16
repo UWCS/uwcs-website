@@ -4,7 +4,8 @@ from time import strftime
 
 from django.utils.datastructures import MultiValueDictKeyError
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.shortcuts import *
 from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
 from django import forms
@@ -15,7 +16,7 @@ import re
 from compsoc.events.models import *
 from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING
 from compsoc.memberinfo.models import warwick_week_for,Term
-from compsoc.shortcuts import begin_week
+from compsoc.shortcuts import begin_week,path_processor
 
 from compsoc.events.similarity import closest_person
 
@@ -58,10 +59,9 @@ def events_list(request):
     lookup = map(lambda (begin,events): (Week(begin),events),sorted(lookup.items()))
     return render_to_response('events/list.html', {
         'breadcrumbs': [('/','home'),('/events/','events')],
-        'user':request.user,
         'events':lookup,
         'future':future_events()
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 def calendar(request,delta):
     '''
@@ -97,9 +97,8 @@ def calendar(request,delta):
         'current':date.today(),
         'prev':offset-1,
         'next':offset+1,
-        'user':request.user,
         'future':future_events(),
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 def valid_signup(user,event):
     now = datetime.now()
@@ -134,7 +133,6 @@ def details(request,event_id):
         'signups':signups,
         'reserved':reserved,
         'can_edit':request.user.is_staff if request.user else False,
-        'user':u,
         'future':future_events(),
         'is_displayed':event.is_displayed(),
     }
@@ -155,7 +153,8 @@ def details(request,event_id):
     except EventSignup.DoesNotExist, e:
         dict.update({ 'can_signup':False })
 
-    return render_to_response('events/details.html',dict)
+    return render_to_response('events/details.html',dict,
+        context_instance=RequestContext(request,{},[path_processor]))
 
 p = re.compile(r"col([0-5])\((.*),\)")
 
@@ -163,7 +162,6 @@ p = re.compile(r"col([0-5])\((.*),\)")
 def seating(request, event_id, revision_no=None):
     e = get_object_or_404(Event, id=event_id)
     dict = {
-            'user':request.user,
             'event':e,
             'future':future_events(),
            }
@@ -192,10 +190,9 @@ def seating(request, event_id, revision_no=None):
                             if row >= room.max_rows or column >= room.max_cols:
                                 revision.delete()
                                 return render_to_response('events/seating_size_failure.html',{
-                                    'user':request.user,
                                     'event':e,
                                     'room':room,
-                                })
+                                },context_instance=RequestContext(request,{},[path_processor]))
                             else:
                                 try:
                                     u = User.objects.get(id=int(id_string))
@@ -242,7 +239,8 @@ def seating(request, event_id, revision_no=None):
                 })
     except EventSignup.DoesNotExist: pass
 
-    return render_to_response('events/seating.html', dict)
+    return render_to_response('events/seating.html', dict
+        ,context_instance=RequestContext(request,{},[path_processor]))
 
 class CommentForm(forms.Form):
     comment = forms.CharField(max_length=255, required=False)
@@ -272,15 +270,16 @@ def do_signup(request,event_id):
                 if valid_signup(request.user,event):
                     event.signup_set.create(time=datetime.now(),user=request.user,comment=c)
                 else:
-                    return render_to_response('events/cantsignup.html',{'event':event})
+                    return render_to_response('events/cantsignup.html',{'event':event},
+                        context_instance=RequestContext(request,{},[path_processor]))
         else:
             return render_to_response('events/comment_fail.html',{
                 'event':event,
-                'user':request.user,
                 'errors':form.errors,
-            })
+            },context_instance=RequestContext(request,{},[path_processor]))
                 
-        return render_to_response('events/signup.html',{'event_id':event_id, 'user':request.user})
+        return render_to_response('events/signup.html',{'event_id':event_id,}, 
+            context_instance=RequestContext(request,{},[path_processor]))
     else:
         form = CommentForm()
         try:
@@ -290,8 +289,7 @@ def do_signup(request,event_id):
     return render_to_response('events/edit_signup.html', {
         'form': form,
         'event_id': event_id,
-        'user':request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required
 def do_unsignup(request,event_id):
@@ -300,8 +298,10 @@ def do_unsignup(request,event_id):
         signup = event.signup_set.get(user=request.user)
         signup.delete()
     except Signup.DoesNotExist:
-        return render_to_response('events/nonsignup.html',{'event':event,'user':request.user})
-    return render_to_response('events/unsignup.html',{'event_id':event_id,'user':request.user})
+        return render_to_response('events/nonsignup.html',{'event':event,},
+            context_instance=RequestContext(request,{},[path_processor]))
+    return render_to_response('events/unsignup.html',{'event_id':event_id,},
+        context_instance=RequestContext(request,{},[path_processor]))
 
 def ical_feed(request):
     '''
@@ -338,14 +338,12 @@ def location(request,object_id):
     return render_to_response("events/location_detail.html", {
         'object':loc,
         'map_room':loc.map_loc,
-        'user':request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 def lan_friends(request):
     return render_to_response('events/lan_friends.html', {
         'friends':closest_person(),
-        'user':request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required
 def activity(request):
@@ -358,5 +356,5 @@ def activity(request):
 
     return render_to_response('events/activity.html', {
         'members': members,
-        'user':request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
+

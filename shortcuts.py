@@ -38,3 +38,6 @@ def begin_week(of):
 
 def flatten(list):
     return map(lambda (x,):x,list)
+
+def path_processor(request):
+    return {'path': request.path}

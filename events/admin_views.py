@@ -20,15 +20,15 @@ def email_signups(request,event_id):
             event = Event.objects.get(id=event_id)
             for signup in event.signup_set.all():
                 signup.user.email_user(subject, message, COMPSOC_EXEC_EMAIL)
-            return render_to_response('events/admin/email_signups_done.html',{'user':request.user})
+            return render_to_response('events/admin/email_signups_done.html',{},
+                context_instance=RequestContext(request,{},[path_processor]))
     else:
         form = EmailForm()
 
     return render_to_response('events/admin/email_signups_form.html', {
         'event_id':event_id,
         'form': form,
-        'user': request.user,
-    })    
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 class LocationForm(forms.Form):
     location = forms.ModelChoiceField(queryset=Location.objects.all())
@@ -60,6 +60,5 @@ def unify(request,location_id):
         'form': form,
         'title': "Unify Location %s" % loc.name,
         'location': loc.name,
-        'user': request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 

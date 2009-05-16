@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
-from django.template import loader, Context
+from django.template import loader, Context, RequestContext
 
 from random import choice
 from string import *
 
 from compsoc.memberinfo.models import *
 from compsoc.memberinfo.forms import *
-from compsoc.shortcuts import template_mail
+from compsoc.shortcuts import * 
 from compsoc.settings import *
 
 from datetime import datetime
@@ -69,10 +69,9 @@ def index(request):
         'name_form':name_form,
         'website_form':website_form,
         'publish_form': PublishForm(initial={'publish':u.member.showDetails}),
-        'user':u,
         'my_lists':my_lists,
         'other_lists':other_lists,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def shell(request):
@@ -92,8 +91,10 @@ def do_service(request,form,klass,name,error):
 
         try:
             acc = klass.objects.get(user=u)
-            return render_to_response('memberinfo/request_error.html',
-                {'user':u,'name':name,'error':error(acc)})
+            return render_to_response('memberinfo/request_error.html',{
+                'name':name,
+                'error':error(acc),
+            },context_instance=RequestContext(request,{},[path_processor]))
         except klass.DoesNotExist:
             obj = klass(user=u,name=n,status='RE')
             obj.save()
@@ -106,8 +107,10 @@ def do_service(request,form,klass,name,error):
                 [COMPSOC_TECHTEAM_EMAIL])
         return HttpResponseRedirect('/member/')
     else:
-        return render_to_response('memberinfo/form_errors.html',
-            {'user':u,'name':name,'all_errors':f.errors.items()})
+        return render_to_response('memberinfo/form_errors.html',{
+            'name':name,
+            'all_errors':f.errors.items(),
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def quota(request):
@@ -126,11 +129,15 @@ def quota(request):
                 [COMPSOC_TECHTEAM_EMAIL,COMPSOC_TREASURER_EMAIL])
             return HttpResponseRedirect('/member/')
         except ShellAccount.DoesNotExist:
-            return render_to_response('memberinfo/request_error.html',
-                {'user':user,'name':'Quota','error':'You don\'t have a shell account'})
+            return render_to_response('memberinfo/request_error.html',{
+                'name':'Quota',
+                'error':'You don\'t have a shell account',
+            },context_instance=RequestContext(request,{},[path_processor]))
     else:
-        return render_to_response('memberinfo/request_error.html',
-            {'user':user,'name':'Quota','error':"You must enter an integer as the amount"})
+        return render_to_response('memberinfo/request_error.html',{
+            'name':'Quota',
+            'error':"You must enter an integer as the amount",
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def lists(request):
@@ -154,15 +161,17 @@ def lists(request):
             for list in remove: unsubscribe_member(user,list)
             return HttpResponseRedirect('/member/')
         except MailmanError, e:
-            return render_to_response('memberinfo/request_error.html',
-                {'user':user,'name':'Mailing Lists','error':e.msg})
+            error = e.msg
     except ImportError:
         if not DEBUG:
-            return render_to_response('memberinfo/request_error.html',
-                {'user':user,'name':'Mailing Lists','error':"You don't have mailman installed and the site is running outside of DEBUG mode."})
+            error = "You don't have mailman installed and the site is running outside of DEBUG mode."
         else:
-            return render_to_response('memberinfo/request_error.html',
-                {'user':user,'name':'Mailing Lists','error':("If mailman had been installed we would have added %s and removed %s" % (str(add),str(remove)))})
+            error = ("If mailman had been installed we would have added %s and removed %s" % (str(add),str(remove)))
+    finally:
+        return render_to_response('memberinfo/request_error.html',{
+            'name':'Mailing Lists',
+            'error':error,
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def set_nickname(request):
@@ -182,8 +191,10 @@ def set_nickname(request):
             nickname = NicknameDetails.objects.create(user=u, nickname=name)
         return HttpResponseRedirect('/member/')
     else:
-        return render_to_response('memberinfo/form_errors.html',
-            {'user':u,'name':'Nickname','all_errors':form.errors.items()})
+        return render_to_response('memberinfo/form_errors.html',{
+            'name':'Nickname',
+            'all_errors':form.errors.items(),
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def set_website(request):
@@ -199,8 +210,10 @@ def set_website(request):
             WebsiteDetails.objects.create(user=u,websiteTitle=form.cleaned_data['title'],websiteUrl=form.cleaned_data['url'])
         return HttpResponseRedirect('/member/')
     else:
-        return render_to_response('memberinfo/form_errors.html',
-            {'user':u,'name':'Website Details','all_errors':form.errors.items()})
+        return render_to_response('memberinfo/form_errors.html',{
+            'name':'Website Details',
+            'all_errors':form.errors.items(),
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def set_publish(request):
@@ -212,8 +225,10 @@ def set_publish(request):
         member.save()
         return HttpResponseRedirect('/member/')
     else:
-        return render_to_response('memberinfo/form_errors.html',
-            {'user':u,'name':'Publish Details','all_errors':form.errors.items()})
+        return render_to_response('memberinfo/form_errors.html',{
+            'name':'Publish Details',
+            'all_errors':form.errors.items(),
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 '''
 End of Member Profile Section
@@ -236,11 +251,9 @@ def member_list(request):
                 get_website(user,lambda w: w.websiteUrl),
             ))
     
-    dict = {
-        'user': request.user,
-        'users': sorted(users,key=lambda (name,nick,title,url):name)
-    }
-    return render_to_response('memberinfo/list.html',dict)
+    return render_to_response('memberinfo/list.html',{
+        'users': sorted(users,key=lambda (name,nick,title,url):name),
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 def reset_password(request):
     try:
@@ -258,7 +271,8 @@ def reset_password(request):
             {'name':user_name,'password':password},
             WEBMASTER_EMAIL,
             [user.email])
-        return render_to_response('memberinfo/password_reset_success.html',{'user':request.user})
+        return render_to_response('memberinfo/password_reset_success.html',{
+        },context_instance=RequestContext(request,{},[path_processor]))
     # If someone tries to reset the password of a user who doesn't exist, then report it
     except User.DoesNotExist:
         template_mail(
@@ -267,7 +281,9 @@ def reset_password(request):
             {'name':user_name, 'ip':request.META['REMOTE_ADDR']},
             WEBMASTER_EMAIL,
             [WEBMASTER_EMAIL])
-        return render_to_response('memberinfo/password_reset_no_name.html', {'tech':WEBMASTER_EMAIL,})
+        return render_to_response('memberinfo/password_reset_no_name.html', {
+            'tech':WEBMASTER_EMAIL,
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def reset_account(request,account):
@@ -281,13 +297,16 @@ def reset_account(request,account):
             {'name':u.get_full_name(),'type':type,'accname':name},
             u.email,
             [COMPSOC_TECHTEAM_EMAIL])
-        return render_to_response('memberinfo/account_reset.html',{'user':u,})
+        return render_to_response('memberinfo/account_reset.html',{
+        },context_instance=RequestContext(request,{},[path_processor]))
     except DatabaseAccount.DoesNotExist:
-        return render_to_response('memberinfo/request_error.html',
-            {'user':u,'name':'Database','error':"You don't have a database, so it can't be password reset"})
+        error = "You don't have a database, so it can't be password reset"
     except ShellAccount.DoesNotExist:
-        return render_to_response('memberinfo/request_error.html',
-            {'user':u,'name':'Shell','error':"You don't have a shell account, so it can't be password reset"})
+        error = "You don't have a shell account, so it can't be password reset"
+    return render_to_response('memberinfo/request_error.html',{
+        'name':'Shell',
+        'error':error,
+    },context_instance=RequestContext(request,{},[path_processor]))
        
 def create_guest(request):
     name = request.POST['name']

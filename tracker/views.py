@@ -5,6 +5,8 @@ from collections import defaultdict
 from django.contrib.auth.models import User, Group
 from django import forms
 from django.shortcuts import render_to_response
+from compsoc.shortcuts import path_processor
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.admin.widgets import AdminSplitDateTime
@@ -91,15 +93,14 @@ def new_ticket(request):
 
     return render_to_response('tracker/new_ticket.html', {
         'breadcrumbs': [('/','home'),('/tickets','tickets'),('/tickets/new/','new')],
-        'user': request.user,
         'form': form,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 common = [
     ('completed','O'),
     ('submitted_0','A'),
     ('deadline_0','A'),
-]  
+] 
 DF = '%Y-%m-%d'
 TF = '%H:%M:%S'
 
@@ -160,6 +161,5 @@ def index(request):
         'form': form,
         'shorts':shorts,
         'results':by_goal.iteritems(),
-        'user': request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 

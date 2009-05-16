@@ -1,25 +1,24 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from compsoc.memberinfo.models import *
-from compsoc.shortcuts import template_mail
+from compsoc.shortcuts import template_mail, path_processor
 from compsoc.settings import COMPSOC_EXEC_EMAIL,COMPSOC_TECHTEAM_EMAIL
 
 @user_passes_test(lambda u: u.is_staff)
 def guest_list(request):
     return render_to_response('admin/memberinfo/member/guests.html', {
         'guests':filter(lambda u: u.member.guest and not u.is_active,User.objects.all()),
-        'user':request.user,
-    }) 
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @user_passes_test(lambda u: u.is_staff)
 def account_list(request):
     return render_to_response('admin/memberinfo/member/accounts.html', {
-        'user':request.user,
         'shell_requests': ShellAccount.objects.filter(status='RE'),
         'database_requests': DatabaseAccount.objects.filter(status='RE'),
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @user_passes_test(lambda u: u.is_staff)
 def accept_guest(request,user_id):

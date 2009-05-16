@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response,get_object_or_404
 from django.http import HttpResponseRedirect
 from compsoc.cms.models import *
 from collections import defaultdict
+from django.template import RequestContext
+from compsoc.shortcuts import *
 
 def cleanse(l):
     return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
@@ -42,11 +44,11 @@ def handle(request,url):
         'text':data.text,
         'siblings':[(p.get_absolute_url(),p.get_data().title,p.slug == prefix) for p in sibs],
         'children':cleanse(page.get_children()),
-        'user':request.user,
         'breadcrumbs':lookup(breadcrumbs),
         'slug': url,
     }
-    return render_to_response('cms/page.html',dict)
+    return render_to_response('cms/page.html',dict,
+        context_instance=RequestContext(request,{},[path_processor]))
 
 def list(request):
     def rec(page):
@@ -61,6 +63,5 @@ def list(request):
 
     return render_to_response('cms/list.html',{
         'list':rec(get_object_or_404(Page,slug='about')) + rec(get_object_or_404(Page,slug='contact')),
-        'user':request.user,
-    })
+    },context_instance=RequestContext(request,{},[path_processor]))
 
