@@ -1,0 +1,27 @@
+{% extends "events/base.html" %}
+
+{% block ttitle %}Member Activity{% endblock %}
+
+{% block content %}
+
+<h2 class="title">Member Activity</h2>
+
+<p>Number of events attended by members</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Member</th>
+        <th>Events</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for name,count in members %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ count }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

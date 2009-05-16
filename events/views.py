@@ -346,3 +346,17 @@ def lan_friends(request):
         'friends':closest_person(),
         'user':request.user,
     })
+
+@login_required
+def activity(request):
+    members = []
+    for u in User.objects.all():
+        signup_count = u.signup_set.count()
+        if signup_count:
+            members.append((u.member.name(),signup_count))
+    members.sort(key=lambda(x,y):y,reverse=True)
+
+    return render_to_response('events/activity.html', {
+        'members': members,
+        'user':request.user,
+    })

@@ -13,5 +13,6 @@ urlpatterns = patterns('compsoc.events.views',
     (r'^seating/(?P<event_id>\d+)/(?P<revision_no>\d+)/$', 'seating'),
     (r'^location/(?P<object_id>\d+)/$','location'),
     (r'^friends/$','lan_friends'),
+    (r'^activity/$','activity'),
 )
 

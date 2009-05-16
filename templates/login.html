@@ -14,7 +14,7 @@
 
 <div class="box">
 	<h2>Login</h2>
-	<form method="post" action=".">
+	<form method="post" action="{% url django.contrib.auth.views.login %}">
 	<div class="input">
 		{{ form.username.label_tag }}
 		{{ form.username }}
@@ -28,6 +28,7 @@
 		<input type="hidden" name="next" value="/" />
 	</div>
 	</form>
+    {{ next }}
 	<div class="clear"></div>
 </div>
 
