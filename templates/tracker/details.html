@@ -26,10 +26,10 @@
 		<dd>{{ object.due_date|date:"D d M Y" }}</dd>
 	{% endif %}
 	<dt>Submitted by</dt>
-	<dd>{{ object.submitter }}</dd>
+	<dd>{{ object.submitter.member.name }}</dd>
 	{% if object.assignee %}	
 		<dt>Assigned To</dt>
-		<dd>{{ object.assignee }}</dd>
+		<dd>{{ object.assignee.member.name }}</dd>
 	{% endif %}
 	<dt>Goal</dt>
 	<dd>{{ object.goal }}</dd>
