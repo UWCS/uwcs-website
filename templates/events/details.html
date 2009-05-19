@@ -45,7 +45,7 @@
 			<dd>{{ event.longDescription|textile }}</dd>
 		{% endif %}
 		<dt>General Information</dt>
-		<dd>{{ event.type.info }}</dd>
+		<dd>{{ event.type.info|textile }}</dd>
 		{% if has_seating %}
 			<dt>Seating plan</dt>
 			<dd><a href="/events/seating/{{ event.id }}">View or edit seating plan</a></dd>
