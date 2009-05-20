@@ -23,10 +23,18 @@
 	    <ul>
 	        <li><a href="/password/">Change Website Password</a></li>
 	        {% if shell.isPresent %}
-	           <li><a href="/member/reset/shell/">Request Shell Password Reset</a></li>
+               <li><a 
+                href="#"
+                onclick="if(confirm('Are you sure you want to reset your shell password?')) { window.location='/member/reset/shell/';}">
+                Request Shell Password Reset
+               </a><li>
 	        {% endif %}
 	        {% if db.isPresent %}
-	            <li><a href="/member/reset/db/">Request Database Password Reset</a></li>
+               <li><a 
+                href="#"
+                onclick="if(confirm('Are you sure you want to reset your database password?')) { window.location='/member/reset/db/';}">
+                Request Database Password Reset
+               </a><li>
 	        {% endif %}
 	    </ul></li>
 	    <li><h2>Links</h2>
