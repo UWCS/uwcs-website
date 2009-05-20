@@ -223,6 +223,8 @@ def seating(request, event_id, revision_no=None):
                     unass.discard(seat.user)
 
                 unass = map(lambda u: (u,'removed' if u.pk in removed else 'static'),unass)
+            else:
+                unass = map(lambda u: (u,'static'),unass)
 
             # create nested lists for rows and columns
             cols = range(0,room.max_cols)
