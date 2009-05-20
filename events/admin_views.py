@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django import forms
 from django.core.mail import send_mail
 from compsoc.settings import COMPSOC_EXEC_EMAIL
+from compsoc.shortcuts import path_processor
 from compsoc.events.models import *
 from django.contrib.admin.views.decorators import staff_member_required
 
