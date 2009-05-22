@@ -24,15 +24,15 @@
 	        <li><a href="/password/">Change Website Password</a></li>
 	        {% if shell.isPresent %}
                <li><a 
-                href="#"
-                onclick="if(confirm('Are you sure you want to reset your shell password?')) { window.location='/member/reset/shell/';}">
+                href="/member/reset/shell/"
+                onclick="return confirm('Are you sure you want to reset your shell password?')">
                 Request Shell Password Reset
                </a><li>
 	        {% endif %}
 	        {% if db.isPresent %}
                <li><a 
-                href="#"
-                onclick="if(confirm('Are you sure you want to reset your database password?')) { window.location='/member/reset/db/';}">
+                href="/member/reset/db/"
+                onclick="return confirm('Are you sure you want to reset your database password?')">
                 Request Database Password Reset
                </a><li>
 	        {% endif %}
