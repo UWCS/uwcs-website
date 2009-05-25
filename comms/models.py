@@ -1,7 +1,7 @@
 from django.db import models
 
 from compsoc.search import register
-
+from compsoc.settings import DATE_FORMAT_STRING
 from time import strftime
 
 COMMS_TYPE = (
@@ -47,5 +47,13 @@ class Communication(models.Model):
 
     def prev_item(self):
         return self.predecessors().latest('date')
+    
+    def last_change_time(self):
+        from django.contrib.admin.models import LogEntry,ContentType
+        try:
+            cct = ContentType.objects.get(name='communication')
+            return LogEntry.objects.filter(object_id=self.pk,content_type=cct).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
+        except:
+            return 0
 
 register(Communication, ['title'])

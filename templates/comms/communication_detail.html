@@ -9,7 +9,13 @@
         <a class="edit" href="/admin/comms/communication/{{ object.id }}/">Edit</a>
     {% endif %}
     <h2 class="title">{{ object.title }}</h2>
-    <p class="byline"><p><small>{{ object.get_type_display }} Posted on {{ object.date }}</small></p>
+    <p class="byline"><p><small>{{ object.get_type_display }} Posted on {{ object.date }}
+    {% with object.last_change_time as change_time %}
+        {% if change_time %}
+            and Last Modified at {{ change_time }}
+        {% endif %}
+    {% endwith %}
+    </small></p>
     <div class="entry">
     {{ object.text|textile }}
     </div>
@@ -19,6 +25,7 @@
     {% if object.has_next_item %}
         <div class="next"><a href="{{ object.next_item.get_absolute_url }}">next</a></div>
     {% endif %}
+
 
 </div>
 

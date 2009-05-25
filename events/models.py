@@ -107,9 +107,10 @@ class Event(models.Model):
         return self.type.name
 
     def last_change_time(self):
-        from django.contrib.admin.models import LogEntry
+        from django.contrib.admin.models import LogEntry,ContentType
         try:
-            return LogEntry.objects.filter(object_id=self.pk).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
+            cct = ContentType.objects.get(name='event')
+            return LogEntry.objects.filter(object_id=self.pk,content_type=cct).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
         except:
             return 0
 
