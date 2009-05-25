@@ -357,6 +357,8 @@ def activity(request):
     members.sort(key=lambda(x,y):y,reverse=True)
 
     return render_to_response('events/activity.html', {
+        'breadcrumbs': [('/','home'),('/events/','events'),('/events/activity/','activity')],
         'members': members,
+        'future':future_events()
     },context_instance=RequestContext(request,{},[path_processor]))
 
