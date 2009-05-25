@@ -33,8 +33,12 @@ def email_signups(request,event_id):
     },context_instance=RequestContext(request,{},[path_processor]))
 
 class LocationForm(forms.Form):
-    location = forms.ModelChoiceField(queryset=Location.objects.all())
+    location = forms.ModelChoiceField(queryset=Location.objects.none())
     delete = forms.BooleanField(required=False)
+
+    def __init__(self, location_id, *args, **kwargs):
+        super(LocationForm, self).__init__(*args, **kwargs)
+        self.fields['location'].queryset = Location.objects.exclude(pk=location_id).order_by('name')
 
 @staff_member_required
 def unify(request,location_id):
@@ -55,7 +59,7 @@ def unify(request,location_id):
             if form.cleaned_data['delete']:
                 from_loc.delete()
     else:
-        form = LocationForm()
+        form = LocationForm(location_id)
 
     return render_to_response('events/admin/unify_locations.html',{
         'location_id':location_id,
