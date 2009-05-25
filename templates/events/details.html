@@ -44,6 +44,12 @@
 			<dt>Notes</dt>
 			<dd>{{ event.longDescription|textile }}</dd>
 		{% endif %}
+        {% with event.last_change_time as change_time %}
+            {% if change_time %}
+                <dt>Last Modified</dt>
+                <dd><p>{{ change_time }}</p></dd>
+            {% endif %}
+        {% endwith %}
 		<dt>General Information</dt>
 		<dd>{{ event.type.info|textile }}</dd>
 		{% if has_seating %}

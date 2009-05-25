@@ -106,6 +106,13 @@ class Event(models.Model):
     def get_type_name(self):
         return self.type.name
 
+    def last_change_time(self):
+        from django.contrib.admin.models import LogEntry
+        try:
+            return LogEntry.objects.filter(object_id=self.pk).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
+        except:
+            return 0
+
 def future_events(n=5):
     '''
     Generates a list of event types t and events e s.t. e is the
