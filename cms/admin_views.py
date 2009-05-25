@@ -6,6 +6,7 @@ from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.forms.util import ErrorList
 from django.template import RequestContext
+from compsoc.shortcuts import path_processor
 
 class PageForm(forms.Form):
     slug = forms.CharField(max_length=30)
