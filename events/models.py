@@ -164,7 +164,7 @@ class Signup(models.Model):
     event = models.ForeignKey(Event)
     time = models.DateTimeField()
     user = models.ForeignKey(User)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
 
     class Meta:
         ordering = ["time"]
