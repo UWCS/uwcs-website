@@ -7,7 +7,17 @@
 {% block content %}
 <p>You may request your guest account here:</p>
 <form action="{% url guest_account %}" method="POST">
+    <p>Prove you're not a robot:</p>  
+    <script>var RecaptchaOptions = {theme : 'white'};</script>  
+    <script type="text/javascript" src="http://api.recaptcha.net/challenge?k={{ public_key }}{{ captcha_error }}"></script>  
+    <noscript>  
+        <iframe src="http://api.recaptcha.net/noscript?k={{ public_key }}{{ captcha_error }}"  
+                height="300" width="500" frameborder="0"></iframe><br />  
+        <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>  
+        <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>  
+    </noscript>  
     <table class="form">
+        {{ captcha|safe }}
         {{ form.as_table }}
     </table>
     <input type="submit" value="request" />

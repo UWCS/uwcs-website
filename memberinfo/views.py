@@ -16,6 +16,8 @@ from compsoc.settings import *
 
 from datetime import datetime
 
+from recaptcha.client import captcha
+
 '''
 The following views are all related to the member profile section of the website.
 '''
@@ -309,9 +311,21 @@ def reset_account(request,account):
     },context_instance=RequestContext(request,{},[path_processor]))
        
 def create_guest(request):
+
+    captcha_error = ""
+
     if request.method == 'POST':
         form = GuestForm(request.POST)
-        if form.is_valid():
+        
+        captcha_response = captcha.submit(request.POST.get("recaptcha_challenge_field", None),
+            request.POST.get("recaptcha_response_field", None),
+            RECAPTCHA_PRIV_KEY, 
+            request.META.get("REMOTE_ADDR", None)
+        )
+               
+        if not captcha_response.is_valid:
+            captcha_error = "&error=%s" % captcha_response.error_code
+        elif form.is_valid():
             name = form.cleaned_data['username']
             u = form.save(commit=False)
             u.set_unusable_password()
@@ -336,8 +350,10 @@ def create_guest(request):
     else:
         form = GuestForm()
         
-
     return render_to_response('memberinfo/guest_form.html', {
         'form': form,
+        'captcha_errpr':captcha_error,
+#        'captcha':captcha.displayhtml(RECAPTCHA_PUB_KEY),
+        'public_key':RECAPTCHA_PUB_KEY,
     })
 
