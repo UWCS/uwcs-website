@@ -148,12 +148,16 @@
     will appear on the member list page (and any other public list of members) only
     if you allow the details to be published.</p>
     <form action="/member/website/" method="post">
-        {{ website_form.as_p }}
+        <table class="form">
+            {{ website_form.as_table }}
+        </table>
         <input type="submit" value="submit" />
     </form>
     <hr />
     <form action="/member/publish/" method="post">
-        {{ publish_form.as_p }}
+        <table class="form">
+            {{ publish_form.as_table }}
+        </table>
         <input type="submit" value="submit" />
     </form>
     <hr />

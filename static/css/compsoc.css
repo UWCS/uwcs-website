@@ -516,3 +516,7 @@ textarea {
 .form th {
     border-bottom:0 none;
 }
+
+.form td {
+    width: 100%;
+}

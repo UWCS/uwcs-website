@@ -151,7 +151,9 @@ function reloadPreviewDiv() {
     {% else %}
         <form action="/admin/cms/page/add/" method="post">
     {% endif %}
-        {{ form.as_p }}
+        <table class="form">
+            {{ form.as_table }}
+        </table>
         <div class="input">
             <input type="submit" value="submit" />
 		</div>
