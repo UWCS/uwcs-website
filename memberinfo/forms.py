@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 class DatabaseForm(forms.Form):
     name = forms.CharField()
@@ -18,4 +19,13 @@ class WebsiteForm(forms.Form):
 
 class PublishForm(forms.Form):
     publish = forms.BooleanField(label='Publish Details',required=False)
+
+class GuestForm(forms.ModelForm):
+    # enforce fields otherwise optional
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=75)
+    class Meta:
+        model = User
+        fields = ('username','first_name','last_name','email')
     

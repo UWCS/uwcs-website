@@ -47,21 +47,7 @@
 
 <div class="box">
 	<h2>Guest Account</h2>
-    <p>If you wish to request a guest account please complete the following form.</p>
-    <form method="post" action="/member/guest/">
-	<div class="input">
-		<label for="guest_name">Name</label>
-		<input type="text" name="name" id="guest_name" />
-	</div>
-	<div class="input">
-		<label for="guest_email">Email</label>
-		<input type="text" name="email" id="guest_email" />
-	</div>
-	<div class="input">
-		<input type="submit" value="request" />
-	</div>
-    </form>
-	<div class="clear"></div>
+    <p>You may <a href="{% url guest_account %}">request</a> a guest account.</p>
 </div>
 
 {% endif %}

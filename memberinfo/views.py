@@ -309,28 +309,35 @@ def reset_account(request,account):
     },context_instance=RequestContext(request,{},[path_processor]))
        
 def create_guest(request):
-    name = request.POST['name']
-    email = request.POST['email']
-    u = User.objects.create_user(name,email)
-    u.set_unusable_password()
-    u.is_active=False
-    u.save()
-    mem = Member.objects.create(user=u,guest=True,showDetails=False)
-    mem.save()
-    n = NicknameDetails(user=u,nickname=name)
-    n.save()
-    template_mail(
-        'Guest account request',
-        'memberinfo/guest_request_email',
-        {'name':name},
-        COMPSOC_EXEC_EMAIL,
-        [email])
-    template_mail(
-        'Guest account request',
-        'memberinfo/exec_guest_request_email',
-        {'name':name},
-        COMPSOC_EXEC_EMAIL,
-        [COMPSOC_EXEC_EMAIL])
-    return render_to_response('memberinfo/guest_request.html')
+    if request.method == 'POST':
+        form = GuestForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['username']
+            u = form.save(commit=False)
+            u.set_unusable_password()
+            u.is_active = False
+            u.save()
+            Member.objects.create(user=u,guest=True,showDetails=False)
+            NicknameDetails.objects.create(user=u,nickname=name)
+            template_mail(
+                'Guest account request',
+                'memberinfo/guest_request_email',
+                {'name':name},
+                COMPSOC_EXEC_EMAIL,
+                [u.email])
+            template_mail(
+                'Guest account request',
+                'memberinfo/exec_guest_request_email',
+                {'name':name},
+                COMPSOC_EXEC_EMAIL,
+                [COMPSOC_EXEC_EMAIL])
 
+            return render_to_response('memberinfo/guest_request.html')
+    else:
+        form = GuestForm()
+        
+
+    return render_to_response('memberinfo/guest_form.html', {
+        'form': form,
+    })
 

@@ -150,3 +150,9 @@ class MailingList(models.Model):
     def __unicode__(self):
         return self.list
 
+'''class Society(models.Model):
+    user = models.ForeignKey(User,related_name='society')
+    name = models.CharField(max_length=255)
+    contact_email = models.EmailField(max_length=255)
+'''
+    

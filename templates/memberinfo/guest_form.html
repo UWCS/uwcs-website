@@ -1,0 +1,15 @@
+{% extends "memberinfo/base.html" %}
+
+{% block ttitle %}Guest Account Request{% endblock %}
+
+{% block sidebar-outer %}{% endblock %}
+
+{% block content %}
+<p>You may request your guest account here:</p>
+<form action="{% url guest_account %}" method="POST">
+    <table class="form">
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="request" />
+</form>
+{% endblock %}
