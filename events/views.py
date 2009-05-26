@@ -317,7 +317,7 @@ def ical_feed(request):
         total = str(event.signup_total()) if event.signup_total() else u'\u221E'
         signups = u' [%i/%s]' % (event.signup_count(),total) if event.has_signups() else u''
         vevent = cal.add('vevent')
-        vevent.add('summary').value = event.type.name + (' ":" ' + event.shortDescription if event.shortDescription else event.type.name) + signups
+        vevent.add('summary').value = event.type.name + (' - ' + event.shortDescription if event.shortDescription else event.type.name) + signups
         vevent.add('location').value = str(event.location)
         vevent.add('dtstart').value = event.start
         vevent.add('dtend').value = event.finish
