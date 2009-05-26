@@ -50,7 +50,7 @@ def unify(request,location_id):
     '''
     loc = Location.objects.get(pk=location_id)
     if request.method == 'POST':
-        form = LocationForm(request.POST)
+        form = LocationForm(location_id,request.POST)
         if form.is_valid():
             from_loc = form.cleaned_data['location']
             # move events and rooms
