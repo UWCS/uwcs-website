@@ -94,7 +94,7 @@ ul.seating div {
 ul.seating div.insert {
 	background: #888;
 	height: 0.2em;
-    width: 5em;
+    width: 98%;
 	border-top: 3px solid #333;
 	border-bottom: 3px solid #333;
 }
