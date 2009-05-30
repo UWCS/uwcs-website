@@ -28,4 +28,10 @@ class GuestForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','first_name','last_name','email')
-    
+
+class UserModelChoiceField(forms.ModelChoiceField):
+    '''
+    Uses a formatted name as the label for a username
+    '''
+    def label_from_instance(self, obj):
+        return obj.member.name()

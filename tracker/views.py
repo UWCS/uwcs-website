@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.admin.widgets import AdminSplitDateTime
+from compsoc.memberinfo.forms import UserModelChoiceField
 
 COMPLETED_CHOICES = (
     ('C','Completed'),
@@ -52,13 +53,6 @@ class DateTimeQueryField(forms.MultiValueField):
 
     def compress(self,data_list):
             return (data_list[0],data_list[1])
-
-class UserModelChoiceField(forms.ModelChoiceField):
-    '''
-    Uses a formatted name as the label for a username
-    '''
-    def label_from_instance(self, obj):
-        return obj.member.name()
 
 class TicketSearchForm(forms.Form):
     '''
