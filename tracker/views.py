@@ -53,6 +53,13 @@ class DateTimeQueryField(forms.MultiValueField):
     def compress(self,data_list):
             return (data_list[0],data_list[1])
 
+class UserModelChoiceField(forms.ModelChoiceField):
+    '''
+    Uses a formatted name as the label for a username
+    '''
+    def label_from_instance(self, obj):
+        return obj.member.name()
+
 class TicketSearchForm(forms.Form):
     '''
     Search limited by conjunction of restrictions present
@@ -60,9 +67,9 @@ class TicketSearchForm(forms.Form):
     '''
     title = forms.CharField(max_length=20,required=False)
     description = forms.CharField(required=False)
-    submitter = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
+    submitter = UserModelChoiceField(queryset=User.objects.all(),required=False)
     submitter_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
-    assignee = forms.ModelChoiceField(queryset=User.objects.all(),required=False)
+    assignee = UserModelChoiceField(queryset=User.objects.all(),required=False)
     assignee_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
     goal = forms.ModelChoiceField(queryset=Goal.objects.all(),required=False)
     submitted = DateTimeQueryField(future=False)
