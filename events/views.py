@@ -156,7 +156,6 @@ def details(request,event_id):
     return render_to_response('events/details.html',dict,
         context_instance=RequestContext(request,{},[path_processor]))
 
-p = re.compile(r"col([0-5])\((.*),\)")
 
 # assumes initial revision
 def seating(request, event_id, revision_no=None):
@@ -182,6 +181,7 @@ def seating(request, event_id, revision_no=None):
                     comment=request.POST['comment'],
                     number=last_no+1
                 )
+                p = re.compile(r"col([0-%i])\((.*),\)"% (room.max_cols-1))
                 for col in order.split(';'):
                     m = p.match(col)
                     if m:
