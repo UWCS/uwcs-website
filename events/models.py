@@ -187,7 +187,6 @@ class Signup(models.Model):
 post_save.connect(write_file_callback, sender=Signup)
 post_delete.connect(write_file_callback, sender=Signup)
 
-
 class RevisionManager(models.Manager):
     def for_event(self,e):
         return self.filter(event=e).order_by('-number')
@@ -238,12 +237,21 @@ class SeatingRevision(models.Model):
 def val_users(query):
     return flatten(query.values_list('user'))
 
+class SeatingManager(models.Manager):
+    def for_event(self,e):
+        return self.filter(revision__event=e)
+
+    def maximums(self,e):
+        return reduce(lambda (col,row),o: (max(col,o.col),max(row,o.row)),self.for_event(e),(0,0))
+
 class Seating(models.Model):
     '''Information about a seat at a revision'''
     user = models.ForeignKey(User)
     revision = models.ForeignKey(SeatingRevision)
     col = models.IntegerField()
     row = models.IntegerField()
+
+    objects = SeatingManager()
 
     def __unicode__(self):
         return "%s @ %i,%i" % (self.user.member.name(),self.col,self.row)
