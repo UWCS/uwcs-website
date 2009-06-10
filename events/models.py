@@ -143,7 +143,7 @@ class SeatingRoom(models.Model):
     max_rows = models.IntegerField()
 
     def __unicode__(self):
-        return self.room.__unicode__()
+        return "%s @ %s" % (self.name,self.room.__unicode__())
 
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):
