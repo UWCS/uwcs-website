@@ -157,7 +157,6 @@ def details(request,event_id):
         context_instance=RequestContext(request,{},[path_processor]))
 
 
-# assumes initial revision
 def seating(request, event_id, revision_no=None):
     e = get_object_or_404(Event, id=event_id)
     dict = {
@@ -219,6 +218,8 @@ def seating(request, event_id, revision_no=None):
                         type = 'moved'
                     else:
                         type = 'static'
+                    if seat.user not in unass:
+                        type += ' unsignedup'
                     seat_dict[seat.col][seat.row] = (seat.user,type)
                     unass.discard(seat.user)
 

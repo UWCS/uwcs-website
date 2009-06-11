@@ -111,6 +111,10 @@ li.moved td, span.moved {
     background: #660066;
 }
 
+li.unsignedup td, span.unsignedup {
+    color: #FF99DD;
+}
+
 /* Comments */
 
 #comments {
