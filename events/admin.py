@@ -67,7 +67,7 @@ class SeatingRoomForm(forms.ModelForm):
         max_cols,max_rows = data.get('max_cols')-1,data.get('max_rows')-1
         for e in Event.objects.filter(eventsignup__seating__pk=data.get('id')):
             (rows,cols) = Seating.objects.maximums(e)
-            if rows > max_cols or cols > max_rows:
+            if rows > max_rows or cols > max_cols:
                 raise forms.ValidationError(u'This seating room is used by %s, which requires it to be wider or taller than you have set it.'%e)
         return data
 
