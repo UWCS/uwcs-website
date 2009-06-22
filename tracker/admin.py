@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from compsoc.memberinfo.forms import UserModelChoiceField
 
 class GoalAdminForm(ModelForm):
-    supervisor = UserModelChoiceField(queryset=User.objects.all(),required=True)
+    supervisor = UserModelChoiceField(queryset=User.objects.select_related('member').all(),required=True)
     class Meta:
         model = Goal
 
