@@ -520,3 +520,8 @@ textarea {
 .form td {
     width: 100%;
 }
+
+.recaptcha_theme_red #recaptcha_response_field {
+    color:white;
+}
+
