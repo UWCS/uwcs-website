@@ -1,4 +1,4 @@
-function checkPlan(max_cols) {
+function checkPlan(max_rows) {
     var vals = $("ul[id*=col]");
     for(i = 0;i<vals.length;i++) {
         if ($('#'+vals[i].id+' li').length > max_cols) {

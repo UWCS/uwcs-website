@@ -235,7 +235,7 @@ def seating(request, event_id, revision_no=None):
             dict.update({
                 'room':room,
                 'seating':s,
-                'max_cols': room.max_cols,
+                'max_rows': room.max_rows,
                 'seating_revisions':revisions,
                 'new_revision_no':revisions[0].number+1 if revisions else 0,
                 'unassigned':unass,
