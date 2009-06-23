@@ -1,3 +1,14 @@
+function checkPlan(max_cols) {
+    var vals = $("ul[id*=col]");
+    for(i = 0;i<vals.length;i++) {
+        if ($('#'+vals[i].id+' li').length > max_cols) {
+            alert('All columns must be shorter than '+max_cols);
+            return false;
+        }
+    }
+    return true;
+}
+
 var DocPos = {
 	// Calculates the top-left (TL) coordinates of an element, relative to the page.
 	fromElementTL : function(element) {
