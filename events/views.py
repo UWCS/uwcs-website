@@ -284,10 +284,11 @@ def do_signup(request,event_id):
         return render_to_response('events/signup.html',{'event_id':event_id,}, 
             context_instance=RequestContext(request,{},[path_processor]))
     else:
-        form = CommentForm()
         try:
             e = event.signup_set.get(user=request.user)
-        except Signup.DoesNotExist: pass
+            form = CommentForm({'comment':e.comment})
+        except Signup.DoesNotExist:
+            form = CommentForm()
 
     return render_to_response('events/edit_signup.html', {
         'form': form,
