@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from compsoc.feeds import *
 from compsoc import settings
-from compsoc.cms.views import handle,list
+from compsoc.cms.views import handle,list,games
 from compsoc.search.views import search
 from django.contrib.auth.models import User
 
@@ -52,6 +52,7 @@ urlpatterns = patterns('',
 
     (r'^cms/(?P<url>.*)/$',handle),
     (r'^info_map/$',list),
+    (r'^game_servers/$',games),
     (r'^search/$', search),
 )
 

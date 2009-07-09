@@ -1,9 +1,10 @@
-from django.shortcuts import render_to_response,get_object_or_404
+from django.shortcuts import render_to_response,get_object_or_404,get_list_or_404
 from django.http import HttpResponseRedirect
 from compsoc.cms.models import *
 from collections import defaultdict
 from django.template import RequestContext
 from compsoc.shortcuts import *
+from compsoc.settings import GAMING_SERVER
 
 def cleanse(l):
     return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
@@ -65,3 +66,9 @@ def list(request):
         'list':rec(get_object_or_404(Page,slug='about')) + rec(get_object_or_404(Page,slug='contact')),
     },context_instance=RequestContext(request,{},[path_processor]))
 
+def games(request):
+    return render_to_response('cms/games.html',{
+        'games':get_list_or_404(Game),
+        'server':GAMING_SERVER,
+    },context_instance=RequestContext(request,{},[path_processor]))
+    

@@ -112,3 +112,5 @@ WEEK_FORMAT_STRING = '%a, %d %b %Y'
 # Mon, 27 Apr
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+
+GAMING_SERVER = 'insomnia.compsoc.warwick.ac.uk'

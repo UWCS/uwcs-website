@@ -1,6 +1,7 @@
 from django.db import models
-
+from urllib import urlopen
 from compsoc.search import register
+from compsoc.settings import GAMING_SERVER
 
 class Page(models.Model):
     slug = models.CharField(max_length=30)
@@ -60,3 +61,16 @@ class PageRevision(models.Model):
     def __unicode__(self):
             return self.title
 
+class Game(models.Model):
+    title = models.CharField(max_length=255)
+    port = models.IntegerField()
+
+    def __unicode__(self):
+        return self.title
+
+    def is_online(self):
+        try:
+            urlopen("http://%s:%i"%(GAMING_SERVER,self.port)).close()
+            return True
+        except IOError:
+            return False

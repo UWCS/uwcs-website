@@ -525,3 +525,10 @@ textarea {
     color:white;
 }
 
+.online {
+    color:green;
+}
+
+.offline {
+    color:red;
+}

@@ -1,4 +1,4 @@
-from compsoc.cms.models import Page,PageRevision
+from compsoc.cms.models import Page,PageRevision,Game
 from django.contrib import admin
 
 
@@ -11,3 +11,4 @@ class PageAdmin(admin.ModelAdmin):
     inlines = [RevisionInline]
 
 admin.site.register(Page,PageAdmin)
+admin.site.register(Game)
