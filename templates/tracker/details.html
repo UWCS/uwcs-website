@@ -1,8 +1,10 @@
 {% extends "tracker/base.html" %}
 
+{% load markup %}
+
 {% block ttitle %}Issue Details for {{object.name }}{% endblock %}
 
- {% block sidebar %}
+{% block sidebar %}
     <ul>
         <li>
             <h2>Actions</h2>
@@ -12,7 +14,7 @@
             </ul>
         </li>
     </ul>
- {% endblock %}
+{% endblock %}
 
 {% block content %}
 {% if user.is_staff %}<a class="edit" href="/admin/tracker/ticket/{{ object.id }}/">Edit</a>{% endif %}
@@ -36,6 +38,6 @@
 	<dt>Completed</dt>
 	<dd>{% if object.completed %}Yes{% else %}No{% endif %}</dd>
 	<dt>Details</dt>
-	<dd>{{ object.description }}</dd>
+	<dd><div class="entry">{{ object.description|textile }}</div></dd>
 </dl>
 {% endblock %}
