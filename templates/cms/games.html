@@ -1,0 +1,26 @@
+{% extends "cms/page.html" %}
+
+{% block content %}
+
+    <p>Compsoc runs servers for several games on {{ server }}.</p>
+
+    <div class="post">
+        <div class="entry">
+            <ul>
+            {% for game in games %}
+                <li>
+                    {{ game.title }} runs on port {{ game.port}} and is
+                    {% if game.is_online %}
+                        <span class="online">online</span>
+                    {% else %}
+                        <span class="offline">offline</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar-outer %}{% endblock %}
