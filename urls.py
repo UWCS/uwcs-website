@@ -4,6 +4,7 @@ from compsoc import settings
 from compsoc.cms.views import handle,list,games
 from compsoc.search.views import search
 from django.contrib.auth.models import User
+from compsoc.rest import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -54,6 +55,10 @@ urlpatterns = patterns('',
     (r'^info_map/$',list),
     (r'^game_servers/$',games),
     (r'^search/$', search),
+
+    #XML REST API
+    url(r'^xml/user/(\d+)/$', xml_user),
+    url(r'^xml/game/(.*?)/?$', xml_games),
 )
 
 # Some legacy link compatibility. I hope this doesn't break anything
@@ -87,7 +92,6 @@ if settings.LEGACY_SITE:
         ('^services/$', 'redirect_to', {'url': '/cms/about/services/'}),
         ('^services/(?P<id>\d+)/$', 'redirect_to', {'url': '/cms/about/services/%(id)s/'}),
     )   
-
 
 # if we are debugging serve the static content locally
 # when deployed we use an http server to do this
