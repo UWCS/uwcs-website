@@ -3,6 +3,10 @@ from urllib import urlopen
 from compsoc.search import register
 from compsoc.settings import GAMING_SERVER
 
+# set timeout - note this should be written for python 3k
+import socket
+socket.setdefaulttimeout(0.1)
+
 class Page(models.Model):
     slug = models.CharField(max_length=30)
     
