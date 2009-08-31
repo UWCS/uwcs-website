@@ -247,9 +247,6 @@ input {
 	line-height: 1.35em;
 }
 
-.entry li {
-	line-height: 1.35em;
-}
 
 .entry h2 {
 	margin-top: 1em;
@@ -490,10 +487,18 @@ td {
 	padding-top: 10px;
 }
 
-.entry ul li {
-	list-style-type: square !important;
+.entry li {
+	line-height: 1.35em;
 	padding-left: 5px;
 	margin-left: 30px;
+}
+
+.entry ul li {
+	list-style-type: square !important;
+}
+
+.entry ol li {
+    list-style-type: decimal !important;
 }
 
 .next {
