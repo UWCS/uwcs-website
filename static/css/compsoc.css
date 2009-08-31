@@ -501,6 +501,15 @@ td {
     list-style-type: decimal !important;
 }
 
+.entry ol li li {
+    list-style-type: lower-roman !important;
+}
+
+.entry ol li li li {
+    list-style-type: armenian !important;
+}
+
+
 .next {
     float: right;
 }
