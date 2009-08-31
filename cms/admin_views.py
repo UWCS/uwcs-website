@@ -9,8 +9,8 @@ from django.template import RequestContext
 from compsoc.shortcuts import path_processor
 
 class PageForm(forms.Form):
-    slug = forms.CharField(max_length=30)
-    title = forms.CharField(max_length=30)
+    slug = forms.CharField(max_length=60)
+    title = forms.CharField(max_length=60)
     comment = forms.CharField(max_length=30)
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
@@ -81,7 +81,17 @@ def add_edit(request,page_id=None):
         form.errors['comment'] = ErrorList()
         comments = map(lambda rev: (rev.comment,rev.id),page.pagerevision_set.order_by('-date_written'))
     else:
-        form = PageForm()
+        data = {
+            'slug':request.GET.get('slug',""),
+            'comment':'Please type a comment',
+        }
+        form = PageForm(data)
+
+        # this apparently suppresses error messages we don't want to see this time
+        form.errors['slug'] = ErrorList()
+        form.errors['title'] = ErrorList()
+        form.errors['comment'] = ErrorList()
+        form.errors['text'] = ErrorList()
         comments = []
         page = None
 

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+    {% if breadcrumbs %}
+        <div class="crumbs">
+        {% for url,name in breadcrumbs %}
+                <a href="{{ url }}">{{ name.lower }}</a>
+                &rsaquo;
+        {% endfor %}
+        {{ slug }}
+        </div>
+{% endif %}
+{% endblock %}
+
+
+{% block ttitle %}{{ slug }} does not exist{% endblock %}
+
+{% block contact %}
+    {% ifequal slug "contact" %}
+        class="active"
+    {% endifequal %}
+{% endblock %}
+
+{% block about %}
+    {% ifnotequal slug "contact" %}
+        class="active"
+    {% endifnotequal %}
+{% endblock %}
+
+{% block sidebar %}
+    <ul>
+        <li>
+            <h2>Browse</h2>
+
+        <ul class="cms">
+
+            {% for page_url,name in breadcrumbs %}
+            {% if not forloop.first %}
+                {% if not forloop.last %}
+                <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a>
+                <ul>
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            {% for page_url,name,marked in siblings %}
+            {% if marked %}
+                <li>&rsaquo;&nbsp;{{ name }}</li>
+                {% if children %}
+                    <ul>
+                    {% for page_url,name in children %}
+                        <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% else %}
+                <li>&rsaquo;&nbsp;<a href="{{ page_url }}">{{ name }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% for a,b in breadcrumbs %}
+            {% if not forloop.first %}{% if not forloop.last %}</ul></li>{% endif %}{% endif %}
+            {% endfor %}
+        </ul>
+     </li>
+    </ul>
+    <ul>
+        <li><a href="/info_map/">Site Information Map</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+<p>This page has not yet been created.{% if user.is_staff %} Click <a href="/admin/cms/page/add/?slug={{slug}}">here</a> if you would like to add it!{% endif %}</p>
+
+{% endblock %}

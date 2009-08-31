@@ -21,11 +21,6 @@ def lookup(l):
     return breadcrumbs
 
 def handle(request,url):
-    page = get_object_or_404(Page,slug=url)
-    data = page.get_data()
-   
-    if data.login and not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
 
     # breadcrumbs
     split = url.split('/')
@@ -34,7 +29,21 @@ def handle(request,url):
         breadcrumbs.append(prefix)
         prefix += '/' + item
     breadcrumbs.append(prefix)
-    breadcrumbs.sort(key=lambda x:x.title())
+
+    try:
+        page = Page.objects.get(slug=url)
+    except Page.DoesNotExist:
+        dict = {
+            'slug':url,
+            'breadcrumbs':lookup(breadcrumbs),
+        }
+        return render_to_response('cms/does_not_exist.html',dict,
+            context_instance=RequestContext(request,{},[path_processor]))
+
+    data = page.get_data()
+
+    if data.login and not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
 
     # find the siblings that go before and after
     sibs = sorted(page.get_siblings_and_self(), key=lambda x: x.title())
