@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from compsoc.feeds import *
 from compsoc import settings
-from compsoc.cms.views import handle,list,games
+from compsoc.cms.views import handle,list,games,attachments
 from compsoc.search.views import search
 from django.contrib.auth.models import User
 from compsoc.rest import *
@@ -51,7 +51,6 @@ urlpatterns = patterns('',
     (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
-    (r'^cms/(?P<url>.*)/$',handle),
     (r'^info_map/$',list),
     (r'^game_servers/$',games),
     (r'^search/$', search),
@@ -98,7 +97,13 @@ if settings.LEGACY_SITE:
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
+        (r'^(?P<path>cms/.*/attachment/[^/]+)/$', 'django.views.static.serve', { 'document_root':settings.MEDIA_ROOT } ),
         (r'^ajax/lvsch/$','django.views.generic.simple.redirect_to',{'url':'http://search.warwick.ac.uk/'}),
         (r'^sitebuilder2$','django.views.generic.simple.redirect_to',{'url':'http://www2.warwick.ac.uk/sitebuilder2/'}),
     )
 
+# this goes afterwards to make sure it doesn't catch urls of the form cms/.*/attachment/foo$  this currently has problems with cms/.*/attachment/crap/attachment/foo
+urlpatterns += patterns('',
+    (r'^cms/(?P<url>.*)/attachment/$', attachments),
+    (r'^cms/(?P<url>.*)/$',handle),
+)

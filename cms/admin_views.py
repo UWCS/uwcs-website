@@ -102,3 +102,31 @@ def add_edit(request,page_id=None):
         'slug': page.slug if page else None,
     },context_instance=RequestContext(request,{},[path_processor]))
 
+@staff_member_required
+def attachments(request, url):
+    """
+    Lists attachments for a page, and presents an upload form.
+    """
+    page = get_object_or_404(Page, slug=url)
+    attachments = Attachment.objects.filter(page=page)
+
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['file']
+            title = request.POST['title']
+            attachment = Attachment(page=page, title=title, filename=file.name)
+            attachment.save()
+            handle_uploaded_file(file, page.slug)
+    else:
+        form = UploadFileForm()
+
+    stash = {
+        'slug':url,
+        'title':url,
+        'attachments':attachments,
+        'form':form,
+    }
+    return render_to_response('cms/attachments.html', stash,
+            context_instance=RequestContext(request,{},[path_processor]))
+

@@ -4,7 +4,9 @@ from compsoc.cms.models import *
 from collections import defaultdict
 from django.template import RequestContext
 from compsoc.shortcuts import *
-from compsoc.settings import GAMING_SERVER
+from compsoc.settings import GAMING_SERVER, MEDIA_ROOT
+from django import forms
+from django.forms import ModelForm
 
 def cleanse(l):
     return map(lambda p: (p.get_absolute_url(),p.get_data().title),l)
@@ -19,6 +21,34 @@ def lookup(l):
         # There may not be a parent, if so, we want
         except Page.DoesNotExist: pass
     return breadcrumbs
+
+class AttachmentForm(ModelForm):
+    class Meta:
+        model = Attachment
+        exclude = ('page')
+
+def attachments(request, url):
+    """
+    Lists attachments for a page, and presents an upload form.
+    """
+    page = get_object_or_404(Page, slug=url)
+    attachments = Attachment.objects.filter(page=page)
+
+    if request.method == 'POST':
+        attachment = Attachment(page=page)
+        form = AttachmentForm(request.POST, request.FILES, instance=attachment)
+        if form.is_valid(): form.save()
+    else:
+        form = AttachmentForm()
+
+    stash = {
+        'slug':url,
+        'title':url,
+        'attachments':attachments,
+        'form':form,
+    }
+    return render_to_response('cms/attachments.html', stash,
+            context_instance=RequestContext(request,{},[path_processor]))
 
 def handle(request,url):
 

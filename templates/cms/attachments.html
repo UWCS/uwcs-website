@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block ttitle %}Attachments for {{ title }}{% endblock %}
+
+{% block content %}
+<h1>Items attached to "{{ title }}"</h1>
+{% if attachments %}
+    <ul>
+    {% for attachment in attachments %}
+    <li><a href="/{{ attachment }}">{{ attachment }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% if user.is_staff %}
+<hr/>
+<h1>Attachment Upload</h1>
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endif %}
+
+{% endblock%}
