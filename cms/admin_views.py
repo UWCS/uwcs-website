@@ -130,8 +130,8 @@ class MovePageForm(forms.Form):
     Simple form to present the options for Page.move
     """
     destination = forms.CharField()
-    with_children = forms.BooleanField(initial=True)
-    with_attachments = forms.BooleanField(initial=True)
+    with_children = forms.BooleanField(initial=True, required=False)
+    with_attachments = forms.BooleanField(initial=True, required=False)
 
 @staff_member_required
 def move(request, page_id):
@@ -151,7 +151,7 @@ def move(request, page_id):
             success = True
             failed_children = []
             try:
-                failed_children = page.move(request.POST['destination'])
+                failed_children = page.move(**form.cleaned_data)
             except IntegrityError:
                 success = False
             dict.update({
