@@ -11,6 +11,17 @@ import os
 import socket
 socket.setdefaulttimeout(0.1)
 
+class PageAlreadyExists(Exception):
+    """
+    Small class for use in forward checking uniqueness for CMS pages
+    """
+    # This could be properly nested as a subclass exception, but the
+    # code for that is unneccessarily confusing for the gains.
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
+
 class Page(models.Model):
     slug = models.CharField(max_length=30, unique=True)
     
@@ -60,14 +71,17 @@ class Page(models.Model):
         """
         Moves a page to a new location. As well as changing the slug, it
         has the ability to move attached items and children also. 
-        Will error if the root page cannot be moved, will silently fail to
-        move any subpages that cannot be moved.
+        Will error if the root page cannot be moved, will return a list
+        of children Pages that couldn't be moved.
         NOTE: This will always call self.save()
         """
+        # we really should just check uniqueness first
+        if Page.objects.filter(slug=destination):
+            raise PageAlreadyExists('There is already a page at %s' % destination)
+
+        # also make sure we have the children first..
         if with_children: children = self.get_children()
         self.slug = destination
-
-        # unique=True makes sure we can move to here first 
         self.save()
 
         # now remember to update the attachments
@@ -76,15 +90,17 @@ class Page(models.Model):
                 a.move(self, save=True)
 
         if with_children:
+            failed = []
             for child in children:
                 suffix = child.slug.rstrip('/').split('/')[-1]
                 # disjointed pages can exist, we might end up moving a 
-                # child to somewhere that already exists, in this case we skip
-                # that one.
+                # child to somewhere that already exists, in this case we note
+                # that one for return
                 try:
                     child.move("%s/%s" % (destination, suffix))
-                except IntegrityError:
-                    pass
+                except PageAlreadyExists:
+                    failed.append(child)
+            return failed
 
 register(Page, ['title','text'])
 

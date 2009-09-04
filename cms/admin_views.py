@@ -7,11 +7,12 @@ from django.http import HttpResponseRedirect
 from django.forms.util import ErrorList
 from django.template import RequestContext
 from compsoc.shortcuts import path_processor
+from django.db import IntegrityError
 
 class PageForm(forms.Form):
     slug = forms.CharField(max_length=60)
     title = forms.CharField(max_length=60)
-    comment = forms.CharField(max_length=30)
+    comment = forms.CharField(max_length=30, initial='Please type a comment')
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
 
@@ -76,22 +77,16 @@ def add_edit(request,page_id=None):
             'text':rev.text,
             'login':rev.login,
         }
-        form = PageForm(data)
+        form = PageForm(initial=data)
         # remove the 'please type a comment' error on first binding
-        form.errors['comment'] = ErrorList()
+        # form.errors['comment'] = ErrorList()
         comments = map(lambda rev: (rev.comment,rev.id),page.pagerevision_set.order_by('-date_written'))
     else:
         data = {
             'slug':request.GET.get('slug',""),
-            'comment':'Please type a comment',
         }
-        form = PageForm(data)
+        form = PageForm(initial=data)
 
-        # this apparently suppresses error messages we don't want to see this time
-        form.errors['slug'] = ErrorList()
-        form.errors['title'] = ErrorList()
-        form.errors['comment'] = ErrorList()
-        form.errors['text'] = ErrorList()
         comments = []
         page = None
 
@@ -130,3 +125,48 @@ def attachments(request, url):
     return render_to_response('cms/attachments.html', stash,
             context_instance=RequestContext(request,{},[path_processor]))
 
+class MovePageForm(forms.Form):
+    """
+    Simple form to present the options for Page.move
+    """
+    destination = forms.CharField()
+    with_children = forms.BooleanField(initial=True)
+    with_attachments = forms.BooleanField(initial=True)
+
+@staff_member_required
+def move(request, page_id):
+    """
+    Displays the user with the options for moving a cms page
+    """
+    page = get_object_or_404(Page, id=page_id)
+    if request.method == "POST":
+        form = MovePageForm(request.POST)
+        dict = {
+            'page_id':page_id,
+            'slug':page.slug,
+            'form':form,
+        }
+        if form.is_valid():
+            moved_from = page.slug
+            success = True
+            failed_children = []
+            try:
+                failed_children = page.move(request.POST['destination'])
+            except IntegrityError:
+                success = False
+            dict.update({
+                'slug':page.slug,
+                'success':success,
+                'failed_children':failed_children,
+                'moved_from':moved_from,
+                'moved_to':form.cleaned_data['destination'],
+            })
+    else:
+        form = MovePageForm(initial={'destination':page.slug})
+        dict = {
+            'page_id':page_id,
+            'slug':page.slug,
+            'form':form,
+        }
+    return render_to_response('cms/admin/move.html', dict,
+            context_instance=RequestContext(request,{},[path_processor]))
