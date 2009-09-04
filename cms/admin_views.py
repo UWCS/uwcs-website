@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 from django.forms.util import ErrorList
 from django.template import RequestContext
 from compsoc.shortcuts import path_processor
-from django.db import IntegrityError
 
 class PageForm(forms.Form):
     slug = forms.CharField(max_length=60)
@@ -152,7 +151,7 @@ def move(request, page_id):
             failed_children = []
             try:
                 failed_children = page.move(**form.cleaned_data)
-            except IntegrityError:
+            except PageAlreadyExists:
                 success = False
             dict.update({
                 'slug':page.slug,

@@ -1,0 +1,32 @@
+{% extends "cms/admin/base.html" %}
+
+{% block sidebar %}
+    <ul>
+        <li>
+            <h2>CMS Admin</h2>
+            <ul>
+		<li><a href="/cms/{{ slug }}/">View Page</a></li>
+		<li><a href="/admin/cms/page/{{ page_id }}/">Edit Page</a></li>
+                <li><a href="/admin/cms/page/">Page List</a></li>
+            </ul>
+		</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% if moved_from %}
+		{% if success %}
+			<h1>Successfully moved "{{ moved_from }}" to "{{ moved_to }}"</h1>
+			{% if failed_children %}
+				<p>Movement of the following children failed: {{ failed_children|join:", " }}</p>
+			{% endif %}
+		{% else %}
+			<h1>Couldn't move "{{ moved_from }}" to "{{ moved_to }}". There must be a page there already.</h1>
+		{% endif %}
+	{% endif %}
+	<h1>Where would you like to move "{{ slug }}" to?</h1>
+	<form action="/admin/cms/page/move/{{ page_id }}/" method="POST">
+		{{ form.as_p }}
+		<input type="submit" value="move"/>
+	</form>
+{% endblock %}
