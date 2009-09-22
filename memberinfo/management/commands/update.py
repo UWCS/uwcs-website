@@ -21,6 +21,8 @@ def get_data():
     Relies on their web service
     PRECOND: compsoc.settings.UNION_API_KEY is set
     '''
+    import socket
+    socket.setdefaulttimeout(None)
     content = urlopen(PREFIX+UNION_API_KEY+'/').read()
     doc = xml.dom.minidom.parseString(content)
     lookup = {}
@@ -29,7 +31,10 @@ def get_data():
         first = to_camel(get(prop[0]))
         last = to_camel(get(prop[1]))
         user = get(prop[2]) if prop[2].firstChild else first+last
-        email = get(prop[3])
+        if prop[3].firstChild:
+            email = get(prop[3])
+        else:
+            email = None
         lookup[user] = (first,last,email)
     return lookup
 
@@ -55,37 +60,65 @@ class Command(NoArgsCommand):
         union_lookup = get_data()
 
         #2. soundness: if your account is active then you must be a union member
+        # a) sync active members info
+        # b) deactivate non union members
         for user in User.objects.all():
             if user.is_active:
                 if union_lookup.has_key(user.username):
                     (first,last,email) = union_lookup[user.username]
                     user.first_name = first
                     user.last_name = last
-                    user.email = email
+                    if email is not None:
+                        user.email = email
+                    else:
+                        user.email = ""
+                        user.is_active = False
                     user.save()
                     del union_lookup[user.username]
                 else:
                     user.is_active = False
+                    user.save()
 
         #3. completeness: if you are a union member, then you must have a compsoc account
+        #                 it is active iff you have a union email address
         #4. TODO: information: emails people who have just had their accounts added
         #5. consistency: ensure there exist current join years for members
+        # a) create new accounts for those without
+        # b) reactivate accounts for those already with inactive accounts
         y = current_year()
         for (id,(first,last,email)) in union_lookup.iteritems():
-            password = User.objects.make_random_password()
-            user = User.objects.create_user(id,email,password)
-            print user
-            template_mail(
-                'Welcome to Compsoc',
-                'memberinfo/new_user_email',
-                {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
-                settings.WEBMASTER_EMAIL,
-                [u.email])
 
+            active = True
+
+            try:
+                # find disabled accounts
+                user = User.objects.get(username=id)
+                print "reactivating %s" % id
+                if email is None:
+                    email = ""
+                    active = False
+                    print "cannot reactivate %s: no email address" % id
+            except User.DoesNotExist:
+                print "creating %s" % id
+                if email is None:
+                    email = ""
+                    active = False
+                    print "cannot activate %s: no email address" % id
+                password = User.objects.make_random_password()
+                user = User.objects.create_user(id,email,password)
+                member = Member(user=user,showDetails=False,guest=False)
+                member.save()
+                user.memberjoin_set.create(year=y)
+                template_mail(
+                    'Welcome to Compsoc',
+                    'memberinfo/new_user_email',
+                    {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
+                    settings.WEBMASTER_EMAIL,
+                    [])
+
+            #sync info
             user.first_name = first
             user.last_name = last 
-            user.save()
-            member = Member(user=user,showDetails=False,guest=False)
-            member.save()
-            user.memberjoin_set.create(year=y)
+            user.is_active = active
 
+            user.save()
