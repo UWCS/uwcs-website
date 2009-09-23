@@ -74,8 +74,8 @@ class Term(models.Model):
         return "%s term %i" % (self.get_which_display(), self.start_date.year)
 
 def term_for(date):
-    candidate = Term.objects.filter(start_date__lte=(date-timedelta(days=-7))).latest('start_date')
-    within = timedelta(days=(candidate.length-1)*7)
+    candidate = Term.objects.filter(start_date__lte=date).latest('start_date')
+    within = timedelta(days=(candidate.length)*7)
     if date < (candidate.start_date + within):
         return candidate
     else:
