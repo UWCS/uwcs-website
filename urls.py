@@ -16,6 +16,8 @@ feeds = {
     'news/atom': LatestAtomNews,
     'events': NextEvents,
     'events/atom': NextAtomEvents,
+    'signups': LatestSignups,
+    'seating': LatestSeatingRevisions,
     'minutes': LatestMinutes,
     'minutes/atom': LatestAtomMinutes,
     'newsletters': LatestNewsletters,

@@ -1,0 +1,5 @@
+Added: {{ obj.added|join:", " }}
+
+Removed: {{ obj.removed|join:", " }}
+
+Moved: {% for to, from in obj.moved %} {{from}}->{{to}}{% endfor %}

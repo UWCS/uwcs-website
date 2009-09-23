@@ -21,8 +21,6 @@ def get_data():
     Relies on their web service
     PRECOND: compsoc.settings.UNION_API_KEY is set
     '''
-    import socket
-    socket.setdefaulttimeout(None)
     content = urlopen(PREFIX+UNION_API_KEY+'/').read()
     doc = xml.dom.minidom.parseString(content)
     lookup = {}

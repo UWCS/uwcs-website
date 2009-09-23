@@ -234,6 +234,9 @@ class SeatingRevision(models.Model):
         except SeatingRevision.DoesNotExist:
             return self.seating_set.none()
 
+    def get_absolute_url(self):
+        return "/events/seating/%s/%s" % (self.event.id, self.number)
+
 def val_users(query):
     return flatten(query.values_list('user'))
 
