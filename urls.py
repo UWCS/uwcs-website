@@ -75,6 +75,7 @@ if settings.LEGACY_SITE:
         ('^services/codd/tos/?$', 'redirect_to', {'url': '/cms/about/services/codd/tos/'}),
         ('^society/events/rss2.0/$', 'redirect_to', {'url': '/feeds/events/'}),
         ('^society/news/rss2.0/$', 'redirect_to', {'url': '/feeds/news/'}),
+        ('^society/minutes/rss2.0/$', 'redirect_to', {'url': '/feeds/minutes/'}),
         ('^society/events/ical/$', 'redirect_to', {'url': '/events/ical/'}),
         ('^society/contact/$', 'redirect_to', {'url': '/cms/contact/'}),
         ('^society/exec/$', 'redirect_to', {'url': '/cms/contact/'}),
