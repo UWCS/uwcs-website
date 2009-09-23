@@ -77,7 +77,7 @@
 				{% if signups %}
 					{% for signup in signups %}
 						<li class="signup"><ul>
-							<li class="username">{{ signup.user.member.name }}</li>
+							<li class="username" title="{{signup.user.member.all_name}}">{{ signup.user.member.name }}</li>
 							<li class="time">{{ signup.time_form }}</li>
 							<li class="comment"><p>{{ signup.comment }}</p></li>
 						</ul></li>
