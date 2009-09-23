@@ -104,15 +104,15 @@ class LatestSeatingRevisions(Feed):
     def get_object(self, bits):
         if len(bits) != 1:
             raise ObjectDoesNotExist
-        return SeatingRevision.objects.get(id=bits[0])
+        return Event.objects.get(id=bits[0])
 
     def title(self, obj):
-        return "Latest seating revisions for %s" % obj.event
+        return "Latest seating revisions for %s" % obj
 
     def link(self, obj):
         if not obj:
             raise FeedDoesNotExist
-        return obj.event.get_absolute_url()
+        return obj.get_absolute_url()
 
     def items(self, obj):
-        return SeatingRevision.objects.filter(event=obj.event).order_by('-id')[:10]
+        return SeatingRevision.objects.filter(event=obj).order_by('-number')[:10]
