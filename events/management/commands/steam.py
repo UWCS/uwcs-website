@@ -6,7 +6,6 @@ from datetime import datetime,timedelta
 from dateutil.relativedelta import relativedelta
 from events.models import SteamEvent,SteamEventFeed
 from django.core.management.base import NoArgsCommand
-import socket
 
 p_event_title = re.compile(r'<a class="headlineLink"[^>]+>([^<]+)</a>')
 p_event_date = re.compile(r'<div class="eventDateBlock"><span[^>]+>([^<]+)</span>')
@@ -27,7 +26,6 @@ class Command(NoArgsCommand):
         """
         Should sync SteamEvents on the website and those on the steam community page.
         """
-        socket.setdefaulttimeout(None)
         begin = datetime.now()
         end = begin + relativedelta(months=1)
 
