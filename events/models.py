@@ -115,7 +115,7 @@ class Event(models.Model):
             return 0
 
 class SteamEvent(Event):
-    steam_id = models.IntegerField(unique=True)
+    steam_id = models.CharField(max_length=50)
 
 def future_events(n=5):
     '''
