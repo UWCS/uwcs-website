@@ -137,6 +137,8 @@ register(Event,['shortDescription','longDescription','get_type_name'],order='-st
 
 post_save.connect(write_file_callback, sender=Event)
 post_delete.connect(write_file_callback, sender=Event)
+post_save.connect(write_file_callback, sender=SteamEvent)
+post_delete.connect(write_file_callback, sender=SteamEvent)
 
 class SeatingRoom(models.Model):
     '''Information a room that people are sat in'''
