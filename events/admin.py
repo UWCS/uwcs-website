@@ -90,4 +90,6 @@ admin.site.register(Event,EventAdmin)
 #admin.site.register(Seating)
 #admin.site.register(SeatingRoom)
 #admin.site.register(SeatingRevision)
+admin.site.register(SteamEventFeed)
+admin.site.register(SteamEvent)
 

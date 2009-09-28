@@ -41,9 +41,9 @@ class Event(models.Model):
     location = models.ForeignKey(Location)
     shortDescription = models.CharField(max_length=255)
     longDescription = models.TextField()
-    start = models.DateTimeField()
-    finish = models.DateTimeField()
-    displayFrom = models.DateTimeField()
+    start = models.DateTimeField(default=datetime.now)
+    finish = models.DateTimeField(default=lambda:datetime.now() + timedelta(hours=1))
+    displayFrom = models.DateTimeField(default=datetime.now)
     cancelled = models.BooleanField()
 
     def days(self):
@@ -113,6 +113,9 @@ class Event(models.Model):
             return LogEntry.objects.filter(object_id=self.pk,content_type=cct).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
         except:
             return 0
+
+class SteamEvent(Event):
+    steam_id = models.IntegerField(unique=True)
 
 def future_events(n=5):
     '''
@@ -259,3 +262,10 @@ class Seating(models.Model):
     def __unicode__(self):
         return "%s @ %i,%i" % (self.user.member.name(),self.col,self.row)
 
+class SteamEventFeed(models.Model):
+    group_name = models.CharField(max_length=30)
+    event_type = models.ForeignKey(EventType)
+    location = models.ForeignKey(Location)
+
+    def __unicode__(self):
+        return self.group_name
