@@ -67,7 +67,7 @@ class Command(NoArgsCommand):
                     event_content_div = [x for x in divs if x.attributes.has_key('class') and x.attributes['class'].nodeValue == "eventContent"][0]
 
                     contents = event_content_div.getElementsByTagName('p')[1:]
-                    event_details = "\n".join([x.firstChild.nodeValue for x in contents]) + ("\nMore details available at %s" % link)
+                    event_details = "\n".join([x.firstChild.nodeValue for x in contents]) + ("\nMore details available \"here\":%s" % link)
 
                     # now that we have all the data for the event, either create a new one or sync with a currently existing one
                     try:
