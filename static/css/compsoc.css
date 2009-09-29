@@ -224,6 +224,7 @@ dt {
 }
 
 dd {
+    line-height:1em;
 	margin-bottom: 5px;
 	margin-left: 210px;
 }
@@ -548,5 +549,5 @@ textarea {
 }
 
 dl.details p {
-    margin: 0px 0px 10px;
+    margin: 0px 0px 10px 0px;
 }
