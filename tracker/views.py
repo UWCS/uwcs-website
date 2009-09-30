@@ -138,7 +138,7 @@ def index(request):
 
     else:
         form = TicketSearchForm()
-        results = Ticket.objects.by_completed('A')
+        results = Ticket.objects.by_completed('O')
 
     my_id = request.user.id
     n = datetime.now()
@@ -150,6 +150,11 @@ def index(request):
             ('deadline_1_1',n.strftime(TF)),
         ]),
         ('Exec Tickets',common + [('assignee_group',1)]),
+        ('All Tickets', [
+            ('completed','A'),
+            ('submitted_0','A'),
+            ('deadline_0','A'),
+        ]),
     ]
 
     #group results by goal
