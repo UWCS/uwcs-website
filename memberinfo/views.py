@@ -16,7 +16,7 @@ from compsoc.settings import *
 
 from datetime import datetime
 
-from recaptcha.client import captcha
+from compsoc.recaptcha.client import captcha
 
 '''
 The following views are all related to the member profile section of the website.
@@ -169,11 +169,11 @@ def lists(request):
             error = "You don't have mailman installed and the site is running outside of DEBUG mode."
         else:
             error = ("If mailman had been installed we would have added %s and removed %s" % (str(add),str(remove)))
-
-    return render_to_response('memberinfo/request_error.html',{
-        'name':'Mailing Lists',
-        'error':error,
-    },context_instance=RequestContext(request,{},[path_processor]))
+    finally:
+        return render_to_response('memberinfo/request_error.html',{
+            'name':'Mailing Lists',
+            'error':error,
+        },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def set_nickname(request):
