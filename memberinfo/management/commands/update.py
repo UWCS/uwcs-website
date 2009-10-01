@@ -107,12 +107,13 @@ class Command(NoArgsCommand):
                 member = Member(user=user,showDetails=False,guest=False)
                 member.save()
                 user.memberjoin_set.create(year=y)
-                template_mail(
-                    'Welcome to Compsoc',
-                    'memberinfo/new_user_email',
-                    {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
-                    settings.WEBMASTER_EMAIL,
-                    [])
+                if user.email != "":
+                    template_mail(
+                        'Welcome to Compsoc',
+                        'memberinfo/new_user_email',
+                        {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
+                        settings.WEBMASTER_EMAIL,
+                        [user.email])
 
             #sync info
             user.first_name = first

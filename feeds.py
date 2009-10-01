@@ -9,10 +9,6 @@ from django.contrib.admin.models import LogEntry, ADDITION,CHANGE,DELETION
 
 from tracker.models import Ticket
 
-def format_ticket_log(entry):
-    if entry.action_flag == CHANGE:
-        return "Ticket modified: %s" % entry.change_message
-
 class LatestTicketChanges(Feed):
     title = "Latest changes in the CompSoc ticket tracker"
     link = "/"
@@ -20,7 +16,7 @@ class LatestTicketChanges(Feed):
 
     def items(self):
         ct = ContentType.objects.get(app_label="tracker", model="ticket")
-        return LogEntry.objects.filter(content_type=ct).order_by('-action_time').select_related('user_id','object_id')[:15]
+        return LogEntry.objects.exclude(action_flag=DELETION).filter(content_type=ct).order_by('-action_time').select_related()[:15]
 
     def item_link(self, item):
         return "/tickets/detail/%i" % int(item.object_id)

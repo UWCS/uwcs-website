@@ -1,0 +1,15 @@
+{% ifequal obj.action_flag 1 %}
+New Ticket! "{{ obj.object_repr }}"
+{% else %}{% ifequal obj.action_flag 2 %}
+
+    {% ifequal obj.change_message "Changed completed." %}
+    Completed {{ obj.object_repr }}!
+    {% else %}{% ifequal obj.change_message "Changed assignee." %}
+    Assigned {{ obj.object_repr }} to {{ obj.user.member.name }}
+    {% else %}
+    Modified "{{ obj.object_repr }}": {{obj.change_message|lower}}
+    {% endifequal %}{% endifequal %}
+
+{% else %}
+Deleted Ticket "{{ obj.object_repr }}"
+{% endifequal %}{% endifequal %}
