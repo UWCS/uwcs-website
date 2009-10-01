@@ -4,6 +4,27 @@ from compsoc.comms.models import Communication
 from compsoc.events.models import Event, Signup, SeatingRevision
 from datetime import datetime
 
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.models import LogEntry, ADDITION,CHANGE,DELETION
+
+from tracker.models import Ticket
+
+def format_ticket_log(entry):
+    if entry.action_flag == CHANGE:
+        return "Ticket modified: %s" % entry.change_message
+
+class LatestTicketChanges(Feed):
+    title = "Latest changes in the CompSoc ticket tracker"
+    link = "/"
+    description = "Latest changes in the CompSoc ticket tracker"
+
+    def items(self):
+        ct = ContentType.objects.get(app_label="tracker", model="ticket")
+        return LogEntry.objects.filter(content_type=ct).order_by('-action_time').select_related('user_id','object_id')[:15]
+
+    def item_link(self, item):
+        return "/tickets/detail/%i" % int(item.object_id)
+
 class LatestNews(Feed):
     title = "Latest Compsoc news items"
     link = "/"
