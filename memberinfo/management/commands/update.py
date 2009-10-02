@@ -66,14 +66,14 @@ class Command(NoArgsCommand):
                     (first,last,email) = union_lookup[user.username]
                     user.first_name = first
                     user.last_name = last
-                    if email is not None:
+                    if not user.is_staff and email is not None:
                         user.email = email
                     else:
                         user.email = ""
                         user.is_active = False
                     user.save()
                     del union_lookup[user.username]
-                else:
+                elif not user.is_staff:
                     user.is_active = False
                     user.save()
 
