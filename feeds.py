@@ -3,6 +3,7 @@ from django.utils.feedgenerator import Atom1Feed
 from compsoc.comms.models import Communication
 from compsoc.events.models import Event, Signup, SeatingRevision
 from datetime import datetime
+from cms.models import PageRevision
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.models import LogEntry, ADDITION,CHANGE,DELETION
@@ -20,6 +21,18 @@ class LatestTicketChanges(Feed):
 
     def item_link(self, item):
         return "/tickets/detail/%i" % int(item.object_id)
+
+class LatestPageRevisions(Feed):
+    title = "Latest changes to the CompSoc cms pages"
+    link = "/"
+    description = "Latest changes to the CompSoc cms pages"
+
+    def items(self):
+        return PageRevision.objects.order_by('-date_written')[:10]
+
+    def item_link(self, item):
+        return "/admin/cms/pagerevision/%d/" % item.id
+
 
 class LatestNews(Feed):
     title = "Latest Compsoc news items"

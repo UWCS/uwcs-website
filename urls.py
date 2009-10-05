@@ -23,6 +23,7 @@ feeds = {
     'newsletters': LatestNewsletters,
     'newsletters/atom': LatestNewsletters,
     'tickets': LatestTicketChanges,
+    'pagerevisions': LatestPageRevisions,
 }
 
 urlpatterns = patterns('',
