@@ -6,6 +6,7 @@ from django.core.management.base import NoArgsCommand
 from settings import UNION_API_KEY
 from django.contrib.auth.models import User
 from compsoc.memberinfo.models import *
+from compsoc.shortcuts import *
 
 PREFIX = 'http://www.sunion.warwick.ac.uk/portal/membershipapi/listMembers/'
  
@@ -74,8 +75,10 @@ class Command(NoArgsCommand):
                     user.save()
                     del union_lookup[user.username]
                 elif not user.is_staff:
-                    user.is_active = False
-                    user.save()
+                    # if out of grace period
+                    if warwick_week_for(datetime.now()) > 3 and not user.memberjoin_set.filter(year=current_year()-1):
+                        user.is_active = False
+                        user.save()
 
         #3. completeness: if you are a union member, then you must have a compsoc account
         #                 it is active iff you have a union email address
