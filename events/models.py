@@ -36,6 +36,12 @@ class Location(models.Model):
     def get_absolute_url(self):
         return "/events/location/%i/" % self.id
 
+class EventManager(models.Manager):
+    def in_future(self):
+        now = datetime.now()
+        # events which are allowed to display, and haven't yet finished
+        return self.filter(finish__gte=now,displayFrom__lte=now).order_by('-start')
+
 class Event(models.Model):
     type = models.ForeignKey(EventType)
     location = models.ForeignKey(Location)
@@ -45,6 +51,8 @@ class Event(models.Model):
     finish = models.DateTimeField(default=lambda:datetime.now() + timedelta(hours=1))
     displayFrom = models.DateTimeField(default=datetime.now)
     cancelled = models.BooleanField()
+
+    objects = EventManager()
 
     def days(self):
         days = []
