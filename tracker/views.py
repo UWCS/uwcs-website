@@ -12,7 +12,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.admin.widgets import AdminSplitDateTime
 from compsoc.memberinfo.forms import UserModelChoiceField
 
-from tracker.models import Ticket
 from django.contrib.admin.models import LogEntry,ADDITION,CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
 
@@ -92,7 +91,7 @@ def new_ticket(request):
             ticket.started = datetime.now()
             ticket.completed = False
             ticket.save()
-            print "logging! %s" % ticket.id
+            #print "logging! %s" % ticket.id
             LogEntry.objects.log_action(
                 user_id         = request.user.pk,
                 content_type_id = ContentType.objects.get_for_model(ticket).pk,
