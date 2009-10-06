@@ -59,16 +59,16 @@ class Command(NoArgsCommand):
         #1. get data from the union
         union_lookup = get_data()
 
-        #2. soundness: if your account is active then you must be a union member
+        #2. soundness: if your account is not a guest account and is active then you must be a union member
         # a) sync active members info
         # b) deactivate non union members
-        for user in User.objects.all():
+        for user in User.objects.exclude(member__guest=True):
             if user.is_active:
                 if union_lookup.has_key(user.username):
                     (first,last,email) = union_lookup[user.username]
                     user.first_name = first
                     user.last_name = last
-                    if not user.is_staff and email is not None:
+                    if email is not None:
                         user.email = email
                     else:
                         user.email = ""
