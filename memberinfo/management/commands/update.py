@@ -7,6 +7,7 @@ from settings import UNION_API_KEY
 from django.contrib.auth.models import User
 from compsoc.memberinfo.models import *
 from compsoc.shortcuts import *
+from events.models import Event
 
 PREFIX = 'http://www.sunion.warwick.ac.uk/portal/membershipapi/listMembers/'
  
@@ -107,6 +108,8 @@ class Command(NoArgsCommand):
                     print "cannot activate %s: no email address" % id
                 password = User.objects.make_random_password()
                 user = User.objects.create_user(id,email,password)
+                user.first_name = first
+                user.last_name = last
                 member = Member(user=user,showDetails=False,guest=False)
                 member.save()
                 user.memberjoin_set.create(year=y)
@@ -114,7 +117,7 @@ class Command(NoArgsCommand):
                     template_mail(
                         'Welcome to Compsoc',
                         'memberinfo/new_user_email',
-                        {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password},
+                        {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password, 'events':Event.objects.in_future()[:5]},
                         settings.WEBMASTER_EMAIL,
                         [user.email])
 

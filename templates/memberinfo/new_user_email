@@ -1,13 +1,39 @@
-Dear {{ first }} {{ last }}
- 
+Dear {{ first }} {{ last }},
+
 You are being sent this email because you've joined the University of
 Warwick Computing Society.  We have been given you an account
-on our website, which can be found at http://uwcs.co.uk.
- 
-Your Username is {{ username }}.
-Your Password is {{ password }}.
- 
-  regards,
- 
-  The Exec
+on our website, http://uwcs.co.uk/. To login just go to http://uwcs.co.uk/login/.
 
+Your Username is {{ username }}
+Your Password is {{ password }}
+
+====================================================================================
+
+We'll email you a newsletter each week to keep you updated on what's happening 
+with the society. You can check out our upcoming events at http://uwcs.co.uk/events/.
+
+{% if events %}We have these coming up:
+{% for event in events %}{{ event.type }} on {{ event.start|date:"D, jS F" }}{% endfor %}{% endif %}
+
+====================================================================================
+
+We also recommend you connect to our IRC network so you can chat to our
+members a bit and get to know them. :D
+
+Find out more at: http://uwcs.co.uk/cms/about/services/irc/
+
+====================================================================================
+
+If you're interested in hosting, you'll want to go to http://uwcs.co.uk/member/
+and fill in the request form for a shell account. You'll need to make a separate
+request for database account (a MySQL account) if any of your sites use that (for
+example WordPress).
+
+====================================================================================
+
+If you have any other questions, http://uwcs.co.uk/cms/about/faq/ is a good place to
+start, and you can always drop us a line at compsoc-exec@uwcs.co.uk.
+
+Hope you enjoy being part of the society!
+
+The CompSoc Exec

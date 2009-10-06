@@ -40,7 +40,7 @@ class EventManager(models.Manager):
     def in_future(self):
         now = datetime.now()
         # events which are allowed to display, and haven't yet finished
-        return self.filter(finish__gte=now,displayFrom__lte=now).order_by('-start')
+        return self.filter(finish__gte=now,displayFrom__lte=now).order_by('start')
 
 class Event(models.Model):
     type = models.ForeignKey(EventType)
