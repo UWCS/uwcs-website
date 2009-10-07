@@ -30,6 +30,8 @@ class MyUserAdmin(UserAdmin):
                ShellAccountInline,
                DatabaseAccountInline,
                QuotaInline,]
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
+    list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 # re-register useradmin
 admin.site.unregister(User)
