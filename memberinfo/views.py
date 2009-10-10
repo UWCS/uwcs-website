@@ -16,7 +16,7 @@ from compsoc.settings import *
 
 from datetime import datetime
 
-from recaptcha.client import captcha
+from compsoc.recaptcha.client import captcha
 
 '''
 The following views are all related to the member profile section of the website.

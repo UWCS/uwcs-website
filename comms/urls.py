@@ -1,5 +1,5 @@
 from time import strftime
-from events.models import Event
+from compsoc.events.models import Event
 
 from django.conf.urls.defaults import *
 
