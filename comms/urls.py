@@ -1,4 +1,5 @@
 from time import strftime
+from events.models import Event
 
 from django.conf.urls.defaults import *
 
@@ -22,7 +23,15 @@ def get_dict(item_type,paginate=True,intro=False):
     else:           info_dict['date_field'] = 'date'
     return info_dict
 
-urlpatterns = patterns('django.views.generic.list_detail',
+urlpatterns = patterns('',
+        (r'^newsletters/generate/$','django.views.generic.simple.direct_to_template',{
+            'template':'comms/newsletter.html',
+            'extra_context':{'events':lambda:Event.objects.in_future()[:5]},
+        }),
+)
+
+
+urlpatterns += patterns('django.views.generic.list_detail',
     (r'^$','object_list',get_dict('N', intro=True)),
     (r'^news/(?P<page>[0-9]+)/$','object_list',get_dict('N')),
     (r'^minutes/(?P<page>[0-9]+)/$','object_list',get_dict('M')),

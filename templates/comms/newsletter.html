@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block ttitle %}Generated newsletter{% endblock %}
+{% block content %}
+
+<pre>
+Greetings CompSoc!
+
+WRITE YOUR NEWSLETTER LOVE AND PUNS HERE &lt;3
+{% if events %}
+Upcoming events
+=========================================
+{% for event in events %}{{ event.type }} on {{ event.start|date:"D, jS F" }}
+http://uwcs.co.uk{{ event.get_absolute_url }}
+
+{% endfor %}{% endif %}
+Chatting with us
+=========================================
+
+We also recommend you connect to our IRC network so you can chat to our
+members a bit and get to know them. :D
+
+Find out more at: http://uwcs.co.uk/cms/about/services/irc/
+
+
+Web Hosting
+=========================================
+If you're interested in hosting, you'll want to go to http://uwcs.co.uk/member/
+and fill in the request form for a shell account. You'll need to make a separate
+request for database account (a MySQL account) if any of your sites use that (for
+example WordPress).
+
+
+Further Info
+=========================================
+If you have any other questions, http://uwcs.co.uk/cms/about/faq/ is a good place to
+start, and you can always drop us a line at compsoc-exec@uwcs.co.uk.
+
+Regards,
+
+{{ user.member.all_name }}
+</pre>
+{% endblock %}
