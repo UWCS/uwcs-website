@@ -83,7 +83,7 @@
 					{% endfor %}
 					{% for signup in reserved %}
 						<li class="reserved"><ul>
-							<li class="username">{{ signup.user.username }}</li>
+							<li class="username" title="{{ signup.user.member.all_name }}">{{ signup.user.member.name }}</li>
 							<li class="time">{{ signup.time_form }}</li>
 							<li class="comment"><p>{{ signup.comment }}</p></li>
 						</ul></li>
