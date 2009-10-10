@@ -283,3 +283,11 @@ ul#eventlist, #eventlist ul {
 .eventhidden {
     background-color: #870606;
 }
+
+.eventrunning a, .eventrunning {
+	background-color: #2264ae;
+}
+
+.eventhidden a, .eventhidden {
+	background-color: #870606;
+}

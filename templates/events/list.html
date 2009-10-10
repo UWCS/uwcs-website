@@ -3,6 +3,11 @@
 {% block ttitle %}Events List{% endblock %}
 
 {% block content %}
+<p class="calendar-key">
+<b>Key:</b> <span class="eventrunning">now running</span>
+    {% if user.is_staff %} <span class="eventhidden">not yet shown</span>{% endif %}
+</p>
+
 <ul id="eventlist">
     {% for week,entries in events %}
     <li><ul class="week">
@@ -10,7 +15,7 @@
         <li class="fullweek"><span>{{ week }}</span></li>
         <li class="events"><ul>
             {% for event in entries %}
-            <li class="name {% if not event.is_public_yet %}eventhidden{% endif %}"><a href="details/{{ event.id }}">{{ event.type.name }}</a>
+            <li class="name {% if event.is_running %}eventrunning {% endif %}{% if not event.is_public_yet %}eventhidden{% endif %}"><a href="details/{{ event.id }}">{{ event.type.name }}</a>
 
             <ul class="{% if event.is_in_past %}eventpast {% endif %}{% if not event.is_public_yet %}eventhidden {% endif %}eventdetail">
                 <li class="time">{{ event.time_string }}</li>
