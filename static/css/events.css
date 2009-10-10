@@ -279,3 +279,7 @@ ul#eventlist, #eventlist ul {
 .reserved li {
 	padding: 5px 0;
 }
+
+.eventhidden {
+    background-color: #870606;
+}

@@ -39,6 +39,16 @@ def get_listable_events(offset,span):
     events = Event.objects.order_by('start').filter(finish__gte=begin).exclude(displayFrom__gte=datetime.now())
     return (begin.date(),end.date(),events)
 
+def get_listable_events_all(offset,span):
+    """
+    Get upcoming events for a given number of weeks, including those not 
+    yet meant to be shown publically.
+    """
+    begin = begin_week(datetime.today())+timedelta(days=7*offset)
+    end = begin + timedelta(days=7*span)
+    events = Event.objects.order_by('start').filter(finish__gte=begin)
+    return (begin.date(),end.date(),events)
+
 class Week:
     '''
     Abstract a week, so the template doesn't require any lookup logic
@@ -51,7 +61,11 @@ class Week:
         return self.begin.strftime(WEEK_FORMAT_STRING)+" - "+self.end.strftime(WEEK_FORMAT_STRING)
 
 def events_list(request):
-    begin,end,events = get_listable_events(0,10)
+    if request.user.is_staff:
+        begin,end,events = get_listable_events_all(0,10)
+    else:
+        begin,end,events = get_listable_events(0,10)
+
     lookup = defaultdict(lambda: [])
     for event in events:
        lookup[begin_week(event.start)].append(event)
@@ -69,7 +83,11 @@ def calendar(request,delta):
     presents a Table of events for the current week, and 4 successors
     '''
     offset = int(delta)
-    begin,end,events = get_listable_events(offset,4)
+    if request.user.is_staff:
+        begin,end,events = get_listable_events_all(offset,4)
+    else:
+        begin,end,events = get_listable_events(offset,4)
+
     # lookup :: BEGIN_WEEK -> DAY -> EVENT
     lookup = defaultdict(lambda: defaultdict(lambda:[]))
     for event in events:

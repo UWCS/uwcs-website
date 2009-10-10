@@ -36,11 +36,22 @@ class Location(models.Model):
     def get_absolute_url(self):
         return "/events/location/%i/" % self.id
 
+    class Meta:
+        ordering = ['name']
+
 class EventManager(models.Manager):
     def in_future(self):
+        """
+        Get upcoming events which are allowed to be displayed now.
+        """
         now = datetime.now()
-        # events which are allowed to display, and haven't yet finished
         return self.filter(finish__gte=now,displayFrom__lte=now).order_by('start')
+
+    def in_future_all(self):
+        """
+        Get upcoming events, including those that aren't displayed publically yet.
+        """
+        return self.filter(finish__gte=datetime.now()).order_by('start')
 
 class Event(models.Model):
     type = models.ForeignKey(EventType)
@@ -121,6 +132,12 @@ class Event(models.Model):
             return LogEntry.objects.filter(object_id=self.pk,content_type=cct).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
         except:
             return 0
+
+    def is_public_yet(self):
+        """
+        Returns whether this event should be shown in the public events calendar and feeds yet.
+        """
+        return self.displayFrom <= datetime.now()
 
 class SteamEvent(Event):
     steam_id = models.CharField(max_length=50)
