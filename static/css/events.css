@@ -56,7 +56,16 @@ ul#eventlist, #eventlist ul {
 	width: 150px;
 	float: left;
 	padding: 15px;
-	font-size: 1.2em
+	font-size: 1.2em;
+}
+
+.eventpast {
+	background-color: #111;
+	color: #333;
+}
+
+.eventpast a {
+	color: #333;
 }
 
 #eventlist .events .eventdetail {
@@ -291,3 +300,4 @@ ul#eventlist, #eventlist ul {
 .eventhidden a, .eventhidden {
 	background-color: #870606;
 }
+
