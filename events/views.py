@@ -10,11 +10,12 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
 from django import forms
 
+from pytz import timezone
 import vobject
 import re
 
 from compsoc.events.models import *
-from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING
+from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING,TIME_ZONE
 from compsoc.memberinfo.models import warwick_week_for,Term
 from compsoc.shortcuts import begin_week,path_processor
 
@@ -331,6 +332,8 @@ def ical_feed(request):
     Generates an ical sync of all events in the future
     '''
     cal = vobject.iCalendar()
+
+    tz = timezone(TIME_ZONE)
     # IE/Outlook needs this:
     cal.add('method').value = 'PUBLISH'
     # Only publish events in the future
@@ -340,9 +343,9 @@ def ical_feed(request):
         vevent = cal.add('vevent')
         vevent.add('summary').value = event.type.name + (' - ' + event.shortDescription if event.shortDescription else event.type.name) + signups
         vevent.add('location').value = str(event.location)
-        vevent.add('dtstart').value = event.start
-        vevent.add('dtend').value = event.finish
-        vevent.add('dtstamp').value = event.start # again, for Outlook
+        vevent.add('dtstart').value = tz.localize(event.start)
+        vevent.add('dtend').value = tz.localize(event.finish)
+        vevent.add('dtstamp').value = tz.localize(event.start) # again, for Outlook
         vevent.add('description').value = event.longDescription
         vevent.add('categories').value = [event.type.get_target_display()]
         url = "http://%s/events/details/%i/" % (Site.objects.get_current() , event.id)
