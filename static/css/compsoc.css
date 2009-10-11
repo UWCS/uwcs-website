@@ -76,11 +76,11 @@ html {
 #header {
 	width: 100%;
 	padding-top: 20px;	
-	height: 150px;
+	height: 140px;
 }
 
 #logo {
-	padding: 5px 0 0 30px;
+	padding-left: 30px;
 }
 
 #logo img {
@@ -96,7 +96,6 @@ html {
 #top-right {
 	float: right;
 	padding-right: 30px;
-	padding-top: 15px;
 	text-align: right;
 }
 
@@ -110,7 +109,7 @@ html {
 /* Menu */
 
 #menu {
-	margin-top: -35px;
+	margin-top: -20px;
 	float: right;
 	padding-right: 30px;
 }
