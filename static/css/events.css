@@ -65,7 +65,11 @@ ul#eventlist, #eventlist ul {
 }
 
 .eventpast a {
-	color: #666;
+	color: #866609;
+}
+
+.eventpast a:hover {
+	color: #2F4783;
 }
 
 #eventlist .events .eventdetail {
