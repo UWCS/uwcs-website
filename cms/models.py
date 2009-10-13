@@ -8,8 +8,8 @@ from django.db import IntegrityError
 import os
 
 # set timeout - note this should be written for python 3k
-import socket
-socket.setdefaulttimeout(0.1)
+#import socket
+#socket.setdefaulttimeout(0.1)
 
 class PageAlreadyExists(Exception):
     """

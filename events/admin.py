@@ -48,12 +48,12 @@ class EventSignupInline(admin.StackedInline):
     max_num = 1
     form = EventSignupForm
 
-#class SignupInline(admin.TabularInline):
-#   model = Signup
-#    extra = 1
+class SignupInline(admin.TabularInline):
+   model = Signup
+   extra = 1
 
 class EventAdmin(admin.ModelAdmin):
-    inlines = [ EventSignupInline ] #, SignupInline]
+    inlines = [ EventSignupInline , SignupInline]
     form = EventAdminForm
     list_display = ('type', 'location', 'start')
     ordering = ('-start',)
