@@ -1,14 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
 import re
-pattern = re.compile(r'[^A-Za-z0-9]')
+pattern = re.compile(r'[^a-z0-9]')
 
 class DatabaseForm(forms.Form):
     name = forms.CharField()
     def clean_name(self):
         name = self.cleaned_data['name']
         if re.search(pattern, name):
-            raise forms.ValidationError("Invalid characters in username")
+            raise forms.ValidationError("Please enter only lowercase characters and numbers")
         return name
 
 class ShellForm(forms.Form):
@@ -16,7 +16,7 @@ class ShellForm(forms.Form):
     def clean_name(self):
         name = self.cleaned_data['name']
         if re.search(pattern, name):
-            raise forms.ValidationError("Invalid characters in username")
+            raise forms.ValidationError("Please enter only lowercase characters and numbers")
         return name
 
 class QuotaForm(forms.Form):

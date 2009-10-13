@@ -62,6 +62,7 @@
         {% endif %}{% endif %}
     {% else %}
         <p>You don't have a shell account, you may request one here.</p>
+        <p>Note: Usernames can only consist of lower case letters and numbers!</p>
         <form action="/member/shell/" method="post">
             {{ shell_form.as_p }}
             <input type="submit" value="request" />
