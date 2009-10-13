@@ -60,7 +60,7 @@
 
 {% block content %}
 	<div class="post">
-		{% if user.is_staff %}<a class="edit" href="/admin/cms/page/{{ page_id }}/">edit</a> <a class="edit" href="attachment">attachments</a>{% endif %}
+		{% if user.is_staff %}<a class="edit" href="/admin/cms/page/add/?slug={{slug}}/newpage">add child page</a><a class="edit" href="/admin/cms/page/{{ page_id }}/">edit</a> <a class="edit" href="attachment">attachments</a>{% endif %}
 		<h2 class="title">{{ title }}</h2>
 		<div class="entry">
 			{{ text|textile }}
