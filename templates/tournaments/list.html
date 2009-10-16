@@ -1,0 +1,12 @@
+{% extends "tournaments/base.html" %}
+
+{% block ttitle %}Tournament List{% endblock %}
+
+{% block content %}
+
+<ul id="eventlist">
+    {% for tournament in list %}
+        <li><a href="{% url tournaments.views.tournament_detail tournament.pk %}">{{ tournament }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

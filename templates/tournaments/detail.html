@@ -1,0 +1,8 @@
+{% extends "tournaments/base.html" %}
+
+{% block ttitle %}Tournament List{% endblock %}
+
+{% block content %}
+    <p>{{ tournament }}</p>
+    <p>{{ tournament.get_type_display }}</p>
+{% endblock %}
