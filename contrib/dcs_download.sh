@@ -63,6 +63,12 @@ install_jquery ()
     ln -s jquery-1.3.2.js jquery.js
 }
 
+install_recaptcha ()
+{
+    cd "$WEBSITE_DIR/compsoc/static/js"
+    curl http://mulletron.uwcs.co.uk/recaptcha.tar.gz | tar xz
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
@@ -75,3 +81,4 @@ install_dateutil
 install_vobject
 install_textile
 install_jquery
+install_recaptcha
