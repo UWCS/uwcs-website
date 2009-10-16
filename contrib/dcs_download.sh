@@ -56,6 +56,13 @@ install_textile ()
     standard_setup http://pypi.python.org/packages/source/t/textile/textile-2.0.11.tar.gz textile-2.0.11
 }
 
+install_jquery ()
+{
+    cd "$WEBSITE_DIR/compsoc/static/js"
+    wget http://jqueryjs.googlecode.com/files/jquery-1.3.2.js
+    ln -s jquery-1.3.2.js jquery.js
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
@@ -67,3 +74,4 @@ install_docutils
 install_dateutil
 install_vobject
 install_textile
+install_jquery
