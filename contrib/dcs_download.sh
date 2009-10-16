@@ -69,6 +69,11 @@ install_recaptcha ()
     curl http://mulletron.uwcs.co.uk/recaptcha.tar.gz | tar xz
 }
 
+install_pytz ()
+{
+    standard_setup http://pypi.python.org/packages/source/p/pytz/pytz-2009n.tar.gz pytz-2009n
+}
+
 mkdir -p $WEBSITE_DIR
 cd $WEBSITE_DIR
 
@@ -82,3 +87,4 @@ install_vobject
 install_textile
 install_jquery
 install_recaptcha
+install_pytz
