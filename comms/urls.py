@@ -26,7 +26,7 @@ def get_dict(item_type,paginate=True,intro=False):
 urlpatterns = patterns('',
         (r'^newsletters/generate/$','django.views.generic.simple.direct_to_template',{
             'template':'comms/newsletter.html',
-            'extra_context':{'events':lambda:Event.objects.in_future()[:5]},
+            'extra_context':{'events':lambda:Event.objects.for_week(datetime.now()+timedelta(days=3))},
         }),
 )
 

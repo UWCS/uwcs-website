@@ -53,6 +53,18 @@ class EventManager(models.Manager):
         """
         return self.filter(finish__gte=datetime.now()).order_by('start')
 
+    def for_week(self, date):
+        """
+        Get events for the whole week containing this date
+        """
+        # events starting from midnight sunday
+        startdate = date - timedelta(days=date.weekday())
+        startdate = startdate.replace(hour=0,minute=0,second=0,microsecond=0)
+        # ending at midnight sunday
+        enddate = startdate + timedelta(days=7)
+
+        return self.filter(finish__gte=startdate, finish__lte=enddate).order_by('start')
+
 class Event(models.Model):
     type = models.ForeignKey(EventType)
     location = models.ForeignKey(Location)
