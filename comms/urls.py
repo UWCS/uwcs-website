@@ -6,6 +6,7 @@ from django.conf.urls.defaults import *
 from compsoc.comms.models import *
 from compsoc.shortcuts import current_year,get
 from compsoc.events.models import future_events
+from datetime import datetime,timedelta
 
 def get_dict(item_type,paginate=True,intro=False):
     data = Communication.objects.filter(type=item_type).order_by('-date')
