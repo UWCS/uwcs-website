@@ -1,8 +1,95 @@
 {% extends "tournaments/base.html" %}
 
+{% load tournament %}
+
 {% block ttitle %}Tournament List{% endblock %}
 
 {% block content %}
-    <p>{{ tournament }}</p>
-    <p>{{ tournament.get_type_display }}</p>
+    <h2 class="title">Tournament Details for {{ tournament }}</h2>
+    <dl>
+        <dt>Tournament Type</dt>
+        <dd>{{ tournament.get_type_display }}</dd>
+        <dt>Game</dt>
+        <dd>{{ tournament.game }}</dd>
+        <dt>In Progress</dt>
+        <dd>{{ tournament.is_in_progress|yesno }}</dd>
+    </dl>
+
+    <div class="tournament{{ tournament.tree_size }}-wrap">
+        {{ tournament|tournament_divs }}
+    </div>
+    {% if user.is_staff %}
+        {% if tournament.is_in_progress %}
+            <form action="{% url tournaments.views.tournament_detail tournament.pk %}" method="POST">
+                {{ form.as_p }}
+                <input type="submit" value="Add Win" />
+            </form>
+        {% endif %}
+    {% endif %}
+    <!--
+    TODO: remove this after satisfied with debugging
+    <div class="tournament16-wrap">
+        <div class="round5-top winner5">Yousuf</div>
+
+        <div class="round4-topwrap">
+            <div class="round4-top">Yousuf</div>
+            <div class="round3-topwrap">
+                <div class="round3-top">George</div>
+                <div class="round2-topwrap">
+                    <div class="round2-top">bakaidiot_</div>
+                    <div class="round1-top">Kenshiro</div>
+                    <div class="round1-bottom">bakaidiot_</div>
+                </div>
+                <div class="round2-bottomwrap">
+                    <div class="round2-bottom">George</div>
+                    <div class="round1-top">Paris</div>
+                    <div class="round1-bottom">George</div>
+                </div>
+            </div>
+            <div class="round3-bottomwrap">
+                <div class="round3-bottom">Yousuf</div>
+                <div class="round2-topwrap">
+                    <div class="round2-top">Yousuf</div>
+                    <div class="round1-top">Yousuf</div>
+                    <div class="round1-bottom">zed0</div>
+                </div>
+                <div class="round2-bottomwrap">
+                    <div class="round2-bottom">monk</div>
+                    <div class="round1-top">monk</div>
+                    <div class="round1-bottom">kiwi</div>
+                </div>
+            </div>
+        </div>
+        <div class="round4-bottomwrap">
+            <div class="round4-bottom">Henry</div>
+            <div class="round3-topwrap">
+                <div class="round3-top">Henry</div>
+                <div class="round2-topwrap">
+                    <div class="round2-top">Zamiel</div>
+                    <div class="round1-top">Tony</div>
+                    <div class="round1-bottom">Zamiel</div>
+                </div>
+                <div class="round2-bottomwrap">
+                    <div class="round2-bottom">Henry</div>
+                    <div class="round1-top">Mike (monk)</div>
+                    <div class="round1-bottom">Henry</div>
+                </div>
+            </div>
+            <div class="round3-bottomwrap">
+                <div class="round3-bottom">Agaeki</div>
+                <div class="round2-topwrap">
+                    <div class="round2-top">Agaeki</div>
+                    <div class="round1-top">Agaeki</div>
+                    <div class="round1-bottom">Demo</div>
+                </div>
+                <div class="round2-bottomwrap">
+                    <div class="round2-bottom">Fyorl</div>
+                    <div class="round1-top">Fyorl</div>
+                    <div class="round1-bottom">Azurit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
 {% endblock %}
