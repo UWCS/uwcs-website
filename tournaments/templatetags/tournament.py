@@ -1,6 +1,7 @@
 from django import template
 from math import log
 from django.utils.safestring import mark_safe
+from tournaments.models import *
 
 register = template.Library()
 
@@ -8,26 +9,44 @@ register = template.Library()
 def tournament_divs(tournament):
     # TODO: make this work when tree not entirely full
     rounds = int(log(tournament.tree_size(),2))
-    final = tournament.match_set.get(round=rounds)
-    s = recursive_divs(final,rounds,'top',True)
+    _,s = recurs(tournament,rounds,1)
+#    print s
     return mark_safe(s)
 
 def disp(alloc):
     return alloc.user.member.name()
 
 def row(alloc,round,pos):
-    return '<div class="round%i-%s">%s</div>' % (round,pos,disp(alloc))
+    return '<div class="round%i-%s">%s</div>' % (round,pos,alloc)
 
 def outer(winner,round,pos):
-    return '<div class="round%i-%swrap">\n<div class="round%i-%s">%s</div>\n' % (round,pos,round,pos,disp(winner))
+    return '<div class="round%i-%swrap">\n<div class="round%i-%s">%s</div>\n' % (round,pos,round,pos,winner)
 
-def recursive_divs(match,round,pos,final):
-    [l,r] = sorted([match.winner,match.looser],key=lambda x:x.index)
-    next = round + 1
-    if round == 1:
-        return outer(match.winner,next,pos)+row(l,round,'top')+'\n'+row(r,round,'bottom')+'\n</div>\n'
+def recurs(tournament,round,index):
+    pos = 'top' if (index % 2) != 0 else 'bottom'
+    if round == 0:
+        alloc = tournament.allocation_set.get(index=index)
+        return (alloc,row(disp(alloc),round+1,pos))
     else:
-        round = round - 1
-        def bottom(alloc,pos):
-            return recursive_divs(alloc.wins.get(round=round),round,pos,False)
-        return '<div class="round%i-top %s">%s</div>' % (next,"winner%i" % next if final else '',disp(match.winner)) + bottom(l,'top') + bottom(r,'bottom')
+        final = log(tournament.tree_size(),2) == round
+
+        def inner(n):
+            return recurs(tournament,round-1,n)
+
+        # fail lack of maybe monad
+        def match(w,l,f):
+            try:
+                return tournament.match_set.get(winner=w,looser=l)
+            except:
+                return f()
+
+        (lalloc,lstr),(ralloc,rstr) = inner(2*index-1),inner(2*index)
+        current_match = match(lalloc,ralloc,lambda:match(ralloc,lalloc,lambda:None))
+        round += 1
+        name,win = (disp(current_match.winner),current_match.winner) if current_match else ("unknown",None)
+        if final:
+            s = '<div class="round%i-top winner%i">%s</div>' % (round,round,name) + lstr + rstr
+        else:
+            s = '<div class="round%i-%swrap">\n<div class="round%i-%s">%s</div>\n' % (round,pos,round,pos,name) + lstr + rstr + '\n</div'
+        return (win,s)
+

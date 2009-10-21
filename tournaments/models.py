@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from math import log
 
 class Game(models.Model):
     name = models.CharField(max_length=255)
@@ -29,7 +30,7 @@ class Tournament(models.Model):
         return bound(self.allocation_set.count())
 
     def is_in_progress(self):
-        return not bool(self.match_set.get(round=self.tree_size()))
+        return not bool(self.match_set.filter(round=log(self.tree_size(),2)))
 
     def in_play(self):
         return self.allocation_set.exclude(losses__tournament=self)
@@ -55,10 +56,16 @@ class Allocation(models.Model):
         '''
         Creates the match object when this Player has won
         '''
-        round = self.wins.latest('round').round + 1
-        mid,up = pow(2,round-1)+1,pow(2,round)+1
-        opponent = self.tournament.in_play().get(index__in=range(mid,up) if self.index < mid else range(1,mid))
-        self.wins.create(round=round,looser=opponent,tournament=self.tournament)
+        try:
+            # if you've already won a game
+            round = self.wins.latest('round').round + 1
+            mid,up = pow(2,round-1)+1,pow(2,round)+1
+            opponent = self.tournament.in_play().get(index__in=range(mid,up) if self.index < mid else range(1,mid))
+            self.wins.create(round=round,looser=opponent,tournament=self.tournament)
+        except Match.DoesNotExist:
+            # first game
+            partner = self.index - 1 if self.index % 2 == 0 else self.index + 1
+            self.wins.create(round=1,looser=self.tournament.allocation_set.get(index=partner),tournament=self.tournament)
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament)
