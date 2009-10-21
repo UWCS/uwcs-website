@@ -5,6 +5,9 @@
 {% block ttitle %}Tournament List{% endblock %}
 
 {% block content %}
+	{% if user.is_staff %}
+        <a class="edit" href="/admin/tournaments/tournament/{{ tournament.id }}/">Edit</a>
+    {% endif %}
     <h2 class="title">Tournament Details for {{ tournament }}</h2>
     <dl>
         <dt>Tournament Type</dt>
