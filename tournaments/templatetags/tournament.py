@@ -25,8 +25,11 @@ def outer(winner,round,pos):
 def recurs(tournament,round,index):
     pos = 'top' if (index % 2) != 0 else 'bottom'
     if round == 0:
-        alloc = tournament.allocation_set.get(index=index)
-        return (alloc,row(disp(alloc),round+1,pos))
+        try:
+            alloc = tournament.allocation_set.get(index=index)
+            return (alloc,row(disp(alloc),round+1,pos))
+        except Allocation.DoesNotExist:
+            return (None,row("No one",round+1,pos))
     else:
         final = log(tournament.tree_size(),2) == round
 

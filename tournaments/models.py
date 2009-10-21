@@ -52,6 +52,9 @@ class Allocation(models.Model):
     def __unicode__(self):
         return self.user.member.name() + u' in ' + self.tournament.__unicode__()
 
+    def partner_index(self):
+        return self.index - 1 if self.index % 2 == 0 else self.index + 1
+
     def win(self):
         '''
         Creates the match object when this Player has won
@@ -63,15 +66,22 @@ class Allocation(models.Model):
             opponent = self.tournament.in_play().get(index__in=range(mid,up) if self.index < mid else range(1,mid))
             self.wins.create(round=round,looser=opponent,tournament=self.tournament)
         except Match.DoesNotExist:
+            try:
+                other = self.tournament.allocation_set.get(index=self.partner_index())
+            except:
+                other = None
             # first game
-            partner = self.index - 1 if self.index % 2 == 0 else self.index + 1
-            self.wins.create(round=1,looser=self.tournament.allocation_set.get(index=partner),tournament=self.tournament)
+            self.wins.create(
+                round=1,
+                looser=other,
+                tournament=self.tournament,
+            )
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament)
     round = models.IntegerField()
     winner = models.ForeignKey(Allocation, related_name="wins")
-    looser = models.ForeignKey(Allocation, related_name="losses")
+    looser = models.ForeignKey(Allocation, related_name="losses", blank=True, null=True)
 
     def __unicode__(self):
         return "%s beat %s in %i" % (self.winner,self.looser,self.round)
