@@ -514,6 +514,22 @@ td {
     float: left;
 }
 
+.player-form {
+    float: right;
+}
+
+.winner-form {
+    float: left;
+}
+
+.winner-form, .player-form {
+    border: 1px solid white;
+}
+
+.winner-form form, .player-form form {
+    margin: 10px;
+}
+
 .advanced {
     text-align:right;
 }
