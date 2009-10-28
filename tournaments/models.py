@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from math import log
+from django.db.models.signals import post_delete
 
 class Game(models.Model):
     name = models.CharField(max_length=255)
@@ -35,6 +36,9 @@ class Tournament(models.Model):
     def in_play(self):
         return self.allocation_set.exclude(losses__tournament=self)
 
+    def is_not_full(self):
+        return self.allocation_set.count() <= 32
+    
     def __unicode__(self):
         return self.name
 
@@ -76,6 +80,13 @@ class Allocation(models.Model):
                 looser=other,
                 tournament=self.tournament,
             )
+
+def del_handler(sender, instance, **kwargs):
+    for alloc in instance.tournament.allocation_set.filter(index__gt=instance.index).order_by('index'):
+        alloc.index -= 1
+        alloc.save()
+
+post_delete.connect(del_handler,sender=Allocation)
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament)
