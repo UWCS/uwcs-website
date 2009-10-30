@@ -18,9 +18,20 @@
         <dd>{{ tournament.is_in_progress|yesno }}</dd>
     </dl>
 
-    <div class="tournament{{ tournament.tree_size }}-wrap">
-        {{ tournament|tournament_divs }}
-    </div>
+    {% if tournament.is_elim_cup %}
+        <div class="tournament{{ tournament.tree_size }}-wrap">
+            {{ tournament|tournament_divs }}
+        </div>
+    {% else %}
+        <table>
+            <tr>
+            {% for alloc in tournament.allocation_set.all %}
+                <td>{{ alloc.user }}</td>
+            {% endfor %}
+            </tr>
+            {{ tournament|tournament_league }}
+        </table>
+    {% endif %}
     <hr />
     <br />
     {% if user.is_staff %}

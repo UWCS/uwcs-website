@@ -53,3 +53,9 @@ def recurs(tournament,round,index):
             s = '<div class="round%i-%swrap">\n<div class="round%i-%s">%s</div>\n' % (round,pos,round,pos,name) + lstr + rstr + '\n</div'
         return (win,s)
 
+@register.filter
+def tournament_league(tournament):
+    '''
+    Generates a league table
+    '''
+    return mark_safe("")

@@ -12,6 +12,7 @@ class Game(models.Model):
 
 TOURNAMENT_TYPES = (
     ('S','Single Elimination Cup'),
+    ('LE','League'),
 )
 
 def bound(n):
@@ -38,7 +39,10 @@ class Tournament(models.Model):
 
     def is_not_full(self):
         return self.allocation_set.count() <= 32
-    
+   
+    def is_elim_cup(self):
+        return self.type == 'S'
+
     def __unicode__(self):
         return self.name
 
