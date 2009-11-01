@@ -156,6 +156,7 @@ def lists(request):
     # update mailman
     now = set(my_lists.all())
     add,remove = now - previous,previous - now
+    error = "Something else went wrong!"
     try:
         from compsoc.memberinfo.mailman import *
         try:
@@ -169,11 +170,10 @@ def lists(request):
             error = "You don't have mailman installed and the site is running outside of DEBUG mode."
         else:
             error = ("If mailman had been installed we would have added %s and removed %s" % (str(add),str(remove)))
-    finally:
-        return render_to_response('memberinfo/request_error.html',{
-            'name':'Mailing Lists',
-            'error':error,
-        },context_instance=RequestContext(request,{},[path_processor]))
+    return render_to_response('memberinfo/request_error.html',{
+        'name':'Mailing Lists',
+        'error':error,
+    },context_instance=RequestContext(request,{},[path_processor]))
 
 @login_required()
 def set_nickname(request):

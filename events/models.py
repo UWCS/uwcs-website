@@ -8,6 +8,7 @@ from compsoc.settings import DATE_FORMAT_STRING,SAME_SECOND_FORMAT
 from compsoc.search import register
 from compsoc.events import write_file_callback
 from compsoc.shortcuts import flatten
+from django.contrib.admin.models import LogEntry,ContentType
 
 TARGETS = (
     ('ACA', 'Academic'),
@@ -138,12 +139,25 @@ class Event(models.Model):
         return self.type.name
 
     def last_change_time(self):
-        from django.contrib.admin.models import LogEntry,ContentType
         try:
             cct = ContentType.objects.get(name='event')
             return LogEntry.objects.filter(object_id=self.pk,content_type=cct).latest('action_time').action_time.strftime(DATE_FORMAT_STRING)
         except:
             return 0
+
+    def creation_time(self):
+        """
+        Returns the datetime of the first logentry in the admin history
+        """
+        ct = ContentType.objects.get(app_label='events', model='event')
+        return LogEntry.objects.filter(content_type=ct,object_id=self.id).order_by('action_time')[0].action_time
+
+    def update_count(self):
+        """
+        Returns the number of modifications in the admin interface to this item
+        """
+        ct = ContentType.objects.get(app_label='events', model='event')
+        return LogEntry.objects.filter(content_type=ct,object_id=self.id).count()
 
     def is_public_yet(self):
         """

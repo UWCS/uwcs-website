@@ -1,4 +1,4 @@
-from tournaments.models import *
+from compsoc.tournaments.models import *
 from django.contrib import admin
 
 admin.site.register(Tournament)

@@ -334,6 +334,7 @@ def ical_feed(request):
     cal = vobject.iCalendar()
 
     tz = timezone(TIME_ZONE)
+    utc = vobject.icalendar.utc
     # IE/Outlook needs this:
     cal.add('method').value = 'PUBLISH'
     # Only publish events in the future
@@ -354,6 +355,37 @@ def ical_feed(request):
     response = HttpResponse(cal.serialize(), mimetype='text/calendar')
     response['Filename'] = 'filename.ics'  # IE needs this
     response['Content-Disposition'] = 'attachment; filename=filename.ics'
+    return response
+
+def ical_feed2(request):
+    '''
+    Generates an ical sync of all events in the future
+    '''
+    cal = vobject.iCalendar()
+
+    tz = timezone(TIME_ZONE)
+    utc = timezone('GMT')
+    # IE/Outlook needs this:
+    cal.add('method').value = 'PUBLISH'
+    # Only publish events in the future
+    for event in filter(lambda e: e.is_in_future(),Event.objects.order_by('start').exclude(displayFrom__gte=datetime.now())):
+        total = str(event.signup_total()) if event.signup_total() else u'\u221E'
+        signups = u' [%i/%s]' % (event.signup_count(),total) if event.has_signups() else u''
+        vevent = cal.add('vevent')
+        vevent.add('summary').value = event.type.name + (' - ' + event.shortDescription if event.shortDescription else event.type.name) + signups
+        vevent.add('location').value = str(event.location)
+        vevent.add('dtstart').value = tz.localize(event.start).astimezone(utc)
+        vevent.add('dtend').value = tz.localize(event.finish).astimezone(utc)
+        vevent.add('dtstamp').value = tz.localize(event.creation_time()).astimezone(utc) # again, for Outlook
+        vevent.add('description').value = event.longDescription
+        vevent.add('sequence').value = str(event.update_count()) # for updates
+        vevent.add('categories').value = [event.type.get_target_display()]
+        url = "http://%s/events/details/%i/" % (Site.objects.get_current() , event.id)
+        vevent.add('uid').value = url
+        vevent.add('url').value = url
+    response = HttpResponse(cal.serialize(), mimetype='text/calendar; charset=UTF-8')
+    response['Filename'] = 'compsoc.ics'  # IE needs this
+    response['Content-Disposition'] = 'attachment; filename=compsoc.ics'
     return response
 
 def location(request,object_id):

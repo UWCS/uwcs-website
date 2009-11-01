@@ -1,4 +1,4 @@
-from tournaments.models import *
+from compsoc.tournaments.models import *
 from django.shortcuts import *
 from django.template import RequestContext
 from compsoc.shortcuts import begin_week,path_processor

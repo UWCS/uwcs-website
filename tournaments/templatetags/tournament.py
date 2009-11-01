@@ -1,7 +1,7 @@
 from django import template
 from math import log
 from django.utils.safestring import mark_safe
-from tournaments.models import *
+from compsoc.tournaments.models import *
 
 register = template.Library()
 
