@@ -11,20 +11,10 @@
 <p class="notification">{{ form.non_field_errors|striptags }}</p>
 {% endif %}
 
-
 <div class="box">
 	<h2>Login</h2>
 	<form method="post" action="{% url django.contrib.auth.views.login %}">
-	<div class="input">
-		{{ form.username.label_tag }}
-		{{ form.username }}
-		{{ form.username.errors }}
-	</div>
-	<div class="input">
-		{{ form.password.label_tag }}
-		{{ form.password }}
-		{{ form.password.errors }}
-	</div>
+		{{ form.as_p }}
 	<div class="input">
 		<input type="submit" value="login" />
 		<input type="hidden" name="next" value="{{ next }}" />
@@ -34,22 +24,13 @@
 </div>
 
 <div class="box">
-	<h2>Password Reset</h2>
-    <p>If you have forgotten your website password, you can reset it.  A new password will be automatically emailed to you, at your contact email address.</p>
-    <form method="post" action="/member/reset/">
-	<div class="input">
-        <label for="reset_username">Username</label><input type="text" name="user_name" id="reset_username" />
-	</div>
-	<div class="input">
-        <input type="submit" value="reset" />
-	</div>
-    </form>
-	<div class="clear"></div>
+	<h2>Forgotten your details?</h2>
+	<p>Your username should be your university ID number. If you like, you can <a href="/password_reset/">reset your password</a></p>
 </div>
 
 <div class="box">
 	<h2>Guest Account</h2>
-    <p>You may <a href="{% url guest_account %}">request</a> a guest account.</p>
+    <p>You may <a href="{% url guest_account %}">request a guest account</a>.</p>
 </div>
 
 {% endif %}
