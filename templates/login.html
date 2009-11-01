@@ -13,12 +13,21 @@
 
 <div class="box">
 	<h2>Login</h2>
-	<form method="post" action="{% url django.contrib.auth.views.login %}">
-		{{ form.as_p }}
-	<div class="input">
-		<input type="submit" value="login" />
-		<input type="hidden" name="next" value="{{ next }}" />
-	</div>
+	<form action="" method="post">
+		<div class="input">
+			{{ form.username.label_tag }}
+			{{ form.username }}
+			{{ form.username.errors }}
+		</div>
+		<div class="input">
+			{{ form.password.label_tag }}
+			{{ form.password }}
+			{{ form.password.errors }}
+		</div>
+		<div class="input">
+			<input type="submit" value="login" />
+			<input type="hidden" name="next" value="{{ next }}" />
+		</div>
 	</form>
 	<div class="clear"></div>
 </div>
