@@ -122,3 +122,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
 )
+
+EX_EXEC_GROUP_NAME = "Ex-exec"

@@ -3,8 +3,8 @@ from xml.dom.minidom import Node
 from urllib import urlopen
 import settings
 from django.core.management.base import NoArgsCommand
-from settings import UNION_API_KEY
-from django.contrib.auth.models import User
+from settings import UNION_API_KEY,EX_EXEC_GROUP_NAME
+from django.contrib.auth.models import User,Group
 from compsoc.memberinfo.models import *
 from compsoc.shortcuts import *
 from events.models import Event
@@ -76,10 +76,13 @@ class Command(NoArgsCommand):
                     user.save()
                     del union_lookup[user.username]
                 elif not user.is_staff:
-                    # if out of grace period
-                    if warwick_week_for(datetime.now()) > 3 and not user.memberjoin_set.filter(year=current_year()-1):
-                        user.is_active = False
-                        user.save()
+                    # next two lines should be removed when historical exec data is added
+                    ex, created = Group.objects.get_or_create(name=EX_EXEC_GROUP_NAME)
+                    if not user.groups.filter(name=EX_EXEC_GROUP_NAME):
+                        # if out of grace period
+                        if warwick_week_for(datetime.now()) > 3 and not user.memberjoin_set.filter(year=current_year()-1):
+                            user.is_active = False
+                            user.save()
 
         #3. completeness: if you are a union member, then you must have a compsoc account
         #                 it is active iff you have a union email address
@@ -119,7 +122,7 @@ class Command(NoArgsCommand):
                         'memberinfo/new_user_email',
                         {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password, 'events':Event.objects.in_future()[:5]},
                         settings.WEBMASTER_EMAIL,
-                        [user.email])
+                        [])
 
             #sync info
             user.first_name = first
