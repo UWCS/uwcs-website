@@ -33,7 +33,7 @@
 				<a href="/member/">profile</a>
 				<a href="/logout/">logout</a>
 			{% else %}
-				<a href="/login/?next={{ request.path }}">login</a>
+			<a href="/login/?next={% block next %}{{ request.path }}{% endblock %}">login</a>
 			{% endif %}
 			<form action="/search/" method="post">
 				<div>
