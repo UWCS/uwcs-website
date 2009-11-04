@@ -476,6 +476,7 @@ td {
 .entry h3 {
 	font-size: 1.1em;
 	padding: 0 15px;
+    padding-top: 15px;
 	font-weight: bold;
 }
 
