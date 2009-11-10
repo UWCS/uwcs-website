@@ -93,12 +93,12 @@ class LatestAtomMinutes(LatestMinutes):
     subtitle = LatestMinutes.description
 
 class LatestNewsletters(Feed):
-    title = "Compsoc Exec Meeting Newsletters"
+    title = "Compsoc Newsletters"
     link = "/"
     description = "Newsletters written by the University of Warwick Computing Society Exec"
 
     def items(self):
-        return Communication.objects.filter(type='N').order_by('-date')[:10]
+        return Communication.objects.filter(type='NL').order_by('-date')[:10]
 
     def item_link(self,item):
         return "/details/%i/" % item.id
