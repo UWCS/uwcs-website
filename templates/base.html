@@ -16,7 +16,20 @@
 	<![endif]-->
 
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
-
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			$.getScript(gaJsHost + "google-analytics.com/ga.js", function () {
+				try {
+					var pageTracker = _gat._getTracker("UA-220431-4");
+					pageTracker._setDomainName("none");
+					pageTracker._setAllowLinker(true);
+					pageTracker._trackPageview();
+				} catch(err) {}
+			});
+		});
+	
+	</script>
 	{% block morehead %}{% endblock %}
 </head>
 
