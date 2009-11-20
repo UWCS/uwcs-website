@@ -52,13 +52,16 @@ class Allocation(models.Model):
     '''
     tournament = models.ForeignKey(Tournament)
     index = models.IntegerField()
-    user = models.ForeignKey(User)
+    user = models.ManyToManyField(User)
 
-    class Meta:
-        unique_together = (('tournament','user'),)
+#    class Meta:
+#        unique_together = (('tournament','user'),)
+
+    def user_str(self):
+        return reduce(lambda acc,u: acc+" "+u.member.name(),self.user.all(),"")
 
     def __unicode__(self):
-        return self.user.member.name() + u' in ' + self.tournament.__unicode__()
+        return self.user_str() + u' in ' + self.tournament.__unicode__()
 
     def partner_index(self):
         return self.index - 1 if self.index % 2 == 0 else self.index + 1

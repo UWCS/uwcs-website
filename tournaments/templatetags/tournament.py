@@ -14,7 +14,7 @@ def tournament_divs(tournament):
     return mark_safe(s)
 
 def disp(alloc):
-    return alloc.user.member.name()
+    return alloc.user_str()
 
 def row(alloc,round,pos):
     return '<div class="round%i-%s">%s</div>' % (round,pos,alloc)
