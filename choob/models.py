@@ -26,7 +26,7 @@ class QuoteLine(models.Model):
     linenumber = models.IntegerField(null=True, blank=True)
     nick = models.CharField(max_length=255, blank=True)
     message = models.CharField(max_length=255, blank=True)
-    isaction = models.BooleanField(null=True, blank=True)
+    isaction = models.NullBooleanField(null=True, blank=True)
     
     class Meta:
         db_table = u'_objectdb_plugins_quote_quoteline'

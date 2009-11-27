@@ -29,6 +29,12 @@ class WebsiteForm(forms.Form):
     url = forms.URLField()
     title = forms.CharField()
 
+class GameidForm(forms.Form):
+    steam = forms.CharField(required=False)
+    xbox = forms.CharField(required=False)
+    psn = forms.CharField(required=False)
+    xfire = forms.CharField(required=False)
+
 class PublishForm(forms.Form):
     publish = forms.BooleanField(label='Publish Details',required=False)
 

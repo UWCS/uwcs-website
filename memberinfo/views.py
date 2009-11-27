@@ -53,6 +53,17 @@ def index(request):
     except WebsiteDetails.DoesNotExist:
         website_form = WebsiteForm()
 
+    try:
+        gameids = u.gamingids
+        gameid_form = GameidForm(initial={
+            'steam':gameids.steamID,
+            'xbox':gameids.xboxID,
+            'psn':gameids.psnID,
+            'xfire':gameids.xfireID,
+        })
+    except GamingIDs.DoesNotExist:
+        gameid_form = GameidForm()
+
     my_lists = u.mailinglist_set.all()
     other_lists = []
     for list in MailingList.objects.all():
@@ -71,6 +82,7 @@ def index(request):
         'name_form':name_form,
         'website_form':website_form,
         'publish_form': PublishForm(initial={'publish':u.member.showDetails}),
+        'gameid_form':gameid_form,
         'my_lists':my_lists,
         'other_lists':other_lists,
     },context_instance=RequestContext(request,{},[path_processor]))
@@ -229,6 +241,27 @@ def set_publish(request):
     else:
         return render_to_response('memberinfo/form_errors.html',{
             'name':'Publish Details',
+            'all_errors':form.errors.items(),
+        },context_instance=RequestContext(request,{},[path_processor]))
+
+@login_required
+def set_gameids(request):
+    u = request.user
+    form = GameidForm(request.POST)
+    if form.is_valid():
+        try: 
+            gameids = u.gamingids
+            gameids.steamID = form.cleaned_data['steam']
+            gameids.xboxID = form.cleaned_data['xbox']
+            gameids.psnID = form.cleaned_data['psn']
+            gameids.xfireID = form.cleaned_data['xfire']
+            gameids.save()
+        except GamingIDs.DoesNotExist:
+            GamingIDs.objects.create(user=u,steamID=form.cleaned_data['steam'],xboxID=form.cleaned_data['xbox'],psnID=form.cleaned_data['psn'],xfireID=form.cleaned_data['xfire'])
+        return HttpResponseRedirect('/member/')
+    else:
+        return render_to_response('memberinfo/form_errors.html',{
+            'name':'Gaming IDs',
             'all_errors':form.errors.items(),
         },context_instance=RequestContext(request,{},[path_processor]))
 

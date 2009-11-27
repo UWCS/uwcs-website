@@ -166,6 +166,21 @@
     <hr />
     </div>
 
+    <a onClick="flip('game','gh')">
+    	<h4><div id="gh" style="display:inline">&#x21E8;&nbsp;</div>Gaming IDs</h4>
+    </a>
+    <div id="game" style="display:none">
+    <p>Here you can optionally include a list of your nicknames and identities on
+    other gaming sites across the internet. People will be able to view these
+    publically and add you as a contact there.</p>
+    <form action="/member/gamingids/" method="post">
+    	<table class="form">
+	    {{ gameid_form.as_table }}
+	</table>
+	<input type="submit" value="submit" />
+    </form>
+    <hr />
+    </div>
 </div>
 {% endblock %}
 

@@ -49,6 +49,15 @@ class NicknameDetails(models.Model):
     user = models.OneToOneField(User)
     nickname = models.CharField(max_length=20)
 
+# Optional info for ones' gaming identities
+
+class GamingIDs(models.Model):
+    user = models.OneToOneField(User)
+    steamID = models.CharField(max_length=50)
+    xboxID = models.CharField(max_length=50)
+    psnID = models.CharField(max_length=50)
+    xfireID = models.CharField(max_length=50)
+
 class MemberJoin(models.Model):
     '''Stores history of membership'''
     user = models.ForeignKey(User)
