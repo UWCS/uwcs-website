@@ -21,6 +21,8 @@
     {% if not is_popup %}
     <!-- Header -->
 	<div id="admin-header">
+		<div id="sponsor" style="float:right; padding-right:30px"><img alt="Supported by IBM" src="/static/img/IBM.png"/></div>
+
 		<div id="top-right">
 			{% if user.is_authenticated %}
 				Logged in as {{ user.member.name }}<br />
@@ -37,8 +39,7 @@
 			</form>
 		</div>
 		<div id="logo">
-			<img src="/static/img/si_logo_small.png" title="UWCS Logo" alt="University of Warwick Computing Society" />
-			<h1 id="pagetitle"><a href="/">Warwick Computing Society</a></h1>
+			<h1><a href="/"><img src="/static/img/logo.png" title="UWCS Logo" alt="University of Warwick Computing Society" /></a></h1>
 		</div>
 		<div id="menu">
 			<ul>
@@ -63,7 +64,7 @@
         {% if messages %}
         <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
         {% endif %}
-
+    <div id="page">
     <!-- Content -->
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
@@ -77,6 +78,8 @@
         <br class="clear" />
     </div>
     <!-- END Content -->
+    </div>
+    <!-- END Page -->
 	<div id="footer-spacer"></div> 
 </div>
 <!-- END Container -->
