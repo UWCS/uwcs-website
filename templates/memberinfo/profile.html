@@ -1,0 +1,27 @@
+{% extends "memberinfo/base.html" %}
+
+{% block ttitle %}{{ name }}'s profile{% endblock %}
+
+{% block sidebar-outer %}{% endblock %}
+
+{% block content %}
+
+<h1>{{name}}</h1>
+
+<div id="personaldetails">
+	<ul>
+		<li><span class="detailtitle">Name:</span> {{ name }}</li>
+		{% if nickname %}<li><span class="detailtitle">Nickname:</span> {{ nickname }}</li>{% endif %}
+		{% if website_url %}<li><span class="detailtitle">Website:</span> <a href="{{ website_url }}" title="{{ website_name }}">{{ website_name }}</a></li>{% endif %}
+	</ul>
+</div>
+<div id="gameIDDetails">
+	<ul>
+		{% if steamid %}<li><span class="detailtitle">Steam:</span> <a href="http://www.steamcommunity.com/id/{{ steamid }}" title="Steam Community :: ID :: {{ steamid }}">{{ steamid }}</a></li>{% endif %}
+		{% if xboxid %}<li><span class="detailtitle">Xbox:</span> <a href="http://live.xbox.com/en-US/profile/profile.aspx?pp=0&GamerTag={{ xboxid }}" title="Xbox.com - {{ xboxid }}">{{ xboxid }}</a></li>{% endif %}
+		{% if psnid %}<li><span class="detailtitle">PSN:</span> <a href="http://profiles.us.playstation.com/playstation/psn/profiles/{{ psnid }}/" title="Playstation.com - Public Profile - {{ psnid }}">{{ psnid }}</a></li>{% endif %}
+		{% if xfireid %}<li><span class="detailtitle">Xfire:</span> <a href="http://www.xfire.com/profile/{{ xfireid }}" title="Xfire :: {{ xfireid }}">{{ xfireid }}</a></li>{% endif %}
+	</ul>
+</div>
+
+{% endblock %}

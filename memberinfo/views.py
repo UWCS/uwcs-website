@@ -390,3 +390,38 @@ def create_guest(request):
         'public_key':RECAPTCHA_PUB_KEY,
     })
 
+def profiles(request,userid):
+    try:
+	u = User.objects.get(id__exact=userid)
+        try:
+	    gameids = u.gamingids
+	    profile = {
+		'name': u.get_full_name(),
+		'steamid': gameids.steamID,
+		'xboxid': gameids.xboxID,
+		'psnid': gameids.psnID,
+		'xfireid': gameids.xfireID,
+	    }
+	except GamingIDs.DoesNotExist:
+	    profile = {'name': u.get_full_name(),}
+	
+	try:
+	    profile['nickname'] = u.nicknamedetails.nickname
+	except NicknameDetails.DoesNotExist:
+	    profile['nickname'] = ""
+
+	try:
+	    profile['website_url'] = u.websitedetails.websiteUrl
+	    profile['website_name'] = u.websitedetails.websiteTitle
+	except WebsiteDetails.DoesNotExist:
+	    pass	    
+
+	return render_to_response('memberinfo/profile.html',
+            profile,
+	context_instance=RequestContext(request,{},[path_processor]))
+    except User.DoesNotExist:
+	error = "this user does not exist."
+    return render_to_response('memberinfo/request_error.html',{
+	        'name':'profile',
+		'error':error,
+	},context_instance=RequestContext(request,{},[path_processor]))
