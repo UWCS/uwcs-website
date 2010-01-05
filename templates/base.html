@@ -64,9 +64,7 @@
 				<li {% block events %}{% endblock %} ><a href="/events/">Events</a></li>
 				<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
 				<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact</a></li>
-				{% if user.is_authenticated %}
-					<li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
-				{% endif %}
+				<li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
 				{% if user.is_staff %}
 					<li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
 				{% endif %}

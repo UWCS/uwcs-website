@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.admin.widgets import AdminSplitDateTime
 from compsoc.memberinfo.forms import UserModelChoiceField
 
+from django.shortcuts import get_object_or_404
 from django.contrib.admin.models import LogEntry,ADDITION,CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
 
@@ -116,6 +117,13 @@ common = [
 DF = '%Y-%m-%d'
 TF = '%H:%M:%S'
 
+@login_required
+def details(request,object_id):
+    return render_to_response('tracker/details.html',{
+        'object':get_object_or_404(Ticket,pk=object_id),
+    },context_instance=RequestContext(request,{},[path_processor]))
+
+@login_required
 def index(request):
     '''
     Offers a search form, and/or results for said search
