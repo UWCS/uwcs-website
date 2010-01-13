@@ -62,27 +62,40 @@ class Command(NoArgsCommand):
         #2. soundness: if your account is not a guest account and is active then you must be a union member
         # a) sync active members info
         # b) deactivate non union members
-        for user in User.objects.exclude(member__guest=True):
-            if user.is_active:
-                if union_lookup.has_key(user.username):
-                    (first,last,email) = union_lookup[user.username]
-                    user.first_name = first
-                    user.last_name = last
-                    if email is not None:
-                        user.email = email
-                    else:
-                        user.email = ""
-                        user.is_active = False
-                    user.save()
-                    del union_lookup[user.username]
-                elif not user.is_staff:
-                    # next two lines should be removed when historical exec data is added
-                    ex, created = Group.objects.get_or_create(name=EX_EXEC_GROUP_NAME)
-                    if not user.groups.filter(name=EX_EXEC_GROUP_NAME):
-                        # if out of grace period
-                        if warwick_week_for(datetime.now()) > 3 and not user.memberjoin_set.filter(year=current_year()-1):
+        #for user in User.objects.exclude(member__guest=True):
+        for user in User.objects.filter(is_active=True, member__guest=False):
+            if union_lookup.has_key(user.username):
+                (first,last,email) = union_lookup[user.username]
+                user.first_name = first
+                user.last_name = last
+                if email is not None:
+                    user.email = email
+                else:
+                    user.email = ""
+                    user.is_active = False
+                user.save()
+                del union_lookup[user.username]
+            # if they're not listed in the union's api, could be a special case
+            elif not user.is_staff:
+                # next two lines should be removed when historical exec data is added
+                ex, created = Group.objects.get_or_create(name=EX_EXEC_GROUP_NAME)
+
+                # if not on the exec at some point
+                if not user.groups.filter(name=EX_EXEC_GROUP_NAME):
+                    try:
+                        week = warwick_week_for(datetime.now())
+                    except Term.DoesNotExist:
+                        week = settings.GRACE_PERIOD + 1 #assume outside of grace period
+
+                    # if inside the grace period 
+                    if week <= settings.GRACE_PERIOD:
+                        # but not a member from last year
+                        if not user.memberjoin_set.filter(year=current_year()-1):
                             user.is_active = False
                             user.save()
+                    else:
+                        user.is_active = False
+                        user.save()
 
         #3. completeness: if you are a union member, then you must have a compsoc account
         #                 it is active iff you have a union email address
@@ -113,16 +126,15 @@ class Command(NoArgsCommand):
                 user = User.objects.create_user(id,email,password)
                 user.first_name = first
                 user.last_name = last
-                member = Member(user=user,showDetails=False,guest=False)
-                member.save()
                 user.memberjoin_set.create(year=y)
-                if user.email != "":
-                    template_mail(
-                        'Welcome to Compsoc',
-                        'memberinfo/new_user_email',
-                        {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password, 'events':Event.objects.in_future()[:5]},
-                        settings.WEBMASTER_EMAIL,
-                        [])
+                if not settings.DEBUG:
+                    if user.email != "":
+                        template_mail(
+                            'Welcome to Compsoc',
+                            'memberinfo/new_user_email',
+                            {'first': user.first_name, 'last':user.last_name, 'username':user.username, 'password':password, 'events':Event.objects.in_future()[:5]},
+                            settings.WEBMASTER_EMAIL,
+                            [user.email])
 
             #sync info
             user.first_name = first
