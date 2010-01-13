@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from compsoc.settings import DATE_FORMAT_STRING
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
+from django.db.models.signals import post_save,post_delete
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -164,4 +165,8 @@ class MailingList(models.Model):
     name = models.CharField(max_length=255)
     contact_email = models.EmailField(max_length=255)
 '''
-    
+
+def ensure_memberinfo_callback(sender, instance, **kwargs):
+    profile, new = Member.objects.get_or_create(user=instance)
+
+post_save.connect(ensure_memberinfo_callback, sender=User)
