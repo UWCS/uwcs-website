@@ -7,6 +7,10 @@ from django.db.models.signals import post_save,post_delete
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
+    """
+    Used to store auxiliary data to the default profile data for
+    a django User.
+    """
     user = models.OneToOneField(User)
     showDetails = models.BooleanField()
     guest = models.BooleanField()
@@ -167,6 +171,37 @@ class MailingList(models.Model):
 '''
 
 def ensure_memberinfo_callback(sender, instance, **kwargs):
+    """
+    Used to create a Member object for any user that doesn't
+    have it when saving the User, for sanity.
+    """
     profile, new = Member.objects.get_or_create(user=instance)
 
 post_save.connect(ensure_memberinfo_callback, sender=User)
+
+class ExecPosition(models.Model):
+    """
+    Represents an exec position
+    """
+    title = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ['title']
+
+    def __unicode__(self):
+        return self.title
+
+class ExecPlacement(models.Model):
+    """
+    Represents a time period of working on the exec
+    """
+    position = models.ForeignKey(ExecPosition)
+    user = models.ForeignKey(User)
+    start = models.DateField()
+    end = models.DateField()
+
+    class Meta:
+        ordering = ['start']
+
+    def __unicode__(self):
+        return "%s/%s - %s" % (self.start.year, self.end.year, self.position)

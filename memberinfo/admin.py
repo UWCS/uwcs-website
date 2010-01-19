@@ -46,4 +46,5 @@ admin.site.register(MemberJoin,MemberJoinAdmin)
 #admin.site.register(Quota)
 admin.site.register(MailingList)
 admin.site.register(Term)
-
+admin.site.register(ExecPosition)
+admin.site.register(ExecPlacement)
