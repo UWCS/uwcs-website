@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from itertools import groupby
+from datetime import datetime
 # Create your views here.
 
 class VoteForm(ModelForm):
@@ -56,6 +57,13 @@ def validate_vote_forms(forms):
 @login_required
 def details(request, object_id):
     election = get_object_or_404(Election, id=object_id)
+
+    # if proxy votes have closed
+    if datetime.now() > election.close_date:
+        return render_to_response('elections/closed.html', {
+            'election':election,
+        },context_instance=RequestContext(request))
+
     # if the user has already voted for this election
     if Vote.objects.filter(voter=request.user, candidate__position__election=election):
         return render_to_response('elections/thankyou.html', {

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Election(models.Model):
     date = models.DateTimeField()
-    #close_date = models.DateTimeField()
+    close_date = models.DateTimeField()
 
     def __unicode__(self):
         return "Elections for %s" % self.date.year

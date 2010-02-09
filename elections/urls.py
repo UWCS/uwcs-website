@@ -15,4 +15,5 @@ urlpatterns = patterns('',
         #'queryset':Election.objects.all(),
     #}),
     (r'^details/(?P<object_id>[^/]+)/$', 'elections.views.details'),
+    (r'^summary/(?P<object_id>[^/]+)/$', 'elections.views.summary'),
 )
