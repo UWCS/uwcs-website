@@ -11,19 +11,18 @@
 
 
 {% block pretitle %}
-<div class="tasks">
-    <h1>Common Tasks</h1>
-    <p><a href="/newsletters/generate/">Generate Newsletter</a></p>
-    <p><a href="/admin/comms/communication/add/">Add Minutes</a></p>
-    <p><a href="/admin/events/event/add/">Add Event</a></p>
-</div>
-<br/>
-<div class="Requests">
+<div id="requests">
     <h1>Pending Requests</h1>
     <p><a href="/admin/memberinfo/guests/">{{ guest_request_count }} Guest Account Requests</a></p>
     <p><a href="/admin/memberinfo/accounts/">{{ shell_request_count }} Shell Account Requests</a></p>
     <p><a href="/admin/memberinfo/accounts/">{{ database_request_count }} Database Account Requests</a></p>
     <p><a href="/admin/memberinfo/accounts/">{{ quota_request_count }} Quota Requests</a></p>
+</div>
+<div id="tasks">
+    <h1>Common Tasks</h1>
+    <p><a href="/newsletters/generate/">Generate Newsletter</a></p>
+    <p><a href="/admin/comms/communication/add/">Add Minutes</a></p>
+    <p><a href="/admin/events/event/add/">Add Event</a></p>
 </div>
 <br/>
 {% endblock %}
