@@ -1,0 +1,89 @@
+from django.forms import ModelForm
+from models import Vote, Candidate, Election
+from django.shortcuts import render_to_response
+from django.forms.formsets import formset_factory
+from django.forms.widgets import HiddenInput, Widget, TextInput
+from django import forms
+from django.utils.encoding import StrAndUnicode, smart_unicode, force_unicode
+from django.utils.safestring import mark_safe
+from django.forms.util import flatatt, ErrorDict, ErrorList, ValidationError
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from itertools import groupby
+# Create your views here.
+
+class VoteForm(ModelForm):
+    class Meta:
+        model = Vote
+        fields = ('preference')
+
+def validate_position(vote_forms):
+    """
+    Checks that:
+    1) Each form has a preference of 1-len(candidates)
+    2) No duplicate preferences
+    """
+    candidate_count = len(vote_forms)
+    seen_already = []
+
+    for form in vote_forms:
+        if form.is_valid():
+            p = form.cleaned_data['preference']
+
+            if p < 1:
+                form._errors['preference'] = ErrorList([u"Can't enter a preference above 1"])
+                return False
+            elif p > candidate_count:
+                form._errors['preference'] = ErrorList([u"Can't enter a preference below the number of candidates (%s)" % candidate_count])
+                return False
+            elif p in seen_already:
+                form._errors['preference'] = ErrorList([u"Can't enter duplicate preferences"])
+                return False
+            seen_already.append(p)
+        else:
+            # we take incomplete forms as no further preferences
+            form._errors['preference'] = ErrorList([])
+    return True
+
+def validate_vote_forms(forms):
+    """
+    Breaks up into positions and validates each position
+    """
+    positions = groupby(forms, lambda f: f.instance.candidate.position)
+    return all([validate_position(list(forms)) for position,forms in positions])
+
+@login_required
+def details(request, object_id):
+    election = Election.objects.get(id=object_id)
+    # if the user has already voted for this election
+    if Vote.objects.filter(voter=request.user, candidate__position__election=election):
+        return render_to_response('elections/thankyou.html', {
+            'election':election,
+        },context_instance=RequestContext(request))
+
+    # I officially have no idea how to use formsets for this, sod it.
+    if request.method == 'POST':
+        candidates = Candidate.objects.filter(position__election=object_id)
+        votes = [Vote(candidate=c, voter=request.user) for c in candidates]
+        forms = [VoteForm(request.POST, prefix=str(v.candidate.id), instance=v) for v in votes]
+        if validate_vote_forms(forms):
+            for form in forms:
+                if form.is_valid():
+                    form.save()
+            return render_to_response('elections/thankyou.html', {
+                'election':election
+            },context_instance=RequestContext(request))
+        else:
+            return render_to_response('elections/election_detail.html', {
+                'election':election,
+                'stuff':zip(candidates, forms),
+            },context_instance=RequestContext(request))
+    else:
+        candidates = Candidate.objects.filter(position__election=object_id)
+        votes = [Vote(candidate=c, voter=request.user) for c in candidates]
+        forms = [VoteForm(instance=v, prefix=str(v.candidate.id)) for v in votes]
+        # XXX: RequestContext
+        return render_to_response('elections/election_detail.html', {
+            'election':election,
+            'stuff':zip(candidates, forms),
+        },context_instance=RequestContext(request))

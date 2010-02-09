@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block ttitle %}Elections List{% endblock %}
+
+{% block content %}
+<h2>Compsoc Elections</h2>
+
+<ul>
+{% for election in object_list %}
+    <li><a href="details/{{election.id}}">{{ election.date.year }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

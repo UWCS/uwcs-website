@@ -28,6 +28,7 @@ feeds = {
 
 urlpatterns = patterns('',
     (r'^', include('compsoc.comms.urls')),
+    (r'^elections/', include('elections.urls')),
     (r'^member/', include('compsoc.memberinfo.urls')),
     (r'^events/', include('compsoc.events.urls')),
     (r'^tournaments/', include('compsoc.tournaments.urls')),

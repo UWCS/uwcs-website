@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block ttitle %}{{ election.date.year }} Elections{% endblock %}
+
+{% block content %}
+<h2>{{ election.date.year }} Elections</h2>
+
+<p>1 is the highest preference</p>
+
+<form action="/elections/details/{{ election.id }}/" method="post">
+    {% regroup stuff by 0.position as position_list %}
+    {% for position in position_list %}
+    <div class="post">
+    <h2>{{ position.grouper }}</h2>
+
+    {% for candidate,form in position.list %}
+    <p>Name: {{candidate.user.member.all_name}}</p>
+    <p>Manifesto: {{candidate.manifesto}}</p>
+    {{ form.as_p }}
+    {% endfor %}
+</div>
+    {% endfor %}
+<input type="submit">
+</form>
+{% endblock %}
