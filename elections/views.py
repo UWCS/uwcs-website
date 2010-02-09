@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from models import Vote, Candidate, Election
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,get_object_or_404
 from django.forms.formsets import formset_factory
 from django.forms.widgets import HiddenInput, Widget, TextInput
 from django import forms
@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 from django.forms.util import flatatt, ErrorDict, ErrorList, ValidationError
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from itertools import groupby
 # Create your views here.
 
@@ -54,7 +55,7 @@ def validate_vote_forms(forms):
 
 @login_required
 def details(request, object_id):
-    election = Election.objects.get(id=object_id)
+    election = get_object_or_404(Election, id=object_id)
     # if the user has already voted for this election
     if Vote.objects.filter(voter=request.user, candidate__position__election=election):
         return render_to_response('elections/thankyou.html', {
@@ -87,3 +88,13 @@ def details(request, object_id):
             'election':election,
             'stuff':zip(candidates, forms),
         },context_instance=RequestContext(request))
+
+@staff_member_required
+def summary(request, object_id):
+    election = get_object_or_404(Election, id=object_id)
+
+    votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
+    return render_to_response('elections/election_summary.html',{
+        'votes':votes,
+    },context_instance=RequestContext(request))
+

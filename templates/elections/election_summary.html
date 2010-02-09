@@ -1,0 +1,10 @@
+{% regroup votes by voter as ballots %}
+{% for ballot in ballots %}
+<table>
+    <tr><th>Candidate</th><th>Preference</th>
+    {% for vote in ballot.list %}
+    <tr><td>{{ vote.candidate }}</td><td>{{ vote.preference }}</td>
+    {% endfor %}
+</table>
+{% endfor %}
+
