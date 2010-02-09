@@ -5,10 +5,23 @@ from compsoc.cms.views import handle,list,games,attachments
 from compsoc.search.views import search
 from django.contrib.auth.models import User
 from compsoc.rest import *
+from functools import partial
+import new
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
+from memberinfo.models import ShellAccount,DatabaseAccount,Quota
+
+# inject extra context into the index method (WHY DOES IT HAVE THIS ARGUMENT IF IT DOESN'T LET YOU USE IT!?)
+index_with_extra_context = partial(admin.site.index, extra_context={
+    'guest_request_count':User.objects.filter(is_active=False,member__guest=True).count(),
+    'shell_request_count':ShellAccount.objects.filter(status='RE').count(),
+    'database_request_count':DatabaseAccount.objects.filter(status='RE').count(),
+    'quota_request_count':Quota.objects.filter(status='RE').count(),
+})
+admin.site.index = index_with_extra_context
 
 # See feeds.py for details
 feeds = {
