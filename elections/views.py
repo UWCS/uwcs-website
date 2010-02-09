@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from itertools import groupby
 from datetime import datetime
+from django.contrib.auth.models import User
 # Create your views here.
 
 class VoteForm(ModelForm):
@@ -100,9 +101,38 @@ def details(request, object_id):
 @staff_member_required
 def summary(request, object_id):
     election = get_object_or_404(Election, id=object_id)
-
     votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
+
     return render_to_response('elections/election_summary.html',{
         'votes':votes,
     },context_instance=RequestContext(request))
 
+def checklist(items1, items2):
+    """
+    Returns [(Bool, Item)], where each Item is from the second argument,
+    and the Bool marks whether it existed in the first argument.
+    """
+    ret = [(False,x) for x in items2]
+    for x in items1:
+        try:
+            i = items2.index(x)
+            ret[i] = (True,ret[i][1])
+        except ValueError:
+            pass
+    return ret
+
+def checklist_page(request, object_id):
+    """
+    Renders a simple page with a checklist useful for AGM events
+    """
+    election = get_object_or_404(Election, id=object_id)
+
+    active_users = User.objects.filter(is_active=True).order_by('username')
+    votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
+
+    voter_usernames = [v.voter.username for v in votes]
+    active_usernames = [u.username for u in active_users]
+
+    return render_to_response('elections/checklist.html',{
+        'checklist':checklist(voter_usernames, active_usernames)
+    },context_instance=RequestContext(request))

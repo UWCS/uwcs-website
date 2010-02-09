@@ -1,0 +1,5 @@
+<ul>
+{% for user in checklist %}
+<li>{% if user.0 %}<strike>{% endif %}{{ user.1 }}{% if user.0 %}</strike>{% endif %}</li>
+{% endfor %}
+</ul>
