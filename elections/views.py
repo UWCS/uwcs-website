@@ -59,6 +59,10 @@ def validate_vote_forms(forms):
 def details(request, object_id):
     election = get_object_or_404(Election, id=object_id)
 
+    # guests can't vote
+    if request.user.member.guest:
+        return render_to_response('elections/noguest.html', {}, context_instance=RequestContext(request))
+
     # if proxy votes have closed
     if datetime.now() > election.close_date:
         return render_to_response('elections/closed.html', {
@@ -121,6 +125,7 @@ def checklist(items1, items2):
             pass
     return ret
 
+@staff_member_required
 def checklist_page(request, object_id):
     """
     Renders a simple page with a checklist useful for AGM events
