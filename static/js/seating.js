@@ -274,6 +274,28 @@ var Seating = {
 		
 		this.dropOn = null;
 	},
+
+    fillOrderField : function () {
+		// Now serialise the data...
+		var data = "";
+		var items = document.getElementsByTagName("ul");
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].container == null) continue;
+			if (items[i].id == "unassigned_empty") continue;
+			data = data + items[i].id + "(";
+			var sibling = items[i].firstChild;
+			while(sibling != null) {
+				if (sibling.nodeName.toLowerCase() != "li") {
+					sibling = sibling.nextSibling;
+					continue;
+				}
+				data += sibling.id + ",";
+				sibling = sibling.nextSibling;
+			}
+			data += ");";
+		}
+		document.getElementById('order').value = data;
+    },
 	
 	// Calculates the element being dropped on, and whether to insert above or below it.
 	calculateDropElement : function (event) {
