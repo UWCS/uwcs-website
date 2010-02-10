@@ -15,13 +15,20 @@ admin.autodiscover()
 from memberinfo.models import ShellAccount,DatabaseAccount,Quota
 
 # inject extra context into the index method (WHY DOES IT HAVE THIS ARGUMENT IF IT DOESN'T LET YOU USE IT!?)
-index_with_extra_context = partial(admin.site.index, extra_context={
-    'guest_request_count':User.objects.filter(is_active=False,member__guest=True).count(),
-    'shell_request_count':ShellAccount.objects.filter(status='RE').count(),
-    'database_request_count':DatabaseAccount.objects.filter(status='RE').count(),
-    'quota_request_count':Quota.objects.filter(status='RE').count(),
-})
-admin.site.index = index_with_extra_context
+def create_index(index):
+    def index_with_extra_context(*args, **kwargs):
+        extra_context = {
+            'guest_request_count':User.objects.filter(is_active=False,member__guest=True).count(),
+            'shell_request_count':ShellAccount.objects.filter(status='RE').count(),
+            'database_request_count':DatabaseAccount.objects.filter(status='RE').count(),
+            'quota_request_count':Quota.objects.filter(status='RE').count(),
+        }
+        kwargs['extra_context'] = extra_context
+        return index(*args, **kwargs)
+
+    return index_with_extra_context
+
+admin.site.index = create_index(admin.site.index)
 
 # See feeds.py for details
 feeds = {
