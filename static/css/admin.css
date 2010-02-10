@@ -216,9 +216,7 @@ a:hover {
 	color: #46B;
 }
 input, input, textarea, select{
-	color: #ddd;
 	border: 1px solid #888;
-	background-color: #181818;
 }
 
 #footer, #container {
