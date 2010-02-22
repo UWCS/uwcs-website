@@ -569,3 +569,7 @@ pre {
 	background-color: #111;
 	overflow: auto;
 }
+
+.errorlist li {
+    background-color: red;
+}

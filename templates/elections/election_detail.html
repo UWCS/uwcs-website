@@ -16,12 +16,12 @@
     <h2>{{ position.grouper }}</h2>
 
     {% for candidate,form in position.list %}
-    <p>Name: {{candidate.user.member.all_name}}</p>
+    <p><b>Name: {{candidate.user.member.all_name}}</b></p>
     <p>Manifesto: {{candidate.manifesto}}</p>
     {{ form.as_p }}
     {% endfor %}
 </div>
     {% endfor %}
-<input type="submit">
+<input type="submit" value="Cast Vote">
 </form>
 {% endblock %}
