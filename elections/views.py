@@ -57,6 +57,9 @@ def validate_vote_forms(forms):
 
 @login_required
 def details(request, object_id):
+    """
+    Renders the online voting form for a specific election
+    """
     election = get_object_or_404(Election, id=object_id)
 
     # guests can't vote
@@ -104,10 +107,15 @@ def details(request, object_id):
 
 @staff_member_required
 def summary(request, object_id):
+    """
+    Returns a set of ballots entered into the database.
+    """
     election = get_object_or_404(Election, id=object_id)
     votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
 
     return render_to_response('elections/election_summary.html',{
+        'election':election,
+        'now':datetime.now(),
         'votes':votes,
     },context_instance=RequestContext(request))
 
