@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     (r'^details/(?P<object_id>[^/]+)/$', 'elections.views.details'),
     (r'^summary/(?P<object_id>[^/]+)/$', 'elections.views.summary'),
     (r'^checklist/(?P<object_id>[^/]+)/$', 'elections.views.checklist_page'),
+    (r'^ballotform/(?P<object_id>[^/]+)/$', 'elections.views.printable_ballot_form'),
 )

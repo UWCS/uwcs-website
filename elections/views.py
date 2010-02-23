@@ -132,7 +132,31 @@ def checklist_page(request, object_id):
     """
     election = get_object_or_404(Election, id=object_id)
 
-    active_users = User.objects.filter(is_active=True).order_by('username')
+    active_users = User.objects.filter(is_active=True,member__guest=False).order_by('username')
+    votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
+
+    voter_usernames = [v.voter.username for v in votes]
+    active_usernames = [u.username for u in active_users]
+
+    return render_to_response('elections/checklist.html',{
+        'checklist':checklist(voter_usernames, active_usernames)
+    },context_instance=RequestContext(request))
+
+@staff_member_required
+def printable_ballot_form(request, object_id):
+    """
+    Renders a simple printable ballot form.
+    """
+    election = get_object_or_404(Election, id=object_id)
+
+    return render_to_response('elections/ballot_form.html', {
+        'election':election,
+        'candidates':Candidate.objects.filter(position__election=object_id)
+    },context_instance=RequestContext(request))
+
+
+
+    active_users = User.objects.filter(is_active=True,member__guest=False).order_by('username')
     votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
 
     voter_usernames = [v.voter.username for v in votes]

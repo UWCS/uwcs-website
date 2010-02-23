@@ -1,0 +1,19 @@
+<head>
+    <link href="/static/css/ballot_form.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <h1>CompSoc Elections {{ election.date.year }}</h1>
+    <p>For each position, please write a set of preferences for each candidate. 1 indicates
+    you most want that candidate, higher numbers mean lower preference.</p>
+
+    {% regroup candidates by position as positions %}
+    {% for position in positions %}
+    <h1>{{ position.grouper }}
+    <table class="ballot">
+        <tr><th>Name</th><th>Preference</th>
+        {% for candidate in position.list %}
+        <tr><td>{{ candidate.user.member.all_name }}</td><td></td></tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</body>

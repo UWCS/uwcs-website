@@ -14,6 +14,7 @@ class Member(models.Model):
     user = models.OneToOneField(User)
     showDetails = models.BooleanField()
     guest = models.BooleanField()
+    nickname = models.CharField(max_length=20, default='', blank=True)
 
     def is_fresher(self):
         return self.user.username.startswith("%02d" % (date.today().year-2000))
@@ -21,28 +22,28 @@ class Member(models.Model):
     def is_normal(self):
         return not (self.is_fresher() or self.guest)
 
+    def __unicode__(self):
+        return self.all_name()
+
     def name(self):
-        try:
-            nick = self.user.nicknamedetails.nickname
-            if nick.strip():
-                return nick
-        except: pass
-        return self.user.get_full_name()
+        """
+        Formats the name as: "nick" or "first last" if nick
+        is not available
+        """
+        if self.nickname != '':
+            return "%s" % self.nickname
+        else:
+            return "%s %s" % (self.user.first_name, self.user.last_name)
 
     def all_name(self):
-        try:
-            return self.user.nicknamedetails.nickname+" ("+self.user.get_full_name()+")"
-        except NicknameDetails.DoesNotExist:
-            return self.user.get_full_name()
-    
-    def get_nick(self):
-        try:
-            return self.user.nicknamedetails.nickname
-        except NicknameDetails.DoesNotExist:
-            return ""
-
-    def __unicode__(self):
-        return self.name()
+        """
+        Formats the name as: "nick (first last)" or "first last" if nick
+        is not available
+        """
+        if self.nickname != '':
+            return "%s (%s %s)" % (self.nickname, self.user.first_name, self.user.last_name)
+        else:
+            return "%s %s" % (self.user.first_name, self.user.last_name)
 
 # Optional info about one's website
 class WebsiteDetails(models.Model):
@@ -174,8 +175,13 @@ def ensure_memberinfo_callback(sender, instance, **kwargs):
     """
     Used to create a Member object for any user that doesn't
     have it when saving the User, for sanity.
+
+    Also ensures nickname is not blank.
     """
     profile, new = Member.objects.get_or_create(user=instance)
+    #if profile.nickname == '':
+        #profile.nickname = "%s %s" % (instance.first_name, instance.last_name)
+        #profile.save()
 
 post_save.connect(ensure_memberinfo_callback, sender=User)
 

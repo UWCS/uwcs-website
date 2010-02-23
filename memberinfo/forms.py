@@ -52,4 +52,14 @@ class UserModelChoiceField(forms.ModelChoiceField):
     Uses a formatted name as the label for a username
     '''
     def label_from_instance(self, obj):
-        return obj.member.name()
+        return obj.member.all_name()
+
+class MemberModelForm(forms.ModelForm):
+    def __init__(self, member_field, *args, **kwargs):
+        super(MemberModelForm, member_field).__init__(*args, **kwargs)
+        self._member_field = member_field
+
+    def clean(self, *args, **kwargs):
+        super(GoalAdminForm, self).clean(*args, **kwargs)
+        self.cleaned_data[self._member_field] = member=self.cleaned_data[self._member_field].user
+        return self.cleaned_data
