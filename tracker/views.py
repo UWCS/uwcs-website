@@ -15,7 +15,6 @@ from compsoc.memberinfo.forms import UserModelChoiceField
 from django.shortcuts import get_object_or_404
 from django.contrib.admin.models import LogEntry,ADDITION,CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
-from memberinfo.models import Member
 
 COMPLETED_CHOICES = (
     ('C','Completed'),
@@ -66,13 +65,10 @@ class TicketSearchForm(forms.Form):
     '''
     title = forms.CharField(max_length=20,required=False)
     description = forms.CharField(required=False)
-
-    submitter = forms.ModelChoiceField(queryset=Member.objects.all().order_by('user__first_name','user__last_name').select_related(),required=False)
+    submitter = UserModelChoiceField(queryset=User.objects.all(),required=False)
     submitter_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
-
-    assignee = forms.ModelChoiceField(queryset=Member.objects.all().order_by('user__first_name','user__last_name').select_related(),required=False)
+    assignee = UserModelChoiceField(queryset=User.objects.all(),required=False)
     assignee_group = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
-
     goal = forms.ModelChoiceField(queryset=Goal.objects.all(),required=False)
     submitted = DateTimeQueryField(future=False)
     deadline = DateTimeQueryField()

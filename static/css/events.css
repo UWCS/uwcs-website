@@ -120,10 +120,6 @@ ul#eventlist, #eventlist ul {
     border:1px solid #222222;
 }
 
-#calendar td.today {
-	background-color: #000;
-}
-
 #calendar tr {
 	clear: both;
 }
