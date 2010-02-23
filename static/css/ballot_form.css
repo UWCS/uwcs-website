@@ -6,3 +6,8 @@ table {
 table,tr,th,td {
     border: 1px solid black;
 }
+
+.ballot {
+    padding: 10px;
+    border: 1px solid black;
+}

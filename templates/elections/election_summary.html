@@ -9,13 +9,16 @@
 
     {% regroup ballot.list by candidate.position as positions %}
     {% for position in positions %}
-    <h1>{{ position.grouper }}</h1>
-    <table>
-        <tr><th>Candidate</th><th>Preference</th>
-        {% for vote in position.list %}
-        <tr><td>{{ vote.candidate.user.member.all_name }}</td><td>{{ vote.preference }}</td>
-        {% endfor %}
-    </table>
+    <div class="ballot">
+        <h1>{{ position.grouper }}</h1>
+        <table>
+            <tr><th>Candidate</th><th>Preference</th>
+            {% for vote in position.list %}
+            <tr><td>{{ vote.candidate.user.member.all_name }}</td><td>{{ vote.preference }}</td>
+            {% endfor %}
+        </table>
+    </div>
+    <br/>
     {% endfor %}
     {% endfor %}
 </body>
