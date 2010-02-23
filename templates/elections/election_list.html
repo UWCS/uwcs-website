@@ -4,11 +4,19 @@
 
 {% block content %}
 <h2>Compsoc Elections</h2>
-
-<ul>
+<br/>
 {% for election in object_list %}
-    <li><a href="details/{{election.id}}">{{ election.date.year }}</a></li>
+<div class="post">
+    <h3>{{ election.date.year }}</h3>
+    <ul>
+        <li><a href="details/{{election.id}}">vote</a></li>
+        {% if user.is_staff %}
+        <li><a href="checklist/{{election.id}}">vote checklist</a> 
+        <li><a href="ballotform/{{election.id}}">printable ballot form</a></li>
+        <li><a href="summary/{{election.id}}">online votes list</a></li>
+        {% endif %}
+    </ul>
+</div>
 {% endfor %}
-</ul>
 
 {% endblock %}
