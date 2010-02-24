@@ -63,9 +63,12 @@ class Command(NoArgsCommand):
         # a) sync active members info
         # b) deactivate non union members
         #for user in User.objects.exclude(member__guest=True):
+        y = current_year()
         for user in User.objects.filter(is_active=True, member__guest=False):
             if union_lookup.has_key(user.username):
                 (first,last,email) = union_lookup[user.username]
+
+                # sync information
                 user.first_name = first
                 user.last_name = last
                 if email is not None:
@@ -74,6 +77,10 @@ class Command(NoArgsCommand):
                     user.email = ""
                     user.is_active = False
                 user.save()
+
+                # note that they have joined this year
+                MemberJoin.objects.get_or_create(user=user,year=y)
+
                 del union_lookup[user.username]
             # if they're not listed in the union's api, could be a special case
             elif not user.is_staff:
@@ -103,7 +110,6 @@ class Command(NoArgsCommand):
         #5. consistency: ensure there exist current join years for members
         # a) create new accounts for those without
         # b) reactivate accounts for those already with inactive accounts
-        y = current_year()
         for (id,(first,last,email)) in union_lookup.iteritems():
 
             active = True
@@ -142,3 +148,4 @@ class Command(NoArgsCommand):
             user.is_active = active
 
             user.save()
+            MemberJoin.objects.get_or_create(user=user,year=y)
