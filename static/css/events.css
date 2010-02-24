@@ -305,3 +305,13 @@ ul#eventlist, #eventlist ul {
 	background-color: #870606;
 }
 
+#event .details li {
+	line-height: 1.35em;
+	padding-left: 5px;
+	margin-left: 30px;
+}
+
+#event .details ul li {
+	list-style-type: square !important;
+}
+
