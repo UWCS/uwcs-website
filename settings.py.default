@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'compsoc.search',
     'compsoc.tracker',
     'compsoc.choob',
+    'tinymce',
 )
 
 # Sun, 19 Oct 2008 01:32

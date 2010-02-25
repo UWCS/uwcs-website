@@ -85,6 +85,7 @@ urlpatterns = patterns('',
     #XML REST API
     url(r'^xml/user/(\d+)/$', xml_user),
     url(r'^xml/game/(.*?)/?$', xml_games),
+    (r'^tinymce/', include('tinymce.urls')),
 )
 
 # Some legacy link compatibility. I hope this doesn't break anything
