@@ -80,7 +80,7 @@ class Event(models.Model):
     longDescription = models.TextField(verbose_name="Long Description", help_text="This text is displayed on the details page for this event.")
     start = models.DateTimeField(default=datetime.now)
     finish = models.DateTimeField(default=lambda:datetime.now() + timedelta(hours=1))
-    displayFrom = models.DateTimeField(default=datetime.now)
+    displayFrom = models.DateTimeField(default=datetime.now, verbose_name="Display From", help_text="This controls when the event will be visible in the index and feeds.")
     cancelled = models.BooleanField()
 
     objects = EventManager()
@@ -216,13 +216,13 @@ class EventSignup(models.Model):
     This might be renamed to EventSignupOptions
     """
     event = models.OneToOneField(Event)
-    signupsLimit = models.IntegerField()
+    signupsLimit = models.IntegerField(verbose_name="Signups Limit", help_text="0 here implies unlimited signups.")
     open = models.DateTimeField()
     close = models.DateTimeField()
-    fresher_open = models.DateTimeField()
-    guest_open = models.DateTimeField()
+    fresher_open = models.DateTimeField(help_text="This allows you to control whether freshers can sign up earlier or later than regular members.")
+    guest_open = models.DateTimeField(help_text="This allows you to control whether guests can sign up earlier or later than regular members.")
     # this might be renamed to seating_plan for clarity
-    seating = models.ForeignKey(SeatingRoom,blank=True,null=True)
+    seating = models.ForeignKey(SeatingRoom,blank=True,null=True, verbose_name="Seating Plan", help_text="This determines the number of rows and columns the seating plan will allow for.")
 
     def has_seating_plan(self):
         try:
