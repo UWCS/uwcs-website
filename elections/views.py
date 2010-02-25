@@ -111,7 +111,7 @@ def summary(request, object_id):
     Returns a set of ballots entered into the database.
     """
     election = get_object_or_404(Election, id=object_id)
-    votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter')
+    votes = Vote.objects.filter(candidate__position__election=object_id).order_by('voter','candidate__position')
 
     return render_to_response('elections/election_summary.html',{
         'election':election,
