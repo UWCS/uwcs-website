@@ -11,10 +11,11 @@ class EventAdminForm(forms.ModelForm):
         start = data.get('start')
         finish = data.get('finish')
         display_from = data.get('displayFrom')
-        if finish < start:
-            raise forms.ValidationError('Event must finish after its started')
-        if start < display_from:
-            raise forms.ValidationError('Event must be displayed before it starts')
+        if start:
+            if finish and finish < start:
+                raise forms.ValidationError('Event must finish after its started')
+            if display_from and start < display_from:
+                raise forms.ValidationError('Event must be displayed before it starts')
 
         return data
 
