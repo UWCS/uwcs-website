@@ -70,10 +70,14 @@ class EventManager(models.Manager):
         return self.filter(finish__gte=startdate, finish__lte=enddate).order_by('start')
 
 class Event(models.Model):
+    """
+    Represents a single event
+    """
+    # I'm never using camel case for model fields again :p
     type = models.ForeignKey(EventType)
     location = models.ForeignKey(Location)
-    shortDescription = models.CharField(max_length=255)
-    longDescription = models.TextField()
+    shortDescription = models.CharField(max_length=255, verbose_name="Short Description", help_text="This text is displayed on the events index.")
+    longDescription = models.TextField(verbose_name="Long Description", help_text="This text is displayed on the details page for this event.")
     start = models.DateTimeField(default=datetime.now)
     finish = models.DateTimeField(default=lambda:datetime.now() + timedelta(hours=1))
     displayFrom = models.DateTimeField(default=datetime.now)
