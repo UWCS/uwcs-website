@@ -23,15 +23,23 @@ class EventSignupForm(forms.ModelForm):
         model = EventSignup
 
     def clean(self):
+        # any fields that failed to validate have None in this dict
         data = self.cleaned_data
         close = data.get('close')
-        if close < data.get('open'):
-            raise forms.ValidationError('Signups must close after they start')
-        if close < data.get('fresher_open'):
-            raise forms.ValidationError('Fresher Signups must close after they start')
-        if close < data.get('guest_open'):
-            raise forms.ValidationError('Guest Signups must close after they start')
-        if data.get('signupsLimit') < 0:
+        open = data.get('open')
+        fresher_open = data.get('fresher_open')
+        guest_open = data.get('guest_open')
+
+        if close:
+            if open and close < open:
+                raise forms.ValidationError('Signups must close after they start')
+            if fresher_open and close < fresher_open:
+                raise forms.ValidationError('Fresher Signups must close after they start')
+            if guest_open and close < guest_open:
+                raise forms.ValidationError('Guest Signups must close after they start')
+
+        signups_limit = data.get('signupsLimit')
+        if signups_limit and signups_limit < 0:
             raise forms.ValidationError('The signup limit must be positive')
 
         seating = data.get('seating')
