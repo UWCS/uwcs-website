@@ -206,14 +206,20 @@ class SeatingRoom(models.Model):
 
 # Signup Options seperated from Event to normalise and avoid nullable.
 class EventSignup(models.Model):
+    """
+    This represents the signup options for a particular event,
+    e.g Signup limits and time constraints
+    This might be renamed to EventSignupOptions
+    """
     event = models.OneToOneField(Event)
     signupsLimit = models.IntegerField()
     open = models.DateTimeField()
     close = models.DateTimeField()
     fresher_open = models.DateTimeField()
     guest_open = models.DateTimeField()
+    # this might be renamed to seating_plan for clarity
     seating = models.ForeignKey(SeatingRoom,blank=True,null=True)
-    
+
     def has_seating_plan(self):
         try:
             self.seating
@@ -224,6 +230,7 @@ class EventSignup(models.Model):
     def __unicode__(self):
         return self.event.__unicode__()
 
+# choob will register events if we write them to THE FILE
 post_save.connect(write_file_callback, sender=EventSignup)
 post_delete.connect(write_file_callback, sender=EventSignup)
 
@@ -301,13 +308,22 @@ def val_users(query):
 
 class SeatingManager(models.Manager):
     def for_event(self,e):
+        """
+        Get all the seatings for every revision for a specific event
+        """
         return self.filter(revision__event=e)
 
-    def maximums(self,e):
+    def maximums(self, e):
+        """
+        Returns the minimum dimensions required for the seating allocations
+        for a given event e.
+        """
         return reduce(lambda (col,row),o: (max(col,o.col),max(row,o.row)),self.for_event(e),(0,0))
 
 class Seating(models.Model):
-    '''Information about a seat at a revision'''
+    """
+    Information about a seat at a revision
+    """
     user = models.ForeignKey(User)
     revision = models.ForeignKey(SeatingRevision)
     col = models.IntegerField()

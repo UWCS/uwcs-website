@@ -23,6 +23,13 @@ class EventSignupForm(forms.ModelForm):
         model = EventSignup
 
     def clean(self):
+        """
+        Checks the following:
+
+        1) Signup opening times are before signups close
+        2) Signup limit is positive
+        3) The seating plan is sufficiently large for the current seating allocations
+        """
         # any fields that failed to validate have None in this dict
         data = self.cleaned_data
         close = data.get('close')
@@ -43,12 +50,14 @@ class EventSignupForm(forms.ModelForm):
             raise forms.ValidationError('The signup limit must be positive')
 
         seating = data.get('seating')
-        if seating:
+        id = data.get('id')
+
+        # don't bother with this validation for new events (where id is currently unset)
+        if seating and id:
             e = Event.objects.get(eventsignup__pk=data.get('id'))
             (cols,rows) = Seating.objects.maximums(e)
             if rows > seating.max_rows or cols > seating.max_cols:
-                raise forms.ValidationError(u'This seating room is used by is required to be wider or taller than it currently is.')
-        
+                raise forms.ValidationError(u'This seating plan is required to be wider or taller than it currently is.')
         return data
 
 class EventSignupInline(admin.StackedInline):
