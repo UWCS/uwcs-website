@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from compsoc.settings import DATE_FORMAT_STRING
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
-from django.db.models.signals import post_save,post_delete
+from django.db.models.signals import post_save,post_delete,m2m_changed
+from memberinfo.mailman import subscribe_member,unsubscribe_member
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -158,17 +159,33 @@ class Quota(models.Model):
         return str(self.quantity) + " for " + self.user.username + ", currently " + self.status
 
 class MailingList(models.Model):
+    """
+    Represents the info for mailman mailing lists in
+    the reinhardt database, also acts as a proxy
+    to update the mailman database
+    """
     users = models.ManyToManyField(User)
     list = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.list
 
-'''class Society(models.Model):
-    user = models.ForeignKey(User,related_name='society')
-    name = models.CharField(max_length=255)
-    contact_email = models.EmailField(max_length=255)
-'''
+def mailing_list_users_changed(sender, instance, action, **kwargs):
+    """
+    Acts as a callback when the many2many relation
+    containing users for this list is updated.
+
+    Attempts to commit to mailman before the
+    reinhardt database is updated.
+    """
+    if action == "pre_add":
+        pk = kwargs['pk_set'].pop()
+        subscribe_member(User.objects.get(id=pk), instance)
+    elif action == "pre_remove":
+        pk = kwargs['pk_set'].pop()
+        unsubscribe_member(User.objects.get(id=pk), instance)
+
+m2m_changed.connect(mailing_list_users_changed, sender=MailingList.users.through, weak=False)
 
 def ensure_memberinfo_callback(sender, instance, **kwargs):
     """
@@ -178,6 +195,29 @@ def ensure_memberinfo_callback(sender, instance, **kwargs):
     profile, new = Member.objects.get_or_create(user=instance)
 
 post_save.connect(ensure_memberinfo_callback, sender=User)
+
+def sync_email_with_mailman_database(sender, instance, **kwargs):
+    """
+    Used to ensure that the mailman database stays faithful to
+    the reinhardt one when an email address is updated
+    """
+    old_user = User.objects.get(user=instance)
+    raise "current: %s new: %s" % (old_user.email,instance.email)
+    old_address = self.user.email
+    lists = MailingList.objects.filter(users=user)
+
+    # silently update mailman list subscriptions
+    # not sure what to do on mailman throwing an error here
+    for l in lists:
+        mailman_list = MailList.MailList(l.list)
+        mailman_list.ApprovedDeleteMember(user.email, 'bin/remove_members', ack=False, admin_notif=False)
+        mailman_list.ApprovedAddMember(UserDesc(user.member.all_name(),address), ack=False, admin_notif=False)
+        mailman_list.unlock()
+
+    self.user.email = address
+    self.user.save()
+
+#pre_save.connect(sync_email_with_mailman_database, sender=User)
 
 class ExecPosition(models.Model):
     """
