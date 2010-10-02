@@ -179,18 +179,23 @@ def mailing_list_users_changed(sender, instance, action, **kwargs):
     reinhardt database is updated.
     """
     if action == "pre_add":
-        pk_set = kwargs['pk_set']
-        user = User.objects.get(id=list(pk_set)[0])
+        users = User.objects.filter(id__in=kwargs['pk_set'])
         try:
-            subscribe_member(user, instance)
+            for u in users:
+                subscribe_member(user, instance)
         # XXX: need to move away from wrapping the different types of
         # exception all in MailmanError
+        #
+        # preferably here we would check if we can commit all of the users
+        # to the mailman database before trying to
+        #
+        # in the next version. :P -- monk
         except MailmanError: pass
     elif action == "pre_remove":
-        pk_set = kwargs['pk_set']
-        user = User.objects.get(id=list(pk_set)[0])
+        users = User.objects.filter(id__in=kwargs['pk_set'])
         try:
-            unsubscribe_member(user, instance)
+            for u in users:
+                unsubscribe_member(user, instance)
         except MailmanError: pass
 
 m2m_changed.connect(mailing_list_users_changed, sender=MailingList.users.through)
