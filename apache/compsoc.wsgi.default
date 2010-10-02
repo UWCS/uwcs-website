@@ -1,5 +1,6 @@
 import os, sys
 
+# = /path/to/folder/containingdjango
 CUSTOM_DJANGO_PATH = None
 
 # Calculate the path based on the location of the WSGI script.
