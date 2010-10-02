@@ -181,7 +181,7 @@ def mailing_list_users_changed(sender, instance, action, **kwargs):
     if action == "pre_add":
         users = User.objects.filter(id__in=kwargs['pk_set'])
         try:
-            for u in users:
+            for user in users:
                 subscribe_member(user, instance)
         # XXX: need to move away from wrapping the different types of
         # exception all in MailmanError
@@ -194,7 +194,7 @@ def mailing_list_users_changed(sender, instance, action, **kwargs):
     elif action == "pre_remove":
         users = User.objects.filter(id__in=kwargs['pk_set'])
         try:
-            for u in users:
+            for user in users:
                 unsubscribe_member(user, instance)
         except MailmanError: pass
 
