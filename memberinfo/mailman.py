@@ -33,7 +33,7 @@ sys.path.append(sitedir)
 
 # END MAILMAN PATH INCLUSION ---------------------------
 
-from compsoc.memberinfo.models import MailingList
+#from compsoc.memberinfo.models import MailingList
 from Mailman import Utils
 from Mailman import MailList
 from django.contrib.auth.models import User
@@ -91,8 +91,9 @@ def subscribe_member(user,list):
     try:
         mailman_list = MailList.MailList(list.list)
         try:
-            # 1 = send welcome message
-            mailman_list.ApprovedAddMember(UserDesc(user.member.all_name(),user.email), 1, 0)
+            # ack = send notification to user about being subscribed to list
+            # just easier not to do this especially when testing :P
+            mailman_list.ApprovedAddMember(UserDesc(user.member.all_name(),user.email), ack=False, admin_notif=False)
             mailman_list.Save()
         except Errors.MMAlreadyAMember:
             raise MailmanError('User is already a member')

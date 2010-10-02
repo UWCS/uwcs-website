@@ -4,7 +4,7 @@ from compsoc.settings import DATE_FORMAT_STRING
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
 from django.db.models.signals import post_save,post_delete,m2m_changed
-from memberinfo.mailman import subscribe_member,unsubscribe_member
+from memberinfo.mailman import subscribe_member,unsubscribe_member,MailmanError
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -179,13 +179,21 @@ def mailing_list_users_changed(sender, instance, action, **kwargs):
     reinhardt database is updated.
     """
     if action == "pre_add":
-        pk = kwargs['pk_set'].pop()
-        subscribe_member(User.objects.get(id=pk), instance)
+        pk_set = kwargs['pk_set']
+        user = User.objects.get(id=list(pk_set)[0])
+        try:
+            subscribe_member(user, instance)
+        # XXX: need to move away from wrapping the different types of
+        # exception all in MailmanError
+        except MailmanError: pass
     elif action == "pre_remove":
-        pk = kwargs['pk_set'].pop()
-        unsubscribe_member(User.objects.get(id=pk), instance)
+        pk_set = kwargs['pk_set']
+        user = User.objects.get(id=list(pk_set)[0])
+        try:
+            unsubscribe_member(user, instance)
+        except MailmanError: pass
 
-m2m_changed.connect(mailing_list_users_changed, sender=MailingList.users.through, weak=False)
+m2m_changed.connect(mailing_list_users_changed, sender=MailingList.users.through)
 
 def ensure_memberinfo_callback(sender, instance, **kwargs):
     """
