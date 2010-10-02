@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from compsoc.settings import DATE_FORMAT_STRING
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
-from django.db.models.signals import post_save,post_delete,m2m_changed
+from django.db.models.signals import post_save,post_delete,m2m_changed,pre_save
 from memberinfo.mailman import subscribe_member,unsubscribe_member,MailmanError
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
@@ -208,24 +208,28 @@ def sync_email_with_mailman_database(sender, instance, **kwargs):
     """
     Used to ensure that the mailman database stays faithful to
     the reinhardt one when an email address is updated
+
+    Intended to be triggered pre_save, and act when a user changes
+    their email address
     """
-    old_user = User.objects.get(user=instance)
-    raise "current: %s new: %s" % (old_user.email,instance.email)
-    old_address = self.user.email
-    lists = MailingList.objects.filter(users=user)
+    try:
+        old_user = User.objects.get(id=instance.id)
+    except User.DoesNotExist:
+        old_user = instance
+
+    lists = MailingList.objects.filter(users=instance)
 
     # silently update mailman list subscriptions
-    # not sure what to do on mailman throwing an error here
+    # not sure what to do on mailman throwing an error here yet
     for l in lists:
-        mailman_list = MailList.MailList(l.list)
-        mailman_list.ApprovedDeleteMember(user.email, 'bin/remove_members', ack=False, admin_notif=False)
-        mailman_list.ApprovedAddMember(UserDesc(user.member.all_name(),address), ack=False, admin_notif=False)
-        mailman_list.unlock()
+        try:
+            unsubscribe_member(old_user, l)
+        except MailmanError: pass
+        try:
+            subscribe_member(instance, l)
+        except MailmanError: pass
 
-    self.user.email = address
-    self.user.save()
-
-#pre_save.connect(sync_email_with_mailman_database, sender=User)
+pre_save.connect(sync_email_with_mailman_database, sender=User)
 
 class ExecPosition(models.Model):
     """
