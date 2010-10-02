@@ -79,7 +79,9 @@ TERMS = (
 )
 
 class Term(models.Model):
-    '''Stores date information about terms'''
+    """
+    Stores date information about terms
+    """
     start_date = models.DateField()
     start_number = models.IntegerField()
     length = models.IntegerField()
@@ -166,6 +168,17 @@ class MailingList(models.Model):
     """
     users = models.ManyToManyField(User)
     list = models.CharField(max_length=30)
+
+    def sync_users_to_mailman(self):
+        """
+        Convenience method used when you want to push all
+        the users for this MailingList to its respective
+        mailman list
+        """
+        try:
+            for user in self.users():
+                subscribe_member(user, self)
+        except MailmanError: pass
 
     def __unicode__(self):
         return self.list
@@ -262,3 +275,12 @@ class ExecPlacement(models.Model):
 
     def __unicode__(self):
         return "%s/%s - %s" % (self.start.year, self.end.year, self.position)
+
+class Society(User):
+    """
+    A society is just a User which also has a related
+    user who is responsible for it
+
+    what should it's first and last name be? blank and blank?
+    """
+    representative = models.ForeignKey(User, related_name="represented_societies")
