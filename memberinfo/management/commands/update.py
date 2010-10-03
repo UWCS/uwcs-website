@@ -28,9 +28,11 @@ def get_data():
     # XXX: in python 2.6, urllib actually has timeout support
     # this should then be updated
     timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(5)
-    content = urlopen(PREFIX+UNION_API_KEY+'/').read()
-    socket.setdefaulttimeout(timeout)
+    try:
+        socket.setdefaulttimeout(5)
+        content = urlopen(PREFIX+UNION_API_KEY+'/').read()
+    finally:
+        socket.setdefaulttimeout(timeout)
 
     doc = xml.dom.minidom.parseString(content)
     lookup = {}
