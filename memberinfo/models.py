@@ -152,11 +152,15 @@ class DatabaseAccount(models.Model):
         return self.name
 
 class Quota(models.Model):
+    """
+    Represents a quota upgrade for a user shell account
+    """
     user = models.ForeignKey(User)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(help_text="How many quota upgrades to order")
+    quota_size = models.IntegerField(help_text="How much each upgrade is worth")
     status = models.CharField(max_length=2,choices=QUOTA_STATUS)
-    date = models.DateTimeField()
-    
+    date = models.DateTimeField(help_text="The date of the original request")
+
     def __unicode__(self):
         return str(self.quantity) + " for " + self.user.username + ", currently " + self.status
 
