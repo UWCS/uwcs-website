@@ -8,6 +8,7 @@ from django.contrib.auth.models import User,Group
 from compsoc.memberinfo.models import *
 from compsoc.shortcuts import *
 from events.models import Event
+import socket
 
 PREFIX = 'http://www.sunion.warwick.ac.uk/portal/membershipapi/listMembers/'
  
@@ -23,7 +24,14 @@ def get_data():
     Relies on their web service
     PRECOND: compsoc.settings.UNION_API_KEY is set
     '''
+
+    # XXX: in python 2.6, urllib actually has timeout support
+    # this should then be updated
+    timeout = socket.getdefaulttimeout()
+    socket.setdefaulttimeout(5)
     content = urlopen(PREFIX+UNION_API_KEY+'/').read()
+    socket.setdefaulttimeout(timeout)
+
     doc = xml.dom.minidom.parseString(content)
     lookup = {}
     for node in doc.getElementsByTagName('Member'):
