@@ -97,8 +97,9 @@
         <h4><div id="qh" style="display:inline">&#x21E8;&nbsp;</div>Quota</h4>
     </a>
     <div id="quota" style="display:none">
-    <p>This is the quota related to your shell account.  Your total quota is {{ total_quota }}MB.  The current base quota is 1000MB and you have additionally bought {{ quota }}
-    blocks of extra quota.</p>
+	<p>This is the quota related to your shell account.  Your total quota is {{
+	total_quota }}MB.  The current base quota is 1000MB and you have
+	additionally bought {{ quota }}MB of extra quota.</p>
     {% if req_quota %}
         <p>You have {{ req_quota }}MB of quota on request.</p>
     {% endif %}

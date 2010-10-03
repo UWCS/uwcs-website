@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from compsoc.settings import DATE_FORMAT_STRING
+from compsoc.settings import DATE_FORMAT_STRING,QUOTA_INC
 from compsoc.shortcuts import *
 from datetime import datetime, timedelta
 from django.db.models.signals import post_save,post_delete,m2m_changed,pre_save
@@ -157,7 +157,7 @@ class Quota(models.Model):
     """
     user = models.ForeignKey(User)
     quantity = models.IntegerField(help_text="How many quota upgrades to order")
-    quota_size = models.IntegerField(help_text="How much each upgrade is worth")
+    quota_size = models.IntegerField(default=QUOTA_INC,help_text="How much each upgrade is worth")
     status = models.CharField(max_length=2,choices=QUOTA_STATUS)
     date = models.DateTimeField(help_text="The date of the original request")
 

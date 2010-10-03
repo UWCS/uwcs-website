@@ -74,14 +74,16 @@ def index(request):
         + sum([q*s for (q,s) in Quota.objects.filter(user=u,status='PR').values_list('quantity','quota_size')])
     )
 
+    extra_quota = sum([q*s for (q,s) in Quota.objects.filter(user=u,status='PR').values_list('quantity','quota_size')])
+    total_quota = BASE_QUOTA + extra_quota
+
     return render_to_response('memberinfo/index.html',{
         'shell': shell,
         'shell_form':ShellForm(),
         'db': db,
         'db_form':DatabaseForm(),
-        'quota': getQuota('PR'),
+        'quota': extra_quota,
         'req_quota': getQuota('RE')*QUOTA_INC,
-        #'total_quota':getQuota('PR')*QUOTA_INC+BASE_QUOTA,
         'total_quota':total_quota,
         'quota_form':QuotaForm(),
         'name_form':name_form,

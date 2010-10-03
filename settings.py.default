@@ -26,7 +26,7 @@ UNION_API_KEY = ''
 CHOOB_FILE = os.path.join(os.getcwd(), 'choob.data')
 
 BASE_QUOTA = 1000
-QUOTA_INC = 500
+QUOTA_INC = 1000
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
