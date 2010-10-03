@@ -166,10 +166,10 @@ class MailingList(models.Model):
     the reinhardt database, also acts as a proxy
     to update the mailman database
     """
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, blank=True)
     list = models.CharField(max_length=30)
 
-    def sync_users_to_mailman(self):
+    def export_to_mailman(self):
         """
         Convenience method used when you want to push all
         the users for this MailingList to its respective
@@ -179,6 +179,19 @@ class MailingList(models.Model):
             for user in self.users():
                 subscribe_member(user, self)
         except MailmanError: pass
+
+    def clear_mailman_list(self):
+        """
+        Unsubscribes everyone from the mailman list
+        """
+        pass
+
+    def import_from_mailman(self):
+        """
+        This clears this mailing list and adds all the
+        members who are subscribed in the mailman database
+        """
+        pass
 
     def __unicode__(self):
         return self.list
