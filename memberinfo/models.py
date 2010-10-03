@@ -167,7 +167,7 @@ class MailingList(models.Model):
     to update the mailman database
     """
     users = models.ManyToManyField(User, blank=True)
-    list = models.CharField(max_length=30)
+    list = models.CharField(max_length=30, unique=True)
 
     def export_to_mailman(self):
         """
