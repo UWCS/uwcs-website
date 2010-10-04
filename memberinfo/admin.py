@@ -1,6 +1,6 @@
 from compsoc.memberinfo.models import *
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin,UserChangeForm
+from django.contrib.auth.admin import UserAdmin,UserChangeForm,UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class MemberJoinAdmin(admin.ModelAdmin):
@@ -38,6 +38,10 @@ class SocietyChangeForm(UserChangeForm):
     class Meta:
         model = Society
 
+class SocietyCreationForm(UserCreationForm):
+    class Meta:
+        model = Society
+
 class SocietyAdmin(UserAdmin):
     def __init2__(self, *args, **kwargs):
         super(SocietyAdmin, self).__init__(*args,**kwargs)
@@ -50,6 +54,8 @@ class SocietyAdmin(UserAdmin):
                ShellAccountInline,
                DatabaseAccountInline,
                QuotaInline,]
+
+    # these are used for the modify form
     fieldsets = (
         (None, {'fields': ('username', 'password', 'representative')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -57,9 +63,21 @@ class SocietyAdmin(UserAdmin):
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (_('Groups'), {'fields': ('groups',)}),
     )
+
+    # these are used for the creation form
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'representative')}
+        ),
+    )
+
+    # these are used in the index
     list_display = ('username', 'representative', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
+
     form = SocietyChangeForm
+    add_form = SocietyCreationForm
 
 # re-register useradmin
 admin.site.unregister(User)
