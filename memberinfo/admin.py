@@ -1,6 +1,7 @@
 from compsoc.memberinfo.models import *
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin,UserChangeForm
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 class MemberJoinAdmin(admin.ModelAdmin):
     list_filter = ['year']
@@ -33,20 +34,32 @@ class MyUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
+class SocietyChangeForm(UserChangeForm):
+    class Meta:
+        model = Society
+
 class SocietyAdmin(UserAdmin):
-    def __init__(self, *args, **kwargs):
+    def __init2__(self, *args, **kwargs):
         super(SocietyAdmin, self).__init__(*args,**kwargs)
-        fields = list(UserAdmin.fieldsets[0][1]['fields'])
+        fields = list(SocietyAdmin.fieldsets[0][1]['fields'])
         fields.append('representative')
-        UserAdmin.fieldsets[0][1]['fields'] = fields
+        SocietyAdmin.fieldsets[0][1]['fields'] = fields
     inlines = [MemberInline,
                NicknameDetailsInline,
                WebsiteDetailsInline,
                ShellAccountInline,
                DatabaseAccountInline,
                QuotaInline,]
+    fieldsets = (
+        (None, {'fields': ('username', 'password', 'representative')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Groups'), {'fields': ('groups',)}),
+    )
     list_display = ('username', 'representative', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
+    form = SocietyChangeForm
 
 # re-register useradmin
 admin.site.unregister(User)
@@ -63,4 +76,5 @@ admin.site.register(MailingList)
 admin.site.register(Term)
 admin.site.register(ExecPosition)
 admin.site.register(ExecPlacement)
+
 admin.site.register(Society, SocietyAdmin)
