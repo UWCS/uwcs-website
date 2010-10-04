@@ -301,3 +301,6 @@ class Society(User):
     what should it's first and last name be? blank and blank?
     """
     representative = models.ForeignKey(User, related_name="represented_societies")
+
+    class Meta:
+        verbose_name_plural = "Societies"

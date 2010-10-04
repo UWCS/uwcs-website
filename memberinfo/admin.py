@@ -33,6 +33,16 @@ class MyUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
+class SocietyAdmin(UserAdmin):
+    inlines = [MemberInline,
+               NicknameDetailsInline,
+               WebsiteDetailsInline,
+               ShellAccountInline,
+               DatabaseAccountInline,
+               QuotaInline,]
+    list_display = ('username', 'representative', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
+    list_filter = ('is_staff', 'is_superuser', 'is_active')
+
 # re-register useradmin
 admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
@@ -48,3 +58,4 @@ admin.site.register(MailingList)
 admin.site.register(Term)
 admin.site.register(ExecPosition)
 admin.site.register(ExecPlacement)
+admin.site.register(Society, SocietyAdmin)
