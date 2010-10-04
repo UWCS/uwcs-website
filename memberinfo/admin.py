@@ -34,6 +34,11 @@ class MyUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 class SocietyAdmin(UserAdmin):
+    def __init__(self, *args, **kwargs):
+        super(SocietyAdmin, self).__init__(*args,**kwargs)
+        fields = list(UserAdmin.fieldsets[0][1]['fields'])
+        fields.append('representative')
+        UserAdmin.fieldsets[0][1]['fields'] = fields
     inlines = [MemberInline,
                NicknameDetailsInline,
                WebsiteDetailsInline,
