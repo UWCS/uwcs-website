@@ -2,6 +2,7 @@ from compsoc.memberinfo.models import *
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin,UserChangeForm,UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.forms import widgets,ModelChoiceField
 
 class MemberJoinAdmin(admin.ModelAdmin):
     list_filter = ['year']
@@ -35,19 +36,16 @@ class MyUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 class SocietyChangeForm(UserChangeForm):
+    representative = ModelChoiceField(queryset = User.objects.order_by('username'))
     class Meta:
         model = Society
 
 class SocietyCreationForm(UserCreationForm):
+    representative = ModelChoiceField(queryset = User.objects.order_by('username'))
     class Meta:
         model = Society
 
 class SocietyAdmin(UserAdmin):
-    def __init2__(self, *args, **kwargs):
-        super(SocietyAdmin, self).__init__(*args,**kwargs)
-        fields = list(SocietyAdmin.fieldsets[0][1]['fields'])
-        fields.append('representative')
-        SocietyAdmin.fieldsets[0][1]['fields'] = fields
     inlines = [MemberInline,
                NicknameDetailsInline,
                WebsiteDetailsInline,
