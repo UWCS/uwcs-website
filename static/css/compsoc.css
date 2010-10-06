@@ -272,8 +272,13 @@ a.edit {
 }
 
 .box label {
-	margin: 0 20px;
+	/*margin: 0 20px;*/
 	font-weight: bold;
+	float: left;
+	width: 7em;
+	margin-right: 1em;
+	text-align: right;
+	line-height: 1.5em;
 }
 
 .box .input {
@@ -573,3 +578,4 @@ pre {
 .errorlist li {
     background-color: red;
 }
+
