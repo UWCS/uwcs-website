@@ -14,7 +14,7 @@ class Society(models.Model):
         verbose_name_plural = "Societies"
 
     def __unicode__(self):
-        return "%s (su%d)" % (self.name, self.number)
+        return "%s (%d)" % (self.name, self.number)
 
 class SocietyContact(models.Model):
     """

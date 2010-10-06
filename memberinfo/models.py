@@ -304,3 +304,5 @@ class Society(User):
 
     class Meta:
         verbose_name_plural = "Societies"
+
+post_save.connect(ensure_memberinfo_callback, sender=Society)

@@ -26,32 +26,50 @@ class QuotaInline(admin.TabularInline):
     model = Quota
 
 class MyUserAdmin(UserAdmin):
-    inlines = [MemberInline,
-               NicknameDetailsInline,
-               WebsiteDetailsInline,
-               ShellAccountInline,
-               DatabaseAccountInline,
-               QuotaInline,]
+    """
+    Customised user admin that includes the inlines
+    for optional data such as website details or nickname
+    """
+    inlines = [
+        MemberInline,
+        NicknameDetailsInline,
+        WebsiteDetailsInline,
+        ShellAccountInline,
+        DatabaseAccountInline,
+        QuotaInline,
+    ]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 class SocietyChangeForm(UserChangeForm):
+    """
+    Form to modify the details of a Society object
+    """
     representative = ModelChoiceField(queryset = User.objects.order_by('username'))
     class Meta:
         model = Society
 
 class SocietyCreationForm(UserCreationForm):
+    """
+    Form to create a new Society object
+    """
     representative = ModelChoiceField(queryset = User.objects.order_by('username'))
     class Meta:
         model = Society
 
 class SocietyAdmin(UserAdmin):
-    inlines = [MemberInline,
-               NicknameDetailsInline,
-               WebsiteDetailsInline,
-               ShellAccountInline,
-               DatabaseAccountInline,
-               QuotaInline,]
+    """
+    Customised admin for a Society object. Includes the
+    useful inlines for this model and extra field which
+    represents the User acting as the current contact for this
+    society
+    """
+    inlines = [
+        WebsiteDetailsInline,
+        ShellAccountInline,
+        DatabaseAccountInline,
+        QuotaInline,
+    ]
 
     # these are used for the modify form
     fieldsets = (
