@@ -98,7 +98,7 @@ class Command(NoArgsCommand):
                 ex, created = Group.objects.get_or_create(name=EX_EXEC_GROUP_NAME)
 
                 # if not on the exec at some point or a society
-                if not (user.groups.filter(name=EX_EXEC_GROUP_NAME) or Society.objects.filter(user_ptr=u))
+                if not (user.groups.filter(name=EX_EXEC_GROUP_NAME) or Society.objects.filter(user_ptr=user)):
                     try:
                         week = warwick_week_for(datetime.now())
                     except Term.DoesNotExist:
