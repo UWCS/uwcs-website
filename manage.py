@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-import sys
-sys.path.insert(0,"/home/new-website/Django-1.2.3/")
-
 from django.core.management import execute_manager
 try:
     import settings # Assumed to be in the same directory.
