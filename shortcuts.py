@@ -20,7 +20,7 @@ def pair_map(f,list):
 
 def current_year():
     from compsoc.memberinfo.models import Term
-    return Term.objects.filter(start_number=1).order_by('start_date').reverse()[0].start_date.year
+    return Term.objects.filter(start_date__lte=datetime.today(),start_number=1).latest('start_date').start_date.year
 
 def get(tuples,key):
     for (s,l) in tuples:
