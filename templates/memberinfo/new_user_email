@@ -1,8 +1,8 @@
 Dear {{ first }} {{ last }},
 
-You are being sent this email because you've joined the University of
-Warwick Computing Society.  We have been given you an account
-on our website, http://uwcs.co.uk/. To login just go to http://uwcs.co.uk/login/.
+You are being sent this email because you've joined the University of Warwick
+Computing Society.  We have given you an account on our website,
+http://uwcs.co.uk/. To login just go to http://uwcs.co.uk/login/.
 
 Your Username is {{ username }}
 Your Password is {{ password }}
