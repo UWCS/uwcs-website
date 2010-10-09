@@ -579,3 +579,11 @@ pre {
     background-color: red;
 }
 
+#facebook_like {
+	width: 100px;
+	float: right;
+	margin-left:10px;
+	background-color: #181818;
+	text-align:center;
+	border: 1px solid #333;
+}
