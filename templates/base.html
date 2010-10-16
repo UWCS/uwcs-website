@@ -65,6 +65,7 @@
 				<li {% block about %}{% endblock %} ><a href="/cms/about">About</a></li>
 				<li {% block contact %}{% endblock %} ><a href="/cms/contact">Contact</a></li>
 				<li {% block tickets %}{% endblock %} ><a href="/tickets/">Tickets</a></li>
+				<li><a href="http://forums.uwcs.co.uk">Forum</a></li>
 				{% if user.is_staff %}
 					<li {% block adminu %}{% endblock %}><a href="/admin">Admin</a></li>
 				{% endif %}
