@@ -55,7 +55,7 @@ class EventSignupForm(forms.ModelForm):
 
         # don't bother with this validation for new events (where id is currently unset)
         if seating and id:
-            e = Event.objects.get(eventsignup__pk=data.get('id'))
+            e = Event.objects.get(eventsignup=data.get('id'))
             (cols,rows) = Seating.objects.maximums(e)
             if rows > seating.max_rows or cols > seating.max_cols:
                 raise forms.ValidationError(u'This seating plan is required to be wider or taller than it currently is.')
