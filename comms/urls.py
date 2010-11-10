@@ -36,7 +36,7 @@ urlpatterns += patterns('django.views.generic.list_detail',
     (r'^details/(?P<object_id>\d+)/$', 'object_detail',{
         'queryset':Communication.objects.all(),
         'extra_context':{
-            'future':lambda: future_events(),
+            'future':lambda: Event.objects.in_future().select_related('type'),
         },
     }),
 ) + patterns('django.views.generic.date_based',

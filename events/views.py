@@ -14,7 +14,7 @@ from pytz import timezone
 import vobject
 import re
 
-from compsoc.events.models import *
+from models import *
 from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING,TIME_ZONE
 from compsoc.memberinfo.models import warwick_week_for,Term
 from compsoc.shortcuts import begin_week,path_processor
@@ -75,7 +75,7 @@ def events_list(request):
     return render_to_response('events/list.html', {
         'breadcrumbs': [('/','home'),('/events/','events')],
         'events':lookup,
-        'future':future_events()
+        'future':Event.objects.in_future().select_related('type'),
     },context_instance=RequestContext(request,{},[path_processor]))
 
 def calendar(request,delta):
@@ -116,7 +116,7 @@ def calendar(request,delta):
         'current':date.today(),
         'prev':offset-1,
         'next':offset+1,
-        'future':future_events(),
+        'future':Event.objects.in_future().select_related('type'),
     },context_instance=RequestContext(request,{},[path_processor]))
 
 def valid_signup(user,event):
@@ -131,7 +131,7 @@ def valid_signup(user,event):
         else:
             can_signup &= s.open < now
     else:
-        can_signup = False
+        can_signup = false
     return can_signup
     
 def details(request,event_id):
@@ -151,8 +151,8 @@ def details(request,event_id):
         'event':event,
         'signups':signups,
         'reserved':reserved,
-        'can_edit':request.user.is_staff if request.user else False,
-        'future':future_events(),
+        'can_edit':request.user.is_staff if request.user else false,
+        'future':Event.objects.in_future().select_related('type'),
         'is_displayed':event.is_displayed(),
     }
 
@@ -180,7 +180,7 @@ def seating(request, event_id, revision_no=None):
     e = get_object_or_404(Event, id=event_id)
     dict = {
             'event':e,
-            'future':future_events(),
+            'future':Event.objects.in_future().select_related('type'),
            }
     try:
         signup = e.eventsignup
@@ -415,6 +415,6 @@ def activity(request):
     return render_to_response('events/activity.html', {
         'breadcrumbs': [('/','home'),('/events/','events'),('/events/activity/','activity')],
         'members': members,
-        'future':future_events()
+        'future':Event.objects.in_future().select_related('type'),
     },context_instance=RequestContext(request,{},[path_processor]))
 
