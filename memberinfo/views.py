@@ -371,7 +371,11 @@ def create_guest(request):
             u.set_unusable_password()
             u.is_active = False
             u.save()
-            Member.objects.create(user=u,guest=True,showDetails=False)
+
+            member = u.member
+            member.guest = True
+            member.save()
+
             NicknameDetails.objects.create(user=u,nickname=name)
             template_mail(
                 'Guest account request',
