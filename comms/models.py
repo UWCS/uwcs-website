@@ -11,6 +11,9 @@ COMMS_TYPE = (
 )
 
 def lookup(item_type):
+    """
+    Returns stuff in some structure that nothing else uses, really.
+    """
     data = Communication.objects.filter(type=item_type).order_by('-date')
     store = {}
     for comm in data:

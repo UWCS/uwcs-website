@@ -15,7 +15,7 @@ def get_dict(item_type,paginate=True,intro=False):
         'template_name':'comms/list.html',
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
-            'dates':lambda: lookup(item_type),
+            'dates':lambda: Communication.objects.filter(type=item_type).order_by('-date').values('date'),
             'future':lambda: future_events(),
             'intro':intro,
         },
