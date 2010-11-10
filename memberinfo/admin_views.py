@@ -10,7 +10,8 @@ from compsoc.settings import COMPSOC_EXEC_EMAIL,COMPSOC_TECHTEAM_EMAIL
 @user_passes_test(lambda u: u.is_staff)
 def guest_list(request):
     return render_to_response('admin/memberinfo/member/guests.html', {
-        'guests':filter(lambda u: u.member.guest and not u.is_active,User.objects.all()),
+        #'guests':filter(lambda u: u.member.guest and not u.is_active,User.objects.all()),
+        'guests':User.objects.filter(member__guest=True,is_active=False).select_related('guestreason'),
     },context_instance=RequestContext(request,{},[path_processor]))
 
 @user_passes_test(lambda u: u.is_staff)

@@ -45,6 +45,13 @@ class Member(models.Model):
     def __unicode__(self):
         return self.name()
 
+class GuestReason(models.Model):
+    """
+    Reflects a reason for a particular account wanting to be a guest account
+    """
+    user = models.OneToOneField(User)
+    reason = models.TextField(help_text="This should reflect why you want a guest account and want your connection to the society is")
+
 # Optional info about one's website
 class WebsiteDetails(models.Model):
     user = models.OneToOneField(User)

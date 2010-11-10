@@ -6,13 +6,14 @@
 
 {% block content %}
     <table>
-    <tr><th>Username</th><th>Email</th></tr>
+    <tr><th/><th/><th>Username</th><th>Email</th><th>Reason</th></tr>
     {% for acc in guests %}
         <tr>
-            <td>{{ acc.username }}</td>
-            <td>{{ acc.email }}</td>
             <td><a href="/admin/memberinfo/acceptguest/{{ acc.id }}/">accept</a></td>
             <td><a href="/admin/memberinfo/rejectguest/{{ acc.id }}/">reject</a></td>
+            <td>{{ acc.username }}</td>
+            <td>{{ acc.email }}</td>
+            <td>{{ acc.guestreason.reason }}</div>
         </tr>
     {% endfor %}
     </table>
