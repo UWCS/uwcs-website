@@ -175,16 +175,6 @@ class Event(models.Model):
 class SteamEvent(Event):
     steam_id = models.CharField(max_length=50)
 
-def future_events(n=5):
-    """
-    Generates a list of event types t and events e s.t. e is the
-    next event for t.  Restricted to the next n events
-    """
-    now = datetime.now()
-
-    # first get all future events, then regroup them in python
-    return Event.objects.filter(finish__gte=now,displayFrom__lte=now).order_by('start').select_related('type')
-
 register(Event,['shortDescription','longDescription','get_type_name'],order='-start',filter=lambda: Q(displayFrom__lte=datetime.now(), cancelled=False))
 
 post_save.connect(write_file_callback, sender=Event)

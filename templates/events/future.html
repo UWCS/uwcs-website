@@ -3,7 +3,7 @@
 <li>
     <h2>Upcoming</h2>
     <ul>
-        {% for event_type in event_types %}
+        {% for event_type in event_types|slice:":5" %}
             <li><a href="/events/details/{{event_type.list.0.id}}/">{{event_type.grouper}}</a></li>
         {% endfor %}
     </ul>

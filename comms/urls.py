@@ -1,11 +1,8 @@
-from time import strftime
-from compsoc.events.models import Event
-
 from django.conf.urls.defaults import *
 
-from compsoc.comms.models import *
+from models import *
 from compsoc.shortcuts import current_year,get
-from compsoc.events.models import future_events
+from events.models import Event
 from datetime import datetime,timedelta
 
 def get_dict(item_type,paginate=True,intro=False):
@@ -16,7 +13,7 @@ def get_dict(item_type,paginate=True,intro=False):
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
             'dates':lambda: Communication.objects.filter(type=item_type).order_by('-date').values('date'),
-            'future':lambda: future_events(),
+            'future':lambda: Event.objects.in_future().select_related('type'),
             'intro':intro,
         },
     }
@@ -30,7 +27,6 @@ urlpatterns = patterns('',
             'extra_context':{'events':lambda:Event.objects.for_week(datetime.now()+timedelta(days=3))},
         }),
 )
-
 
 urlpatterns += patterns('django.views.generic.list_detail',
     (r'^$','object_list',get_dict('N', intro=True)),
