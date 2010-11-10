@@ -10,16 +10,6 @@ COMMS_TYPE = (
     ('N','News Item'),
 )
 
-def lookup(item_type):
-    """
-    Returns stuff in some structure that nothing else uses, really.
-    """
-    data = Communication.objects.filter(type=item_type).order_by('-date')
-    store = {}
-    for comm in data:
-        store[(comm.date.year,comm.date.month)] = True
-    return map(lambda (y,m): (y,strftime("%b",(0,m,0,0,0,0,0,0,0))),sorted(store.keys(),reverse=True))
-
 class Communication(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField()
