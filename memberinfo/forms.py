@@ -43,6 +43,7 @@ class GuestForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     email = forms.EmailField(max_length=75)
+    reason = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = User
         fields = ('username','first_name','last_name','email')
