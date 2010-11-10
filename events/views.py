@@ -131,7 +131,7 @@ def valid_signup(user,event):
         else:
             can_signup &= s.open < now
     else:
-        can_signup = false
+        can_signup = False
     return can_signup
     
 def details(request,event_id):
