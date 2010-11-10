@@ -176,20 +176,14 @@ class SteamEvent(Event):
     steam_id = models.CharField(max_length=50)
 
 def future_events(n=5):
-    '''
+    """
     Generates a list of event types t and events e s.t. e is the
     next event for t.  Restricted to the next n events
-    '''
-    types = EventType.objects.all()
-    future = []
-    for type in types:
-        try:
-            event = type.event_set.filter(finish__gte=datetime.now()).exclude(displayFrom__gte=datetime.now()).order_by('start')[0]
-        except IndexError:
-            pass
-        else:
-            future.append((type,event))
-    return sorted(future,key=lambda (t,e): e.start)[:n]
+    """
+    now = datetime.now()
+
+    # first get all future events, then regroup them in python
+    return Event.objects.filter(finish__gte=now,displayFrom__lte=now).order_by('start').select_related('type')
 
 register(Event,['shortDescription','longDescription','get_type_name'],order='-start',filter=lambda: Q(displayFrom__lte=datetime.now(), cancelled=False))
 
