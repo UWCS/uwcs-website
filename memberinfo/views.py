@@ -356,13 +356,13 @@ def create_guest(request):
 
     if request.method == 'POST':
         form = GuestForm(request.POST)
-        
+
         captcha_response = captcha.submit(request.POST.get("recaptcha_challenge_field", None),
             request.POST.get("recaptcha_response_field", None),
             RECAPTCHA_PRIV_KEY, 
             request.META.get("REMOTE_ADDR", None)
         )
-               
+
         if not captcha_response.is_valid:
             captcha_error = "&error=%s" % captcha_response.error_code
         elif form.is_valid():
@@ -375,6 +375,8 @@ def create_guest(request):
             member = u.member
             member.guest = True
             member.save()
+
+            GuestReason.objects.create(user=u, reason=form.cleaned_data['reason'])
 
             NicknameDetails.objects.create(user=u,nickname=name)
             template_mail(
