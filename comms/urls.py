@@ -12,7 +12,7 @@ def get_dict(item_type,paginate=True,intro=False):
         'template_name':'comms/list.html',
         'extra_context':{
             'type':get(COMMS_TYPE,item_type).lower(),
-            'dates':lambda: Communication.objects.filter(type=item_type).order_by('-date').values('date'),
+            'dates':lambda: Communication.objects.filter(type=item_type).order_by('-date').values_list('date',flat=True),
             'future':lambda: Event.objects.in_future().select_related('type'),
             'intro':intro,
         },

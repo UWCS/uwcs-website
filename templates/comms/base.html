@@ -27,8 +27,9 @@
     {% if dates %}
         <h2>Archives</h2>
         <ul id="archivelist">
-            {% for v in dates %}
-                <li><a href="/month{{ type|slugify }}s/{{ v.date.year }}/{{ v.date|date:"b" }}/">{{ v.date|date:"b"|title }} {{ v.date.year }}</a></li>
+            {% regroup dates by month as dates %}
+            {% for month in dates %}
+                <li><a href="/month{{ type|slugify }}s/{{ month.list.0.year }}/{{ month.list.0|date:"b" }}/">{{ month.list.0|date:"b"|title }} {{ month.list.0.year }}</a></li>
             {% endfor %}
         </ul>
         <a id="archivemore" href="#" onclick="$('#archivelist').animate({ height: $('#archivelist').height()+196 },1000); return false;">Show more</a>
