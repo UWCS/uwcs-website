@@ -46,9 +46,13 @@ feeds = {
     'pagerevisions': LatestPageRevisions,
 }
 
+def throw_wrapper_because_lambdas_suck_ass():
+    raise "your mum"
+
 urlpatterns = patterns('',
     (r'^', include('compsoc.comms.urls')),
     (r'^elections/', include('elections.urls')),
+    (r'^oops/', throw_wrapper_because_lambdas_suck_ass),
     (r'^member/', include('compsoc.memberinfo.urls')),
     (r'^events/', include('compsoc.events.urls')),
     (r'^tournaments/', include('compsoc.tournaments.urls')),
