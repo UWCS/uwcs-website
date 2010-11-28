@@ -2,6 +2,7 @@ from collections import defaultdict
 from datetime import date,datetime,timedelta,time
 from time import strftime
 
+from django.db.models import Min
 from django.utils.datastructures import MultiValueDictKeyError
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -18,6 +19,7 @@ from models import *
 from compsoc.settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING,TIME_ZONE
 from compsoc.memberinfo.models import warwick_week_for,Term
 from compsoc.shortcuts import begin_week,path_processor
+from memberinfo.models import MemberJoin
 
 from compsoc.events.similarity import closest_person
 
@@ -26,7 +28,7 @@ def calendar_index(request): return calendar(request,0)
 def month(dat): return strftime("%b",(0,dat,0,0,0,0,0,0,0))
 
 a_week = timedelta(days=7)
-    
+
 def safe_week_for(date):
     dt = datetime(date.year,date.month,date.day)
     try:
@@ -250,6 +252,19 @@ def seating(request, event_id, revision_no=None):
             cols = range(0,room.max_cols)
             max_rows = [ max([-1]+seat_dict[y].keys())+1 for y in cols]
             s = [[seat_dict[y][x] for x in range(0,max_rows[y])] for y in cols]
+
+            year = datetime.now().year
+            stats = []
+            year_mins = MemberJoin.objects.values_list('user').order_by('user').annotate(Min('year'))
+                #for (fromi,toi) in [(x-3,x) for x in range(2,room.max_cols+2,2)]:
+                    #pro = revision.seating_set.filter(col__gt=fromi).filter(col__lt=toi)
+                    #pro_users = pro.values_list('user',flat=True)
+                    #oldies = pro.filter(Q(user__memberjoin__year__lt=year - 3)).distinct().count()
+                    #freshers = len([p for p in pro if p.user.member.is_fresher()])
+                    #years = [v['year__min'] for v in MemberJoin.objects.filter(user__in=pro_users).values('user').order_by('user').annotate(Min('year')) if v['year__min']]
+                    #age = year - int(round(float(sum(years))/float(len(years))))
+#
+                    #stats.append((oldies,freshers,age))
            
             dict.update({
                 'room':room,
@@ -259,6 +274,8 @@ def seating(request, event_id, revision_no=None):
                 'new_revision_no':revisions[0].number+1 if revisions else 0,
                 'unassigned':unass,
                 'notclosed':not closed,
+                'table_stats':stats,
+                'years':year_mins,
                 })
     except EventSignup.DoesNotExist: pass
 

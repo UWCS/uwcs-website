@@ -17,7 +17,12 @@
             {% endfor %}
             Seating.initialiseContainer($('#unassigned')[0]);
             Seating.initialiseContainer($('#unassigned_empty')[0]);
-            Seating.fillOrderField()
+            Seating.fillOrderField();
+            var d = new Date();
+            var log10 = Math.log(10);
+            {% for user,year in years %}
+                hsvBorder($('#{{user}}'),0.25,0.6,Math.log(Math.min(d.getFullYear()-{{year}}+1,10))/log10);
+            {% endfor %}
         });
         </script>
     {% endif %}
@@ -36,6 +41,7 @@
         <span class="moved">moved</span>
         <span class="removed">removed</span>
         <span class="unsignedup">no longer signed up</span>
+        <span>lighter border = older</span>
     </p>
     <!-- visual seating plan goes here. -->
 <table class="seating">
@@ -50,6 +56,16 @@
             {% if forloop.counter0|divisibleby:"2" %}
                 <th colspan="2">Table {{ forloop.counter0|tableno }}</th>
             {% endif %}
+        {% endfor %}
+    </tr><tr>
+        <td colspan="1"></td>
+        {% for oldies,freshers,age in table_stats %}
+                <td colspan="2">
+                    <!-- Fuck you semantic odd_bloke -->
+                    <center>
+                        Oldies:{{oldies}}, Freshers: {{freshers}}, Age: {{age}}
+                    </center>
+                </td>
         {% endfor %}
     </tr><tr>
     <td>
