@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Election(models.Model):
-    date = models.DateTimeField()
-    close_date = models.DateTimeField()
+    date = models.DateTimeField(help_text="This is when the elections will take place")
+    close_date = models.DateTimeField(help_text="This is the closing date for proxy votes")
 
     def __unicode__(self):
         return "Elections for %s" % self.date.year
