@@ -129,3 +129,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 EX_EXEC_GROUP_NAME = "Ex-exec"
 # number of weeks members from last year stay active on the website
 GRACE_PERIOD = 4
+
+# Mon, 14 Feb (why are we dating versioned file changes?)
+
+LOGIN_REDIRECT_URL = '/member/'

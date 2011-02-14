@@ -73,7 +73,7 @@ def handle(request,url):
     data = page.get_data()
 
     if data.login and not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/login/?next=%s' % request.path)
 
     # find the siblings that go before and after
     sibs = sorted(page.get_siblings_and_self(), key=lambda x: x.title())
