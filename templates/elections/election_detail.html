@@ -7,7 +7,7 @@
 
 <p>Proxy votes close at {{ election.close_date }}</p>
 <p>Please enter your order of preference for each candidate below. 1 is the highest preference, #candidates + 1 is the lowest preference. If you leave certain candidates blank, then it will be considered as "no further preferences".</p>
-<p>Please note: <b>You only get one chance to vote!</b> If you fill in the form incorrectly then you will have another chance, but there is no recasting.</p>
+<p>Please note: <b style="color:#F0BC20">You only get to cast your vote once!</b> The form is automatically validated and will not cast your vote if you have filled it in incorrectly, but there is no recasting (remember that missing fields will be considered as "no further preferences").</p>
 
 <form action="/elections/details/{{ election.id }}/" method="post">
     {% regroup stuff by 0.position as position_list %}
