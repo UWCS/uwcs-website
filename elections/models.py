@@ -15,7 +15,7 @@ class Position(models.Model):
     title = models.CharField(max_length=30)
 
     def __unicode__(self):
-        return self.title
+        return "%s for %s" % (self.title, self.election.date.year)
 
 #class AbstractCandidate(models.Model):
     #class Meta:
