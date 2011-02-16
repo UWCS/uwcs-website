@@ -9,6 +9,5 @@ class PositionAdmin(admin.ModelAdmin):
     inlines = [CandidateInline]
 
 admin.site.register(Election)
-admin.site.register(Vote)
 admin.site.register(Position, PositionAdmin)
 
