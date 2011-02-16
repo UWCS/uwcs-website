@@ -1,0 +1,25 @@
+{% extends "admin/app_index.html" %}
+{% load i18n %}
+{% block instructions %}
+<link rel="stylesheet" type="text/css" href="/static/css/admin-instructions.css" />
+<div class="entry">
+    <h1>Election System Instructions</h1>
+    <ol>
+        <li><a href="election/add">Add an election</a></li>
+        <li><a href="position">Add positions for this election</a></li>
+        <li><a href="position">For each position, add candidates (addable in the admin page for each position)</a></li>
+    </ol>
+
+    <p>Once an election is setup, people can proxy vote by visiting <a href=/elections>the elections page</a></p>
+    <h2>Things to note:</h2>
+    <ul>
+        <li>For those organising the election, there is a summary page accessible from the elections page which provides a list of completed proxy votes</li>
+        <li>There is also a page that lists the university ids of all our active members, with lines through those who have already proxy voted</li>
+        <li>There is also a page that presents a printable ballot form</li>
+        <li>Guests may not proxy vote</li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block pretitle %}{% endblock %}
