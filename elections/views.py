@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 class VoteForm(ModelForm):
     class Meta:
         model = Vote
-        fields = ('preference')
+        fields = ['preference']
 
 def validate_position(vote_forms):
     """
