@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.shortcuts import *
 from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django import forms
 
 from pytz import timezone
@@ -431,12 +432,16 @@ def lan_friends(request):
 
 @login_required
 def activity(request):
-    members = []
-    for u in User.objects.all():
-        signup_count = u.signup_set.count()
-        if signup_count:
-            members.append((u.member.name(),signup_count))
-    members.sort(key=lambda(x,y):y,reverse=True)
+    users_with_signups = User.objects \
+                .select_related('nicknamedetails') \
+                .annotate(signup_count=Count('signup')) \
+                .filter(signup_count__gt=0) \
+                .order_by('-signup_count')
+
+    def get_name(user):
+        return user.nicknamedetails and user.nicknamedetails.nickname or user.get_full_name()
+
+    members = [(get_name(user), user.signup_count) for user in users_with_signups]
 
     return render_to_response('events/activity.html', {
         'breadcrumbs': [('/','home'),('/events/','events'),('/events/activity/','activity')],
