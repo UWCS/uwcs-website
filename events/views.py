@@ -194,7 +194,7 @@ def seating(request, event_id, revision_no=None):
         if signup.has_seating_plan():
             room = signup.seating
             closed = e.finish < datetime.now()
-            signed_up = request.user in e.signup_set.all()
+            signed_up = request.user.is_authenticated() and e.signup_set.filter(user=request.user)
 
             if request.method == 'POST' and request.user.is_authenticated():
                 if closed:
