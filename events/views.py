@@ -179,6 +179,10 @@ def details(request,event_id):
 
 
 def seating(request, event_id, revision_no=None):
+    """
+    Logic for adding a seating revision or viewing the current
+    seating plan for an event.
+    """
     e = get_object_or_404(Event, id=event_id)
     dict = {
             'event':e,
@@ -189,10 +193,14 @@ def seating(request, event_id, revision_no=None):
         if signup.has_seating_plan():
             room = signup.seating
             closed = e.finish < datetime.now()
+            signed_up = request.user in e.signup_set.all()
 
             if request.method == 'POST' and request.user.is_authenticated():
                 if closed:
                     return render_to_response('events/plan_closed.html')
+                if not signed_up:
+                    return render_to_response('events/not_signed_up.html')
+
                 order = request.POST['order']
                 previous = SeatingRevision.objects.filter(event=e).order_by('-number')
                 last_no = previous[0].number if previous else 0
@@ -276,6 +284,7 @@ def seating(request, event_id, revision_no=None):
                 'notclosed':not closed,
                 'table_stats':stats,
                 'years':year_mins,
+                'signed_up':signed_up,
                 })
     except EventSignup.DoesNotExist: pass
 

@@ -112,6 +112,7 @@
 		</ul></li>
 		{% if user.is_authenticated %}
 		{% if notclosed %}
+        {% if signed_up %}
 		<li class="newrevision"><ul>
 			<li class="rev">{{ new_revision_no }} (new)</li>
 			<li class="creator" title="{{ user.member.all_name }}">{{ user.member.name }}</li>
@@ -125,6 +126,7 @@
 				</div>
 			</li>
 		</ul></li>
+        {% endif %}
 		{% endif %}
 		{% endif %}
 		{% for revision in seating_revisions %}
