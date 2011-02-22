@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin,UserChangeForm,UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.forms import widgets,ModelChoiceField
+from forms import UserModelChoiceField
 
 class MemberJoinAdmin(admin.ModelAdmin):
     list_filter = ['year']
@@ -45,7 +46,7 @@ class SocietyChangeForm(UserChangeForm):
     """
     Form to modify the details of a Society object
     """
-    representative = ModelChoiceField(queryset = User.objects.order_by('username'))
+    representative = UserModelChoiceField()
     class Meta:
         model = Society
 
@@ -53,7 +54,7 @@ class SocietyCreationForm(UserCreationForm):
     """
     Form to create a new Society object
     """
-    representative = ModelChoiceField(queryset = User.objects.order_by('username'))
+    representative = UserModelChoiceField()
     class Meta:
         model = Society
 
