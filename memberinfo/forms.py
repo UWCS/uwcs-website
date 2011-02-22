@@ -53,7 +53,20 @@ class GuestForm(forms.ModelForm):
 
 class UserModelChoiceField(forms.ModelChoiceField):
     '''
-    Uses a formatted name as the label for a username
+    Uses a formatted name as the label for selecting a user
+
+    {nick} ({full name})
+    or
+    {full name}
+
+    also sorts by nick, then full name
     '''
+    def __init__(self, *args, **kwargs):
+        if not kwargs.has_key('queryset'):
+            kwargs['queryset'] = User.objects.all()
+
+        kwargs['queryset'] = kwargs['queryset'].select_related('nicknamedetails').order_by('nicknamedetails__nickname','first_name','last_name')
+        super(UserModelChoiceField, self).__init__(*args, **kwargs)
+
     def label_from_instance(self, obj):
-        return obj.member.name()
+        return obj.nicknamedetails and "%s (%s)" % (obj.nicknamedetails.nickname, obj.get_full_name()) or obj.get_full_name()
