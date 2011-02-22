@@ -55,9 +55,9 @@ class UserModelChoiceField(forms.ModelChoiceField):
     '''
     Uses a formatted name as the label for selecting a user
 
-    {nick} ({full name})
-    or
-    {full name}
+    {nick} ({username})
+    or, failing that
+    {full name} ({username})
 
     also sorts by nick, then full name
     '''
@@ -69,4 +69,4 @@ class UserModelChoiceField(forms.ModelChoiceField):
         super(UserModelChoiceField, self).__init__(*args, **kwargs)
 
     def label_from_instance(self, obj):
-        return obj.nicknamedetails and "%s (%s)" % (obj.nicknamedetails.nickname, obj.get_full_name()) or obj.get_full_name()
+        return "%s (%s)" % (obj.nicknamedetails and obj.nicknamedetails.nickname or obj.get_full_name(), obj.username)
