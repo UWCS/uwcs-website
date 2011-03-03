@@ -210,8 +210,7 @@ class EventSignup(models.Model):
 
     def has_seating_plan(self):
         try:
-            self.seating
-            return True
+            return self.seating != None
         except SeatingRoom.DoesNotExist:
             return False
 
