@@ -37,7 +37,7 @@ body, html {
 
 body {
 	margin: 0 auto;
-	min-width: 800px;
+	min-width: 980px;
 	max-width: 1200px;
 	text-align: left;
 }
@@ -125,7 +125,7 @@ html {
 #menu a {
 	display: block;
 	float: left;
-	margin-left: 20px;
+	margin-left: 15px;
 	text-decoration: none;
 	font-size: 1.36em;
 }
