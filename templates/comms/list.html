@@ -2,6 +2,8 @@
 
 {% load markup %}
 
+{% block ttitle %}{{ type|title }}s - Page {{ page }}{% endblock %}
+
 {% block content %}
 {% if intro %}
 <div id="facebook_like"><p>Like us on facebook!</p>
