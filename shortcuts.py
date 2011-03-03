@@ -41,3 +41,19 @@ def flatten(list):
 
 def path_processor(request):
     return {'path': request.path}
+
+def cast_to_submodel(instance, subclass, **extra):
+    """
+    Casts an instance of a model Base to an instance of a model Derived.
+    Does not commit anything, you need to do this yourself.
+
+    You can pass in extra arguments for the derived model as keyword args.
+    """
+    superclass = instance.__class__
+    superclass_fields = superclass.objects.filter(id=instance.id).values()[0]
+    superclass_fields.update(extra);
+
+    subclass_instance = subclass(**superclass_fields);
+    ancestor_link_name = subclass_instance._meta.get_ancestor_link(superclass).name
+    setattr(subclass_instance, ancestor_link_name, instance)
+    return subclass_instance
