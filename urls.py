@@ -47,7 +47,7 @@ feeds = {
 }
 
 def throw_wrapper_because_lambdas_suck_ass():
-    raise "your mum"
+    raise Exception("this is just here for testing the 500 page")
 
 urlpatterns = patterns('',
     (r'^', include('compsoc.comms.urls')),
