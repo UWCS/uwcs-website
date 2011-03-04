@@ -308,6 +308,9 @@ class SeatingRevision(models.Model):
     def get_absolute_url(self):
         return "/events/seating/%s/%s" % (self.event.id, self.number)
 
+    class Meta:
+        unique_together = ("event","number")
+
 def val_users(query):
     return flatten(query.values_list('user'))
 
