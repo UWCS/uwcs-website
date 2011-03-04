@@ -44,6 +44,15 @@ class Location(models.Model):
         ordering = ['name']
 
 class EventManager(models.Manager):
+    """
+    Slightly modified manager to select related EventTypes along with Events
+    as they are used in displaying Events
+
+    Also has some commonly used querysets
+    """
+    def get_query_set(self):
+        return super(EventManager, self).get_query_set().select_related('type')
+
     def in_future(self):
         """
         Get upcoming events which are allowed to be displayed now.
@@ -221,11 +230,20 @@ class EventSignup(models.Model):
 post_save.connect(write_file_callback, sender=EventSignup)
 post_delete.connect(write_file_callback, sender=EventSignup)
 
+class SignupManager(models.Manager):
+    """
+    Slightly modified manager to select related users along with Signups
+    as they are used in displaying Signups
+    """
+    def get_query_set(self):
+        return super(SignupManager, self).get_query_set().select_related('user')
+
 class Signup(models.Model):
     event = models.ForeignKey(Event)
     time = models.DateTimeField()
     user = models.ForeignKey(User)
     comment = models.TextField(blank=True)
+    objects = SignupManager()
 
     class Meta:
         ordering = ["time"]
