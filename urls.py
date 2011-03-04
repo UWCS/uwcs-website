@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from compsoc.rest import *
 from functools import partial
 import new
+import user_overrides
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
