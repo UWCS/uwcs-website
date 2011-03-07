@@ -2,7 +2,13 @@
 
 {% load markup %}
 
-{% block ttitle %}{{ type|title }}s - Page {{ page }}{% endblock %}
+{% block headtitle %}
+{% if intro %}
+University of Warwick Computing Society
+{% else %}
+{{ type|title }}s - Page {{ page }} - University of Warwick Computing Society
+{% endif %}
+{% endblock %}
 
 {% block content %}
 {% if intro %}
