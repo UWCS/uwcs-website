@@ -46,14 +46,23 @@ def revision(request,rev_id):
 def add_edit(request,page_id=None):
     if request.method == 'POST':
         form = PageForm(request.POST)
+
+        # try to modify a page instance
+        # and load previous page revision comments
+        try:
+            page = Page.objects.get(id=page_id)
+            comments = map(lambda rev: (rev.comment,rev.id),page.pagerevision_set.order_by('-date_written'))
+
+        # just make a new page if we have to
+        except Page.DoesNotExist:
+            page = Page(slug=form.cleaned_data['slug'])
+            comments = []
+
         if form.is_valid():
-            try:
-                page = Page.objects.get(id=page_id)
-                page.slug = form.cleaned_data['slug']
-            except Page.DoesNotExist:
-                page = Page(slug=form.cleaned_data['slug'])
-            
+            page.slug = form.cleaned_data['slug']
             page.save()
+
+            # add a revision to our page
             rev = PageRevision(page=page,
                 title = form.cleaned_data['title'],
                 text = form.cleaned_data['text'],
@@ -64,8 +73,8 @@ def add_edit(request,page_id=None):
             rev.save()
             return HttpResponseRedirect('/admin/cms/page/'+str(page.id))
         else:
-            comments = []
             page = None
+
     elif page_id != None:
         page = get_object_or_404(Page,id=page_id)
         rev = page.get_data()
