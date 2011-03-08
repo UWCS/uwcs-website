@@ -1,5 +1,7 @@
 {% extends "cms/admin/base.html" %}
 
+{% load markup %}
+
 {% block morehead %}
     <script type="text/javascript">
 //<![CDATA[
@@ -7,8 +9,8 @@
             $("#id_comment").click(function(event){
                 $("#id_comment").attr('value','')
             });
-            $('#id_text').keypress(reloadPreviewDiv);
-            reloadPreviewDiv();
+            //$('#id_text').keypress(reloadPreviewDiv);
+            //reloadPreviewDiv();
         });
 <!--
 
@@ -159,11 +161,14 @@ function reloadPreviewDiv() {
             <input type="submit" value="submit" />
 		</div>
 		</form>
+        {% if preview %}
         <div class="post">
             <h2 class="title">Preview</h2>
-            <p>Note: the following is a subset of textile, and is therefore a 'best effort' preview.</p>
-            <div id="previewcomment" class="entry"></div>
+            {{ text|textile }}
+            <!--<p>Note: the following is a subset of textile, and is therefore a 'best effort' preview.</p>
+            <div id="previewcomment" class="entry"></div>-->
         </div>
+        {% endif %}
 	</div>
 {% endblock %}
 
