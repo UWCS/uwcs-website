@@ -164,9 +164,8 @@ function reloadPreviewDiv() {
         {% if preview %}
         <div class="post">
             <h2 class="title">Preview</h2>
-            {{ text|textile }}
-            <!--<p>Note: the following is a subset of textile, and is therefore a 'best effort' preview.</p>
-            <div id="previewcomment" class="entry"></div>-->
+            <!--<p>Note: the following is a subset of textile, and is therefore a 'best effort' preview.</p>--!>
+            <div id="previewcomment" class="entry">{{ text|textile }}</div>
         </div>
         {% endif %}
 	</div>
