@@ -14,7 +14,6 @@ class PageForm(forms.Form):
     comment = forms.CharField(max_length=30, initial='Please type a comment')
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
-    preview = forms.BooleanField(required=False)
 
     def clean_slug(self):
         slug = self.cleaned_data['slug']
@@ -69,7 +68,7 @@ def add_edit(request,page_id=None):
                 date_written = datetime.now(),
             )
 
-            if not form.cleaned_data['preview']:
+            if 'preview' not in request.POST:
                 page.save()
 
                 # the page might not have an id before saving,
@@ -105,11 +104,6 @@ def add_edit(request,page_id=None):
         comments = []
         page = None
 
-    try:
-        preview = form.cleaned_data['preview']
-    except AttributeError:
-        preview = False
-
     return render_to_response('cms/admin/addedit.html', {
         'form': form,
         'id': page_id,
@@ -120,8 +114,6 @@ def add_edit(request,page_id=None):
         # 2) we're adding a new page
         'slug': page.slug if page else None,
         'text': rev.text if page else None,
-
-        'preview': preview,
     },context_instance=RequestContext(request,{},[path_processor]))
 
 @staff_member_required
