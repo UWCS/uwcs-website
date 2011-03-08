@@ -14,6 +14,7 @@ class PageForm(forms.Form):
     comment = forms.CharField(max_length=30, initial='Please type a comment')
     text = forms.CharField(widget=forms.Textarea)
     login = forms.BooleanField(required=False)
+    preview = forms.BooleanField(required=False)
 
     def clean_slug(self):
         slug = self.cleaned_data['slug']
@@ -55,14 +56,11 @@ def add_edit(request,page_id=None):
 
         # just make a new page if we have to
         except Page.DoesNotExist:
-            page = Page(slug=form.cleaned_data['slug'])
+            page = Page()
             comments = []
 
         if form.is_valid():
             page.slug = form.cleaned_data['slug']
-            page.save()
-
-            # add a revision to our page
             rev = PageRevision(page=page,
                 title = form.cleaned_data['title'],
                 text = form.cleaned_data['text'],
@@ -70,8 +68,17 @@ def add_edit(request,page_id=None):
                 login = form.cleaned_data['login'],
                 date_written = datetime.now(),
             )
-            rev.save()
-            return HttpResponseRedirect('/admin/cms/page/'+str(page.id))
+
+            if not form.cleaned_data['preview']:
+                page.save()
+
+                # the page might not have an id before saving,
+                # (e.g. we just created it), so set the page for this
+                # revision now
+                rev.page = page
+                rev.save()
+
+                return HttpResponseRedirect('/admin/cms/page/'+str(page.id))
         else:
             page = None
 
@@ -82,8 +89,8 @@ def add_edit(request,page_id=None):
             'slug':page.slug,
             'title':rev.title,
             'comment':'Please type a comment',
-            'text':rev.text,
             'login':rev.login,
+            'text':rev.text,
         }
         form = PageForm(initial=data)
         # remove the 'please type a comment' error on first binding
@@ -98,11 +105,23 @@ def add_edit(request,page_id=None):
         comments = []
         page = None
 
+    try:
+        preview = form.cleaned_data['preview']
+    except AttributeError:
+        preview = False
+
     return render_to_response('cms/admin/addedit.html', {
         'form': form,
         'id': page_id,
         'comments':comments,
+
+        # page is set to None when either:
+        # 1) the form is invalid
+        # 2) we're adding a new page
         'slug': page.slug if page else None,
+        'text': rev.text if page else None,
+
+        'preview': preview,
     },context_instance=RequestContext(request,{},[path_processor]))
 
 @staff_member_required
