@@ -60,8 +60,12 @@
 		<div class="signups">
 			{% if can_signup %}
 				<form action="/events/signup/{{ event.id }}/" method="post" class="notsignedup">
+					{% if event.signup_set.count < limit %}
 					<p>You are not signed up to this event, you may signup:</p>
-					<input class="commentfield" type="text" size="255" name="comment" />
+					{% else %}
+					<p><b>Currently the event is fully booked, but you may sign up as a reserve in case enough slots free up.</b><p>
+					{% endif %}
+					<label>Comment for your signup:</label><input class="commentfield" type="text" size="255" name="comment" />
 					<input type="submit" value="signup" />
 				</form>
             {% else %}
