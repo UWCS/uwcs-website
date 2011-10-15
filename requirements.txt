@@ -1,0 +1,4 @@
+Django==1.2.3
+django-tinymce
+-e hg+https://bitbucket.org/rryan/django-rest-interface#egg=django-rest-interface
+South
