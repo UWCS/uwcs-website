@@ -1,19 +1,22 @@
-from django.conf.urls.defaults import *
-from compsoc.feeds import *
-from compsoc import settings
-from compsoc.cms.views import handle,list,games,attachments
-from compsoc.search.views import search
-from django.contrib.auth.models import User
-from compsoc.rest import *
-from functools import partial
 import new
-import user_overrides
+from functools import partial
+
+from django.conf.urls.defaults import *
+from django.contrib.auth.models import User
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-from memberinfo.models import ShellAccount,DatabaseAccount,Quota
+from uwcs.website.rest import *
+from uwcs.website.cms.views import handle,list,games,attachments
+from uwcs.website.search.views import search
+
+from uwcs.website.memberinfo.models import ShellAccount,DatabaseAccount,Quota
+from feeds import *
+
+#import user_overrides
+import settings
 
 # inject extra context into the index method (WHY DOES IT HAVE THIS ARGUMENT IF IT DOESN'T LET YOU USE IT!?)
 def create_index(index):
@@ -51,26 +54,26 @@ def throw_wrapper_because_lambdas_suck_ass():
     raise Exception("this is just here for testing the 500 page")
 
 urlpatterns = patterns('',
-    (r'^', include('compsoc.comms.urls')),
+    (r'^', include('uwcs.website.comms.urls')),
     (r'^elections/', include('elections.urls')),
     (r'^oops/', throw_wrapper_because_lambdas_suck_ass),
-    (r'^member/', include('compsoc.memberinfo.urls')),
-    (r'^events/', include('compsoc.events.urls')),
-    (r'^tournaments/', include('compsoc.tournaments.urls')),
-    #(r'^irc/', include('compsoc.choob.urls')),
-    (r'^tickets/', include('compsoc.tracker.urls')),
+    (r'^member/', include('uwcs.website.memberinfo.urls')),
+    (r'^events/', include('uwcs.website.events.urls')),
+    (r'^tournaments/', include('uwcs.website.tournaments.urls')),
+    #(r'^irc/', include('uwcs.website.choob.urls')),
+    (r'^tickets/', include('uwcs.website.tracker.urls')),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     
-    (r'^admin/cms/page/(?P<page_id>\d+)/$','compsoc.cms.admin_views.add_edit'),
-    (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','compsoc.cms.admin_views.revision'),
-    (r'^admin/cms/page/add/$','compsoc.cms.admin_views.add_edit'),
-    (r'^admin/cms/page/move/(?P<page_id>\d+)/$', 'compsoc.cms.admin_views.move'),
-    (r'^admin/memberinfo/guests/$','compsoc.memberinfo.admin_views.guest_list'),
-    (r'^admin/memberinfo/accounts/$','compsoc.memberinfo.admin_views.account_list'),
-    (r'^admin/memberinfo/acceptguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.accept_guest'),
-    (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.reject_guest'),
-    (r'^admin/events/email/(?P<event_id>\d+)/$','compsoc.events.admin_views.email_signups'),
-    (r'^admin/events/location/unify/(?P<location_id>\d+)/$','compsoc.events.admin_views.unify'),
+    (r'^admin/cms/page/(?P<page_id>\d+)/$','uwcs.website.cms.admin_views.add_edit'),
+    (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','uwcs.website.cms.admin_views.revision'),
+    (r'^admin/cms/page/add/$','uwcs.website.cms.admin_views.add_edit'),
+    (r'^admin/cms/page/move/(?P<page_id>\d+)/$', 'uwcs.website.cms.admin_views.move'),
+    (r'^admin/memberinfo/guests/$','uwcs.website.memberinfo.admin_views.guest_list'),
+    (r'^admin/memberinfo/accounts/$','uwcs.website.memberinfo.admin_views.account_list'),
+    (r'^admin/memberinfo/acceptguest/(?P<user_id>\d+)/$','uwcs.website.memberinfo.admin_views.accept_guest'),
+    (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','uwcs.website.memberinfo.admin_views.reject_guest'),
+    (r'^admin/events/email/(?P<event_id>\d+)/$','uwcs.website.events.admin_views.email_signups'),
+    (r'^admin/events/location/unify/(?P<location_id>\d+)/$','uwcs.website.events.admin_views.unify'),
     (r'^admin/(.*)', admin.site.root),
 
 # django stuff for authentication
@@ -97,8 +100,8 @@ urlpatterns = patterns('',
 
 if settings.LEGACY_SITE:
     urlpatterns += patterns('',
-    	(r'^society/events/', include('compsoc.events.urls')),
-    	(r'^society/members/website', include('compsoc.memberinfo.urls')),
+    	(r'^society/events/', include('uwcs.website.events.urls')),
+    	(r'^society/members/website', include('uwcs.website.memberinfo.urls')),
     	(r'^auth/logout', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
     )
     urlpatterns += patterns('django.views.generic.simple',
