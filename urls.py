@@ -74,7 +74,7 @@ urlpatterns = patterns('',
     (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','uwcs.website.memberinfo.admin_views.reject_guest'),
     (r'^admin/events/email/(?P<event_id>\d+)/$','uwcs.website.events.admin_views.email_signups'),
     (r'^admin/events/location/unify/(?P<location_id>\d+)/$','uwcs.website.events.admin_views.unify'),
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/(.*)', include(admin.site.urls)),
 
 # django stuff for authentication
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
