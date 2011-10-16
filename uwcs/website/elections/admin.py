@@ -1,5 +1,6 @@
-from models import *
 from django.contrib import admin
+
+from models import *
 
 class CandidateInline(admin.TabularInline):
     model = Candidate
@@ -10,4 +11,3 @@ class PositionAdmin(admin.ModelAdmin):
 
 admin.site.register(Election)
 admin.site.register(Position, PositionAdmin)
-

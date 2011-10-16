@@ -1,5 +1,7 @@
+from itertools import groupby
+from datetime import datetime
+
 from django.forms import ModelForm
-from models import Vote, Candidate, Election
 from django.shortcuts import render_to_response,get_object_or_404
 from django.forms.formsets import formset_factory
 from django.forms.widgets import HiddenInput, Widget, TextInput
@@ -10,10 +12,9 @@ from django.forms.util import flatatt, ErrorDict, ErrorList, ValidationError
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from itertools import groupby
-from datetime import datetime
 from django.contrib.auth.models import User
-# Create your views here.
+
+from models import Vote, Candidate, Election
 
 class VoteForm(ModelForm):
     class Meta:
