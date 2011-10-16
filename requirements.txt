@@ -1,4 +1,9 @@
-Django==1.2.3
+Django==1.3.1
 django-tinymce
 -e hg+https://bitbucket.org/rryan/django-rest-interface#egg=django-rest-interface
 South
+pytz
+python-dateutil==1.5
+vobject
+ipython==0.10
+recaptcha-client
