@@ -101,6 +101,7 @@ INSTALLED_APPS = (
     'uwcs.website.tracker',
     'uwcs.website.choob',
     'tinymce',
+    'south',
 )
 
 # Sun, 19 Oct 2008 01:32
