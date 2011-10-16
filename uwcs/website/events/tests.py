@@ -46,7 +46,7 @@ class TestEvents(TestCase):
             cancelled=False
         )
 
-        self.event = Event.objects.create(
+        self.hidden_event = Event.objects.create(
             type=lan,
             location=lib2,
             shortDescription="secret LAN",
@@ -59,6 +59,20 @@ class TestEvents(TestCase):
             cancelled=False
         )
 
+        layout = SeatingRoom.objects.create(
+            room=lib2,
+            name="default lib2",
+            max_cols=10,
+            max_rows=10,
+        )
+
+        SeatingRevision.objects.create(
+            event=self.event,
+            creator=self.user,
+            number=1,
+            comment="nobody",
+        )
+
         EventSignup.objects.create(
             event=self.event,
             signupsLimit=60,
@@ -68,7 +82,7 @@ class TestEvents(TestCase):
             guest_open=datetime.now(),
 
             close=datetime.now() + timedelta(weeks=1),
-
+            seating=layout,
         )
 
     def login(self):
@@ -134,4 +148,12 @@ class TestEvents(TestCase):
 
     def test_get_location_that_doesnt_exist_returns_404(self):
         response = self.client.get('/events/location/9001/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_get_seating_plan_revision_that_exists_returns_200(self):
+        response = self.client.get('/events/seating/1/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_seating_plan_revision_that_doesnt_exist_returns_404(self):
+        response = self.client.get('/events/seating/1/300/')
         self.assertEqual(response.status_code, 404)
