@@ -423,7 +423,7 @@ def location(request,object_id):
     '''
     Location details page controller
     '''
-    loc = Location.objects.get(pk=object_id)
+    loc = get_object_or_404(Location, id=object_id)
     return render_to_response("events/location_detail.html", {
         'object':loc,
         'map_room':loc.map_loc,
