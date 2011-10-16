@@ -55,7 +55,7 @@ def throw_wrapper_because_lambdas_suck_ass():
 
 urlpatterns = patterns('',
     (r'^', include('uwcs.website.comms.urls')),
-    (r'^elections/', include('elections.urls')),
+    (r'^elections/', include('uwcs.website.elections.urls')),
     (r'^oops/', throw_wrapper_because_lambdas_suck_ass),
     (r'^member/', include('uwcs.website.memberinfo.urls')),
     (r'^events/', include('uwcs.website.events.urls')),

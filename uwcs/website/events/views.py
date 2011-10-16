@@ -19,8 +19,8 @@ import vobject
 from uwcs.website.memberinfo.models import warwick_week_for,Term
 from uwcs.website.shortcuts import begin_week,path_processor
 from uwcs.website.events.similarity import closest_person
+from uwcs.website.memberinfo.models import MemberJoin
 
-from memberinfo.models import MemberJoin
 from models import *
 
 from settings import DATE_FORMAT_STRING,WEEK_FORMAT_STRING,TIME_ZONE

@@ -1,13 +1,14 @@
-from uwcs.website.tournaments.models import *
 from django.shortcuts import *
 from django.template import RequestContext
-from uwcs.website.shortcuts import begin_week,path_processor
 from django import forms
 from django.contrib.auth.models import User
-from memberinfo.forms import UserModelChoiceField
-from tournaments.models import *
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+
+from uwcs.website.shortcuts import begin_week,path_processor
+from uwcs.website.memberinfo.forms import UserModelChoiceField
+
+from models import *
 
 def tournament_list(request):
     tournaments = get_list_or_404(Tournament)
