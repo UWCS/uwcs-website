@@ -232,8 +232,11 @@ def seating(request, event_id, revision_no=None):
             else:
                 revisions = SeatingRevision.objects.for_event(e)
                 if revisions:
-                    revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no,event=e)
-            
+                    if revision_no is None:
+                        revision = revisions[0]
+                    else:
+                        revision = get_object_or_404(SeatingRevision, number=revision_no, event=e)
+
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: (False,False)))
             unass = set([s.user for s in e.signup_set.all()])
