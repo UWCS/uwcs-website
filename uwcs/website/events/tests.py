@@ -127,3 +127,11 @@ class TestEvents(TestCase):
         response = self.client.post('/events/signup/1/')
         self.assertEqual(self.event.signup_set.count(), 1)
         self.assertEqual(self.event.signup_set.all()[0], self.user)
+
+    def test_get_location_that_exists_returns_200(self):
+        response = self.client.get('/events/location/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_location_that_doesnt_exist_returns_404(self):
+        response = self.client.get('/events/location/9001/')
+        self.assertEqual(response.status_code, 404)
