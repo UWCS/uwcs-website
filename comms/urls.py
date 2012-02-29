@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 from models import *
 from compsoc.shortcuts import current_year,get
 from events.models import Event
+import views
 from datetime import datetime,timedelta
 
 def get_dict(item_type,paginate=True,intro=False):
@@ -22,10 +23,8 @@ def get_dict(item_type,paginate=True,intro=False):
     return info_dict
 
 urlpatterns = patterns('',
-        (r'^newsletters/generate/$','django.views.generic.simple.direct_to_template',{
-            'template':'comms/newsletter.html',
-            'extra_context':{'events':lambda:Event.objects.for_week(datetime.now()+timedelta(days=3))},
-        }),
+        (r'^newsletters/generate/$', views.generate_newsletter),
+        (r'^newsletters/generate/(?P<delta>\-?\d+)/$', views.generate_newsletter),
 )
 
 urlpatterns += patterns('django.views.generic.list_detail',
