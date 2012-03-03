@@ -1,0 +1,8 @@
+Django==1.2.3
+django-tinymce==1.5.1b2
+South==0.7.2
+-e hg+https://bitbucket.org/rryan/django-rest-interface#egg=django-rest-interface
+python-dateutil==1.5
+ipython==0.10
+recaptcha-client==1.0.6
+django-debug-toolbar==0.9.4
