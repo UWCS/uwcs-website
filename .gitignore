@@ -1,0 +1,4 @@
+*.pyc
+/static/cms/
+/settings.py
+/apache/compsoc.wsgi

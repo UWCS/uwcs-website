@@ -117,8 +117,8 @@ def unsubscribe_member(user,list):
         try:
             if not mailman_list.isMember(user.email):
                 raise MailmanError("User isn't subscribed to the list")
-            #last 2 args: is admin notified, is user notified
-            mailman_list.ApprovedDeleteMember(user.email, 'bin/remove_members',True,True)
+            #last 2 args: is user notified, is admin notified
+            mailman_list.ApprovedDeleteMember(user.email, 'bin/remove_members', userack=False, admin_notif=False)
             mailman_list.Save()
         finally:
             mailman_list.Unlock()
