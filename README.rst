@@ -18,7 +18,7 @@ The WSGI script that apache uses modifies ``sys.path`` to include the libraries 
 Management commands
 ===================
 There are a bunch of utility commands that can be run from the root of the website like so::
-    
+
     ~/compsoc $ ./manage.py update
 
 ``update``
@@ -121,8 +121,8 @@ Subscription of active members to compsoc-announce
 --------------------------------------------------
 ``contrib/update.sh`` also runs ``./manage.py add_active_members_to_list
 compsoc-announce``. This ensures all active members have subscriptions to
-compsoc-announce (in the django-database, which pushes changes to mailman). 
-It does mean that anyone we unsubscribe that is still active on the website 
+compsoc-announce (in the django-database, which pushes changes to mailman).
+It does mean that anyone we unsubscribe that is still active on the website
 will later be re-subscribed, which might be undesirable.
 
 
@@ -136,3 +136,31 @@ Currently the process is manual, just go to the website directory and run::
 Database Configuration
 ======================
 To document
+
+Testing
+=======
+
+Functional Tests
+----------------
+Trying out lettuce for writing high level tests for the website. To run them,
+just use the included ``lettuce_tests.sh`` script::
+
+    ./lettuce_tests.sh
+
+All the functional tests are stored in a ``features`` folder per app::
+
+    compsoc/
+        events/
+            features/
+                index.feature
+                index-steps.py
+        memberinfo/
+            features/
+                index.feature
+                index-steps.py
+
+Unit Tests
+----------
+Any unit tests are executed using the ``test`` management command::
+
+    python manage.py test

@@ -9,3 +9,5 @@ django-debug-toolbar==0.9.4
 pytz==2012b
 vobject==0.8.1c
 textile==2.1.5
+lettuce==0.1.34
+pyhamcrest==1.6
