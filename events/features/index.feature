@@ -27,7 +27,8 @@ Feature: Event index
         Given there is a "LAN Party" running 1 weeks from now for 2 hours in "Lib2"
         And the event is cancelled
         When I access the url "/events/"
-        Then I see a notification that "There are no upcoming events scheduled"
+        Then I see 1 event
+        And the event description has a strike through it
 
     Scenario: Event in the past
         Given there is a "LAN Party" running 1 weeks ago for 2 hours in "Lib2"

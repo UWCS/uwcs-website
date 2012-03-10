@@ -5,16 +5,15 @@ from django.db import transaction
 
 from lettuce import *
 from lxml import html
-from nose.tools import eq_
+from nose.tools import assert_equal
 from hamcrest import *
 
 from events.models import *
 
 @before.all
 def setup_db():
+    # TODO: should probably flush/syncdb here but SLOWWWWW
     pass
-    #call_command('syncdb', interactive=False)
-    #call_command('flush', interactive=False)
 
 @before.all
 def set_browser():
@@ -44,16 +43,22 @@ def access_url(step, url):
 @step(r'I see the title "(.*?)"')
 def see_title(step, text):
     title = world.dom.cssselect('title')[0]
-    eq_(title.text, text)
+    assert_equal(title.text, text)
+
+def from_now(delta, delta_unit):
+    return datetime.now() + timedelta(**{str(delta_unit): int(delta)})
+
+def ago(delta, delta_unit):
+    return datetime.now() - timedelta(**{str(delta_unit): int(delta)})
 
 @step(r'there is a "(.*?)" running (\d+) (\w+) from now for (\d+) (\w+) in "(.*?)"')
 def schedule_event(step, type, delta, delta_unit, duration, duration_unit, location):
     event_type = EventType.objects.get(name=type)
     location = Location.objects.get(name=location)
 
-    start = datetime.now() + timedelta(**{str(delta_unit): int(delta)})
+    start = from_now(delta, delta_unit)
 
-    Event.objects.create(
+    world.event = Event.objects.create(
         type=event_type,
         location=location,
         shortDescription="nothing to see here",
@@ -62,6 +67,33 @@ def schedule_event(step, type, delta, delta_unit, duration, duration_unit, locat
         finish=start + timedelta(**{str(duration_unit): int(duration)}),
     )
 
+@step(r'there is a "(.*?)" running (\d+) (\w+) ago for (\d+) (\w+) in "(.*?)"')
+def schedule_event(step, type, delta, delta_unit, duration, duration_unit, location):
+    event_type = EventType.objects.get(name=type)
+    location = Location.objects.get(name=location)
+
+    start = ago(delta, delta_unit)
+
+    world.event = Event.objects.create(
+        type=event_type,
+        location=location,
+        shortDescription="nothing to see here",
+        longDescription="nothing to see here",
+        start=start,
+        finish=start + timedelta(**{str(duration_unit): int(duration)}),
+    )
+
+@step(r'the event is set to display from (\d+) (\w+) from now')
+def set_event_display_from(step, delta, delta_unit):
+    display_from = from_now(delta, delta_unit)
+    world.event.displayFrom = display_from
+    world.event.save()
+
+@step(r'the event is cancelled')
+def set_event_cancelled(step):
+    world.event.cancelled = True
+    world.event.save()
+
 @step(r'I see a notification that "(.*)"')
 def see_notification(step, text):
     content = world.dom.cssselect('.notification')[0]
@@ -69,8 +101,16 @@ def see_notification(step, text):
 
 @step('I see (\d+) events?')
 def see_events(step, n):
-    events = world.dom.cssselect('li.name')
-    assert_that(events, has_length(int(n)))
+    world.listed_events = world.dom.cssselect('li.name')
+    assert_that(world.listed_events, has_length(int(n)))
+
+    if n == '1':
+        world.subject = world.listed_events[0]
+
+@step('the event description has a strike through it')
+def strike_through(step):
+    world.dom.cssselect('li.name > a')
+    assert_that(world.subject.cssselect('del'), is_not(equal_to([])))
 
 @step('I see a "(.*?)" scheduled')
 def see_scheduled(step, event_type):
