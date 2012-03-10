@@ -6,6 +6,9 @@ DEBUG = True
 LEGACY_SITE = True			# Defines whether site matches for legacy URLs
 TEMPLATE_DEBUG = DEBUG
 
+# All ADMINS are notified of 500 errors by email
+# by default django sends email from root@localhost on error, which gmail refuses
+SERVER_EMAIL = 'uwcs-website-errors@uwcs.co.uk'
 ADMINS = (
     ('Name', 'email@address'),
 )

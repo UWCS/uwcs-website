@@ -164,3 +164,8 @@ Unit Tests
 Any unit tests are executed using the ``test`` management command::
 
     python manage.py test
+
+Error Reporting
+===============
+If any 500 errors occur in the website, any ADMINS (specified in settings.py)
+are notified of it by email with information about the problem. See https://docs.djangoproject.com/en/dev/howto/error-reporting/.
