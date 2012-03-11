@@ -1,4 +1,5 @@
 from fabric.api import *
+from fabric.colors import *
 from fabric.contrib.files import *
 
 REPO = "git://github.com/UWCS/uwcs-website.git"
@@ -19,6 +20,16 @@ def webserver():
 def database():
     # XXX: setup mysql here
     pass
+
+@task
+def mailman():
+    # XXX: what happens with debconf?
+    print yellow("Installing mailman")
+    sudo("apt-get install -y mailman")
+
+    print yellow("Creating mailman site mailing list (master list for sending out subscription reminders)")
+    domain = raw_input("Enter domain for master mailing list: ")
+    sudo("newlist mailman@%s" % domain)
 
 @task
 def virtualenv():
