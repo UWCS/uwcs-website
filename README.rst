@@ -128,10 +128,23 @@ will later be re-subscribed, which might be undesirable.
 
 Deployment on Codd
 ==================
-Currently the process is manual, just go to the website directory and run::
 
-    ~/reinhardt/compsoc $ git fetch
-    ~/reinhardt/compsoc $ git checkout origin/master
+Install fabric
+--------------
+Install into your virtualenv using pip::
+
+    ~/reinhardt/compsoc $ pip install fabric
+
+Setup ssh-key based access
+--------------------------
+Add a line to ``~webmaster/.ssh/authorized_keys`` on codd with your public key.
+
+Fabric commands
+---------------
+The included fabfile has a ``deploy`` command that updates the website over
+ssh, pulls down dependencies and does syncdb::
+
+    ~/reinhardt/compsoc $ fab deploy --hosts webmaster@uwcs.co.uk
 
 Database Configuration
 ======================
