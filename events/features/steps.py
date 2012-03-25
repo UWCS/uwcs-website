@@ -89,6 +89,24 @@ def set_event_display_from(step, delta, delta_unit):
     world.event.displayFrom = display_from
     world.event.save()
 
+@step(r'the event has a seating plan')
+def set_event_seating_plan(step):
+    room = SeatingRoom.objects.create(
+        room=world.event.location,
+        name='seating plan',
+        max_cols = 4,
+        max_rows = 4
+    )
+    options = EventSignup.objects.create(
+        event = world.event,
+        signupsLimit = 0,
+        open = datetime.now(),
+        close = datetime.now() + timedelta(weeks=1),
+        fresher_open = datetime.now(),
+        guest_open = datetime.now(),
+        seating = room,
+    )
+
 @step(r'the event is cancelled')
 def set_event_cancelled(step):
     world.event.cancelled = True

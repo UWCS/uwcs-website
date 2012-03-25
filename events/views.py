@@ -229,9 +229,24 @@ def seating(request, event_id, revision_no=None):
                                 except ValueError,User.DoesNotExist: pass
                 revisions = SeatingRevision.objects.for_event(e)
             else:
-                revisions = SeatingRevision.objects.for_event(e)
-                if revisions:
-                    revision = revisions[0] if revision_no==None else SeatingRevision.objects.get(number=revision_no,event=e)
+                if revision_no is None:
+                    revisions = SeatingRevision.objects.for_event(e)
+                    if revisions:
+                        revision = revisions[0]
+                    else:
+                        revision = SeatingRevision()
+                else:
+                    try:
+                        revision = SeatingRevision.objects.get(number=revision_no, event=e)
+                    except SeatingRevision.DoesNotExist:
+                        return render_to_response('events/seating_no_such_revision.html',{
+                            'revision_no': revision_no,
+                            'event': e,
+
+                            'breadcrumbs': [('/','home'),('/events/','events')],
+                            'future': Event.objects.in_future().select_related('type'),
+                        }, context_instance=RequestContext(request,{},[path_processor]))
+
             
             # create a seat lookup dict
             seat_dict = defaultdict(lambda: defaultdict(lambda: (False,False)))
