@@ -22,5 +22,5 @@
         {{ form.as_table }}
     </table>
     <input type="submit" value="request" />
-</form>
+{% csrf_token %}</form>
 {% endblock %}

@@ -71,7 +71,7 @@
 					{% endif %}
 					<label>Comment for your signup:</label><input class="commentfield" type="text" size="255" name="comment" />
 					<input type="submit" value="signup" />
-				</form>
+				{% csrf_token %}</form>
             {% else %}
                 {% if event.cancelled %}
                     <li class="nosignups">You may not signup, since this event has been cancelled.</li>

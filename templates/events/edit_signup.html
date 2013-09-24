@@ -5,7 +5,7 @@
 	    <form action="/events/signup/{{ event_id }}/" method="post">
 	    {{ form.as_p }}
 	    <p><input type="submit" value="save" /></p>
-	    </form>
+	    {% csrf_token %}</form>
 	</div>
 {% endblock %}
 

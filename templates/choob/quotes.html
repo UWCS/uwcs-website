@@ -5,7 +5,7 @@
 
 <p><form method="get" action="all_quotes/1/">
     <input type="submit" value="&raquo;" /> All quotes.
-</form></p>
+{% csrf_token %}</form></p>
 <p><form method="post" action="quotes_from/1/">
     <input type="submit" value="&raquo;" />
     All quotes from 
@@ -14,7 +14,7 @@
             <option>{{ person }}</option>
         {% endfor %}
     </select>
-</form></p>
+{% csrf_token %}</form></p>
 <p><form method="post" action="quotes_by/1/">
     <input type="submit" value="&raquo;" />
     All quotes by
@@ -23,10 +23,10 @@
             <option>{{ person }}</option>
         {% endfor %}
     </select>
-</form></p>
+{% csrf_token %}</form></p>
 <p><form method="post" action="quotes_with/1/">
     <input type="submit" value="&raquo;" />
     All quotes with <input type="text" name="val" /> in them
-</form></p>
+{% csrf_token %}</form></p>
 
 {% endblock %}

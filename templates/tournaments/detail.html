@@ -40,7 +40,7 @@
                 <form action="{% url tournaments.views.tournament_detail tournament.pk %}" method="POST">
                     {{ win_form.as_p }}
                     <input type="submit" value="Add Win" />
-                </form>
+                {% csrf_token %}</form>
             {% endif %}
         </div>
         <div class="player-form">
@@ -48,7 +48,7 @@
                 <form action="{% url tournaments.views.add_player_to_tournament tournament.pk %}" method="POST">
                     {{ play_form.as_p }}
                     <input type="submit" value="Add Player" />
-                </form>
+                {% csrf_token %}</form>
             {% endif %}
         </div>
     {% endif %}

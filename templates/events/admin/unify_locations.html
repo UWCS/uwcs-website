@@ -7,5 +7,5 @@
     <form action="/admin/events/location/unify/{{ location_id }}/" method="POST">
     {{ form.as_p }}
     <input type="submit" value="Submit" />
-    </form>
+    {% csrf_token %}</form>
 {% endblock %}

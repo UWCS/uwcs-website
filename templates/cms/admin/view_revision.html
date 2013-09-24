@@ -9,7 +9,7 @@
 			    <form class="revisions" action="/admin/cms/pagerevision/{{ revision.id }}/" method="post">
 			        <input class="comment" type="text" name="comment"/>
 			        <input class="submit" type="submit" value="revert to this" />
-			    </form>
+			    {% csrf_token %}</form>
 		</li>
 	</ul>
 {% endblock %}

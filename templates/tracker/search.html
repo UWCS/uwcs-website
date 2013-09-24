@@ -62,7 +62,7 @@
                         <input type="hidden" name="{{fname}}" value="{{val}}" />
                     {% endfor %}
                     <input type="submit" value="{{ name }}" />
-                </form>
+                {% csrf_token %}</form>
                 </li>
                 {% endfor %}
             </ul>
@@ -88,7 +88,7 @@
              {% endfor %}
              </fieldset>
              <p class="submit"><input type="submit" value="search" /></p>
-         </form>
+         {% csrf_token %}</form>
          <div class="advanced">
             <label for="advanced">Advanced Mode </label>
             <input id="advanced" type="checkbox" onClick="advanced():"/>

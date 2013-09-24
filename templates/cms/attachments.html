@@ -17,7 +17,7 @@
 <form action="" method="POST" enctype="multipart/form-data">
     {{ form.as_p }}
     <input type="submit" value="Submit" />
-</form>
+{% csrf_token %}</form>
 {% endif %}
 
 {% endblock%}

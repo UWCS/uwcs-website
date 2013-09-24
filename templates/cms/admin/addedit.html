@@ -161,7 +161,7 @@ function reloadPreviewDiv() {
             <input type="submit" value="Submit" />
             <input type="submit" name="preview" value="Update Preview" />
 		</div>
-		</form>
+		{% csrf_token %}</form>
         <p>The markup for cms pages is <a href="http://www.textism.com/tools/textile/index.php">Textile</a></p>
         {% if text %}
         <div class="post">

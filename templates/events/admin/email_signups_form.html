@@ -11,5 +11,5 @@
     <form action="/admin/events/email/{{ event_id }}/" method="POST">
         {{ form.as_p }}
         <input type="submit" value="email" />
-    </form>
+    {% csrf_token %}</form>
 {% endblock %}

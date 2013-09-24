@@ -28,7 +28,7 @@
 			<input type="submit" value="login" />
 			<input type="hidden" name="next" value="{{ next }}" />
 		</div>
-	</form>
+	{% csrf_token %}</form>
 	<div class="clear"></div>
 </div>
 

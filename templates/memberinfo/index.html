@@ -66,7 +66,7 @@
         <form action="/member/shell/" method="post">
             {{ shell_form.as_p }}
             <input type="submit" value="request" />
-        </form>
+        {% csrf_token %}</form>
     {% endif %}
     <hr />
     </div>
@@ -88,7 +88,7 @@
         <form action="/member/database/" method="post">
             {{ db_form.as_p }}
             <input type="submit" value="request" />
-        </form>
+        {% csrf_token %}</form>
     {% endif %}
     <hr />
     </div>
@@ -109,7 +109,7 @@
 			<form action="/member/quota/" method="post">
 				{{ quota_form.as_p }}
 				<input type="submit" value="request" />
-			</form>
+			{% csrf_token %}</form>
 	{% else %}
 		Quota corresponds to the main of disk space on your shell account.  You need to have requested a shell
 		account in order to have quota.
@@ -136,7 +136,7 @@
         </p>
     {% endfor %}
     <input type="submit" value="set" />
-    </form>
+    {% csrf_token %}</form>
     <hr />
     </div>
     -->
@@ -151,7 +151,7 @@
     <form action="/member/nickname/" method="post">
         {{ name_form.as_p }}
         <input type="submit" value="submit" />
-    </form>
+    {% csrf_token %}</form>
     <hr />
     <p>Your nickname (or real name) and website (URL and title)
     will appear on the member list page (and any other public list of members) only
@@ -161,14 +161,14 @@
             {{ website_form.as_table }}
         </table>
         <input type="submit" value="submit" />
-    </form>
+    {% csrf_token %}</form>
     <hr />
     <form action="/member/publish/" method="post">
         <table class="form">
             {{ publish_form.as_table }}
         </table>
         <input type="submit" value="submit" />
-    </form>
+    {% csrf_token %}</form>
     <hr />
     </div>
 
@@ -184,7 +184,7 @@
 	    {{ gameid_form.as_table }}
 	</table>
 	<input type="submit" value="submit" />
-    </form>
+    {% csrf_token %}</form>
     <hr />
     </div>
 </div>

@@ -25,7 +25,7 @@
   <div class="submit-row">
     <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
   </div>
-</form>
+{% csrf_token %}</form>
 
 <script type="text/javascript">
 document.getElementById('id_username').focus()

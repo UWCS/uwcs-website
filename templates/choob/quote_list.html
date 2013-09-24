@@ -28,7 +28,7 @@
         <form method="get" action="{{ url }}/{{ page.previous_page_number }}/">
             <hidden name="val" value="{{ value }}" />
             <input type="submit" value="previous" />
-        </form>
+        {% csrf_token %}</form>
     </p>
 {% endif %}
 
@@ -37,7 +37,7 @@
         <form method="get" action="{{ url }}/{{ page.next_page_number }}/">
             <hidden name="val" value="{{ value }}" />
             <input type="submit" value="next" />
-        </form>
+        {% csrf_token %}</form>
 {% endif %}
 
 {% endblock %}

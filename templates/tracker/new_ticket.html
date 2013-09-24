@@ -22,6 +22,6 @@
                 {% endfor %}
             </table>
             <p class="submit"><input type="submit" value="submit" /></p>
-        </form>
+        {% csrf_token %}</form>
     </fieldset>
 {% endblock %}

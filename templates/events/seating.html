@@ -122,7 +122,7 @@
 					<input class="text" type="text" name="comment" maxlength="30" size="50" />
 					<input class="submit" type="submit" value="Save" title="Save New Revision" onclick="return checkPlan({{ max_rows }});" />
 					<input type="hidden" name="order" id="order" value="" />
-				</form>
+				{% csrf_token %}</form>
 				</div>
 			</li>
 		</ul></li>
