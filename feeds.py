@@ -1,4 +1,5 @@
-from django.contrib.syndication.feeds import Feed
+#from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from compsoc.comms.models import Communication
 from compsoc.events.models import Event, Signup, SeatingRevision

@@ -59,7 +59,7 @@ urlpatterns = patterns('',
     (r'^tournaments/', include('compsoc.tournaments.urls')),
     #(r'^irc/', include('compsoc.choob.urls')),
     (r'^tickets/', include('compsoc.tracker.urls')),
-    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
     
     (r'^admin/cms/page/(?P<page_id>\d+)/$','compsoc.cms.admin_views.add_edit'),
     (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','compsoc.cms.admin_views.revision'),
@@ -71,7 +71,8 @@ urlpatterns = patterns('',
     (r'^admin/memberinfo/rejectguest/(?P<user_id>\d+)/$','compsoc.memberinfo.admin_views.reject_guest'),
     (r'^admin/events/email/(?P<event_id>\d+)/$','compsoc.events.admin_views.email_signups'),
     (r'^admin/events/location/unify/(?P<location_id>\d+)/$','compsoc.events.admin_views.unify'),
-    (r'^admin/(.*)', admin.site.root),
+#    (r'^admin/(.*)', admin.site.root),
+	url(r'^admin/', include(admin.site.urls)),
 
 # django stuff for authentication
     (r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
