@@ -1,5 +1,9 @@
 <ul>
-{% for user in checklist %}
-<li>{% if user.0 %}<strike>{% endif %}{{ user.1 }}{% if user.0 %}</strike>{% endif %}</li>
+{% for voted,user in checklist %}
+<li>
+{% if voted %}<strike>{% endif %}
+{{ user }}
+{% if voted %}</strike>{% endif %}
+</li>
 {% endfor %}
 </ul>

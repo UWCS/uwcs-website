@@ -1,0 +1,7 @@
+{% extends "events/base.html" %}
+
+{% block ttitle %}No such seating plan revision{% endblock %}
+
+{% block content %}
+<p class="notification">There is no such seating plan revision {{ revision_no }} for {{ event.get_absolute_url }}</p>
+{% endblock %}

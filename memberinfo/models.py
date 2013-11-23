@@ -5,6 +5,17 @@ from compsoc.shortcuts import *
 from datetime import datetime, timedelta
 from django.db.models.signals import post_save,post_delete,m2m_changed,pre_save
 from memberinfo.mailman import subscribe_member,unsubscribe_member,MailmanError
+import logging
+import logging.handlers
+
+mailman_logger = logging.getLogger('mailman')
+mailman_logger.setLevel(logging.DEBUG)
+
+handler = logging.handlers.RotatingFileHandler(
+  'mailman.log', maxBytes=20, backupCount=5)
+
+mailman_logger.addHandler(handler)
+mailman_logger.addHandler(logging.StreamHandler())
 
 # All information about a member, that isn't stored by auth...User, and isn't optional
 class Member(models.Model):
@@ -253,6 +264,14 @@ class Society(User):
     """
     representative = models.ForeignKey(User, related_name="represented_societies")
 
+    @staticmethod
+    def from_user(user, representative):
+        """
+        Returns a Society object that has the details of the user given,
+        along with a representative.
+        """
+        return Society(representative=representative, **User.objects.filter(id=user).values()[0])
+
     class Meta:
         verbose_name_plural = "Societies"
 
@@ -266,6 +285,8 @@ def sync_email_with_mailman_database(sender, instance, **kwargs):
     Intended to be triggered pre_save, and act when a user changes
     their email address
     """
+    mailman_logger.debug('sync_email_with_mailman_database called')
+    mailman_logger.debug(instance)
     try:
         old_user = User.objects.get(id=instance.id)
     except User.DoesNotExist:
@@ -277,9 +298,11 @@ def sync_email_with_mailman_database(sender, instance, **kwargs):
     # not sure what to do on mailman throwing an error here yet
     for l in lists:
         try:
+            mailman_logger.debug('unsubscribing %s' % old_user.email)
             unsubscribe_member(old_user, l)
         except MailmanError: pass
         try:
+            mailman_logger.debug('subscribing %s' % instance.email)
             subscribe_member(instance, l)
         except MailmanError: pass
 

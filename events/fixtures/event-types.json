@@ -1,0 +1,59 @@
+[
+    {
+        "pk": 3,
+        "model": "events.eventtype",
+        "fields": {
+            "info": "Weekly meeting to discuss stuff.",
+            "name": "Exec Meeting",
+            "target": "SCT"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "events.eventtype",
+        "fields": {
+            "info": "Weekend long sweat off.",
+            "name": "LAN Party",
+            "target": "GAM"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "events.eventtype",
+        "fields": {
+            "info": "Pub food with CompSoc.",
+            "name": "Pub Social",
+            "target": "SCL"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "events.location",
+        "fields": {
+            "map_loc": "",
+            "image_url": "/static/img/no_location.png",
+            "name": "DCS Undergrad Labs",
+            "description": "The building next to the Zeeman building."
+        }
+    },
+    {
+        "pk": 1,
+        "model": "events.location",
+        "fields": {
+            "map_loc": "",
+            "image_url": "/static/img/no_location.png",
+            "name": "Lib2",
+            "description": "Next to the Cafe Library"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "events.location",
+        "fields": {
+            "map_loc": "",
+            "image_url": "/static/img/no_location.png",
+            "name": "The Phantom Coach",
+            "description": "Up the road from tescos. Nice pub!"
+        }
+    }
+]

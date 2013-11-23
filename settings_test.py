@@ -6,9 +6,6 @@ DEBUG = True
 LEGACY_SITE = True			# Defines whether site matches for legacy URLs
 TEMPLATE_DEBUG = DEBUG
 
-# All ADMINS are notified of 500 errors by email
-# by default django sends email from root@localhost on error, which gmail refuses
-SERVER_EMAIL = 'uwcs-website-errors@uwcs.co.uk'
 ADMINS = (
     ('Name', 'email@address'),
 )
@@ -16,7 +13,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'		# 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'compsoc.db'		# Or path to database file if using sqlite3.
+DATABASE_NAME = 'test_uwcs_website.db'		# Or path to database file if using sqlite3.
 DATABASE_USER = ''			# Not used with sqlite3.
 DATABASE_PASSWORD = ''			# Not used with sqlite3.
 DATABASE_HOST = ''			# Set to empty string for localhost. Not used with sqlite3.
@@ -96,14 +93,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
-    'compsoc.cms',
-    'compsoc.comms',
-    'compsoc.events',
-    'compsoc.memberinfo',
-    'compsoc.search',
-    'compsoc.tracker',
-    'compsoc.choob',
+    'cms',
+    'comms',
+    'events',
+    'memberinfo',
+    'search',
+    'tracker',
+    'choob',
     'tinymce',
+    'lettuce.django',
 )
 
 # Sun, 19 Oct 2008 01:32
@@ -136,3 +134,5 @@ GRACE_PERIOD = 4
 # Mon, 14 Feb (why are we dating versioned file changes?)
 
 LOGIN_REDIRECT_URL = '/member/'
+
+SOUTH_TESTS_MIGRATE = False

@@ -3,6 +3,7 @@
 {% block ttitle %}Events List{% endblock %}
 
 {% block content %}
+{% if events %}
 <p class="calendar-key">
 <b>Key:</b> <span class="eventpast">past event</span>
             <span class="eventrunning">now running</span>
@@ -38,4 +39,7 @@
     </ul></li>
     {% endfor %}
 </ul>
+{% else %}
+<p class="notification">There are no upcoming events scheduled</p>
+{% endif %}
 {% endblock %}

@@ -349,6 +349,22 @@ def reset_account(request,account):
         'name':'Shell',
         'error':error,
     },context_instance=RequestContext(request,{},[path_processor]))
+
+def _email_exec_about_guest_request(guest):
+    template_mail(
+        'Guest account request',
+        'memberinfo/exec_guest_request_email',
+        {'name':name},
+        COMPSOC_EXEC_EMAIL,
+        [COMPSOC_EXEC_EMAIL])
+
+def _email_guest_about_pending_request(guest):
+    template_mail(
+        'Guest account request',
+        'memberinfo/guest_request_email',
+        {'name':name},
+        COMPSOC_EXEC_EMAIL,
+        [guest.email])
        
 def create_guest(request):
 
@@ -379,18 +395,6 @@ def create_guest(request):
             GuestReason.objects.create(user=u, reason=form.cleaned_data['reason'])
 
             NicknameDetails.objects.create(user=u,nickname=name)
-            template_mail(
-                'Guest account request',
-                'memberinfo/guest_request_email',
-                {'name':name},
-                COMPSOC_EXEC_EMAIL,
-                [u.email])
-            template_mail(
-                'Guest account request',
-                'memberinfo/exec_guest_request_email',
-                {'name':name},
-                COMPSOC_EXEC_EMAIL,
-                [COMPSOC_EXEC_EMAIL])
 
             return render_to_response('memberinfo/guest_request.html')
     else:
