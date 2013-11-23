@@ -6,6 +6,7 @@ REPO = "git://github.com/UWCS/uwcs-website.git"
 LOCAL_CLONE = "$HOME/reinhardt/compsoc"
 WEBSITE_ENV = "$HOME/uwcs-website-env"
 EASY_INSTALL_DIR = "$HOME/easy-install-dir"
+CHECKOUT_BRANCH = "origin/master"
 
 @task
 def install_prerequisites():
@@ -35,7 +36,7 @@ def mailman():
 def virtualenv():
     if not exists(WEBSITE_ENV):
         run("mkdir -p {easy} && PYTHONPATH={easy} easy_install --install-dir {easy} virtualenv".format(easy=EASY_INSTALL_DIR))
-        run("PYTHONPATH={easy} /usr/bin/python2.6 {easy}/virtualenv --no-site-packages $HOME/uwcs-website-env".format(easy=EASY_INSTALL_DIR))
+        run("PYTHONPATH={easy} /usr/bin/python2.6 {easy}/virtualenv --no-site-packages {env}".format(easy=EASY_INSTALL_DIR, env=WEBSITE_ENV))
 
 @task
 def deploy():
@@ -44,7 +45,7 @@ def deploy():
 
     with cd(LOCAL_CLONE):
         run("git fetch")
-        run("git checkout origin/deployed")
+        run("git checkout %s" % CHECKOUT_BRANCH)
         virtualenv()
 
         with prefix(". {env}/bin/activate".format(env=WEBSITE_ENV)):
