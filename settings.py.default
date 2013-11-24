@@ -136,3 +136,4 @@ GRACE_PERIOD = 4
 # Mon, 14 Feb (why are we dating versioned file changes?)
 
 LOGIN_REDIRECT_URL = '/member/'
+USE_MAILMAN = False
