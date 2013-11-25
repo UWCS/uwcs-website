@@ -1,6 +1,6 @@
-from fabric.api import *
-from fabric.colors import *
-from fabric.contrib.files import *
+from fabric.api import run, prefix, task, sudo, cd
+from fabric.colors import yellow
+from fabric.contrib.files import exists
 
 REPO = "git://github.com/UWCS/uwcs-website.git"
 LOCAL_CLONE = "$HOME/reinhardt/compsoc"
@@ -10,7 +10,8 @@ CHECKOUT_BRANCH = "origin/master"
 
 @task
 def install_prerequisites():
-    sudo("apt-get install -y python2.6 python-virtualenv git mercurial")
+    """Install packages needed to run the django app."""
+    sudo("apt-get install -y python2.7 python-virtualenv git mercurial")
 
 @task
 def webserver():
@@ -36,7 +37,7 @@ def mailman():
 def virtualenv():
     if not exists(WEBSITE_ENV):
         run("mkdir -p {easy} && PYTHONPATH={easy} easy_install --install-dir {easy} virtualenv".format(easy=EASY_INSTALL_DIR))
-        run("PYTHONPATH={easy} /usr/bin/python2.6 {easy}/virtualenv --no-site-packages {env}".format(easy=EASY_INSTALL_DIR, env=WEBSITE_ENV))
+        run("PYTHONPATH={easy} /usr/bin/python2.7 {easy}/virtualenv --no-site-packages {env}".format(easy=EASY_INSTALL_DIR, env=WEBSITE_ENV))
 
 @task
 def deploy():
