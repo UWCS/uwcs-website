@@ -51,7 +51,7 @@ def throw_wrapper_because_lambdas_suck_ass():
 
 urlpatterns = patterns('',
     (r'^', include('uwcs_website.comms.urls')),
-    (r'^elections/', include('elections.urls')),
+    (r'^elections/', include('uwcs_website.elections.urls')),
     (r'^oops/', throw_wrapper_because_lambdas_suck_ass),
     (r'^member/', include('uwcs_website.memberinfo.urls')),
     (r'^events/', include('uwcs_website.events.urls')),
@@ -59,7 +59,7 @@ urlpatterns = patterns('',
     #(r'^irc/', include('uwcs_website.choob.urls')),
     (r'^tickets/', include('uwcs_website.tracker.urls')),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
-    
+
     (r'^admin/cms/page/(?P<page_id>\d+)/$','uwcs_website.cms.admin_views.add_edit'),
     (r'^admin/cms/pagerevision/(?P<rev_id>\d+)/$','uwcs_website.cms.admin_views.revision'),
     (r'^admin/cms/page/add/$','uwcs_website.cms.admin_views.add_edit'),
