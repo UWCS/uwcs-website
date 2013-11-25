@@ -1,14 +1,13 @@
+from datetime import datetime
+
 from django.contrib.syndication.feeds import Feed
 from django.utils.feedgenerator import Atom1Feed
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.models import LogEntry, DELETION
+
 from uwcs_website.comms.models import Communication
 from uwcs_website.events.models import Event, Signup, SeatingRevision
-from datetime import datetime
-from uwcs_websitecms.models import PageRevision
-
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.admin.models import LogEntry, ADDITION,CHANGE,DELETION
-
-from uwcs_website.tracker.models import Ticket
+from uwcs_website.cms.models import PageRevision
 
 class LatestTicketChanges(Feed):
     title = "Latest changes in the CompSoc ticket tracker"

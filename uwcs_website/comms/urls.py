@@ -1,10 +1,9 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns
 
-from models import *
 from uwcs_website.shortcuts import get
-from events.models import Event
-import views
-from datetime import datetime,timedelta
+from uwcs_website.events.models import Event
+from uwcs_website.comms import views
+from uwcs_website.comms.models import Communication, COMMS_TYPE
 
 def get_dict(item_type,paginate=True,intro=False):
     data = Communication.objects.filter(type=item_type).order_by('-date')
@@ -12,10 +11,10 @@ def get_dict(item_type,paginate=True,intro=False):
         'queryset':data,
         'template_name':'comms/list.html',
         'extra_context':{
-            'type':get(COMMS_TYPE,item_type).lower(),
-            'dates':lambda: Communication.objects.filter(type=item_type).order_by('-date').values_list('date',flat=True),
-            'future':lambda: Event.objects.in_future().select_related('type'),
-            'intro':intro,
+            'type': get(COMMS_TYPE, item_type).lower(),
+            'dates': lambda: Communication.objects.filter(type=item_type).order_by('-date').values_list('date',flat=True),
+            'future': lambda: Event.objects.in_future().select_related('type'),
+            'intro': intro,
         },
     }
     if paginate:    info_dict['paginate_by'] = 10
