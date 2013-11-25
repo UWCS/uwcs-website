@@ -1,13 +1,14 @@
-from django.conf.urls.defaults import *
-from compsoc.feeds import *
+from django.conf.urls.defaults import patterns, include, url
+import compsoc.feeds
 from compsoc import settings
 from compsoc.cms.views import handle,list,games,attachments
 from compsoc.search.views import search
 from django.contrib.auth.models import User
-from compsoc.rest import *
-from functools import partial
-import new
+from compsoc.rest import xml_user, xml_games
+
 import user_overrides
+# suppress unused warning, user_overrides just monkey patches
+dir(user_overrides)
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -33,18 +34,18 @@ admin.site.index = create_index(admin.site.index)
 
 # See feeds.py for details
 feeds = {
-    'news': LatestNews,
-    'news/atom': LatestAtomNews,
-    'events': NextEvents,
-    'events/atom': NextAtomEvents,
-    'signups': LatestSignups,
-    'seating': LatestSeatingRevisions,
-    'minutes': LatestMinutes,
-    'minutes/atom': LatestAtomMinutes,
-    'newsletters': LatestNewsletters,
-    'newsletters/atom': LatestNewsletters,
-    'tickets': LatestTicketChanges,
-    'pagerevisions': LatestPageRevisions,
+    'news': compsoc.feeds.LatestNews,
+    'news/atom': compsoc.feeds.LatestAtomNews,
+    'events': compsoc.feeds.NextEvents,
+    'events/atom': compsoc.feeds.NextAtomEvents,
+    'signups': compsoc.feeds.LatestSignups,
+    'seating': compsoc.feeds.LatestSeatingRevisions,
+    'minutes': compsoc.feeds.LatestMinutes,
+    'minutes/atom': compsoc.feeds.LatestAtomMinutes,
+    'newsletters': compsoc.feeds.LatestNewsletters,
+    'newsletters/atom': compsoc.feeds.LatestNewsletters,
+    'tickets': compsoc.feeds.LatestTicketChanges,
+    'pagerevisions': compsoc.feeds.LatestPageRevisions,
 }
 
 def throw_wrapper_because_lambdas_suck_ass():
