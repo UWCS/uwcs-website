@@ -4,7 +4,7 @@ Emails for notifying people are all sent via signals
 
 from django.conf import settings
 
-from uwcs_website.tracker.models import Goal, Ticket
+from uwcs_website.tracker import models
 from uwcs_website.shortcuts import template_mail
 
 def diff(new,old,attr):
@@ -15,7 +15,7 @@ def goal_email(sender, **kwargs):
     '''
     Emails supervisor of goal on any changes
     '''
-    p = Goal.objects.get(pk=sender.id)
+    p = models.Goal.objects.get(pk=sender.id)
     email = diff(sender, p, 'supervisor')
     if email:
         template_mail(
@@ -38,7 +38,7 @@ def ticket_email(sender, **kwargs):
     '''
     Emails appropriate people on ticket changes
     '''
-    p = Ticket.objects.get(pk=sender.id)
+    p = models.Ticket.objects.get(pk=sender.id)
     email_to = set()
     for ticket in [sender,p]:
         if ticket.assignee:
