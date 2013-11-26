@@ -1,5 +1,6 @@
 *.pyc
 mailman.*
+*.db
 /static/cms/
 /settings.py
 /apache/compsoc.wsgi
