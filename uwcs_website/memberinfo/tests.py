@@ -29,4 +29,4 @@ class AuthTests(TestCase):
 
 
     def testLogin(self):
-        self.assertContains(c.get('/','Logged in as'))
+       self.assertContains(self.c.post('/login/', {"username": self.username, "password": self.password, "next":""}, follow=True), "Logged in as")
