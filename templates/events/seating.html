@@ -70,7 +70,7 @@
     </tr><tr>
     <td>
         <ul id="unassigned_empty" class="seating">
-            <li class="empty">(empty)</li>
+            <li class="empty">(reserved)</li>
         </ul>
         <ul id="unassigned" class="seating">
         {% for user,type in unassigned %}
@@ -94,7 +94,7 @@
                     class="{{ type }}">
                     {{ user.member.name }}</li>
             {% else %}
-                <li class="empty">(empty)</li>
+                <li class="empty">(reserved)</li>
             {% endif %}
         {% endfor %}
     </ul>
