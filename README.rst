@@ -1,5 +1,13 @@
 .. contents::
 
+Deprecation
+===========
+
+.. warning::
+    ⚠️🚨 This is not the current website at uwcs.co.uk🚨⚠️
+
+    There has since been a rewrite - https://github.com/davidjrichardson/uwcs-zarya. Since then there has been a fork https://github.com/UWCS/uwcs-dextre.
+
 Virtualenv
 ==========
 All the 3rd party dependencies for the website are maintained in a file called ``requirements.txt``. It's best to install these into a isolated Python environment, use the following to set this up::
