@@ -6,7 +6,7 @@ South==0.7.2
 python-dateutil==1.5
 ipython==0.10
 recaptcha-client==1.0.6
-django-debug-toolbar==0.9.4
+django-debug-toolbar==1.11.1
 pytz==2012b
 vobject==0.8.1c
 textile==2.1.5
